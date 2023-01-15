@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "ts-node --esm ./src/index.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
