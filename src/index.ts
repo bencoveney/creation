@@ -1,3 +1,4 @@
+import { hexMapCreate } from "./hex.js";
 import {
   CellType,
   createWorld,
@@ -74,4 +75,13 @@ writeScore(map);
 console.log();
 const choice = await getChoice();
 console.log(Choice[choice]);
+
+// TODO: Integrate properly
+const hexMap = hexMapCreate(
+  5,
+  () => ({}),
+  () => ({})
+);
+console.log(hexMap);
+
 process.exit();
