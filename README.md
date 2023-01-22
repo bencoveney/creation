@@ -1,5 +1,7 @@
 # creation
 
+[View webpage](https://bencoveney.com/creation/)
+
 ## Reading material
 
 https://www.dwarffortresswiki.org/index.php/DF2014:World_generation
