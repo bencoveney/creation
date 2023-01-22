@@ -255,3 +255,73 @@ function hexMapLookupToCoords(
 export function empty(length: number): undefined[] {
   return new Array(length).fill(undefined);
 }
+
+export function hexMapRender<TileData, EdgeData>(
+  map: HexMap<TileData, EdgeData>
+) {
+  let render = "";
+  const allTiles = map.rqLookup.flat();
+  const renderRows: HexMapTile<TileData, EdgeData>[][] = [];
+  for (
+    let renderRow = -(map.halfSize * 2);
+    renderRow <= map.halfSize * 2;
+    renderRow++
+  ) {
+    renderRows.push(
+      allTiles.filter(({ coords }) => coords[1] - coords[2] == renderRow)
+    );
+  }
+  for (let i = 0; i < renderRows.length; i++) {
+    const tiles = renderRows[i];
+    const renderRow = i - map.halfSize * 2;
+    const body = renderRow > -map.halfSize - 1 && renderRow < map.halfSize + 1;
+    const inset = "        ";
+    const insetRepeat = body
+      ? renderRow % 2 == 0
+        ? 1
+        : 0
+      : Math.abs(renderRow) - map.halfSize;
+    const indent = inset.repeat(insetRepeat);
+    const firstRow = i - 1 < 0;
+    const lastRow = i + 1 >= renderRows.length;
+    if (firstRow) {
+      render += indent;
+      render += "  ,-----,\n";
+      render += indent;
+      render += " /       \\\n";
+    } else {
+      const maxTiles = Math.max(tiles.length, renderRows[i - 1].length);
+      const shrinking = tiles.length < renderRows[i - 1].length;
+      if (!shrinking) {
+        render += indent;
+        render += empty(maxTiles)
+          .map((_) => " /       \\ ")
+          .join("     ");
+      } else {
+        render += inset.repeat(insetRepeat - 1);
+        render += empty(maxTiles)
+          .map((_) => " \\       / ")
+          .join("     ");
+      }
+      render += "\n";
+    }
+    const tilesList = tiles
+      .map(({ coords }) => {
+        const tidyCoords = coords.map((i) =>
+          i < 0 ? i.toString() : " " + i.toString()
+        );
+        return `${tidyCoords[0]},${tidyCoords[1]},${tidyCoords[2]}${
+          body ? "b" : "t"
+        }`;
+      })
+      .join("}-----{");
+    render += `${indent}{${tilesList}}\n`;
+    if (lastRow) {
+      render += indent;
+      render += " \\       /\n";
+      render += indent;
+      render += "  `-----'\n";
+    }
+  }
+  console.log(render);
+}

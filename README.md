@@ -22,6 +22,8 @@ https://www.youtube.com/watch?v=yDPb0jqRr3o
 https://www.youtube.com/watch?v=snbt0PxRvpk
 https://www.youtube.com/watch?v=v8zwPdPvN10
 https://www.bay12games.com/dwarves/dev.html
+http://aurorawiki.pentarch.org/index.php?title=Main_Page
+https://catlikecoding.com/unity/tutorials/hex-map/
 
 ## Ideas
 
@@ -170,6 +172,7 @@ Perhaps occasionally you get information about enemies (from travellers/traders/
 - Trying to make good decisions based on fallible information
 - Balancing resource generation with military
 - Expanding your civilisations influence
+- Combat has risk/reward. You might send out raiders and never hear from them again.
 
 ### Future ideas
 
