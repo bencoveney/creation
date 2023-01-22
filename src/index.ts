@@ -34,53 +34,17 @@ function writeScore(map: World) {
   );
 }
 
-enum Choice {
-  Expand,
-  Consolidate,
-  Fight,
-}
+window.addEventListener("load", async () => {
+  console.clear();
+  writeWorld(map);
+  console.log();
+  writeScore(map);
+  console.log();
 
-async function getChoice(): Promise<Choice> {
-  console.log(`Options:
-1: Expand
-2: Consolidate
-3: Fight`);
-  process.stdout.write("> ");
-  return new Promise((resolve) => {
-    process.stdin.once("data", (data) => {
-      const result = parseInt(data.toString().trim());
-      switch (result) {
-        case 1:
-          resolve(Choice.Expand);
-          return;
-        case 2:
-          resolve(Choice.Consolidate);
-          return;
-        case 3:
-          resolve(Choice.Fight);
-          return;
-        default:
-          console.log(`Unknown value ${data}, please enter 1, 2 or 3`);
-          resolve(getChoice());
-          return;
-      }
-    });
-  });
-}
-
-console.clear();
-writeWorld(map);
-console.log();
-writeScore(map);
-console.log();
-const choice = await getChoice();
-console.log(Choice[choice]);
-
-const hexMap = hexMapCreate(
-  3,
-  () => ({}),
-  () => ({})
-);
-hexMapRender(hexMap);
-
-process.exit();
+  const hexMap = hexMapCreate(
+    3,
+    () => ({}),
+    () => ({})
+  );
+  hexMapRender(hexMap);
+});

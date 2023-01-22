@@ -1,9 +1,18 @@
 {
   "type": "module",
   "scripts": {
-    "start": "ts-node --esm ./src/index.ts"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm-run-all build:clean build:copy-assets build:build-prod",
+    "serve": "npm-run-all build:clean build:copy-assets build:build-watch",
+    "format:prettier": "prettier --write .",
+    "build:clean": "rm -rf ./build",
+    "build:copy-assets": "cpy --cwd=assets . ../build/",
+    "build:build-prod": "esbuild src/index.ts --outdir=build/ --bundle",
+    "build:build-watch": "esbuild src/index.ts --outdir=build/ --bundle --servedir=build"
   },
   "devDependencies": {
-    "ts-node": "^10.9.1"
+    "cpy-cli": "^4.2.0",
+    "esbuild": "^0.17.4",
+    "npm-run-all": "^4.1.5"
   }
 }
