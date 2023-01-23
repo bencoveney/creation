@@ -27,6 +27,26 @@ https://www.bay12games.com/dwarves/dev.html
 http://aurorawiki.pentarch.org/index.php?title=Main_Page
 https://catlikecoding.com/unity/tutorials/hex-map/
 
+## 4x Inspiration
+
+Explore, Expand, Exploit, Exterminate
+https://en.wikipedia.org/wiki/4X
+https://www.youtube.com/watch?v=R5Uk13mQdm0
+
+## Hex Inspiration
+
+https://graphicriver.net/item/strategy-2d-game-tileset/22243155
+https://twitter.com/Franrekk/status/1486045914930233351
+https://www.reddit.com/r/dndmaps/comments/dbh3ke/experimenting_with_a_chunky_hex_style_for_this/
+https://www.wistedt.net/2019/01/19/adventures-in-dunkelmoor/
+https://www.wistedt.net/2019/01/22/the-howling-coast/
+https://androidarts.com/boardgames/bp/BPMapSec1A.jpg
+https://web.archive.org/web/20160513005648/http://ludumdare.com/compo/wp-content/uploads/2014/12/notcatan.png
+https://opengameart.org/content/hexset-v011-hex-pixel-art-terrain-tileset
+https://www.kenney.nl/assets/hexagon-kit
+https://www.kenney.nl/assets/hexagon-pack
+https://pbs.twimg.com/media/C_DeKmMW0AAptqq.jpg
+
 ## Ideas
 
 Deity
