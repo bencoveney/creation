@@ -47,4 +47,19 @@ window.addEventListener("load", async () => {
     () => ({})
   );
   hexMapRender(hexMap);
+
+  const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+
+  if (!canvas) {
+    throw new Error("no canvas context");
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) {
+    throw new Error("no canvas context");
+  }
+
+  ctx.fillStyle = "green";
+  ctx.fillRect(10, 10, 150, 100);
 });
