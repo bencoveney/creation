@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { initWorld, tickWorld } from "./worldgen";
 import { populateWorld } from "./worldgen/populate";
 import {
+  Language,
   getWords,
   spellPhoneme,
   spellWord,
@@ -15,14 +16,26 @@ if (!root) {
 
 const world = initWorld();
 populateWorld(world);
-tickWorld(world);
-console.log(world);
-
+for (let i = 0; i < 20; i++) {
+  tickWorld(world);
+}
 const { language } = [...world.dialects.map.values()][0];
+
+const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
+function formatLog(message: string, language: Language) {
+  return message.replace(logReplaceRegex, (_, word) =>
+    spellWords(getWords(word, language))
+  );
+}
 
 const buh = createRoot(root);
 buh.render(
   <div>
+    <ul>
+      {world.log.map((log, index) => {
+        return <li key={index}>{formatLog(log, language)}</li>;
+      })}
+    </ul>
     <ul>
       {[...world.regions.map.values()].map((region) => {
         return (

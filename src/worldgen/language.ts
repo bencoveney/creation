@@ -330,10 +330,10 @@ function generateSyllable({
   return result;
 }
 
-function generateUnusedWord(language: Language) {
+function generateUnusedWord(language: Language, minSyllables: number) {
   let attempt = 1;
   while (true) {
-    const numSyllables = 1 + Math.floor(attempt++ / 5);
+    const numSyllables = minSyllables + Math.floor(attempt++ / 5);
     const possible: VoicedWord = [];
     for (let i = 0; i < numSyllables; i++) {
       const syllable = generateSyllable(language);
@@ -367,11 +367,11 @@ function generateUnusedWord(language: Language) {
   }
 }
 
-export function getWord(word: string, language: Language) {
+export function getWord(word: string, language: Language, minSyllables = 2) {
   const sanitised = word.toLocaleLowerCase();
 
   if (!language.words[sanitised]) {
-    language.words[sanitised] = generateUnusedWord(language);
+    language.words[sanitised] = generateUnusedWord(language, minSyllables);
   }
 
   return language.words[sanitised];

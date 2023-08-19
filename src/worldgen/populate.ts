@@ -1,39 +1,94 @@
-import { Being, Region, World } from ".";
+import { Artifact, Being, Region, World } from ".";
 import { Lookup } from "../utils/lookup";
-import { flipCoin, randomChoice, randomInt } from "../utils/random";
+import {
+  flipCoin,
+  randomChoice,
+  randomInt,
+  randomSelection,
+} from "../utils/random";
 import { generateLanguage } from "./language";
 
 export function populateWorld(world: World): void {
-  console.log("populating");
   world.dialects.set({
     language: generateLanguage(),
   });
-  for (let i = 0; i < 3; i++) {
-    createDeity(world.beings);
-  }
-  for (let i = 0; i < 20; i++) {
-    createBeing(world.beings);
-  }
-  for (let i = 0; i < 20; i++) {
-    createRegion(world.regions);
-  }
 }
 
-function createBeing(beings: Lookup<Being>): void {
-  beings.set({
+export function createBeing(beings: Lookup<Being>): Being {
+  return beings.set({
     name: createBeingName(),
+    power: 0,
   });
 }
 
-function createDeity(beings: Lookup<Being>): void {
-  beings.set({
+export function createDeity(beings: Lookup<Being>): Being {
+  return beings.set({
     name: createDeityName(),
+    power: 1,
   });
 }
 
-function createRegion(regions: Lookup<Region>): void {
-  regions.set({
-    name: createRegionName(),
+export function getDeities(beings: Lookup<Being>): Being[] {
+  return [...beings.map.values()].filter((being) => being.power === 1);
+}
+
+const artifactSelection = randomSelection([
+  "sword",
+  "shield",
+  "dagger",
+  "spear",
+  "cup",
+  "bowl",
+  "knife",
+  "bracelet",
+  "necklace",
+  "chain",
+  "rope",
+  "gown",
+  "robe",
+  "club",
+  "scepter",
+  "vial",
+  "hood",
+  "veil",
+  "necklace",
+  "eyeglass",
+  "map",
+]);
+
+export function createArtifact(
+  creators: Being[],
+  artifacts: Lookup<Artifact>
+): Artifact {
+  return artifacts.set({
+    name: createArtifactName(),
+    object: artifactSelection(),
+  });
+}
+
+const motifs = randomSelection([
+  "Cross",
+  "Triangle",
+  "Circle",
+  "Square",
+  "Star",
+  "Ring", // Donut/Torus
+  "Arrowhead",
+  "Diamond", // Rhombus
+  "Cresent",
+  "Semicircle",
+]);
+
+export function getSymbol(): Being["motif"] {
+  return {
+    kind: "symbol",
+    value: motifs(),
+  };
+}
+
+export function createWorld(regions: Lookup<Region>): Region {
+  return regions.set({
+    name: createWorldName(),
   });
 }
 
@@ -107,6 +162,11 @@ function describeNoun(nouns: string[], adjectices: string[]) {
   return flipCoin()
     ? randomChoice(nouns)
     : `${randomChoice(adjectices)} ${randomChoice(nouns)}`;
+}
+
+let worldNameCount = 0;
+function createWorldName(): string {
+  return `world_${worldNameCount++}`;
 }
 
 function createRegionName(): string {
@@ -205,22 +265,12 @@ function createBeingName(): string {
   }
 }
 
-// https://en.wikipedia.org/wiki/List_of_fictional_deities
-const deityNames = [
-  "Alash",
-  "Tash",
-  "Azathoth",
-  "Cthulhu",
-  "Nyarlathotep",
-  "Eru",
-  "Melkor",
-  "Ares",
-  "Darkseid",
-  "Rao",
-  "Beerus",
-  "Odin",
-];
-
+let deityNameCount = 0;
 function createDeityName(): string {
-  return randomChoice(deityNames);
+  return `deity_${deityNameCount++}`;
+}
+
+let artifactNameCount = 0;
+function createArtifactName(): string {
+  return `artifact_${deityNameCount++}`;
 }
