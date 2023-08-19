@@ -9,6 +9,7 @@ https://www.dwarffortresswiki.org/index.php/DF2014:Historical_figure
 https://tolkiengateway.net/wiki/Timeline
 https://tolkiengateway.net/wiki/Il%C3%BAvatar
 https://tolkiengateway.net/wiki/Music_of_the_Ainur
+https://en.wikipedia.org/wiki/Trimurti
 https://en.wikipedia.org/wiki/Book_of_Genesis
 https://en.wikipedia.org/wiki/Creator_in_Buddhism
 https://en.wikipedia.org/wiki/Creationism#Religious_views
@@ -29,12 +30,37 @@ https://catlikecoding.com/unity/tutorials/hex-map/
 
 Deity
 
-- 1/2/3?
+- 1/2/3/4?
 - Creation of lower tier deities (demigods, angels/demons, ainur/valar/maiar)
 - Creation of lands (in concert with lesser deities?)
 - Can represent concepts (virtues, sins, guardianship)
 - Less tangible over time
 - Can win others to their cause/alleigance or be corrupted?
+
+- Dynamics
+
+Change/Static
+
+- Change: External, Creativity, Fleeting,
+- Static: Internal, Knowledge, Reliable,
+  More/Less
+- More: Busy, Plenty, Order, Dense
+- Less: Calm, Enough, Entropy, Sparse
+
+- 4: Growth, Decay, Nurture, Fallow
+- Together form a cycle
+- Opposites friends? consecutive enemies?
+- Alpha - Change, Less -> Plenty, Growth, Imagination
+- Beta - Static, Plenty -> Plenty, Ambition, Health,
+- Gamma - Change, Plenty -> Less, Clean, Clarity, Decay, Death
+- Delta - Static, Less -> Less, Comfort, Restraint, Order
+
+| #     | Dynamics | Axis   | Positive            | Negative               |
+| ----- | -------- | ------ | ------------------- | ---------------------- |
+| Alpha | Change   | Plenty | Growth, Imagination | Chaos, Fleeting        |
+| Beta  | Static   | Plenty | Heal, Nurture       | Glutton, Consolidation |
+| Gamma | Change   | Less   | Clean, Harvest      | Decay, Death           |
+| Delta | Static   | Less   | Comfort, Restraint  | Order, Sloth           |
 
 Lower tier deities
 
