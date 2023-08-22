@@ -1,4 +1,4 @@
-import { Artifact, Being, Region, World } from ".";
+import { Artifact, Being, Region, History } from ".";
 import { Lookup } from "../utils/lookup";
 import {
   flipCoin,
@@ -8,7 +8,7 @@ import {
 } from "../utils/random";
 import { generateLanguage } from "./language";
 
-export function populateWorld(world: World): void {
+export function populateWorld(world: History): void {
   world.dialects.set({
     language: generateLanguage(),
   });
@@ -63,20 +63,22 @@ export function createArtifact(
   return artifacts.set({
     name: createArtifactName(),
     object: artifactSelection(),
+    creators: creators.map((creator) => creator.id),
+    inPosessionOf: randomChoice(creators.map((creator) => creator.id)),
   });
 }
 
 const motifs = randomSelection([
-  "Cross",
-  "Triangle",
-  "Circle",
-  "Square",
-  "Star",
-  "Ring", // Donut/Torus
-  "Arrowhead",
-  "Diamond", // Rhombus
-  "Cresent",
-  "Semicircle",
+  "cross",
+  "triangle",
+  "circle",
+  "square",
+  "star",
+  "ring", // Donut/Torus
+  "arrowhead",
+  "diamond", // Rhombus
+  "cresent",
+  "semicircle",
 ]);
 
 export function getSymbol(): Being["motif"] {
@@ -89,6 +91,12 @@ export function getSymbol(): Being["motif"] {
 export function createWorld(regions: Lookup<Region>): Region {
   return regions.set({
     name: createWorldName(),
+  });
+}
+
+export function createTileRegion(regions: Lookup<Region>): Region {
+  return regions.set({
+    name: createRegionName(),
   });
 }
 
@@ -171,7 +179,6 @@ function createWorldName(): string {
 
 function createRegionName(): string {
   const mode = randomInt(0, 3);
-  console.log("regionMode", mode);
   switch (mode) {
     case 0:
       return `The ${describeNoun(regionPlaces, regionAdjectives)}`;
@@ -272,5 +279,5 @@ function createDeityName(): string {
 
 let artifactNameCount = 0;
 function createArtifactName(): string {
-  return `artifact_${deityNameCount++}`;
+  return `artifact_${artifactNameCount++}`;
 }

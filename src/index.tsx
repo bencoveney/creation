@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { initWorld, tickWorld } from "./worldgen";
+import { initHistory, tick } from "./worldgen";
 import { populateWorld } from "./worldgen/populate";
 import {
   Language,
@@ -14,10 +14,10 @@ if (!root) {
   throw new Error("Could not find #root in document");
 }
 
-const world = initWorld();
+const world = initHistory();
 populateWorld(world);
-for (let i = 0; i < 20; i++) {
-  tickWorld(world);
+for (let i = 0; i < 50; i++) {
+  tick(world);
 }
 const { language } = [...world.dialects.map.values()][0];
 
@@ -51,7 +51,19 @@ buh.render(
         return (
           <li key={being.id}>
             Being {being.id}: {being.name}{" "}
-            <i>{spellWords(getWords(being.name, language))}</i>
+            <i>{spellWords(getWords(being.name, language))}</i>{" "}
+            {being.motif && being.motif.value}
+          </li>
+        );
+      })}
+    </ul>
+    <ul>
+      {[...world.artifacts.map.values()].map((artifact) => {
+        return (
+          <li key={artifact.id}>
+            Artifact {artifact.id}: {artifact.name}{" "}
+            <i>{spellWords(getWords(artifact.name, language))}</i>{" "}
+            {artifact.object}
           </li>
         );
       })}
