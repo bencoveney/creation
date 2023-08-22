@@ -1,5 +1,5 @@
 import { Lookup, createLookup } from "../utils/lookup";
-import { randomChoices, shuffle } from "../utils/random";
+import { randomChoice, randomChoices, shuffle } from "../utils/random";
 import { Language } from "./language";
 import {
   createArtifact,
@@ -9,11 +9,12 @@ import {
   getDeities,
   getSymbol,
 } from "./populate";
-import { World, createWorld as createWorld2, getTile } from "./world";
+import { Tile, World, createWorld as createWorld2, getTile } from "./world";
 
 export type Region = {
   id: string;
   name: string;
+  tile?: Tile;
 };
 
 export type Motif = {
@@ -117,8 +118,62 @@ export function tick(history: History) {
         history.log.push(
           `In the year ${history.tick} [[${deity.name}]] entered [[${region.name}]]`
         );
+        toDoList.push(() => {
+          deity.location = undefined;
+          history.log.push(
+            `In the year ${history.tick} [[${deity.name}]] retreated from [[${region.name}]]`
+          );
+        });
+        toDoList = shuffle(toDoList);
       })
     );
+
+    const randomMove = () => {
+      const deity = randomChoice(deities);
+      if (
+        deity.location &&
+        history.regions.map.get(deity.location)?.name !== "world_0" &&
+        history.world
+      ) {
+        const location = history.regions.map.get(deity.location)!;
+        const neighbours = [
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+        ]
+          .map(([dx, dy]) => [location.tile?.x! + dx, location.tile?.y! + dy])
+          .filter(
+            ([x, y]) =>
+              x > 0 &&
+              x < history.world?.width! &&
+              y > 0 &&
+              y < history.world?.height!
+          );
+        const [targetX, targetY] = randomChoice(neighbours);
+        const targetTile = getTile(history.world!, targetX, targetY);
+        const targetLocation = history.regions.map.get(targetTile.location)!;
+        deity.location = targetLocation.id;
+        history.log.push(
+          `In the year ${history.tick} [[${deity.name}]] moved from [[${location.name}]] to [[${targetLocation.name}]]`
+        );
+      } else if (history.world) {
+        deity.location = randomChoice(history.world.cells).location;
+        const location = history.regions.map.get(deity.location)!;
+        history.log.push(
+          `In the year ${history.tick} [[${deity.name}]] moved to [[${location.name}]]`
+        );
+      } else {
+        console.log("Not moving");
+        history.log.push(
+          `In the year ${history.tick} [[${deity.name}]] rested`
+        );
+      }
+      toDoList.push(randomMove);
+      toDoList = shuffle(toDoList);
+    };
+    toDoList.push(randomMove);
+
     toDoList.push(() => {
       history.world = createWorld2(5, 5);
       const inWorldDeities = deities.filter(
@@ -133,14 +188,18 @@ export function tick(history: History) {
         );
       } else {
         history.log.push(
-          `In the year ${history.tick}the world of [[${worldRegion.name}]] was given form`
+          `In the year ${history.tick} the world of [[${worldRegion.name}]] was given form`
         );
       }
       history.world?.cells.forEach((tile) => {
+        const region = createTileRegion(history.regions, tile);
+        const regionNameParts = region.name
+          .split(" ")
+          .map((part) => `[[${part}]]`)
+          .join(" ");
         toDoList.push(() => {
-          const region = createTileRegion(history.regions);
           history.log.push(
-            `In the year ${history.tick} the region ${region.name} was formed`
+            `In the year ${history.tick} the region ${regionNameParts} was formed`
           );
           tile.location = region.id;
         });
@@ -152,7 +211,7 @@ export function tick(history: History) {
   } else if (toDoList.length > 0) {
     toDoList.pop()!();
   } else {
-    history.log.push(`In the year ${history.tick} nothing happened yet...`);
+    history.log.push(`In the year ${history.tick} nothing happened`);
   }
   // Gods can enter the world
   // Gods can navigate the world

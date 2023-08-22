@@ -7,6 +7,7 @@ import {
   randomSelection,
 } from "../utils/random";
 import { generateLanguage } from "./language";
+import { Tile } from "./world";
 
 export function populateWorld(world: History): void {
   world.dialects.set({
@@ -94,62 +95,65 @@ export function createWorld(regions: Lookup<Region>): Region {
   });
 }
 
-export function createTileRegion(regions: Lookup<Region>): Region {
-  return regions.set({
+export function createTileRegion(regions: Lookup<Region>, tile: Tile): Region {
+  const result = regions.set({
     name: createRegionName(),
+    tile,
   });
+  tile.location = result.id;
+  return result;
 }
 
 const regionPlaces = [
-  "Woods",
-  "Halls",
-  "Cliffs",
-  "Forest",
-  "Plains",
-  "Tundras",
-  "Mountains",
-  "Streets",
+  "woods",
+  "halls",
+  "cliffs",
+  "forest",
+  "plains",
+  "tundras",
+  "mountains",
+  "streets",
 ];
 
 const regionVibes = [
-  "Sorrow",
-  "Elation",
-  "Tranquility",
-  "Peace",
-  "Strife",
-  "Anger",
-  "Fear",
-  "Calm",
+  "sorrow",
+  "elation",
+  "tranquility",
+  "peace",
+  "strife",
+  "anger",
+  "fear",
+  "calm",
 ];
 
 const regionAdjectives = [
-  "Windy",
-  "Calm",
-  "Frozen",
-  "Windswept",
-  "Sunny",
-  "Tranquil",
-  "Undead",
-  "Barren",
+  "windy",
+  "calm",
+  "frozen",
+  "windswept",
+  "sunny",
+  "tranquil",
+  "undead",
+  "barren",
 ];
 
 const settlementNameStarts = [
-  "Ply",
-  "Exe",
-  "Tor",
-  "Paign",
-  "Ex",
-  "Barn",
-  "Ton",
-  "Tiver",
-  "Brix",
-  "Bide",
-  "Teign",
-  "Sid",
-  "Dawl",
-  "Tavi",
-  "North",
-  "Ivy",
+  "ply",
+  "exe",
+  "tor",
+  "paign",
+  "ex",
+  "barn",
+  "ton",
+  "tiver",
+  "brix",
+  "bide",
+  "teign",
+  "sid",
+  "dawl",
+  "tavi",
+  "north",
+  "ivy",
 ];
 
 const settlementNameEnds = [
@@ -158,7 +162,7 @@ const settlementNameEnds = [
   "quay",
   "ton",
   "staple",
-  "ton Abbot",
+  "ton abbot",
   "ham",
   "ford",
   "ish",
@@ -181,12 +185,12 @@ function createRegionName(): string {
   const mode = randomInt(0, 3);
   switch (mode) {
     case 0:
-      return `The ${describeNoun(regionPlaces, regionAdjectives)}`;
+      return `the ${describeNoun(regionPlaces, regionAdjectives)}`;
     case 1:
-      return `The ${describeNoun(
+      return `the ${describeNoun(
         regionPlaces,
         regionAdjectives
-      )} Of ${randomChoice(regionVibes)}`;
+      )} of ${randomChoice(regionVibes)}`;
     case 2:
       // Syllables
       return `${randomChoice(settlementNameStarts)}${randomChoice(
@@ -198,61 +202,61 @@ function createRegionName(): string {
 }
 
 const firstNames = [
-  "Alex",
-  "Brook",
-  "Charlie",
-  "Frankie",
-  "Gabriel",
-  "Jesse",
-  "Sam",
-  "Taylor",
+  "alex",
+  "brook",
+  "charlie",
+  "frankie",
+  "gabriel",
+  "jesse",
+  "sam",
+  "taylor",
 ];
 
 // https://en.wikipedia.org/wiki/List_of_most_common_surnames_in_Europe#United_Kingdom
 const secondNames = [
-  "Smith",
-  "Jones",
-  "Taylor",
-  "Brown",
-  "Williams",
-  "Wilson",
-  "Johnson",
-  "Davies",
-  "Robinson",
-  "Wright",
-  "Thompson",
-  "Evans",
-  "Walker",
-  "White",
-  "Roberts",
-  "Green",
-  "Hall",
-  "Wood",
-  "Jackson",
-  "Clark",
+  "smith",
+  "jones",
+  "taylor",
+  "brown",
+  "williams",
+  "wilson",
+  "johnson",
+  "davies",
+  "robinson",
+  "wright",
+  "thompson",
+  "evans",
+  "walker",
+  "white",
+  "roberts",
+  "green",
+  "hall",
+  "wood",
+  "jackson",
+  "clark",
 ];
 const professionNames = [
-  "Butcher",
-  "Farmer",
-  "Explorer",
-  "Shopkeeper",
-  "Innkeeper",
-  "Cook",
-  "Shepherd",
-  "Guard",
-  "Tailor",
-  "Hunter",
-  "Bard",
+  "butcher",
+  "farmer",
+  "explorer",
+  "shopkeeper",
+  "innkeeper",
+  "cook",
+  "shepherd",
+  "guard",
+  "tailor",
+  "hunter",
+  "bard",
 ];
 const rankNames = [
-  "King",
-  "Queen",
-  "Prince",
-  "Princess",
-  "Lord",
-  "Lady",
-  "Baron",
-  "Baroness",
+  "king",
+  "queen",
+  "prince",
+  "princess",
+  "lord",
+  "lady",
+  "baron",
+  "baroness",
 ];
 
 function createBeingName(): string {

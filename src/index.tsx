@@ -3,11 +3,13 @@ import { initHistory, tick } from "./worldgen";
 import { populateWorld } from "./worldgen/populate";
 import {
   Language,
+  getWord,
   getWords,
   spellPhoneme,
   spellWord,
   spellWords,
 } from "./worldgen/language";
+import React from "react";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -16,21 +18,63 @@ if (!root) {
 
 const world = initHistory();
 populateWorld(world);
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 75; i++) {
   tick(world);
 }
 const { language } = [...world.dialects.map.values()][0];
 
+["the", "of"].map((word) => getWord(word, language, 1));
+
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-function formatLog(message: string, language: Language) {
-  return message.replace(logReplaceRegex, (_, word) =>
-    spellWords(getWords(word, language))
+function formatLog(message: string, language: Language): React.ReactElement {
+  return (
+    <>
+      {message.replace(
+        logReplaceRegex,
+        (_, word) => `${spellWords(getWords(word, language))}`
+      )}
+    </>
   );
 }
 
 const buh = createRoot(root);
 buh.render(
   <div>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr ".repeat(world.world?.width!),
+        gridTemplateRows: "1fr ".repeat(world.world?.height!),
+        gridGap: 10,
+      }}
+    >
+      {world.world?.cells.map((cell, index) => (
+        <div
+          key={index}
+          style={{
+            gridRow: world.world?.height! - cell.y,
+            aspectRatio: 1,
+          }}
+        >
+          <span>{world.regions.map.get(cell.location)?.name!}</span>
+          <div>
+            {spellWords(
+              getWords(world.regions.map.get(cell.location)?.name!, language)
+            )}
+          </div>
+          <div>
+            ({cell.x}, {cell.y})
+          </div>
+          {...[...world.beings.map.values()]
+            .filter((being) => being.location === cell.location)
+            .map((being, index) => (
+              <div key="index">
+                {spellWords(getWords(being.name, language))}
+              </div>
+            ))}
+        </div>
+      ))}
+    </div>
     <ul>
       {world.log.map((log, index) => {
         return <li key={index}>{formatLog(log, language)}</li>;

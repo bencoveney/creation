@@ -90,6 +90,8 @@ Artefacts
 
 Traditions
 
+https://en.wikipedia.org/wiki/Combining_character
+
 ## Game Plan
 
 ### World
