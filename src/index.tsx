@@ -4,6 +4,7 @@ import { populateWorld } from "./worldgen/populate";
 import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
 import { runMovementSystem } from "./worldgen/systems/movement";
+import { runArtifactCreationSystem } from "./worldgen/systems/artifactCreation";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -15,6 +16,7 @@ populateWorld(history);
 for (let i = 0; i < 75; i++) {
   tick(history);
   runMovementSystem(history);
+  runArtifactCreationSystem(history);
   // Gods can create demigods
   // Gods can create species
 }

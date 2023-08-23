@@ -7,8 +7,10 @@ export function runMovementSystem(history: History) {
   const deities = getDeities(history.beings);
   deities.forEach((deity) => {
     const rollDice = Math.random() > 0.6;
+    if (!rollDice) {
+      return;
+    }
     if (
-      rollDice &&
       deity.location &&
       history.regions.map.get(deity.location)?.name !== "world_0" &&
       history.world

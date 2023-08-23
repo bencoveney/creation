@@ -33,42 +33,6 @@ export function getDeities(beings: Lookup<Being>): Being[] {
   return [...beings.map.values()].filter((being) => being.power === 1);
 }
 
-const artifactSelection = randomSelection([
-  "sword",
-  "shield",
-  "dagger",
-  "spear",
-  "cup",
-  "bowl",
-  "knife",
-  "bracelet",
-  "necklace",
-  "chain",
-  "rope",
-  "gown",
-  "robe",
-  "club",
-  "scepter",
-  "vial",
-  "hood",
-  "veil",
-  "necklace",
-  "eyeglass",
-  "map",
-]);
-
-export function createArtifact(
-  creators: Being[],
-  artifacts: Lookup<Artifact>
-): Artifact {
-  return artifacts.set({
-    name: createArtifactName(),
-    object: artifactSelection(),
-    creators: creators.map((creator) => creator.id),
-    inPosessionOf: randomChoice(creators.map((creator) => creator.id)),
-  });
-}
-
 const motifs = randomSelection([
   "cross", // U+271A 	✚ 	Heavy Greek cross
   "triangle", // U+25B2 	▲ 	Black up-pointing triangle
@@ -280,9 +244,4 @@ function createBeingName(): string {
 let deityNameCount = 0;
 function createDeityName(): string {
   return `deity_${deityNameCount++}`;
-}
-
-let artifactNameCount = 0;
-function createArtifactName(): string {
-  return `artifact_${artifactNameCount++}`;
 }

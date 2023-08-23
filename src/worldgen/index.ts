@@ -2,7 +2,6 @@ import { Lookup, createLookup } from "../utils/lookup";
 import { shuffle } from "../utils/random";
 import { Language } from "./language";
 import {
-  createArtifact,
   createDeity,
   createTileRegion,
   createWorld,
@@ -106,19 +105,6 @@ export function tick(history: History) {
     history.log.log(
       `${deityNames} forged the world of [[${worldRegion.name}]]`
     );
-    // Artifacts
-    const pairings = getPairings(deities);
-    pairings.forEach((pairing) =>
-      toDoList.push(() => {
-        const artifact = createArtifact(pairing, history.artifacts);
-        const deityNames = commaSeparate(
-          pairing.map((being) => `[[${being.name}]]`)
-        );
-        history.log.log(
-          `${deityNames} created the ${artifact.object} [[${artifact.name}]]`
-        );
-      })
-    );
     // Symbols
     deities.forEach((deity) =>
       toDoList.push(() => {
@@ -179,17 +165,7 @@ export function tick(history: History) {
   }
 }
 
-function getPairings<T>(values: T[]): [T, T][] {
-  let result: [T, T][] = [];
-  for (let first = 0; first < values.length - 1; first++) {
-    for (let second = first + 1; second < values.length; second++) {
-      result.push([values[first], values[second]]);
-    }
-  }
-  return result;
-}
-
-function commaSeparate(values: string[]) {
+export function commaSeparate(values: string[]) {
   if (values.length === 1) {
     return values[0];
   }
