@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { History } from "../worldgen";
 import {
   Language,
@@ -7,16 +6,13 @@ import {
   spellWord,
   spellWords,
 } from "../worldgen/language";
+import { useInput } from "../hooks/useInput";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-function formatLog(message: string, language: Language): React.ReactElement {
-  return (
-    <>
-      {message.replace(
-        logReplaceRegex,
-        (_, word) => `${spellWords(getWords(word, language))}`
-      )}
-    </>
+function formatLog(message: string, language: Language): string {
+  return message.replace(
+    logReplaceRegex,
+    (_, word) => `${spellWords(getWords(word, language))}`
   );
 }
 
@@ -27,7 +23,7 @@ export function Page({
   history: History;
   language: Language;
 }) {
-  const [filter, setFilter] = useState("");
+  const [filter, input] = useInput();
   return (
     <div>
       <div
@@ -61,28 +57,28 @@ export function Page({
             {...[...history.beings.map.values()]
               .filter((being) => being.location === cell.location)
               .map((being, index) => (
-                <div key="index">
+                <div key={index}>
                   {spellWords(getWords(being.name, language))}
                 </div>
               ))}
           </div>
         ))}
       </div>
-      <form>
-        <input
-          type="text"
-          onChange={(e) => setFilter(e.target.textContent || "")}
-        ></input>
-      </form>
+      <form>{input}</form>
       <ul>
-        <li>{filter}</li>
-        {history.log.entries.map(([tick, ...log], index) => {
-          return (
-            <li key={index}>
-              {tick} {formatLog(log.join(","), language)}
-            </li>
-          );
-        })}
+        {history.log.entries
+          .map<[number, string]>(([tick, ...log]) => [
+            tick,
+            formatLog(log.join(","), language),
+          ])
+          .filter(([tick, log]) => log.includes(filter))
+          .map(([tick, ...log], index) => {
+            return (
+              <li key={index}>
+                {tick} {formatLog(log.join(","), language)}
+              </li>
+            );
+          })}
       </ul>
       <ul>
         {[...history.regions.map.values()].map((region) => {
