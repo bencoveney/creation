@@ -70,16 +70,17 @@ export function createArtifact(
 }
 
 const motifs = randomSelection([
-  "cross",
-  "triangle",
-  "circle",
-  "square",
-  "star",
-  "ring", // Donut/Torus
-  "arrowhead",
-  "diamond", // Rhombus
-  "cresent",
-  "semicircle",
+  "cross", // U+271A 	✚ 	Heavy Greek cross
+  "triangle", // U+25B2 	▲ 	Black up-pointing triangle
+  "circle", // U+25CF 	● 	Black circle
+  "square", // U+25FC 	◼ 	Black medium square
+  "star", // ⛦
+  "ring", // ⌾
+  "arrowhead", // U+27A4 	➤ 	Black rightward arrowhead
+  "diamond", // ♦
+  "cresent", // U+25E0 	◠ 	Upper half circle
+  "semicircle", // U+25D6 	◖ 	Left half circle black
+  "bar", //  	❙ 	Medium vertical bar
 ]);
 
 export function getSymbol(): Being["motif"] {
