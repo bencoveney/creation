@@ -76,8 +76,12 @@ buh.render(
       ))}
     </div>
     <ul>
-      {world.log.map((log, index) => {
-        return <li key={index}>{formatLog(log, language)}</li>;
+      {world.log.entries.map(([tick, ...log], index) => {
+        return (
+          <li key={index}>
+            {tick} {formatLog(log.join(","), language)}
+          </li>
+        );
       })}
     </ul>
     <ul>

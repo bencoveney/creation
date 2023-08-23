@@ -43,12 +43,30 @@ export type Artifact = {
   inPosessionOf: string;
 };
 
+export type Logger = {
+  log: (...args: any[]) => void;
+  tick: number;
+  entries: [number, ...string[]][];
+};
+
+function createLogger(tick: number): Logger {
+  const entries: Logger["entries"] = [];
+  const logger: Logger = {
+    log: (...args) => {
+      entries.push([logger.tick, ...args.map((arg) => arg.toString())]);
+    },
+    tick,
+    entries,
+  };
+  return logger;
+}
+
 export type History = {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
   dialects: Lookup<Dialect>;
   artifacts: Lookup<Artifact>;
-  log: string[];
+  log: Logger;
   tick: number;
   world: null | World;
 };
@@ -59,7 +77,7 @@ export function initHistory(): History {
     beings: createLookup<Being>(),
     dialects: createLookup<Dialect>(),
     artifacts: createLookup<Artifact>(),
-    log: [],
+    log: createLogger(0),
     tick: 0,
     world: null,
   };
@@ -68,14 +86,14 @@ export function initHistory(): History {
 let toDoList: Array<() => void> = [];
 
 export function tick(history: History) {
-  history.tick++;
+  history.log.tick = history.tick++;
   if (getDeities(history.beings).length === 0) {
     let created: Being[] = [];
     for (let i = 0; i < 4; i++) {
       created.push(createDeity(history.beings));
     }
-    history.log.push(
-      `In the year ${history.tick} ${commaSeparate(
+    history.log.log(
+      `${commaSeparate(
         created.map((c) => `[[${c.name}]]`)
       )} woke from their slumber.`
     );
@@ -84,8 +102,8 @@ export function tick(history: History) {
     const deityNames = commaSeparate(
       getDeities(history.beings).map((being) => `[[${being.name}]]`)
     );
-    history.log.push(
-      `In the year ${history.tick} ${deityNames} forged the world of [[${worldRegion.name}]]`
+    history.log.log(
+      `${deityNames} forged the world of [[${worldRegion.name}]]`
     );
     // Artifacts
     const deities = getDeities(history.beings);
@@ -96,8 +114,8 @@ export function tick(history: History) {
         const deityNames = commaSeparate(
           pairing.map((being) => `[[${being.name}]]`)
         );
-        history.log.push(
-          `In the year ${history.tick} ${deityNames} created the ${artifact.object} [[${artifact.name}]]`
+        history.log.log(
+          `${deityNames} created the ${artifact.object} [[${artifact.name}]]`
         );
       })
     );
@@ -105,8 +123,8 @@ export function tick(history: History) {
     deities.forEach((deity) =>
       toDoList.push(() => {
         deity.motif = getSymbol();
-        history.log.push(
-          `In the year ${history.tick} [[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`
+        history.log.log(
+          `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`
         );
       })
     );
@@ -115,13 +133,11 @@ export function tick(history: History) {
       toDoList.push(() => {
         const region = [...history.regions.map.entries()][0][1];
         deity.location = region.id;
-        history.log.push(
-          `In the year ${history.tick} [[${deity.name}]] entered [[${region.name}]]`
-        );
+        history.log.log(`[[${deity.name}]] entered [[${region.name}]]`);
         toDoList.push(() => {
           deity.location = undefined;
-          history.log.push(
-            `In the year ${history.tick} [[${deity.name}]] retreated from [[${region.name}]]`
+          history.log.log(
+            `[[${deity.name}]] retreated from [[${region.name}]]`
           );
         });
         toDoList = shuffle(toDoList);
@@ -154,20 +170,16 @@ export function tick(history: History) {
         const targetTile = getTile(history.world!, targetX, targetY);
         const targetLocation = history.regions.map.get(targetTile.location)!;
         deity.location = targetLocation.id;
-        history.log.push(
-          `In the year ${history.tick} [[${deity.name}]] moved from [[${location.name}]] to [[${targetLocation.name}]]`
+        history.log.log(
+          `[[${deity.name}]] moved from [[${location.name}]] to [[${targetLocation.name}]]`
         );
       } else if (history.world) {
         deity.location = randomChoice(history.world.cells).location;
         const location = history.regions.map.get(deity.location)!;
-        history.log.push(
-          `In the year ${history.tick} [[${deity.name}]] moved to [[${location.name}]]`
-        );
+        history.log.log(`[[${deity.name}]] moved to [[${location.name}]]`);
       } else {
         console.log("Not moving");
-        history.log.push(
-          `In the year ${history.tick} [[${deity.name}]] rested`
-        );
+        history.log.log(`[[${deity.name}]] rested`);
       }
       toDoList.push(randomMove);
       toDoList = shuffle(toDoList);
@@ -183,13 +195,11 @@ export function tick(history: History) {
         const inWorldDeityNames = commaSeparate(
           inWorldDeities.map((being) => `[[${being.name}]]`)
         );
-        history.log.push(
-          `In the year ${history.tick} the world of [[${worldRegion.name}]] was given form by ${inWorldDeityNames}`
+        history.log.log(
+          `the world of [[${worldRegion.name}]] was given form by ${inWorldDeityNames}`
         );
       } else {
-        history.log.push(
-          `In the year ${history.tick} the world of [[${worldRegion.name}]] was given form`
-        );
+        history.log.log(`the world of [[${worldRegion.name}]] was given form`);
       }
       history.world?.cells.forEach((tile) => {
         const region = createTileRegion(history.regions, tile);
@@ -198,9 +208,7 @@ export function tick(history: History) {
           .map((part) => `[[${part}]]`)
           .join(" ");
         toDoList.push(() => {
-          history.log.push(
-            `In the year ${history.tick} the region ${regionNameParts} was formed`
-          );
+          history.log.log(`the region ${regionNameParts} was formed`);
           tile.location = region.id;
         });
         toDoList = shuffle(toDoList);
@@ -211,7 +219,7 @@ export function tick(history: History) {
   } else if (toDoList.length > 0) {
     toDoList.pop()!();
   } else {
-    history.log.push(`In the year ${history.tick} nothing happened`);
+    history.log.log(`nothing happened`);
   }
   // Gods can enter the world
   // Gods can navigate the world
