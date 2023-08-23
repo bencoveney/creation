@@ -17,11 +17,17 @@ for (let i = 0; i < 75; i++) {
   tick(history);
   runMovementSystem(history);
   runArtifactCreationSystem(history);
-  // Gods can create demigods
-  // Gods can create species
 }
 const { language } = [...history.dialects.map.values()][0];
 
 ["the", "of"].map((word) => getWord(word, language, 1));
 
 createRoot(root).render(<Page history={history} language={language}></Page>);
+
+// fix:
+// entered/retreated not working quite right
+
+// todo:
+// move more stuff to systems
+// Gods can create demigods
+// Gods can create species

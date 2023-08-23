@@ -49,22 +49,27 @@ function createArtifactName(): string {
 let count = 0;
 export function runArtifactCreationSystem(history: History) {
   if (count >= artifacts.length) {
-    console.log("big skip");
     return;
   }
   const deities = getDeities(history.beings);
-  const locations = deities
-    .map((deity) => deity.location)
-    .filter((location) => location);
-  locations.forEach((location) => {
+  const locationIds = Array.from(
+    new Set(
+      deities
+        .map((deity) => deity.location)
+        .filter<string>((location): location is string => !!location)
+        .filter(
+          (location) => history.regions.map.get(location)?.name !== "world_0"
+        )
+    )
+  );
+  locationIds.forEach((locationId) => {
     const deitiesAtLocation = deities.filter(
-      (deity) => deity.location === location
+      (deity) => deity.location === locationId
     );
     if (deitiesAtLocation.length < 2) {
       return;
     }
     if (count >= artifacts.length) {
-      console.log("small skip");
       return;
     }
     count++;
@@ -72,8 +77,9 @@ export function runArtifactCreationSystem(history: History) {
     const deityNames = commaSeparate(
       deitiesAtLocation.map((being) => `[[${being.name}]]`)
     );
+    const locationName = history.regions.map.get(locationId)?.name;
     history.log.log(
-      `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${location}]]`
+      `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${locationName}]]`
     );
   });
 }
