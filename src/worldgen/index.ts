@@ -1,5 +1,5 @@
 import { Lookup, createLookup } from "../utils/lookup";
-import { randomChoice, randomChoices, shuffle } from "../utils/random";
+import { shuffle } from "../utils/random";
 import { Language } from "./language";
 import {
   createArtifact,
@@ -9,7 +9,7 @@ import {
   getDeities,
   getSymbol,
 } from "./populate";
-import { Tile, World, createWorld as createWorld2, getTile } from "./world";
+import { Tile, World, createWorld as createWorld2 } from "./world";
 
 export type Region = {
   id: string;
@@ -87,7 +87,8 @@ let toDoList: Array<() => void> = [];
 
 export function tick(history: History) {
   history.log.tick = history.tick++;
-  if (getDeities(history.beings).length === 0) {
+  const deities = getDeities(history.beings);
+  if (deities.length === 0) {
     let created: Being[] = [];
     for (let i = 0; i < 4; i++) {
       created.push(createDeity(history.beings));
@@ -100,13 +101,12 @@ export function tick(history: History) {
   } else if (history.regions.map.size === 0) {
     const worldRegion = createWorld(history.regions);
     const deityNames = commaSeparate(
-      getDeities(history.beings).map((being) => `[[${being.name}]]`)
+      deities.map((being) => `[[${being.name}]]`)
     );
     history.log.log(
       `${deityNames} forged the world of [[${worldRegion.name}]]`
     );
     // Artifacts
-    const deities = getDeities(history.beings);
     const pairings = getPairings(deities);
     pairings.forEach((pairing) =>
       toDoList.push(() => {
@@ -144,48 +144,6 @@ export function tick(history: History) {
       })
     );
 
-    const randomMove = () => {
-      const deity = randomChoice(deities);
-      if (
-        deity.location &&
-        history.regions.map.get(deity.location)?.name !== "world_0" &&
-        history.world
-      ) {
-        const location = history.regions.map.get(deity.location)!;
-        const neighbours = [
-          [-1, 0],
-          [1, 0],
-          [0, -1],
-          [0, 1],
-        ]
-          .map(([dx, dy]) => [location.tile?.x! + dx, location.tile?.y! + dy])
-          .filter(
-            ([x, y]) =>
-              x > 0 &&
-              x < history.world?.width! &&
-              y > 0 &&
-              y < history.world?.height!
-          );
-        const [targetX, targetY] = randomChoice(neighbours);
-        const targetTile = getTile(history.world!, targetX, targetY);
-        const targetLocation = history.regions.map.get(targetTile.location)!;
-        deity.location = targetLocation.id;
-        history.log.log(
-          `[[${deity.name}]] moved from [[${location.name}]] to [[${targetLocation.name}]]`
-        );
-      } else if (history.world) {
-        deity.location = randomChoice(history.world.cells).location;
-        const location = history.regions.map.get(deity.location)!;
-        history.log.log(`[[${deity.name}]] moved to [[${location.name}]]`);
-      } else {
-        console.log("Not moving");
-        history.log.log(`[[${deity.name}]] rested`);
-      }
-      toDoList.push(randomMove);
-      toDoList = shuffle(toDoList);
-    };
-    toDoList.push(randomMove);
-
     toDoList.push(() => {
       history.world = createWorld2(5, 5);
       const inWorldDeities = deities.filter(
@@ -218,14 +176,7 @@ export function tick(history: History) {
     toDoList = shuffle(toDoList);
   } else if (toDoList.length > 0) {
     toDoList.pop()!();
-  } else {
-    history.log.log(`nothing happened`);
   }
-  // Gods can enter the world
-  // Gods can navigate the world
-  // Gods can create demigods
-  // Gods can shape the world
-  // Gods can create species
 }
 
 function getPairings<T>(values: T[]): [T, T][] {
