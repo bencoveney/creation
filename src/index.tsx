@@ -5,6 +5,7 @@ import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
 import { runMovementSystem } from "./worldgen/systems/movement";
 import { runArtifactCreationSystem } from "./worldgen/systems/artifactCreation";
+import { runDeityCreation } from "./worldgen/systems/deityCreation";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -17,6 +18,7 @@ for (let i = 0; i < 75; i++) {
   tick(history);
   runMovementSystem(history);
   runArtifactCreationSystem(history);
+  runDeityCreation(history);
 }
 const { language } = [...history.dialects.map.values()][0];
 

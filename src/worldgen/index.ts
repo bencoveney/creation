@@ -82,29 +82,14 @@ export function initHistory(): History {
   };
 }
 
-let toDoList: Array<() => void> = [];
+let toDoList: Array<() => void>;
 
 export function tick(history: History) {
   history.log.tick = history.tick++;
   const deities = getDeities(history.beings);
-  if (deities.length === 0) {
-    let created: Being[] = [];
-    for (let i = 0; i < 4; i++) {
-      created.push(createDeity(history.beings));
-    }
-    history.log.log(
-      `${commaSeparate(
-        created.map((c) => `[[${c.name}]]`)
-      )} woke from their slumber.`
-    );
-  } else if (history.regions.map.size === 0) {
-    const worldRegion = createWorld(history.regions);
-    const deityNames = commaSeparate(
-      deities.map((being) => `[[${being.name}]]`)
-    );
-    history.log.log(
-      `${deityNames} forged the world of [[${worldRegion.name}]]`
-    );
+  if (history.regions.map.size >= 1 && !toDoList) {
+    toDoList = [];
+    const worldRegion = history.regions.map.values().next().value;
     // Symbols
     deities.forEach((deity) =>
       toDoList.push(() => {
@@ -144,7 +129,7 @@ export function tick(history: History) {
     });
 
     toDoList = shuffle(toDoList);
-  } else if (toDoList.length > 0) {
+  } else if (history.regions.map.size >= 1 && toDoList.length > 0) {
     toDoList.pop()!();
   }
 }
