@@ -114,22 +114,6 @@ export function tick(history: History) {
         );
       })
     );
-    // Enter world
-    deities.forEach((deity) =>
-      toDoList.push(() => {
-        const region = [...history.regions.map.entries()][0][1];
-        deity.location = region.id;
-        history.log.log(`[[${deity.name}]] entered [[${region.name}]]`);
-        toDoList.push(() => {
-          deity.location = undefined;
-          history.log.log(
-            `[[${deity.name}]] retreated from [[${region.name}]]`
-          );
-        });
-        toDoList = shuffle(toDoList);
-      })
-    );
-
     toDoList.push(() => {
       history.world = createWorld2(5, 5);
       const inWorldDeities = deities.filter(

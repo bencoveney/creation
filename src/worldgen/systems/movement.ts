@@ -6,15 +6,14 @@ import { getTile } from "../world";
 export function runMovementSystem(history: History) {
   const deities = getDeities(history.beings);
   deities.forEach((deity) => {
+    const deityRegion =
+      (deity.location && history.regions.map.get(deity.location)) || undefined;
     const rollDice = Math.random() > 0.6;
     if (!rollDice) {
       return;
     }
-    if (
-      deity.location &&
-      history.regions.map.get(deity.location)?.name !== "world_0" &&
-      history.world
-    ) {
+    const rollRetreat = Math.random() > 0.9;
+    if (deity.location && deityRegion?.name !== "world_0" && history.world) {
       const location = history.regions.map.get(deity.location)!;
       const neighbours = [
         [-1, 0],
@@ -37,10 +36,24 @@ export function runMovementSystem(history: History) {
       history.log.log(
         `[[${deity.name}]] moved from [[${location.name}]] to [[${targetLocation.name}]]`
       );
-    } else if (history.world) {
+    } else if (
+      deity.location &&
+      deityRegion?.name === "world_0" &&
+      history.world
+    ) {
       deity.location = randomChoice(history.world.cells).location;
       const location = history.regions.map.get(deity.location)!;
       history.log.log(`[[${deity.name}]] moved to [[${location.name}]]`);
+    } else if (!deity.location && history.world) {
+      const target = [...history.regions.map.entries()][0][1];
+      deity.location = target.id;
+      history.log.log(`[[${deity.name}]] entered [[${target.name}]]`);
+      // Won't trigger - caughy "move" branch above
+      // } else if (deity.location && deityRegion?.name !== "world_0") {
+      //   deity.location = undefined;
+      //   history.log.log(
+      //     `[[${deity.name}]] retreated from [[${deityRegion!.name}]]`
+      //   );
     } else {
       // console.log("Not moving");
       // history.log.log(`[[${deity.name}]] rested`);

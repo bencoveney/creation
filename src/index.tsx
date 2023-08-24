@@ -24,9 +24,6 @@ const { language } = [...history.dialects.map.values()][0];
 
 createRoot(root).render(<Page history={history} language={language}></Page>);
 
-// fix:
-// entered/retreated not working quite right
-
 // todo:
 // move more stuff to systems
 // Gods can create demigods
