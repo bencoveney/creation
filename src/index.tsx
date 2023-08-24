@@ -6,6 +6,7 @@ import { Page } from "./components/page";
 import { runMovementSystem } from "./worldgen/systems/movement";
 import { runArtifactCreationSystem } from "./worldgen/systems/artifactCreation";
 import { runDeityCreation } from "./worldgen/systems/deityCreation";
+import { runSymbolAdoption } from "./worldgen/systems/symbolAdoption";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -19,6 +20,7 @@ for (let i = 0; i < 75; i++) {
   runMovementSystem(history);
   runArtifactCreationSystem(history);
   runDeityCreation(history);
+  runSymbolAdoption(history);
 }
 const { language } = [...history.dialects.map.values()][0];
 

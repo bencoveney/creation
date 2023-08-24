@@ -91,14 +91,6 @@ export function tick(history: History) {
     toDoList = [];
     const worldRegion = history.regions.map.values().next().value;
     // Symbols
-    deities.forEach((deity) =>
-      toDoList.push(() => {
-        deity.motif = getSymbol();
-        history.log.log(
-          `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`
-        );
-      })
-    );
     toDoList.push(() => {
       history.world = createWorld2(5, 5);
       const inWorldDeities = deities.filter(
