@@ -31,6 +31,9 @@ export function runMovementSystem(history: History) {
         );
       const [targetX, targetY] = randomChoice(neighbours);
       const targetTile = getTile(history.world!, targetX, targetY);
+      if (!targetTile.location) {
+        return;
+      }
       const targetLocation = history.regions.map.get(targetTile.location)!;
       deity.location = targetLocation.id;
       history.log.log(
@@ -41,7 +44,11 @@ export function runMovementSystem(history: History) {
       deityRegion?.name === "world_0" &&
       history.world
     ) {
-      deity.location = randomChoice(history.world.cells).location;
+      const target = randomChoice(history.world.cells).location;
+      if (!target) {
+        return;
+      }
+      deity.location = target;
       const location = history.regions.map.get(deity.location)!;
       history.log.log(`[[${deity.name}]] moved to [[${location.name}]]`);
     } else if (!deity.location && history.world) {

@@ -34,35 +34,33 @@ export function Page({
           gridGap: 10,
         }}
       >
-        {history.world?.cells.map((cell, index) => (
-          <div
-            key={index}
-            style={{
-              gridRow: history.world?.height! - cell.y,
-              aspectRatio: 1,
-            }}
-          >
-            <span>{history.regions.map.get(cell.location)?.name!}</span>
-            <div>
-              {spellWords(
-                getWords(
-                  history.regions.map.get(cell.location)?.name!,
-                  language
-                )
-              )}
+        {history.world?.cells.map((cell, index) => {
+          const region = history.regions.map.get(cell.location);
+          return (
+            <div
+              key={index}
+              style={{
+                gridRow: history.world?.height! - cell.y,
+                aspectRatio: 1,
+              }}
+            >
+              <span>{region?.name!}</span>
+              <div>
+                {region?.name && spellWords(getWords(region.name, language))}
+              </div>
+              <div>
+                ({cell.x}, {cell.y})
+              </div>
+              {...[...history.beings.map.values()]
+                .filter((being) => being.location === cell.location)
+                .map((being, index) => (
+                  <div key={index}>
+                    {spellWords(getWords(being.name, language))}
+                  </div>
+                ))}
             </div>
-            <div>
-              ({cell.x}, {cell.y})
-            </div>
-            {...[...history.beings.map.values()]
-              .filter((being) => being.location === cell.location)
-              .map((being, index) => (
-                <div key={index}>
-                  {spellWords(getWords(being.name, language))}
-                </div>
-              ))}
-          </div>
-        ))}
+          );
+        })}
       </div>
       <form>{input}</form>
       <ul>

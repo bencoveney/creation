@@ -1,14 +1,6 @@
 import { Lookup, createLookup } from "../utils/lookup";
-import { shuffle } from "../utils/random";
 import { Language } from "./language";
-import {
-  createDeity,
-  createTileRegion,
-  createWorld,
-  getDeities,
-  getSymbol,
-} from "./populate";
-import { Tile, World, createWorld as createWorld2 } from "./world";
+import { Tile, World } from "./world";
 
 export type Region = {
   id: string;
@@ -80,50 +72,6 @@ export function initHistory(): History {
     tick: 0,
     world: null,
   };
-}
-
-let toDoList: Array<() => void>;
-
-export function tick(history: History) {
-  history.log.tick = history.tick++;
-  const deities = getDeities(history.beings);
-  if (history.regions.map.size >= 1 && !toDoList) {
-    toDoList = [];
-    const worldRegion = history.regions.map.values().next().value;
-    // Symbols
-    toDoList.push(() => {
-      history.world = createWorld2(5, 5);
-      const inWorldDeities = deities.filter(
-        (d) => d.location === worldRegion.id
-      );
-      if (inWorldDeities.length > 0) {
-        const inWorldDeityNames = commaSeparate(
-          inWorldDeities.map((being) => `[[${being.name}]]`)
-        );
-        history.log.log(
-          `the world of [[${worldRegion.name}]] was given form by ${inWorldDeityNames}`
-        );
-      } else {
-        history.log.log(`the world of [[${worldRegion.name}]] was given form`);
-      }
-      history.world?.cells.forEach((tile) => {
-        const region = createTileRegion(history.regions, tile);
-        const regionNameParts = region.name
-          .split(" ")
-          .map((part) => `[[${part}]]`)
-          .join(" ");
-        toDoList.push(() => {
-          history.log.log(`the region ${regionNameParts} was formed`);
-          tile.location = region.id;
-        });
-        toDoList = shuffle(toDoList);
-      });
-    });
-
-    toDoList = shuffle(toDoList);
-  } else if (history.regions.map.size >= 1 && toDoList.length > 0) {
-    toDoList.pop()!();
-  }
 }
 
 export function commaSeparate(values: string[]) {

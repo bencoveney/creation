@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { initHistory, tick } from "./worldgen";
+import { initHistory } from "./worldgen";
 import { populateWorld } from "./worldgen/populate";
 import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
@@ -7,6 +7,7 @@ import { runMovementSystem } from "./worldgen/systems/movement";
 import { runArtifactCreationSystem } from "./worldgen/systems/artifactCreation";
 import { runDeityCreation } from "./worldgen/systems/deityCreation";
 import { runSymbolAdoption } from "./worldgen/systems/symbolAdoption";
+import { runWorldFormation } from "./worldgen/systems/worldFormation";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -16,11 +17,12 @@ if (!root) {
 const history = initHistory();
 populateWorld(history);
 for (let i = 0; i < 75; i++) {
-  tick(history);
+  history.log.tick = history.tick++;
   runMovementSystem(history);
   runArtifactCreationSystem(history);
   runDeityCreation(history);
   runSymbolAdoption(history);
+  runWorldFormation(history);
 }
 const { language } = [...history.dialects.map.values()][0];
 
