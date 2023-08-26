@@ -8,11 +8,11 @@ export function runMovementSystem(history: History) {
   deities.forEach((deity) => {
     const deityRegion =
       (deity.location && history.regions.map.get(deity.location)) || undefined;
-    const rollDice = Math.random() > 0.6;
+    const rollDice = Math.random() > history.config.noMovementChance;
     if (!rollDice) {
       return;
     }
-    const rollRetreat = Math.random() > 0.9;
+    // const rollRetreat = Math.random() > 0.9;
     if (deity.location && deityRegion?.name !== "world_0" && history.world) {
       const location = history.regions.map.get(deity.location)!;
       const neighbours = [

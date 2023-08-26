@@ -4,7 +4,7 @@ import { createDeity, createWorld, getDeities } from "../populate";
 const activities: Array<(history: History) => void> = [
   (history) => {
     let created: Being[] = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < history.config.deityCount; i++) {
       created.push(createDeity(history.beings));
     }
     history.log.log(

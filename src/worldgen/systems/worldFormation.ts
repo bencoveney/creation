@@ -7,7 +7,10 @@ export function runWorldFormation(history: History) {
   const deities = getDeities(history.beings);
   if (history.regions.map.size >= 1 && !history.world) {
     const worldRegion = history.regions.map.values().next().value;
-    history.world = createWorld2(5, 5);
+    history.world = createWorld2(
+      history.config.worldWidth,
+      history.config.worldHeight
+    );
     const inWorldDeities = deities.filter((d) => d.location === worldRegion.id);
     if (inWorldDeities.length > 0) {
       const inWorldDeityNames = commaSeparate(

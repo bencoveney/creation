@@ -3,31 +3,7 @@ import { Artifact, Being, History, commaSeparate } from "..";
 import { randomChoice, randomSelection } from "../../utils/random";
 import { Lookup } from "../../utils/lookup";
 
-const artifacts = [
-  "sword",
-  "shield",
-  "dagger",
-  "spear",
-  "cup",
-  "bowl",
-  "knife",
-  "bracelet",
-  "necklace",
-  "chain",
-  "rope",
-  "gown",
-  "robe",
-  "club",
-  "scepter",
-  "vial",
-  "hood",
-  "veil",
-  "necklace",
-  "eyeglass",
-  "map",
-];
-
-const artifactSelection = randomSelection(artifacts);
+let artifactSelection: () => string;
 
 export function createArtifact(
   creators: Being[],
@@ -48,7 +24,10 @@ function createArtifactName(): string {
 
 let count = 0;
 export function runArtifactCreationSystem(history: History) {
-  if (count >= artifacts.length) {
+  if (!artifactSelection) {
+    artifactSelection = randomSelection(history.config.artifactItems);
+  }
+  if (count >= history.config.artifactItems.length) {
     return;
   }
   const deities = getDeities(history.beings);
@@ -69,7 +48,7 @@ export function runArtifactCreationSystem(history: History) {
     if (deitiesAtLocation.length < 2) {
       return;
     }
-    if (count >= artifacts.length) {
+    if (count >= history.config.artifactItems.length) {
       return;
     }
     count++;

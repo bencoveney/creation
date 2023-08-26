@@ -1,3 +1,4 @@
+import { config } from "../config";
 import { Lookup, createLookup } from "../utils/lookup";
 import { Language } from "./language";
 import { Tile, World } from "./world";
@@ -60,6 +61,7 @@ export type History = {
   log: Logger;
   tick: number;
   world: null | World;
+  config: typeof config;
 };
 
 export function initHistory(): History {
@@ -71,6 +73,7 @@ export function initHistory(): History {
     log: createLogger(0),
     tick: 0,
     world: null,
+    config,
   };
 }
 

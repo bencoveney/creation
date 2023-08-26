@@ -16,7 +16,7 @@ if (!root) {
 
 const history = initHistory();
 populateWorld(history);
-for (let i = 0; i < 75; i++) {
+for (let i = 0; i < history.config.runTicks; i++) {
   history.log.tick = history.tick++;
   runMovementSystem(history);
   runArtifactCreationSystem(history);
@@ -26,7 +26,7 @@ for (let i = 0; i < 75; i++) {
 }
 const { language } = [...history.dialects.map.values()][0];
 
-["the", "of"].map((word) => getWord(word, language, 1));
+history.config.preRegisterWords.map((word) => getWord(word, language, 1));
 
 createRoot(root).render(<Page history={history} language={language}></Page>);
 
