@@ -8,14 +8,7 @@ import {
 } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
 import { Map } from "./map";
-
-const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-function formatLog(message: string, language: Language): string {
-  return message.replace(
-    logReplaceRegex,
-    (_, word) => `${spellWords(getWords(word, language))}`
-  );
-}
+import { Log } from "./log";
 
 export function Page({
   history,
@@ -24,26 +17,10 @@ export function Page({
   history: History;
   language: Language;
 }) {
-  const [filter, input] = useInput();
   return (
     <div>
       <Map history={history} language={language} />
-      <form>{input}</form>
-      <ul>
-        {history.log.entries
-          .map<[number, string]>(([tick, ...log]) => [
-            tick,
-            formatLog(log.join(","), language),
-          ])
-          .filter(([tick, log]) => log.includes(filter))
-          .map(([tick, ...log], index) => {
-            return (
-              <li key={index}>
-                {tick} {formatLog(log.join(","), language)}
-              </li>
-            );
-          })}
-      </ul>
+      <Log history={history} language={language} />
       <ul>
         {[...history.regions.map.values()].map((region) => {
           return (
