@@ -7,8 +7,7 @@ import {
   spellWords,
 } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
-import { createTerrain, renderTerrain } from "../terrain";
-import { Terrain } from "./terrain";
+import { Map } from "./map";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -17,8 +16,6 @@ function formatLog(message: string, language: Language): string {
     (_, word) => `${spellWords(getWords(word, language))}`
   );
 }
-
-const terrain = createTerrain(5, 5);
 
 export function Page({
   history,
@@ -30,61 +27,7 @@ export function Page({
   const [filter, input] = useInput();
   return (
     <div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr ".repeat(history.world?.width!),
-          gridTemplateRows: "1fr ".repeat(history.world?.height!),
-          gridGap: 10,
-        }}
-      >
-        {history.world?.cells.map((cell, index) => {
-          const region = history.regions.map.get(cell.location);
-          return (
-            <div
-              key={index}
-              style={{
-                gridRow: history.world?.height! - cell.y,
-                gridColumn: (index % history.world?.width!) + 1,
-                aspectRatio: 1,
-                zIndex: 1,
-              }}
-            >
-              <span>{region?.name!}</span>
-              <div>
-                {region?.name && spellWords(getWords(region.name, language))}
-              </div>
-              <div>
-                ({cell.x}, {cell.y})
-              </div>
-              {...[...history.beings.map.values()]
-                .filter((being) => being.location === cell.location)
-                .map((being, index) => (
-                  <div key={index}>
-                    {spellWords(getWords(being.name, language))}
-                  </div>
-                ))}
-            </div>
-          );
-        })}
-        <div
-          style={{
-            gridRowStart: 1,
-            gridRowEnd: -1,
-            gridColumnStart: 1,
-            gridColumnEnd: -1,
-            aspectRatio: 1,
-            zIndex: 0,
-          }}
-        >
-          <Terrain terrain={terrain} />
-          {/* {renderTerrain(terrain)
-            .split("\n")
-            .map((row, index) => (
-              <div key={index}>{row}</div>
-            ))} */}
-        </div>
-      </div>
+      <Map history={history} language={language} />
       <form>{input}</form>
       <ul>
         {history.log.entries
