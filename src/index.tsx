@@ -30,7 +30,6 @@ history.config.preRegisterWords.map((word) => getWord(word, language, 1));
 
 createRoot(root).render(<Page history={history} language={language}></Page>);
 
-// todo:
-// move more stuff to systems
+// To Do:
 // Gods can create demigods
 // Gods can create species

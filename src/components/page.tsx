@@ -7,6 +7,7 @@ import {
   spellWords,
 } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
+import { createTerrain, renderTerrain } from "../terrain";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -15,6 +16,8 @@ function formatLog(message: string, language: Language): string {
     (_, word) => `${spellWords(getWords(word, language))}`
   );
 }
+
+const terrain = createTerrain(5, 5);
 
 export function Page({
   history,
@@ -61,6 +64,13 @@ export function Page({
             </div>
           );
         })}
+      </div>
+      <div>
+        {renderTerrain(terrain)
+          .split("\n")
+          .map((row, index) => (
+            <div key={index}>{row}</div>
+          ))}
       </div>
       <form>{input}</form>
       <ul>
