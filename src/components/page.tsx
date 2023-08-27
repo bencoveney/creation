@@ -45,7 +45,9 @@ export function Page({
               key={index}
               style={{
                 gridRow: history.world?.height! - cell.y,
+                gridColumn: (index % history.world?.width!) + 1,
                 aspectRatio: 1,
+                zIndex: 1,
               }}
             >
               <span>{region?.name!}</span>
@@ -65,14 +67,23 @@ export function Page({
             </div>
           );
         })}
-      </div>
-      <div>
-        <Terrain terrain={terrain} />
-        {renderTerrain(terrain)
-          .split("\n")
-          .map((row, index) => (
-            <div key={index}>{row}</div>
-          ))}
+        <div
+          style={{
+            gridRowStart: 1,
+            gridRowEnd: -1,
+            gridColumnStart: 1,
+            gridColumnEnd: -1,
+            aspectRatio: 1,
+            zIndex: 0,
+          }}
+        >
+          <Terrain terrain={terrain} />
+          {/* {renderTerrain(terrain)
+            .split("\n")
+            .map((row, index) => (
+              <div key={index}>{row}</div>
+            ))} */}
+        </div>
       </div>
       <form>{input}</form>
       <ul>

@@ -39,7 +39,13 @@ export function Terrain({ terrain }: { terrain: TerrainModel }) {
       ref={canvasRef}
       width={terrain.width}
       height={terrain.height}
-      style={{ width: 500, height: 500, imageRendering: "pixelated" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        imageRendering: "pixelated",
+        margin: 0,
+        padding: 0,
+      }}
     />
   );
 }
