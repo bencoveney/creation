@@ -41,6 +41,6 @@ function getXY<T>(width: number, height: number, index: number) {
   };
 }
 
-function getIndex(x: number, y: number, width: number, height: number) {
+export function getIndex(x: number, y: number, width: number, height: number) {
   return x + y * width;
 }

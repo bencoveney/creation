@@ -7,3 +7,25 @@ function getPairings<T>(values: T[]): [T, T][] {
   }
   return result;
 }
+
+export function getMin(values: number[]): number {
+  if (values.length === 0) {
+    throw new Error("What?");
+  }
+  let lowest = values[0];
+  for (let i = 1; i < values.length; i++) {
+    lowest = Math.min(lowest, values[i]);
+  }
+  return lowest;
+}
+
+export function getMax(values: number[]): number {
+  if (values.length === 0) {
+    throw new Error("What?");
+  }
+  let highest = values[0];
+  for (let i = 1; i < values.length; i++) {
+    highest = Math.max(highest, values[i]);
+  }
+  return highest;
+}

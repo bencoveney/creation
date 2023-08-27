@@ -8,6 +8,7 @@ import {
 } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
 import { createTerrain, renderTerrain } from "../terrain";
+import { Terrain } from "./terrain";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -66,6 +67,7 @@ export function Page({
         })}
       </div>
       <div>
+        <Terrain terrain={terrain} />
         {renderTerrain(terrain)
           .split("\n")
           .map((row, index) => (
