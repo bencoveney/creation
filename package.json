@@ -8,7 +8,7 @@
     "build:clean": "rm -rf ./build",
     "build:copy-assets": "cpy --cwd=assets . ../build/",
     "build:build-prod": "esbuild src/index.tsx --outdir=build/ --external:node --bundle",
-    "build:build-watch": "esbuild src/index.tsx --outdir=build/ --external:node --bundle --servedir=build"
+    "build:build-watch": "esbuild src/index.tsx --outdir=build/ --external:node --bundle --sourcemap --servedir=build"
   },
   "devDependencies": {
     "@types/react": "^18.2.20",

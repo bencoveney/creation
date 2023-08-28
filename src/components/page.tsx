@@ -6,19 +6,23 @@ import {
   spellWord,
   spellWords,
 } from "../worldgen/language";
-import { useInput } from "../hooks/useInput";
 import { Map } from "./map";
 import { Log } from "./log";
+import { Playback } from "./playback";
+import { PlaybackControls } from "../playback";
 
 export function Page({
   history,
   language,
+  playbackControls,
 }: {
   history: History;
   language: Language;
+  playbackControls: PlaybackControls;
 }) {
   return (
     <div>
+      <Playback {...playbackControls} />
       <Map history={history} language={language} />
       <Log history={history} language={language} />
       <ul>

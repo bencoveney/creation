@@ -23,7 +23,7 @@ export function Terrain({ terrain }: { terrain: TerrainModel }) {
       for (let y = 0; y < terrain.height; y++) {
         const index = getIndex(x, y, terrain.width, terrain.height);
         const height = terrain.heights[index];
-        const colorComponent = Math.floor(height * 10);
+        const colorComponent = 255 - Math.floor(height * 10);
         const color: Color = {
           r: colorComponent,
           g: colorComponent,
