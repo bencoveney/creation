@@ -9,9 +9,6 @@ import { Tile, getTile } from "../worldgen/world";
 //   If they are in a location with another deity.
 //     If they meet the % chance to do a group activity.
 //       Do a group activity
-//   Else if they don't currently have an action.
-//     If they meet the % chance to move somewhere.
-//       Pick somewhere and set it as the target location.
 //
 // Maybe need a list of goals + pointer to active goal
 
@@ -43,7 +40,10 @@ export function runDecision(history: History) {
   });
 }
 
-function getDeityTargetLocation(deity: Being, history: History): string | null {
+function getDeityTargetLocation(
+  deity: Being,
+  history: History
+): { x: number; y: number } | null {
   const possibleTiles: Tile[] = [];
   if (deity.location) {
     const location = history.regions.map.get(deity.location)!;
@@ -61,16 +61,15 @@ function getDeityTargetLocation(deity: Being, history: History): string | null {
           y >= 0 &&
           y < history.world?.height!
       )
-      .map(([x, y]) => getTile(history.world!, x, y))
-      .filter((tile) => tile.location);
+      .map(([x, y]) => getTile(history.world!, x, y));
     possibleTiles.push(...neighbours);
   } else {
-    const allTiles = history.world!.cells.filter((tile) => tile.location);
-    possibleTiles.push(...allTiles);
+    possibleTiles.push(...history.world!.cells);
   }
   if (possibleTiles.length === 0) {
     console.log("Nowhere can be moved to");
     return null;
   }
-  return randomChoice(possibleTiles).location;
+  const { x, y } = randomChoice(possibleTiles);
+  return { x, y };
 }

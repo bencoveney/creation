@@ -21,7 +21,7 @@ export type Being = {
   location?: string; // Region ID.
   motif?: Motif;
   currentActivity?: {
-    moveToLocation: string;
+    moveToLocation: { x: number; y: number };
   };
 };
 
