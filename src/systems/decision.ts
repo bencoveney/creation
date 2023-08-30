@@ -24,7 +24,7 @@ export function runDecision(history: History) {
       return;
     }
 
-    const willMove = rollDice(0.2);
+    const willMove = rollDice(history.config.movementChance);
     if (!willMove) {
       return;
     }

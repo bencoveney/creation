@@ -1,4 +1,4 @@
-import { Artifact, Being, Region, History } from ".";
+import { Being, Region, History } from ".";
 import { Lookup } from "../utils/lookup";
 import {
   flipCoin,
@@ -6,31 +6,28 @@ import {
   randomInt,
   randomSelection,
 } from "../utils/random";
+import { createInitialDeities } from "./deities";
 import { generateLanguage } from "./language";
 import { Tile } from "./world";
 
-export function populateWorld(world: History): void {
-  world.dialects.set({
+export function populateWorld(history: History): void {
+  history.dialects.set({
     language: generateLanguage(),
   });
+  createWorld(history.regions);
+  createInitialDeities(history);
 }
 
-export function createBeing(beings: Lookup<Being>): Being {
+export function createDeity(beings: Lookup<Being>, theme: string): Being {
   return beings.set({
-    name: createBeingName(),
-    power: 0,
-  });
-}
-
-export function createDeity(beings: Lookup<Being>): Being {
-  return beings.set({
+    kind: "deity",
     name: createDeityName(),
-    power: 1,
+    theme,
   });
 }
 
 export function getDeities(beings: Lookup<Being>): Being[] {
-  return [...beings.map.values()].filter((being) => being.power === 1);
+  return [...beings.map.values()].filter((being) => being.kind === "deity");
 }
 
 const motifs = randomSelection([
@@ -45,6 +42,25 @@ const motifs = randomSelection([
   "cresent", // U+25E0 	◠ 	Upper half circle
   "semicircle", // U+25D6 	◖ 	Left half circle black
   "bar", //  	❙ 	Medium vertical bar
+  "need more 1",
+  "need more 2",
+  "need more 3",
+  "need more 4",
+  "need more 5",
+  "need more 6",
+  "need more 7",
+  "need more 8",
+  "need more 9",
+  "need more 10",
+  "need more 11",
+  "need more 12",
+  "need more 13",
+  "need more 14",
+  "need more 15",
+  "need more 16",
+  "need more 17",
+  "need more 18",
+  "need more 19",
 ]);
 
 export function getSymbol(): Being["motif"] {

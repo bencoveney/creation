@@ -16,8 +16,9 @@ export type Motif = {
 
 export type Being = {
   id: string;
+  kind: "deity";
   name: string;
-  power: number;
+  theme?: string;
   location?: string; // Region ID.
   motif?: Motif;
   currentActivity?: {

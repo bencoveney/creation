@@ -42,6 +42,7 @@ export function Page({
               Being {being.id}: {being.name}{" "}
               <i>{spellWords(getWords(being.name, language))}</i>{" "}
               {being.motif && being.motif.value}
+              {being.theme && `Deity of ${being.theme}`}
             </li>
           );
         })}

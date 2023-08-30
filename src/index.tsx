@@ -5,7 +5,6 @@ import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
 import { runMovement } from "./systems/movement";
 import { runArtifactCreationSystem } from "./systems/artifactCreation";
-import { runDeityCreation } from "./systems/deityCreation";
 import { runSymbolAdoption } from "./systems/symbolAdoption";
 import { runWorldFormation } from "./systems/worldFormation";
 import { createPlaybackControls } from "./playback";
@@ -41,7 +40,6 @@ function Wrapper() {
           history.log.tick = tick;
           runMovement(history);
           runArtifactCreationSystem(history);
-          runDeityCreation(history);
           runSymbolAdoption(history);
           runWorldFormation(history);
           runDecision(history);
@@ -68,6 +66,6 @@ function Wrapper() {
 createRoot(root).render(<Wrapper />);
 
 // To Do:
-// World restart doesn't work because systems are stateful
+// World restart doesn't work because things are stateful (systems, randomSelection etc)
 // Gods can create demigods
 // Gods can create species

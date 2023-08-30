@@ -5,10 +5,6 @@ import { getTile } from "../worldgen/world";
 export function runMovement(history: History) {
   const deities = getDeities(history.beings);
   deities.forEach((deity) => {
-    const rollDice = Math.random() > history.config.noMovementChance;
-    if (!rollDice) {
-      return;
-    }
     if (deity.currentActivity?.moveToLocation) {
       const previous =
         deity.location && history.regions.map.get(deity.location);
