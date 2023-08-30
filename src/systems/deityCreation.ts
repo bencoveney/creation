@@ -1,5 +1,5 @@
-import { Being, History, commaSeparate } from "..";
-import { createDeity, createWorld, getDeities } from "../populate";
+import { Being, History, commaSeparate } from "../worldgen";
+import { createDeity, createWorld, getDeities } from "../worldgen/populate";
 
 const activities: Array<(history: History) => void> = [
   (history) => {

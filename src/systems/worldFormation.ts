@@ -1,7 +1,7 @@
-import { History, commaSeparate } from "..";
-import { randomChoice } from "../../utils/random";
-import { createTileRegion, getDeities } from "../populate";
-import { createWorld as createWorld2 } from "../world";
+import { History, commaSeparate } from "../worldgen";
+import { randomChoice } from "../utils/random";
+import { createTileRegion, getDeities } from "../worldgen/populate";
+import { createWorld as createWorld2 } from "../worldgen/world";
 
 export function runWorldFormation(history: History) {
   const deities = getDeities(history.beings);

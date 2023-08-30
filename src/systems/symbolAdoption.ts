@@ -1,6 +1,6 @@
-import { History } from "..";
-import { randomChoice } from "../../utils/random";
-import { getDeities, getSymbol } from "../populate";
+import { History } from "../worldgen";
+import { randomChoice } from "../utils/random";
+import { getDeities, getSymbol } from "../worldgen/populate";
 
 export function runSymbolAdoption(history: History) {
   const deities = getDeities(history.beings);

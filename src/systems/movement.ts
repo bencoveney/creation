@@ -1,7 +1,7 @@
-import { randomChoice } from "../../utils/random";
-import { getDeities } from "../populate";
-import { History } from "..";
-import { getTile } from "../world";
+import { randomChoice } from "../utils/random";
+import { getDeities } from "../worldgen/populate";
+import { History } from "../worldgen";
+import { getTile } from "../worldgen/world";
 
 export function runMovementSystem(history: History) {
   const deities = getDeities(history.beings);

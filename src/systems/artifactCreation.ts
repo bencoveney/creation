@@ -1,7 +1,7 @@
-import { getDeities } from "../populate";
-import { Artifact, Being, History, commaSeparate } from "..";
-import { randomChoice, randomSelection } from "../../utils/random";
-import { Lookup } from "../../utils/lookup";
+import { getDeities } from "../worldgen/populate";
+import { Artifact, Being, History, commaSeparate } from "../worldgen";
+import { randomChoice, randomSelection } from "../utils/random";
+import { Lookup } from "../utils/lookup";
 
 let artifactSelection: () => string;
 
