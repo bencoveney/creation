@@ -3,7 +3,7 @@ import { initHistory } from "./worldgen";
 import { populateWorld } from "./worldgen/populate";
 import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
-import { runMovementSystem } from "./systems/movement";
+import { runMovement } from "./systems/movement";
 import { runArtifactCreationSystem } from "./systems/artifactCreation";
 import { runDeityCreation } from "./systems/deityCreation";
 import { runSymbolAdoption } from "./systems/symbolAdoption";
@@ -11,6 +11,7 @@ import { runWorldFormation } from "./systems/worldFormation";
 import { createPlaybackControls } from "./playback";
 import { useMemo, useState } from "react";
 import { Playback } from "./components/playback";
+import { runDecision } from "./systems/decision";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -27,7 +28,7 @@ function initialiseHistory() {
 
 function Wrapper() {
   const [history, setHistory] = useState(initialiseHistory());
-  const [, updateState] = useState({});
+  const [, forceRerender] = useState({});
 
   const playbackControls = useMemo(
     () =>
@@ -38,12 +39,13 @@ function Wrapper() {
         (tick) => {
           history.tick = tick;
           history.log.tick = tick;
-          runMovementSystem(history);
+          runMovement(history);
           runArtifactCreationSystem(history);
           runDeityCreation(history);
           runSymbolAdoption(history);
           runWorldFormation(history);
-          updateState({});
+          runDecision(history);
+          forceRerender({});
           return tick < history.config.runTicks;
         }
       ),

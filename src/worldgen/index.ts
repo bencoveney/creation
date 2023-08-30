@@ -20,6 +20,9 @@ export type Being = {
   power: number;
   location?: string; // Region ID.
   motif?: Motif;
+  currentActivity?: {
+    moveToLocation: string;
+  };
 };
 
 export type Dialect = {

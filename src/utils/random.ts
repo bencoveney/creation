@@ -23,7 +23,11 @@ export function randomInt(minIncl: number = 0, maxExcl: number = 1) {
 }
 
 export function flipCoin(): boolean {
-  return Math.random() >= 0.5;
+  return rollDice(0.5);
+}
+
+export function rollDice(chanceOfSuccess: number): boolean {
+  return Math.random() < chanceOfSuccess;
 }
 
 export function randomSelection<T>(items: T[]): () => T {
