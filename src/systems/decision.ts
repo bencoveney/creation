@@ -70,6 +70,12 @@ function getDeityTargetLocation(
     console.log("Nowhere can be moved to");
     return null;
   }
-  const { x, y } = randomChoice(possibleTiles);
-  return { x, y };
+  const undiscovered = possibleTiles.filter((tile) => !tile.location);
+  if (undiscovered.length > 0) {
+    const { x, y } = randomChoice(undiscovered);
+    return { x, y };
+  } else {
+    const { x, y } = randomChoice(possibleTiles);
+    return { x, y };
+  }
 }
