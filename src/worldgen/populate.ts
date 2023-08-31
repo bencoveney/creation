@@ -1,18 +1,13 @@
 import { Being, Region, History } from ".";
 import { Lookup } from "../utils/lookup";
-import {
-  flipCoin,
-  randomChoice,
-  randomInt,
-  randomSelection,
-} from "../utils/random";
+import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
 import { generateLanguage } from "./language";
 import { Tile } from "./world";
 
 export function populateWorld(history: History): void {
   history.dialects.set({
-    language: generateLanguage(),
+    language: generateLanguage(history),
   });
   createWorld(history.regions);
   createInitialDeities(history);
@@ -28,46 +23,6 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
 
 export function getDeities(beings: Lookup<Being>): Being[] {
   return [...beings.map.values()].filter((being) => being.kind === "deity");
-}
-
-const motifs = randomSelection([
-  "cross", // U+271A 	✚ 	Heavy Greek cross
-  "triangle", // U+25B2 	▲ 	Black up-pointing triangle
-  "circle", // U+25CF 	● 	Black circle
-  "square", // U+25FC 	◼ 	Black medium square
-  "star", // ⛦
-  "ring", // ⌾
-  "arrowhead", // U+27A4 	➤ 	Black rightward arrowhead
-  "diamond", // ♦
-  "cresent", // U+25E0 	◠ 	Upper half circle
-  "semicircle", // U+25D6 	◖ 	Left half circle black
-  "bar", //  	❙ 	Medium vertical bar
-  "need more 1",
-  "need more 2",
-  "need more 3",
-  "need more 4",
-  "need more 5",
-  "need more 6",
-  "need more 7",
-  "need more 8",
-  "need more 9",
-  "need more 10",
-  "need more 11",
-  "need more 12",
-  "need more 13",
-  "need more 14",
-  "need more 15",
-  "need more 16",
-  "need more 17",
-  "need more 18",
-  "need more 19",
-]);
-
-export function getSymbol(): Being["motif"] {
-  return {
-    kind: "symbol",
-    value: motifs(),
-  };
 }
 
 export function createWorld(regions: Lookup<Region>): Region {

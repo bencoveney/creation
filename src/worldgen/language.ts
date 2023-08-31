@@ -1,3 +1,4 @@
+import { History } from ".";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 
 export enum Phoneme {
@@ -382,6 +383,7 @@ export function getWords(words: string, language: Language): VoicedWord[] {
 }
 
 export type Language = {
+  name: string;
   phonemes: Phonemes;
   syllableStructure: SyllableStructure;
   words: {
@@ -389,7 +391,7 @@ export type Language = {
   };
 };
 
-export function generateLanguage(): Language {
+export function generateLanguage(history: History): Language {
   const phonemes: Phonemes = {
     singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
     dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
@@ -397,9 +399,16 @@ export function generateLanguage(): Language {
     voicedConstants: allPhonemes.voicedConstants.filter(() => flipCoin()),
   };
   const syllableStructure = generateSyllableStructure();
-  return {
+  const language: Language = {
+    name: "language",
     phonemes,
     syllableStructure,
     words: {},
   };
+
+  // Preload a few words:
+  history.config.preRegisterWords.map((word) => getWord(word, language, 1));
+  getWord(language.name, language, 2);
+
+  return language as Language;
 }

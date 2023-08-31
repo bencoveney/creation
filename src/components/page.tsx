@@ -1,6 +1,7 @@
 import { History } from "../worldgen";
 import {
   Language,
+  getWord,
   getWords,
   spellPhoneme,
   spellWord,
@@ -10,6 +11,8 @@ import { Map } from "./map";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
+import { Being } from "./being";
+import { Grid, GridItem } from "./grid";
 
 export function Page({
   history,
@@ -35,18 +38,16 @@ export function Page({
           );
         })}
       </ul>
-      <ul>
+      <Grid>
         {[...history.beings.map.values()].map((being) => {
           return (
-            <li key={being.id}>
-              Being {being.id}: {being.name}{" "}
-              <i>{spellWords(getWords(being.name, language))}</i>{" "}
-              {being.motif && being.motif.value}
-              {being.theme && `Deity of ${being.theme}`}
-            </li>
+            <GridItem key={being.id}>
+              <Being being={being} history={history} />
+            </GridItem>
           );
         })}
-      </ul>
+      </Grid>
+      <ul></ul>
       <ul>
         {[...history.artifacts.map.values()].map((artifact) => {
           return (
@@ -64,6 +65,7 @@ export function Page({
             <li key={id}>
               Dialect {id}:
               <ul>
+                <li>Name: {spellWord(getWord(language.name, language))}</li>
                 <li>
                   Onset: {language.syllableStructure.minOnset} -{" "}
                   {language.syllableStructure.maxOnset}

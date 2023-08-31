@@ -1,6 +1,6 @@
 import { History } from "../worldgen";
 import { randomChoice } from "../utils/random";
-import { getDeities, getSymbol } from "../worldgen/populate";
+import { getDeities } from "../worldgen/populate";
 
 export function runSymbolAdoption(history: History) {
   const deities = getDeities(history.beings);
@@ -9,7 +9,10 @@ export function runSymbolAdoption(history: History) {
     return;
   }
   const target = randomChoice(needSymbol);
-  target.motif = getSymbol();
+  target.motif = {
+    kind: "symbol",
+    value: randomChoice(history.config.motifs).name,
+  };
   history.log.log(
     `[[${target.name}]] adopted the ${target.motif?.value} as their symbol`
   );
