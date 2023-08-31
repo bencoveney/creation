@@ -13,6 +13,9 @@ import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
 import { Being } from "./being";
 import { Grid, GridItem } from "./grid";
+import { Artifact } from "./artifact";
+import { Region } from "./region";
+import { Dialect } from "./dialect";
 
 export function Page({
   history,
@@ -28,17 +31,16 @@ export function Page({
       <Playback {...playbackControls} />
       <Map history={history} language={language} />
       <Log history={history} language={language} />
-      <ul>
+      <Grid title="Regions">
         {[...history.regions.map.values()].map((region) => {
           return (
-            <li key={region.id}>
-              Region {region.id}: {region.name}{" "}
-              <i>{spellWords(getWords(region.name, language))}</i>
-            </li>
+            <GridItem key={region.id}>
+              <Region region={region} history={history} />
+            </GridItem>
           );
         })}
-      </ul>
-      <Grid>
+      </Grid>
+      <Grid title="Beings">
         {[...history.beings.map.values()].map((being) => {
           return (
             <GridItem key={being.id}>
@@ -47,78 +49,24 @@ export function Page({
           );
         })}
       </Grid>
-      <ul></ul>
-      <ul>
+      <Grid title="Artifacts">
         {[...history.artifacts.map.values()].map((artifact) => {
           return (
-            <li key={artifact.id}>
-              Artifact {artifact.id}: {artifact.name}{" "}
-              <i>{spellWords(getWords(artifact.name, language))}</i>{" "}
-              {artifact.object}
-            </li>
+            <GridItem key={artifact.id}>
+              <Artifact artifact={artifact} history={history} />
+            </GridItem>
           );
         })}
-      </ul>
-      <ul>
-        {[...history.dialects.map.values()].map(({ id, language }) => {
+      </Grid>
+      <Grid title="Dialects" minWidth={350}>
+        {[...history.dialects.map.values()].map((dialect) => {
           return (
-            <li key={id}>
-              Dialect {id}:
-              <ul>
-                <li>Name: {spellWord(getWord(language.name, language))}</li>
-                <li>
-                  Onset: {language.syllableStructure.minOnset} -{" "}
-                  {language.syllableStructure.maxOnset}
-                </li>
-                <li>
-                  Nucleus: {language.syllableStructure.minNucleus} -{" "}
-                  {language.syllableStructure.maxNucleus}
-                </li>
-                <li>
-                  Coda: {language.syllableStructure.minCoda} -{" "}
-                  {language.syllableStructure.maxCoda}
-                </li>
-                <li>
-                  Single Vowels:{" "}
-                  {language.phonemes.singleVowels
-                    .map((phoneme) => spellPhoneme(phoneme))
-                    .join(", ")}
-                </li>
-                <li>
-                  Dipthongs:{" "}
-                  {language.phonemes.dipthongs
-                    .map((phoneme) => spellPhoneme(phoneme))
-                    .join(", ")}
-                </li>
-                <li>
-                  Unvoiced Constonants:{" "}
-                  {language.phonemes.unvoicedConstants
-                    .map((phoneme) => spellPhoneme(phoneme))
-                    .join(", ")}
-                </li>
-                <li>
-                  Voiced Constonants:{" "}
-                  {language.phonemes.voicedConstants
-                    .map((phoneme) => spellPhoneme(phoneme))
-                    .join(", ")}
-                </li>
-                <li>
-                  Words{" "}
-                  <ul>
-                    {Object.entries(language.words).map(([word, voicing]) => {
-                      return (
-                        <li key={word}>
-                          {word} <i>{spellWord(voicing)}</i>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              </ul>
-            </li>
+            <GridItem key={dialect.id}>
+              <Dialect dialect={dialect} history={history} />
+            </GridItem>
           );
         })}
-      </ul>
+      </Grid>
     </div>
   );
 }

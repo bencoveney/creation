@@ -1,5 +1,4 @@
 import { History, Being } from "../worldgen";
-import { Language } from "../worldgen/language";
 import { Id } from "./id";
 import { Motif } from "./motif";
 import { Names } from "./names";
