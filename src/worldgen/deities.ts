@@ -66,7 +66,7 @@ export function createInitialDeities(history: History) {
   const deityThemes = getDeityThemes(history);
   deityThemes.forEach((deityTheme) => {
     const deity = createDeity(history.beings, deityTheme.theme);
-    history.log.log(`[[${deity.name}]] woke from their slumber.`);
+    history.log(`[[${deity.name}]] woke from their slumber.`);
   });
 }
 
@@ -131,6 +131,10 @@ function getRelationship(count: number): string {
 // herb
 // grass
 // flowers
+
+// pathos
+// logos
+// ethos
 
 // Activities:
 // craft

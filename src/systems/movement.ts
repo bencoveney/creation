@@ -19,7 +19,7 @@ export function runMovement(history: History) {
           .split(" ")
           .map((part) => `[[${part}]]`)
           .join(" ");
-        history.log.log(
+        history.log(
           `[[${deity.name}]] discovered the region of ${regionNameParts}`
         );
         deity.location = region.id;
@@ -29,11 +29,11 @@ export function runMovement(history: History) {
         deity.location = target.id;
         deity.currentActivity = undefined;
         if (previous) {
-          history.log.log(
+          history.log(
             `[[${deity.name}]] moved from [[${previous.name}]] to [[${target.name}]]`
           );
         } else {
-          history.log.log(
+          history.log(
             `[[${deity.name}]] entered the world in [[${target.name}]]`
           );
         }

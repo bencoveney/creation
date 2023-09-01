@@ -23,7 +23,7 @@ function createArtifactName(): string {
 }
 
 let count = 0;
-export function runArtifactCreationSystem(history: History) {
+export function runArtifactCreation(history: History) {
   if (!artifactSelection) {
     artifactSelection = randomSelection(history.config.artifactItems);
   }
@@ -57,7 +57,7 @@ export function runArtifactCreationSystem(history: History) {
       deitiesAtLocation.map((being) => `[[${being.name}]]`)
     );
     const locationName = history.regions.map.get(locationId)?.name;
-    history.log.log(
+    history.log(
       `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${locationName}]]`
     );
   });

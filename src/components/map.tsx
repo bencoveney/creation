@@ -19,6 +19,8 @@ export function Map({
         gridTemplateColumns: "1fr ".repeat(history.world?.width!),
         gridTemplateRows: "1fr ".repeat(history.world?.height!),
         gridGap: 10,
+        maxHeight: 800,
+        maxWidth: 800,
       }}
     >
       {history.world?.cells.map((cell, index) => {

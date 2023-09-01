@@ -15,11 +15,11 @@ export function runWorldFormation(history: History) {
       const inWorldDeityNames = commaSeparate(
         inWorldDeities.map((being) => `[[${being.name}]]`)
       );
-      history.log.log(
+      history.log(
         `the world of [[${worldRegion.name}]] was given form by ${inWorldDeityNames}`
       );
     } else {
-      history.log.log(`the world of [[${worldRegion.name}]] was given form`);
+      history.log(`the world of [[${worldRegion.name}]] was given form`);
     }
   }
 }

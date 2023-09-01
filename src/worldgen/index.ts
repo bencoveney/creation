@@ -1,4 +1,5 @@
 import { config } from "../config";
+import { Logger, createLogger } from "../log";
 import { Lookup, createLookup } from "../utils/lookup";
 import { Language } from "./language";
 import { Tile, World } from "./world";
@@ -38,24 +39,6 @@ export type Artifact = {
   creators: string[];
   inPosessionOf: string;
 };
-
-export type Logger = {
-  log: (...args: any[]) => void;
-  tick: number;
-  entries: [number, ...string[]][];
-};
-
-function createLogger(tick: number): Logger {
-  const entries: Logger["entries"] = [];
-  const logger: Logger = {
-    log: (...args) => {
-      entries.push([logger.tick, ...args.map((arg) => arg.toString())]);
-    },
-    tick,
-    entries,
-  };
-  return logger;
-}
 
 export type History = {
   regions: Lookup<Region>;

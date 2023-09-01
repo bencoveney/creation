@@ -4,13 +4,14 @@ import { populateWorld } from "./worldgen/populate";
 import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
 import { runMovement } from "./systems/movement";
-import { runArtifactCreationSystem } from "./systems/artifactCreation";
+import { runArtifactCreation } from "./systems/artifactCreation";
 import { runSymbolAdoption } from "./systems/symbolAdoption";
 import { runWorldFormation } from "./systems/worldFormation";
 import { createPlaybackControls } from "./playback";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Playback } from "./components/playback";
 import { runDecision } from "./systems/decision";
+import { getQueryBool } from "./utils/queryParams";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -38,10 +39,15 @@ function Wrapper() {
         (tick) => {
           history.tick = tick;
           history.log.tick = tick;
+          history.log.currentSystem = "movement";
           runMovement(history);
-          runArtifactCreationSystem(history);
+          history.log.currentSystem = "artifactCreation";
+          runArtifactCreation(history);
+          history.log.currentSystem = "symbolAdoption";
           runSymbolAdoption(history);
+          history.log.currentSystem = "worldFormation";
           runWorldFormation(history);
+          history.log.currentSystem = "decision";
           runDecision(history);
           forceRerender({});
           return tick < history.config.runTicks;
@@ -49,6 +55,12 @@ function Wrapper() {
       ),
     [history]
   );
+
+  useEffect(() => {
+    if (getQueryBool("autorun")) {
+      playbackControls.tickAll();
+    }
+  }, [playbackControls]);
 
   const firstDialect = [...history.dialects.map.values()][0];
 

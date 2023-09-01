@@ -13,7 +13,7 @@ export function runSymbolAdoption(history: History) {
     kind: "symbol",
     value: randomChoice(history.config.motifs).name,
   };
-  history.log.log(
+  history.log(
     `[[${target.name}]] adopted the ${target.motif?.value} as their symbol`
   );
 }
