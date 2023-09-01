@@ -15,6 +15,11 @@ export type Motif = {
   value: string;
 };
 
+export type Coordinate = {
+  x: number;
+  y: number;
+};
+
 export type Being = {
   id: string;
   kind: "deity";
@@ -23,7 +28,8 @@ export type Being = {
   location?: string; // Region ID.
   motif?: Motif;
   currentActivity?: {
-    moveToLocation: { x: number; y: number };
+    moveToLocation: Coordinate;
+    path?: Coordinate[];
   };
 };
 

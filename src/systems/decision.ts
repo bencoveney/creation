@@ -1,7 +1,7 @@
 import { randomChoice, rollDice } from "../utils/random";
-import { Being, History } from "../worldgen";
+import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
-import { Tile, getTile } from "../worldgen/world";
+import { Tile, getNeighbouringTiles } from "../worldgen/world";
 
 // Something along these lines.
 //
@@ -43,25 +43,11 @@ export function runDecision(history: History) {
 function getDeityTargetLocation(
   deity: Being,
   history: History
-): { x: number; y: number } | null {
+): Coordinate | null {
   const possibleTiles: Tile[] = [];
   if (deity.location) {
     const location = history.regions.map.get(deity.location)!;
-    const neighbours = [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1],
-    ]
-      .map(([dx, dy]) => [location.tile?.x! + dx, location.tile?.y! + dy])
-      .filter(
-        ([x, y]) =>
-          x >= 0 &&
-          x < history.world?.width! &&
-          y >= 0 &&
-          y < history.world?.height!
-      )
-      .map(([x, y]) => getTile(history.world!, x, y));
+    const neighbours = getNeighbouringTiles(history.world!, location.tile!);
     possibleTiles.push(...neighbours);
   } else {
     possibleTiles.push(...history.world!.cells);
