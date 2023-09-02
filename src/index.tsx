@@ -59,8 +59,9 @@ function Wrapper() {
   useEffect(() => {
     if (getQueryBool("autorun")) {
       playbackControls.tickAll();
+      console.log(history);
     }
-  }, [playbackControls]);
+  }, [playbackControls, history]);
 
   const firstDialect = [...history.dialects.map.values()][0];
 

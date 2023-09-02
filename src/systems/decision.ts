@@ -1,7 +1,7 @@
 import { randomChoice, rollDice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
-import { Tile, getNeighbouringTiles } from "../worldgen/world";
+import { Tile, getTile, pathfind } from "../worldgen/world";
 
 // Something along these lines.
 //
@@ -30,12 +30,22 @@ export function runDecision(history: History) {
     }
 
     const targetLocation = getDeityTargetLocation(deity, history);
-    if (targetLocation === null) {
+    if (!targetLocation) {
       return;
     }
 
+    let targetRegionName = "an unknown land";
+    if (targetLocation.location) {
+      const region = history.regions.map.get(targetLocation.location);
+      if (region?.name) {
+        targetRegionName = `[[${region.name}]]`;
+      }
+    }
+    history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
+
     deity.currentActivity = {
       moveToLocation: targetLocation,
+      path: getPathToTargetLocation(deity, targetLocation, history),
     };
   });
 }
@@ -43,25 +53,41 @@ export function runDecision(history: History) {
 function getDeityTargetLocation(
   deity: Being,
   history: History
-): Coordinate | null {
-  const possibleTiles: Tile[] = [];
-  if (deity.location) {
-    const location = history.regions.map.get(deity.location)!;
-    const neighbours = getNeighbouringTiles(history.world!, location.tile!);
-    possibleTiles.push(...neighbours);
-  } else {
-    possibleTiles.push(...history.world!.cells);
-  }
+): Tile | undefined {
+  const possibleTiles: Tile[] = history.world!.cells.filter(
+    (tile) => tile.location != deity.location
+  );
   if (possibleTiles.length === 0) {
     console.log("Nowhere can be moved to");
-    return null;
+    return;
   }
   const undiscovered = possibleTiles.filter((tile) => !tile.location);
   if (undiscovered.length > 0) {
-    const { x, y } = randomChoice(undiscovered);
-    return { x, y };
+    return randomChoice(undiscovered);
   } else {
-    const { x, y } = randomChoice(possibleTiles);
-    return { x, y };
+    return randomChoice(possibleTiles);
   }
+}
+
+function getPathToTargetLocation(
+  deity: Being,
+  targetLocation: Coordinate,
+  history: History
+): Coordinate[] {
+  const world = history.world;
+  if (!world) {
+    console.error("weird");
+    return [];
+  }
+  const location = deity.location && history.regions.map.get(deity.location);
+  if (!location || !location.tile) {
+    return [targetLocation];
+  }
+  const fromTile = location.tile;
+  const toTile = getTile(world, targetLocation.x, targetLocation.y);
+  const path = pathfind(world, fromTile, toTile);
+  if (!path || path.length === 0) {
+    console.error("weird");
+  }
+  return path;
 }

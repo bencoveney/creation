@@ -44,11 +44,7 @@ export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
     .map(([x, y]) => getTile(world!, x, y));
 }
 
-function formatTile(tile: Tile): string {
-  return `(${tile.x},${tile.y})`;
-}
-
-export function pathfind(world: World, from: Tile, to: Tile): Tile[] | null {
+export function pathfind(world: World, from: Tile, to: Tile): Tile[] {
   const fromInfo: PathFindingTileInfo = {
     cameFrom: undefined,
     cost: 0,
@@ -73,7 +69,6 @@ export function pathfind(world: World, from: Tile, to: Tile): Tile[] | null {
         route.unshift(stop);
         stop = tilesIKnowAbout.get(stop)?.cameFrom;
       }
-      route.shift();
       return route;
     } else {
       const neighbours = getNeighbouringTiles(world, next);

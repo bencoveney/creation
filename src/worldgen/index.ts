@@ -29,7 +29,7 @@ export type Being = {
   motif?: Motif;
   currentActivity?: {
     moveToLocation: Coordinate;
-    path?: Coordinate[];
+    path: Coordinate[];
   };
 };
 
