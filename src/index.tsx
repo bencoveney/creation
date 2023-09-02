@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Playback } from "./components/playback";
 import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
+import { lookupFirstValue, lookupValues } from "./utils/lookup";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -21,8 +22,6 @@ if (!root) {
 function initialiseHistory() {
   const newHistory = initHistory();
   populateWorld(newHistory);
-  const { language } = [...newHistory.dialects.map.values()][0];
-  newHistory.config.preRegisterWords.map((word) => getWord(word, language, 1));
   return newHistory;
 }
 
@@ -63,7 +62,7 @@ function Wrapper() {
     }
   }, [playbackControls, history]);
 
-  const firstDialect = [...history.dialects.map.values()][0];
+  const firstDialect = lookupFirstValue(history.dialects);
 
   return firstDialect ? (
     <Page

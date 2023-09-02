@@ -2,6 +2,7 @@ import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { Terrain } from "./terrain";
 import { createTerrain } from "../terrain";
+import { getFromLookup, lookupValues } from "../utils/lookup";
 
 const terrain = createTerrain(5, 5);
 
@@ -24,7 +25,7 @@ export function Map({
       }}
     >
       {history.world?.cells.map((cell, index) => {
-        const region = history.regions.map.get(cell.location);
+        const region = getFromLookup(history.regions, cell.location);
         return (
           <div
             key={index}
@@ -42,7 +43,7 @@ export function Map({
             <div>
               ({cell.x}, {cell.y})
             </div>
-            {...[...history.beings.map.values()]
+            {lookupValues(history.beings)
               .filter((being) => being.location === cell.location)
               .map((being, index) => (
                 <div key={index}>

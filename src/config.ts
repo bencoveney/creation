@@ -82,16 +82,6 @@ export const config = {
       tags: ["beginning"],
     },
     { name: "death", categories: ["stages_of_life"], tags: ["end"] },
-    {
-      name: "youth",
-      categories: ["stages_of_life"],
-      tags: ["middle"],
-    },
-    {
-      name: "adult",
-      categories: ["stages_of_life"],
-      tags: ["middle"],
-    },
     { name: "war", categories: ["diplomacy"], tags: [] },
     { name: "peace", categories: ["diplomacy"], tags: [] },
     { name: "mercy", categories: ["judgement"], tags: [] },

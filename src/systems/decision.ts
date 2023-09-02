@@ -1,3 +1,4 @@
+import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
 import { randomChoice, rollDice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
@@ -19,11 +20,8 @@ export function runDecision(history: History) {
   }
 
   const deities = getDeities(history.beings);
-  deities.forEach((deity) => {
-    if (deity.currentActivity) {
-      return;
-    }
-
+  const availableDeities = deities.filter((deity) => !deity.currentActivity);
+  availableDeities.forEach((deity) => {
     const willMove = rollDice(history.config.movementChance);
     if (!willMove) {
       return;
@@ -36,7 +34,7 @@ export function runDecision(history: History) {
 
     let targetRegionName = "an unknown land";
     if (targetLocation.location) {
-      const region = history.regions.map.get(targetLocation.location);
+      const region = getFromLookup(history.regions, targetLocation.location);
       if (region?.name) {
         targetRegionName = `[[${region.name}]]`;
       }
@@ -79,7 +77,7 @@ function getPathToTargetLocation(
     console.error("weird");
     return [];
   }
-  const location = deity.location && history.regions.map.get(deity.location);
+  const location = getFromLookupSafe(history.regions, deity.location);
   if (!location || !location.tile) {
     return [targetLocation];
   }

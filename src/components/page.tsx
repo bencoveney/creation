@@ -16,6 +16,7 @@ import { Grid, GridItem } from "./grid";
 import { Artifact } from "./artifact";
 import { Region } from "./region";
 import { Dialect } from "./dialect";
+import { lookupValues } from "../utils/lookup";
 
 export function Page({
   history,
@@ -32,7 +33,7 @@ export function Page({
       <Map history={history} language={language} />
       <Log history={history} language={language} />
       <Grid title="Regions">
-        {[...history.regions.map.values()].map((region) => {
+        {lookupValues(history.regions).map((region) => {
           return (
             <GridItem key={region.id}>
               <Region region={region} history={history} />
@@ -41,7 +42,7 @@ export function Page({
         })}
       </Grid>
       <Grid title="Beings">
-        {[...history.beings.map.values()].map((being) => {
+        {lookupValues(history.beings).map((being) => {
           return (
             <GridItem key={being.id}>
               <Being being={being} history={history} />
@@ -50,7 +51,7 @@ export function Page({
         })}
       </Grid>
       <Grid title="Artifacts">
-        {[...history.artifacts.map.values()].map((artifact) => {
+        {lookupValues(history.artifacts).map((artifact) => {
           return (
             <GridItem key={artifact.id}>
               <Artifact artifact={artifact} history={history} />
@@ -59,7 +60,7 @@ export function Page({
         })}
       </Grid>
       <Grid title="Dialects" minWidth={350}>
-        {[...history.dialects.map.values()].map((dialect) => {
+        {lookupValues(history.dialects).map((dialect) => {
           return (
             <GridItem key={dialect.id}>
               <Dialect dialect={dialect} history={history} />

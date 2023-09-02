@@ -1,5 +1,5 @@
 import { Being, Region, History } from ".";
-import { Lookup } from "../utils/lookup";
+import { Lookup, lookupValues } from "../utils/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
 import { generateLanguage } from "./language";
@@ -22,7 +22,7 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
 }
 
 export function getDeities(beings: Lookup<Being>): Being[] {
-  return [...beings.map.values()].filter((being) => being.kind === "deity");
+  return lookupValues(beings).filter((being) => being.kind === "deity");
 }
 
 export function createWorld(regions: Lookup<Region>): Region {

@@ -1,13 +1,13 @@
 import { createTileRegion, getDeities } from "../worldgen/populate";
 import { Being, History, Region } from "../worldgen";
 import { Tile, getTile } from "../worldgen/world";
+import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
 
 export function runMovement(history: History) {
   const deities = getDeities(history.beings);
   deities.forEach((deity) => {
     if (deity.currentActivity) {
-      const previous =
-        deity.location && history.regions.map.get(deity.location);
+      const previous = getFromLookupSafe(history.regions, deity.location);
       const path = deity.currentActivity.path;
       if (path.length === 0) {
         console.error("weird");
@@ -16,14 +16,14 @@ export function runMovement(history: History) {
         // Maybe it would be simpler to have a different category of activity for that.
         const targetTile = getTile(history.world!, path[0].x, path[0].y);
         discoverLocation(deity, targetTile, history);
-        const target = history.regions.map.get(targetTile.location)!;
+        const target = getFromLookup(history.regions, targetTile.location);
         deity.location = target.id;
         history.log(`[[${deity.name}]] completed their journey`);
         deity.currentActivity = undefined;
       } else {
         path.shift();
         const targetTile = getTile(history.world!, path[0].x, path[0].y);
-        moveToLocation(deity, targetTile, history, previous || undefined);
+        moveToLocation(deity, targetTile, history, previous);
       }
     }
   });
@@ -36,7 +36,7 @@ function moveToLocation(
   previous?: Region
 ) {
   discoverLocation(deity, targetTile, history);
-  const target = history.regions.map.get(targetTile.location)!;
+  const target = getFromLookup(history.regions, targetTile.location);
   deity.location = target.id;
   if (previous) {
     history.log(

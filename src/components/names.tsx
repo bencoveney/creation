@@ -1,10 +1,11 @@
+import { lookupEntries } from "../utils/lookup";
 import { History } from "../worldgen";
 import { getWord, spellWord } from "../worldgen/language";
 import { CommaSeparate } from "./commaSeparate";
 import { Tooltip } from "./tooltip";
 
 export function Names({ name, history }: { name: string; history: History }) {
-  const translations = [...history.dialects.map.entries()].map(
+  const translations = lookupEntries(history.dialects).map(
     ([dialectName, dialect]) => [
       dialectName,
       spellWord(getWord(dialect.language.name, dialect.language)),

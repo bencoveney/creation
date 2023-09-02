@@ -1,7 +1,7 @@
 import { getDeities } from "../worldgen/populate";
 import { Artifact, Being, History, commaSeparate } from "../worldgen";
 import { randomChoice, randomSelection } from "../utils/random";
-import { Lookup } from "../utils/lookup";
+import { Lookup, getFromLookup } from "../utils/lookup";
 
 let artifactSelection: () => string;
 
@@ -37,7 +37,8 @@ export function runArtifactCreation(history: History) {
         .map((deity) => deity.location)
         .filter<string>((location): location is string => !!location)
         .filter(
-          (location) => history.regions.map.get(location)?.name !== "world_0"
+          (location) =>
+            getFromLookup(history.regions, location)?.name !== "world_0"
         )
     )
   );
@@ -56,7 +57,7 @@ export function runArtifactCreation(history: History) {
     const deityNames = commaSeparate(
       deitiesAtLocation.map((being) => `[[${being.name}]]`)
     );
-    const locationName = history.regions.map.get(locationId)?.name;
+    const locationName = getFromLookup(history.regions, locationId)?.name;
     history.log(
       `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${locationName}]]`
     );

@@ -1,6 +1,5 @@
-import { Being, History } from ".";
+import { History } from ".";
 import {
-  flipCoin,
   randomChoice,
   randomChoices,
   randomInt,
@@ -164,3 +163,14 @@ function getRelationship(count: number): string {
 // temperance
 // humility
 // diligence
+
+// {
+//   name: "youth",
+//   categories: ["stages_of_life"],
+//   tags: ["middle"],
+// },
+// {
+//   name: "adult",
+//   categories: ["stages_of_life"],
+//   tags: ["middle"],
+// },
