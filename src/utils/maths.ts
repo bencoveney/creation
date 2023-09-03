@@ -6,3 +6,14 @@ export function round(value: number, decimalPlaces: number) {
 export function clamp(min: number, max: number, value: number) {
   return Math.max(min, Math.min(max, value));
 }
+
+// Project x (from 0 - 1) along range min -> max
+export function lerp(x: number, min: number, max: number) {
+  return (1 - x) * min + max * x;
+  //return a + x * (b - a);
+}
+
+// Derive position (from 0 - 1) along range min -> max
+export function inverseLerp(x: number, a: number, b: number) {
+  return (x - a) / (b - a);
+}

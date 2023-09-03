@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Terrain as TerrainModel, getIndex } from "../terrain";
-import { getMax, getMin } from "../utils/array";
+import { getMinAndMax } from "../utils/array";
 import { Color, toHex } from "@bencoveney/utils/dist/color";
-import { clamp } from "../utils/maths";
+import { clamp, inverseLerp } from "../utils/maths";
 
 export function Terrain({
   terrain,
@@ -25,8 +25,7 @@ export function Terrain({
       return;
     }
 
-    const minHeight = getMin(terrain.heights);
-    const maxHeight = getMax(terrain.heights);
+    const { min, max } = getMinAndMax(terrain.heights);
 
     const hoverIndex =
       hoverX !== null && hoverY !== null
@@ -37,7 +36,11 @@ export function Terrain({
       for (let y = 0; y < terrain.height; y++) {
         const index = getIndex(x, y, terrain.width, terrain.height);
         const height = index === hoverIndex ? 100 : terrain.heights[index];
-        const colorComponent = clamp(255 - Math.floor(height * 3), 0, 255);
+        const colorComponent = clamp(
+          Math.floor(inverseLerp(height, min, max) * 255),
+          0,
+          255
+        );
         const color: Color = {
           r: colorComponent,
           g: colorComponent,

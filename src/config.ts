@@ -145,5 +145,6 @@ export const config = {
   movementChance: 0.2,
   worldWidth: 10,
   worldHeight: 10,
-  terrainResolution: 5,
+  terrainResolution: 20,
+  // terrainPerlinRanges: [1, 4, 8, 16],
 };

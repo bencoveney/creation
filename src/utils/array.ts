@@ -29,3 +29,16 @@ export function getMax(values: number[]): number {
   }
   return highest;
 }
+
+export function getMinAndMax(values: number[]): { min: number; max: number } {
+  if (values.length === 0) {
+    throw new Error("What?");
+  }
+  let highest = values[0];
+  let lowest = values[0];
+  for (let i = 1; i < values.length; i++) {
+    highest = Math.max(highest, values[i]);
+    lowest = Math.min(lowest, values[i]);
+  }
+  return { min: lowest, max: highest };
+}
