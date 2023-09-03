@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Terrain as TerrainModel, getIndex } from "../terrain";
 import { getMax, getMin } from "../utils/array";
 import { Color, toHex } from "@bencoveney/utils/dist/color";
+import { clamp } from "../utils/maths";
 
 export function Terrain({
   terrain,
@@ -28,15 +29,15 @@ export function Terrain({
     const maxHeight = getMax(terrain.heights);
 
     const hoverIndex =
-      hoverX !== null &&
-      hoverY !== null &&
-      getIndex(hoverX, hoverY, terrain.width, terrain.height);
+      hoverX !== null && hoverY !== null
+        ? getIndex(hoverX, hoverY, terrain.width, terrain.height)
+        : null;
 
     for (let x = 0; x < terrain.width; x++) {
       for (let y = 0; y < terrain.height; y++) {
         const index = getIndex(x, y, terrain.width, terrain.height);
         const height = index === hoverIndex ? 100 : terrain.heights[index];
-        const colorComponent = 255 - Math.floor(height * 10);
+        const colorComponent = clamp(255 - Math.floor(height * 3), 0, 255);
         const color: Color = {
           r: colorComponent,
           g: colorComponent,
@@ -44,7 +45,12 @@ export function Terrain({
         };
         context.fillStyle = toHex(color);
         const flipY = terrain.height - y - 1;
-        context.fillRect(x, flipY, 1, 1);
+        if (index === hoverIndex && height >= 100) {
+          context.fillStyle = "#ff0000";
+          context.fillRect(x, flipY, 1, 1);
+        } else {
+          context.fillRect(x, flipY, 1, 1);
+        }
       }
     }
   }, [canvasRef.current, hoverX, hoverY]);

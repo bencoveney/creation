@@ -14,7 +14,10 @@ import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
 import { Grid, GridItem } from "./grid";
 
-const terrain = createTerrain(config.worldWidth, config.worldHeight);
+const terrain = createTerrain(
+  config.worldWidth * config.terrainResolution,
+  config.worldHeight * config.terrainResolution
+);
 
 export function Map({
   history,
@@ -29,23 +32,27 @@ export function Map({
   const renderWidth = 900;
   const renderHeight = 900;
   const [handler, x, y] = useHoverPosition();
-  const tileX =
+  const pixelX =
     x === null
       ? null
       : Math.floor(
-          Math.min(x, renderWidth - 1) / (renderWidth / history.world?.width!)
+          Math.min(x, renderWidth - 1) / (renderWidth / terrain.width)
         );
-  const tileY =
+  const pixelY =
     y === null
       ? null
       : Math.floor(
-          Math.min(y, renderHeight - 1) /
-            (renderHeight / history.world?.height!)
+          Math.min(y, renderHeight - 1) / (renderHeight / terrain.height)
         );
-  const flipTileY = tileY === null ? null : terrain.height - tileY - 1;
+  const flipPixelY = pixelY === null ? null : terrain.height - pixelY - 1;
+
   const selectedTile =
-    tileX !== null && flipTileY !== null
-      ? getTile(history.world, tileX, flipTileY)
+    pixelX !== null && flipPixelY !== null
+      ? getTile(
+          history.world,
+          Math.floor(pixelX / config.terrainResolution),
+          Math.floor(flipPixelY / config.terrainResolution)
+        )
       : null;
   const selectedRegion =
     selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
@@ -95,11 +102,11 @@ export function Map({
             zIndex: 0,
           }}
         >
-          <Terrain terrain={terrain} hoverX={tileX} hoverY={flipTileY} />
+          <Terrain terrain={terrain} hoverX={pixelX} hoverY={flipPixelY} />
         </div>
       </div>
       <div style={{ flexGrow: 1 }}>
-        <Grid title={`Tile summary ${tileX} ${flipTileY}`} columns={1}>
+        <Grid title={`Tile summary ${pixelX} ${flipPixelY}`} columns={1}>
           {selectedRegion && (
             <>
               <GridItem>

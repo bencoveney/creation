@@ -51,16 +51,16 @@ const regionPlaces = [
   "streets",
 ];
 
-const regionVibes = [
-  "sorrow",
-  "elation",
-  "tranquility",
-  "peace",
-  "strife",
-  "anger",
-  "fear",
-  "calm",
-];
+// const regionVibes = [
+//   "sorrow",
+//   "elation",
+//   "tranquility",
+//   "peace",
+//   "strife",
+//   "anger",
+//   "fear",
+//   "calm",
+// ];
 
 const regionAdjectives = [
   "windy",
@@ -123,10 +123,11 @@ function createRegionName(): string {
     case 0:
       return `the ${describeNoun(regionPlaces, regionAdjectives)}`;
     case 1:
-      return `the ${describeNoun(
-        regionPlaces,
-        regionAdjectives
-      )} of ${randomChoice(regionVibes)}`;
+      return `the ${describeNoun(regionPlaces, regionAdjectives)}`;
+    // return `the ${describeNoun(
+    //   regionPlaces,
+    //   regionAdjectives
+    // )} of ${randomChoice(regionVibes)}`;
     case 2:
       // Syllables
       return `${randomChoice(settlementNameStarts)}${randomChoice(

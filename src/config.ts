@@ -145,4 +145,5 @@ export const config = {
   movementChance: 0.2,
   worldWidth: 10,
   worldHeight: 10,
+  terrainResolution: 5,
 };
