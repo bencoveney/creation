@@ -8,7 +8,7 @@ export function Being({ being, history }: { being: Being; history: History }) {
     <>
       <Id value={being.id} /> {being.name}:
       <Names name={being.name} history={history} />
-      {being.motif && <Motif motif={being.motif} history={history} />}
+      <Motif motif={being.motif} />
       {being.theme && `Deity of ${being.theme}`}
     </>
   );

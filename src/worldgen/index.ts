@@ -54,7 +54,6 @@ export type History = {
   log: Logger;
   tick: number;
   world: null | World;
-  config: typeof config;
 };
 
 export function initHistory(): History {
@@ -66,7 +65,6 @@ export function initHistory(): History {
     log: createLogger(0),
     tick: 0,
     world: null,
-    config,
   };
 }
 

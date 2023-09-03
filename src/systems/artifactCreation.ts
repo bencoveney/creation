@@ -2,6 +2,7 @@ import { getDeities } from "../worldgen/populate";
 import { Artifact, Being, History, commaSeparate } from "../worldgen";
 import { randomChoice, randomSelection } from "../utils/random";
 import { Lookup, getFromLookup } from "../utils/lookup";
+import { config } from "../config";
 
 let artifactSelection: () => string;
 
@@ -25,9 +26,9 @@ function createArtifactName(): string {
 let count = 0;
 export function runArtifactCreation(history: History) {
   if (!artifactSelection) {
-    artifactSelection = randomSelection(history.config.artifactItems);
+    artifactSelection = randomSelection(config.artifactItems);
   }
-  if (count >= history.config.artifactItems.length) {
+  if (count >= config.artifactItems.length) {
     return;
   }
   const deities = getDeities(history.beings);
@@ -49,7 +50,7 @@ export function runArtifactCreation(history: History) {
     if (deitiesAtLocation.length < 2) {
       return;
     }
-    if (count >= history.config.artifactItems.length) {
+    if (count >= config.artifactItems.length) {
       return;
     }
     count++;

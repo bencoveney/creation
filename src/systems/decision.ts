@@ -1,3 +1,4 @@
+import { config } from "../config";
 import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
 import { randomChoice, rollDice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
@@ -22,7 +23,7 @@ export function runDecision(history: History) {
   const deities = getDeities(history.beings);
   const availableDeities = deities.filter((deity) => !deity.currentActivity);
   availableDeities.forEach((deity) => {
-    const willMove = rollDice(history.config.movementChance);
+    const willMove = rollDice(config.movementChance);
     if (!willMove) {
       return;
     }

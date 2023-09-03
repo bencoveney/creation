@@ -1,4 +1,5 @@
 import { History } from ".";
+import { config } from "../config";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 
 export enum Phoneme {
@@ -407,7 +408,7 @@ export function generateLanguage(history: History): Language {
   };
 
   // Preload a few words:
-  history.config.preRegisterWords.map((word) => getWord(word, language, 1));
+  config.preRegisterWords.map((word) => getWord(word, language, 1));
   getWord(language.name, language, 2);
 
   return language as Language;

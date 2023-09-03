@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { initHistory } from "./worldgen";
 import { populateWorld } from "./worldgen/populate";
-import { getWord } from "./worldgen/language";
 import { Page } from "./components/page";
 import { runMovement } from "./systems/movement";
 import { runArtifactCreation } from "./systems/artifactCreation";
@@ -12,7 +11,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Playback } from "./components/playback";
 import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
-import { lookupFirstValue, lookupValues } from "./utils/lookup";
+import { lookupFirstValue } from "./utils/lookup";
+import { config } from "./config";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -49,7 +49,7 @@ function Wrapper() {
           history.log.currentSystem = "decision";
           runDecision(history);
           forceRerender({});
-          return tick < history.config.runTicks;
+          return tick < config.runTicks;
         }
       ),
     [history]

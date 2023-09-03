@@ -193,7 +193,7 @@ function MapTile({
                   key={index}
                   label={spellWords(getWords(being.name, language))}
                 >
-                  <Motif motif={being.motif} history={history} />
+                  <Motif motif={being.motif} />
                 </Tooltip>
               ))}
             </span>

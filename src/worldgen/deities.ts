@@ -1,4 +1,5 @@
 import { History } from ".";
+import { config } from "../config";
 import {
   randomChoice,
   randomChoices,
@@ -14,21 +15,21 @@ export type Theme = {
 };
 
 const themesByName = new Map<string, Theme>();
-function populatethemesByName(history: History) {
+function populatethemesByName() {
   if (themesByName.size > 0) {
     return;
   }
-  history.config.themes.forEach((theme) => {
+  config.themes.forEach((theme) => {
     themesByName.set(theme.name, theme);
   });
 }
 
 const themesByCategory = new Map<string, Theme[]>();
-function populateThemesByCategory(history: History) {
+function populateThemesByCategory() {
   if (themesByCategory.size > 0) {
     return;
   }
-  history.config.themes.forEach((theme) => {
+  config.themes.forEach((theme) => {
     theme.categories.forEach((category) => {
       if (!themesByCategory.has(category)) {
         themesByCategory.set(category, []);
@@ -40,11 +41,11 @@ function populateThemesByCategory(history: History) {
 }
 
 const themesByTag = new Map<string, Theme[]>();
-function populateThemesByTag(history: History) {
+function populateThemesByTag() {
   if (themesByTag.size > 0) {
     return;
   }
-  history.config.themes.forEach((theme) => {
+  config.themes.forEach((theme) => {
     theme.tags.forEach((tag) => {
       if (!themesByTag.has(tag)) {
         themesByTag.set(tag, []);
@@ -62,25 +63,25 @@ export type DeityTheme = {
 };
 
 export function createInitialDeities(history: History) {
-  const deityThemes = getDeityThemes(history);
+  const deityThemes = getDeityThemes();
   deityThemes.forEach((deityTheme) => {
     const deity = createDeity(history.beings, deityTheme.theme);
     history.log(`[[${deity.name}]] woke from their slumber.`);
   });
 }
 
-export function getDeityThemes(history: History): DeityTheme[] {
-  populatethemesByName(history);
-  populateThemesByCategory(history);
-  populateThemesByTag(history);
+export function getDeityThemes(): DeityTheme[] {
+  populatethemesByName();
+  populateThemesByCategory();
+  populateThemesByTag();
 
   const selectedCategories = randomChoices(
     [...themesByCategory.keys()],
-    randomInt(history.config.themeRange.min, history.config.themeRange.max)
+    randomInt(config.themeRange.min, config.themeRange.max)
   );
   const groups = selectedCategories.flatMap((category) => {
     const themes = themesByCategory.get(category)!;
-    const isRelationship = rollDice(history.config.deityRelationshipChance);
+    const isRelationship = rollDice(config.deityRelationshipChance);
     const relationship = isRelationship
       ? getRelationship(themes.length)
       : undefined;

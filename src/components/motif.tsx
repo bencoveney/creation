@@ -1,17 +1,11 @@
-import { Being, History } from "../worldgen";
+import { config } from "../config";
+import { Being } from "../worldgen";
 
-export function Motif({
-  history,
-  motif,
-}: {
-  history: History;
-  motif: Being["motif"] | undefined;
-}) {
+export function Motif({ motif }: { motif: Being["motif"] | undefined }) {
   return (
     <>
       {motif
-        ? history.config.motifs.find((match) => match.name === motif?.value)
-            ?.unicode
+        ? config.motifs.find((match) => match.name === motif?.value)?.unicode
         : "?"}
     </>
   );
