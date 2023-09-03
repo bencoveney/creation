@@ -1,7 +1,7 @@
 import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { Terrain } from "./terrain";
-import { createTerrain } from "../terrain";
+import { createTerrain, getIndex } from "../terrain";
 import { getFromLookupSafe, lookupValues } from "../utils/lookup";
 import { config } from "../config";
 import { useHoverPosition } from "../hooks/useHover";
@@ -34,7 +34,7 @@ export function Map({
   const [handler, x, y] = useHoverPosition();
   const pixelX =
     x === null
-      ? null
+      ? 0
       : Math.floor(
           Math.min(x, renderWidth - 1) / (renderWidth / terrain.width)
         );
@@ -44,16 +44,13 @@ export function Map({
       : Math.floor(
           Math.min(y, renderHeight - 1) / (renderHeight / terrain.height)
         );
-  const flipPixelY = pixelY === null ? null : terrain.height - pixelY - 1;
+  const flipPixelY = pixelY === null ? 0 : terrain.height - pixelY - 1;
 
-  const selectedTile =
-    pixelX !== null && flipPixelY !== null
-      ? getTile(
-          history.world,
-          Math.floor(pixelX / config.terrainResolution),
-          Math.floor(flipPixelY / config.terrainResolution)
-        )
-      : null;
+  const selectedTile = getTile(
+    history.world,
+    Math.floor(pixelX / config.terrainResolution),
+    Math.floor(flipPixelY / config.terrainResolution)
+  );
   const selectedRegion =
     selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
   return (
@@ -106,7 +103,24 @@ export function Map({
         </div>
       </div>
       <div style={{ flexGrow: 1 }}>
-        <Grid title={`Tile summary ${pixelX} ${flipPixelY}`} columns={1}>
+        <Grid title={`Terrain Summary (${pixelX}, ${flipPixelY})`} columns={1}>
+          {selectedRegion && (
+            <>
+              <GridItem>
+                Height:{" "}
+                {
+                  terrain.heights[
+                    getIndex(pixelX, flipPixelY, terrain.width, terrain.height)
+                  ]
+                }
+              </GridItem>
+            </>
+          )}
+        </Grid>
+        <Grid
+          title={`Tile summary (${selectedTile.x}, ${selectedTile.y})`}
+          columns={1}
+        >
           {selectedRegion && (
             <>
               <GridItem>

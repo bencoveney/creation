@@ -14,12 +14,12 @@ export function createTerrain(width: number, height: number): Terrain {
     const position = getXY(width, height, index);
     const diffX = position.x - middleX;
     const diffY = position.y - middleY;
-    return Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+    return Math.floor(Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2)));
   });
   return { heights, width, height, waterLevel: 1 };
 }
 
-function getXY<T>(width: number, height: number, index: number) {
+function getXY(width: number, height: number, index: number) {
   return {
     x: index % width,
     y: Math.floor(index / height),
