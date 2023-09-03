@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Terrain as TerrainModel, getIndex } from "../terrain";
 import { getMinAndMax } from "../utils/array";
 import { Color, toHex } from "@bencoveney/utils/dist/color";
-import { clamp, inverseLerp } from "../utils/maths";
+import { clamp, inverseLerp, lerp } from "../utils/maths";
 
 export function Terrain({
   terrain,
@@ -36,16 +36,8 @@ export function Terrain({
       for (let y = 0; y < terrain.height; y++) {
         const index = getIndex(x, y, terrain.width, terrain.height);
         const height = index === hoverIndex ? 100 : terrain.heights[index];
-        const colorComponent = clamp(
-          Math.floor(inverseLerp(height, min, max) * 255),
-          0,
-          255
-        );
-        const color: Color = {
-          r: colorComponent,
-          g: colorComponent,
-          b: colorComponent,
-        };
+        const scaledHeight = inverseLerp(height, min, max);
+        const color = getColor(scaledHeight);
         context.fillStyle = toHex(color);
         const flipY = terrain.height - y - 1;
         if (index === hoverIndex && height >= 100) {
@@ -71,4 +63,69 @@ export function Terrain({
       }}
     />
   );
+}
+
+function getColor(height: number): Color {
+  if (height < 0.2) {
+    // Water
+    const scale = inverseLerp(height, 0, 0.2);
+    return {
+      r: lerp(scale, 0, 23),
+      g: lerp(scale, 55, 110),
+      b: lerp(scale, 93, 128),
+    };
+  } else if (height >= 0.2 && height < 0.25) {
+    const scale = inverseLerp(height, 0.2, 0.25);
+    return {
+      r: lerp(scale, 23, 50),
+      g: lerp(scale, 110, 163),
+      b: lerp(scale, 128, 171),
+    };
+  } else if (height >= 0.25 && height < 0.46) {
+    const scale = inverseLerp(height, 0.25, 0.46);
+    return {
+      r: lerp(scale, 50, 88),
+      g: lerp(scale, 163, 219),
+      b: lerp(scale, 171, 202),
+    };
+  } else if (height >= 0.46 && height < 0.5) {
+    // Sand
+    const scale = inverseLerp(height, 0.46, 0.5);
+    return {
+      r: lerp(scale, 235, 148),
+      g: lerp(scale, 196, 119),
+      b: lerp(scale, 80, 3),
+    };
+  } else if (height >= 0.5 && height < 0.67) {
+    // Vegetation
+    const scale = inverseLerp(height, 0.5, 0.67);
+    return {
+      r: lerp(scale, 21, 18),
+      g: lerp(scale, 126, 116),
+      b: lerp(scale, 32, 49),
+    };
+  } else if (height >= 0.67 && height < 0.81) {
+    const scale = inverseLerp(height, 0.67, 0.81);
+    return {
+      r: lerp(scale, 18, 12),
+      g: lerp(scale, 116, 92),
+      b: lerp(scale, 49, 52),
+    };
+  } else if (height >= 0.81 && height < 0.96) {
+    // Cliffs
+    const scale = inverseLerp(height, 0.81, 0.96);
+    return {
+      r: lerp(scale, 112, 76),
+      g: lerp(scale, 117, 79),
+      b: lerp(scale, 113, 100),
+    };
+  } else {
+    // Snow
+    const scale = inverseLerp(height, 0.96, 1);
+    return {
+      r: lerp(scale, 236, 223),
+      g: lerp(scale, 240, 245),
+      b: lerp(scale, 240, 245),
+    };
+  }
 }

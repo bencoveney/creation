@@ -8,12 +8,19 @@ export type Terrain = {
 };
 
 export function createTerrain(width: number, height: number): Terrain {
-  const heights2 = getHeights(width, 2).map((height) => height / 1);
-  const heights4 = getHeights(width, 4).map((height) => height / 2);
-  const heights8 = getHeights(width, 8).map((height) => height / 3);
-  const heights16 = getHeights(width, 16).map((height) => height / 4);
-  const heights = sumHeights(heights2, heights4, heights8, heights16);
-  return { heights, width, height, waterLevel: 1 };
+  const heights2 = getHeights(width, 4).map((height) => height / 1);
+  const heights4 = getHeights(width, 8).map((height) => height / 1);
+  const heights8 = getHeights(width, 16).map((height) => height / 2);
+  const heights16 = getHeights(width, 32).map((height) => height / 3);
+  const heights32 = getHeights(width, 64).map((height) => height / 4);
+  const heights = sumHeights(
+    heights2,
+    heights4,
+    heights8,
+    heights16,
+    heights32
+  ).map((height) => 1 - Math.abs(height));
+  return { heights, width, height, waterLevel: 0.5 };
 }
 
 function getXY(width: number, height: number, index: number) {
