@@ -5,6 +5,10 @@ import { createTerrain } from "../terrain";
 import { getFromLookupSafe, lookupValues } from "../utils/lookup";
 import { config } from "../config";
 import { useHoverPosition } from "../hooks/useHover";
+import { Tile } from "../worldgen/world";
+import { Name } from "./name";
+import { Tooltip } from "./tooltip";
+import { Motif } from "./motif";
 
 const terrain = createTerrain(config.worldWidth, config.worldHeight);
 
@@ -15,8 +19,11 @@ export function Map({
   history: History;
   language: Language;
 }) {
-  const renderWidth = 800;
-  const renderHeight = 800;
+  if (!history.world) {
+    return null;
+  }
+  const renderWidth = 1000;
+  const renderHeight = 1000;
   const [handler, x, y] = useHoverPosition();
   const tileX =
     x === null
@@ -48,33 +55,16 @@ export function Map({
       }}
       onMouseMove={handler}
     >
-      {history.world?.cells.map((cell, index) => {
-        const region = getFromLookupSafe(history.regions, cell.location);
+      {history.world.cells.map((cell, index) => {
         return (
-          <div
+          <MapTile
             key={index}
-            style={{
-              gridRow: history.world?.height! - cell.y,
-              gridColumn: (index % history.world?.width!) + 1,
-              aspectRatio: 1,
-              zIndex: 1,
-            }}
-          >
-            <span>{region?.name!}</span>
-            <div>
-              {region?.name && spellWords(getWords(region.name, language))}
-            </div>
-            <div>
-              ({cell.x}, {cell.y})
-            </div>
-            {lookupValues(history.beings)
-              .filter((being) => being.location === cell.location)
-              .map((being, index) => (
-                <div key={index}>
-                  {spellWords(getWords(being.name, language))}
-                </div>
-              ))}
-          </div>
+            tile={cell}
+            gridRow={history.world?.height! - cell.y}
+            gridColumn={(index % history.world?.width!) + 1}
+            history={history}
+            language={language}
+          />
         );
       })}
       <div
@@ -89,6 +79,99 @@ export function Map({
       >
         <Terrain terrain={terrain} hoverX={tileX} hoverY={tileY} />
       </div>
+    </div>
+  );
+}
+
+function MapTile({
+  tile,
+  gridRow,
+  gridColumn,
+  history,
+  language,
+}: {
+  tile: Tile;
+  gridRow: number;
+  gridColumn: number;
+  history: History;
+  language: Language;
+}) {
+  const region = getFromLookupSafe(history.regions, tile.location);
+  const languageName = spellWords(getWords(language.name, language));
+  const beings = lookupValues(history.beings).filter(
+    (being) => being.location === tile.location && being.motif
+  );
+  return (
+    <div
+      style={{
+        gridRow,
+        gridColumn,
+        aspectRatio: 1,
+        zIndex: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "10px",
+        boxSizing: "border-box",
+      }}
+    >
+      {region?.name && (
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: 10,
+            fontFamily: "sans-serif",
+            fontWeight: "bold",
+            lineHeight: 2,
+          }}
+        >
+          <span
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              boxDecorationBreak: "clone",
+              borderRadius: 6,
+              padding: "6px 6px",
+            }}
+          >
+            <Name
+              languageName={languageName}
+              word={spellWords(getWords(region.name, language))}
+            />
+          </span>
+          <br />
+          {beings.length ? (
+            <span
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                lineHeight: 1.4,
+                boxDecorationBreak: "clone",
+                borderRadius: 6,
+                padding: "6px 6px",
+              }}
+            >
+              {beings.map((being, index) => (
+                <Tooltip
+                  key={index}
+                  label={spellWords(getWords(being.name, language))}
+                >
+                  <Motif motif={being.motif} history={history} />
+                </Tooltip>
+              ))}
+            </span>
+          ) : (
+            <span
+              style={{
+                lineHeight: 1.4,
+              }}
+            >
+              {"\u00A0"}
+            </span>
+          )}
+        </div>
+      )}
+      {}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { lookupEntries } from "../utils/lookup";
 import { History } from "../worldgen";
 import { getWord, spellWord } from "../worldgen/language";
 import { CommaSeparate } from "./commaSeparate";
-import { Tooltip } from "./tooltip";
+import { Name } from "./name";
 
 export function Names({ name, history }: { name: string; history: History }) {
   const translations = lookupEntries(history.dialects).map(
@@ -17,12 +17,7 @@ export function Names({ name, history }: { name: string; history: History }) {
       Known as{" "}
       <CommaSeparate>
         {translations.map(([dialectName, languageName, word]) => (
-          <Tooltip
-            label={`From the language ${languageName}`}
-            key={dialectName}
-          >
-            {word}
-          </Tooltip>
+          <Name key={dialectName} languageName={languageName} word={word} />
         ))}
       </CommaSeparate>
     </div>
