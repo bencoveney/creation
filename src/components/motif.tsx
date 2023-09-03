@@ -5,14 +5,14 @@ export function Motif({
   motif,
 }: {
   history: History;
-  motif: Being["motif"];
+  motif: Being["motif"] | undefined;
 }) {
   return (
     <>
-      {
-        history.config.motifs.find((match) => match.name === motif?.value)
-          ?.unicode
-      }
+      {motif
+        ? history.config.motifs.find((match) => match.name === motif?.value)
+            ?.unicode
+        : "?"}
     </>
   );
 }

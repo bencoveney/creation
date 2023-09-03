@@ -136,7 +136,7 @@ function MapTile({
   const region = getFromLookupSafe(history.regions, tile.location);
   const languageName = spellWords(getWords(language.name, language));
   const beings = lookupValues(history.beings).filter(
-    (being) => being.location === tile.location && being.motif
+    (being) => being.location === tile.location
   );
   return (
     <div
