@@ -1,4 +1,5 @@
 import { empty } from "@bencoveney/utils/dist/array";
+import { History } from ".";
 
 export type Tile = {
   x: number;
@@ -44,7 +45,12 @@ export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
     .map(([x, y]) => getTile(world!, x, y));
 }
 
-export function pathfind(world: World, from: Tile, to: Tile): Tile[] {
+export function pathfind(
+  history: History,
+  world: World,
+  from: Tile,
+  to: Tile
+): Tile[] {
   const fromInfo: PathFindingTileInfo = {
     cameFrom: undefined,
     cost: 0,
@@ -59,7 +65,11 @@ export function pathfind(world: World, from: Tile, to: Tile): Tile[] {
 
   let routeFound = false;
   let sanityCheck = 0;
-  while (!routeFound && tilesIShouldCheck.size > 0 && sanityCheck++ < 100) {
+  while (
+    !routeFound &&
+    tilesIShouldCheck.size > 0 &&
+    sanityCheck++ < world.cells.length
+  ) {
     const [next, nextInfo] = getNextPossibleTile(tilesIShouldCheck);
     tilesIShouldCheck.delete(next);
     if (next === to) {

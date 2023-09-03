@@ -3,7 +3,15 @@ import { Terrain as TerrainModel, getIndex } from "../terrain";
 import { getMax, getMin } from "../utils/array";
 import { Color, toHex } from "@bencoveney/utils/dist/color";
 
-export function Terrain({ terrain }: { terrain: TerrainModel }) {
+export function Terrain({
+  terrain,
+  hoverX,
+  hoverY,
+}: {
+  terrain: TerrainModel;
+  hoverX: number | null;
+  hoverY: number | null;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,10 +27,21 @@ export function Terrain({ terrain }: { terrain: TerrainModel }) {
     const minHeight = getMin(terrain.heights);
     const maxHeight = getMax(terrain.heights);
 
+    const hoverIndex =
+      (hoverX !== null &&
+        hoverY !== null &&
+        getIndex(
+          hoverX,
+          terrain.height - hoverY - 1,
+          terrain.width,
+          terrain.height
+        )) ||
+      null;
+
     for (let x = 0; x < terrain.width; x++) {
       for (let y = 0; y < terrain.height; y++) {
         const index = getIndex(x, y, terrain.width, terrain.height);
-        const height = terrain.heights[index];
+        const height = index === hoverIndex ? 100 : terrain.heights[index];
         const colorComponent = 255 - Math.floor(height * 10);
         const color: Color = {
           r: colorComponent,
@@ -30,10 +49,11 @@ export function Terrain({ terrain }: { terrain: TerrainModel }) {
           b: colorComponent,
         };
         context.fillStyle = toHex(color);
-        context.fillRect(x, y, 1, 1);
+        const flipY = terrain.height - y - 1;
+        context.fillRect(x, flipY, 1, 1);
       }
     }
-  }, [canvasRef.current]);
+  }, [canvasRef.current, hoverX, hoverY]);
   return (
     <canvas
       ref={canvasRef}

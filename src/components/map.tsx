@@ -2,9 +2,11 @@ import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { Terrain } from "./terrain";
 import { createTerrain } from "../terrain";
-import { getFromLookup, lookupValues } from "../utils/lookup";
+import { getFromLookupSafe, lookupValues } from "../utils/lookup";
+import { config } from "../config";
+import { useHoverPosition } from "../hooks/useHover";
 
-const terrain = createTerrain(5, 5);
+const terrain = createTerrain(config.worldWidth, config.worldHeight);
 
 export function Map({
   history,
@@ -13,19 +15,41 @@ export function Map({
   history: History;
   language: Language;
 }) {
+  const renderWidth = 800;
+  const renderHeight = 800;
+  const [handler, x, y] = useHoverPosition();
+  const tileX =
+    x === null
+      ? null
+      : Math.floor(
+          Math.min(x, renderWidth - 1) / (renderWidth / history.world?.width!)
+        );
+  const tileY =
+    y === null
+      ? null
+      : Math.floor(
+          Math.min(y, renderHeight - 1) /
+            (renderHeight / history.world?.height!)
+        );
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr ".repeat(history.world?.width!),
-        gridTemplateRows: "1fr ".repeat(history.world?.height!),
-        gridGap: 10,
-        maxHeight: 800,
-        maxWidth: 800,
+        gridTemplateColumns: `${renderWidth / history.world?.width!}px `.repeat(
+          history.world?.width!
+        ),
+        gridTemplateRows: `${renderHeight / history.world?.height!}px `.repeat(
+          history.world?.height!
+        ),
+        maxHeight: renderHeight,
+        maxWidth: renderWidth,
+        height: renderHeight,
+        width: renderWidth,
       }}
+      onMouseMove={handler}
     >
       {history.world?.cells.map((cell, index) => {
-        const region = getFromLookup(history.regions, cell.location);
+        const region = getFromLookupSafe(history.regions, cell.location);
         return (
           <div
             key={index}
@@ -63,12 +87,7 @@ export function Map({
           zIndex: 0,
         }}
       >
-        <Terrain terrain={terrain} />
-        {/* {renderTerrain(terrain)
-      .split("\n")
-      .map((row, index) => (
-        <div key={index}>{row}</div>
-      ))} */}
+        <Terrain terrain={terrain} hoverX={tileX} hoverY={tileY} />
       </div>
     </div>
   );

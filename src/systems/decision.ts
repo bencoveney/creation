@@ -83,7 +83,7 @@ function getPathToTargetLocation(
   }
   const fromTile = location.tile;
   const toTile = getTile(world, targetLocation.x, targetLocation.y);
-  const path = pathfind(world, fromTile, toTile);
+  const path = pathfind(history, world, fromTile, toTile);
   if (!path || path.length === 0) {
     console.error("weird");
   }

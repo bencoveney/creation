@@ -143,6 +143,6 @@ export const config = {
   ],
   deityRelationshipChance: 0.5,
   movementChance: 0.2,
-  worldWidth: 5,
-  worldHeight: 5,
+  worldWidth: 10,
+  worldHeight: 10,
 };
