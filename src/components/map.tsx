@@ -5,10 +5,14 @@ import { createTerrain } from "../terrain";
 import { getFromLookupSafe, lookupValues } from "../utils/lookup";
 import { config } from "../config";
 import { useHoverPosition } from "../hooks/useHover";
-import { Tile } from "../worldgen/world";
+import { Tile, getTile } from "../worldgen/world";
 import { Name } from "./name";
 import { Tooltip } from "./tooltip";
 import { Motif } from "./motif";
+import { Region } from "./region";
+import { getDeities } from "../worldgen/populate";
+import { Being } from "./being";
+import { Grid, GridItem } from "./grid";
 
 const terrain = createTerrain(config.worldWidth, config.worldHeight);
 
@@ -22,8 +26,8 @@ export function Map({
   if (!history.world) {
     return null;
   }
-  const renderWidth = 1000;
-  const renderHeight = 1000;
+  const renderWidth = 900;
+  const renderHeight = 900;
   const [handler, x, y] = useHoverPosition();
   const tileX =
     x === null
@@ -38,46 +42,79 @@ export function Map({
           Math.min(y, renderHeight - 1) /
             (renderHeight / history.world?.height!)
         );
+  const flipTileY = tileY === null ? null : terrain.height - tileY - 1;
+  const selectedTile =
+    tileX !== null && flipTileY !== null
+      ? getTile(history.world, tileX, flipTileY)
+      : null;
+  const selectedRegion =
+    selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
   return (
     <div
       style={{
-        display: "grid",
-        gridTemplateColumns: `${renderWidth / history.world?.width!}px `.repeat(
-          history.world?.width!
-        ),
-        gridTemplateRows: `${renderHeight / history.world?.height!}px `.repeat(
-          history.world?.height!
-        ),
-        maxHeight: renderHeight,
-        maxWidth: renderWidth,
-        height: renderHeight,
-        width: renderWidth,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-start",
       }}
-      onMouseMove={handler}
     >
-      {history.world.cells.map((cell, index) => {
-        return (
-          <MapTile
-            key={index}
-            tile={cell}
-            gridRow={history.world?.height! - cell.y}
-            gridColumn={(index % history.world?.width!) + 1}
-            history={history}
-            language={language}
-          />
-        );
-      })}
       <div
         style={{
-          gridRowStart: 1,
-          gridRowEnd: -1,
-          gridColumnStart: 1,
-          gridColumnEnd: -1,
-          aspectRatio: 1,
-          zIndex: 0,
+          display: "grid",
+          gridTemplateColumns: `${
+            renderWidth / history.world?.width!
+          }px `.repeat(history.world?.width!),
+          gridTemplateRows: `${
+            renderHeight / history.world?.height!
+          }px `.repeat(history.world?.height!),
+          maxHeight: renderHeight,
+          maxWidth: renderWidth,
+          height: renderHeight,
+          width: renderWidth,
         }}
+        onMouseMove={handler}
       >
-        <Terrain terrain={terrain} hoverX={tileX} hoverY={tileY} />
+        {history.world.cells.map((cell, index) => {
+          return (
+            <MapTile
+              key={index}
+              tile={cell}
+              gridRow={history.world?.height! - cell.y}
+              gridColumn={(index % history.world?.width!) + 1}
+              history={history}
+              language={language}
+            />
+          );
+        })}
+        <div
+          style={{
+            gridRowStart: 1,
+            gridRowEnd: -1,
+            gridColumnStart: 1,
+            gridColumnEnd: -1,
+            aspectRatio: 1,
+            zIndex: 0,
+          }}
+        >
+          <Terrain terrain={terrain} hoverX={tileX} hoverY={flipTileY} />
+        </div>
+      </div>
+      <div style={{ flexGrow: 1 }}>
+        <Grid title={`Tile summary ${tileX} ${flipTileY}`} columns={1}>
+          {selectedRegion && (
+            <>
+              <GridItem>
+                <Region region={selectedRegion} history={history} />
+              </GridItem>
+              {getDeities(history.beings)
+                .filter((deity) => deity.location === selectedRegion.id)
+                .map((deity, index) => (
+                  <GridItem key={index}>
+                    <Being being={deity} history={history} />
+                  </GridItem>
+                ))}
+            </>
+          )}
+        </Grid>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { lookupEntries } from "../utils/lookup";
 import { History } from "../worldgen";
-import { getWord, spellWord } from "../worldgen/language";
+import { getWord, getWords, spellWord, spellWords } from "../worldgen/language";
 import { CommaSeparate } from "./commaSeparate";
 import { Name } from "./name";
 
@@ -9,7 +9,7 @@ export function Names({ name, history }: { name: string; history: History }) {
     ([dialectName, dialect]) => [
       dialectName,
       spellWord(getWord(dialect.language.name, dialect.language)),
-      spellWord(getWord(name, dialect.language)),
+      spellWords(getWords(name, dialect.language)),
     ]
   );
   return (

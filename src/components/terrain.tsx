@@ -30,12 +30,7 @@ export function Terrain({
     const hoverIndex =
       hoverX !== null &&
       hoverY !== null &&
-      getIndex(
-        hoverX,
-        terrain.height - hoverY - 1,
-        terrain.width,
-        terrain.height
-      );
+      getIndex(hoverX, hoverY, terrain.width, terrain.height);
 
     for (let x = 0; x < terrain.width; x++) {
       for (let y = 0; y < terrain.height; y++) {

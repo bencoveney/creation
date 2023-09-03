@@ -3,8 +3,13 @@ import { PropsWithChildren } from "react";
 export function Grid({
   children,
   minWidth = 175,
+  columns,
   title,
-}: PropsWithChildren & { minWidth?: number; title?: string }) {
+}: PropsWithChildren & {
+  minWidth?: number;
+  title?: string;
+  columns?: number;
+}) {
   if (Array.isArray(children) && children.length === 0) {
     return null;
   }
@@ -12,7 +17,9 @@ export function Grid({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
+        gridTemplateColumns: columns
+          ? `1fr `.repeat(columns)
+          : `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
         gridGap: 10,
         margin: 10,
       }}
