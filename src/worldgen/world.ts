@@ -1,5 +1,10 @@
-import { empty } from "@bencoveney/utils/dist/array";
 import { History } from ".";
+import {
+  Array2d,
+  array2dCreate,
+  array2dGet,
+  array2dIsInBounds,
+} from "../utils/array2d";
 
 export type Tile = {
   x: number;
@@ -7,30 +12,10 @@ export type Tile = {
   location: string;
 };
 
-export type World = {
-  cells: Tile[];
-  width: number;
-  height: number;
-};
+export type World = Array2d<Tile>;
 
 export function createWorld(width: number, height: number): World {
-  return {
-    width: width,
-    height: height,
-    cells: empty(width * height).map((_, index) => ({
-      x: index % width,
-      y: Math.floor(index / height),
-      location: "",
-    })),
-  };
-}
-
-export function getTile(world: World, x: number, y: number) {
-  return world.cells[x + y * world.width];
-}
-
-export function isInWorld(world: World, x: number, y: number): boolean {
-  return x >= 0 && x < world?.width! && y >= 0 && y < world?.height!;
+  return array2dCreate(width, height, (x, y) => ({ x, y, location: "" }));
 }
 
 export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
@@ -41,8 +26,8 @@ export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
     [0, 1],
   ]
     .map(([dx, dy]) => [tile.x + dx, tile.y + dy])
-    .filter(([x, y]) => isInWorld(world!, x, y))
-    .map(([x, y]) => getTile(world!, x, y));
+    .filter(([x, y]) => array2dIsInBounds(world, x, y))
+    .map(([x, y]) => array2dGet(world, x, y));
 }
 
 export function pathfind(
@@ -68,7 +53,7 @@ export function pathfind(
   while (
     !routeFound &&
     tilesIShouldCheck.size > 0 &&
-    sanityCheck++ < world.cells.length
+    sanityCheck++ < world.values.length
   ) {
     const [next, nextInfo] = getNextPossibleTile(tilesIShouldCheck);
     tilesIShouldCheck.delete(next);

@@ -1,11 +1,11 @@
 import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { Terrain } from "./terrain";
-import { createTerrain, getIndex } from "../terrain";
+import { createTerrain } from "../terrain";
 import { getFromLookupSafe, lookupValues } from "../utils/lookup";
 import { config } from "../config";
 import { useHoverPosition } from "../hooks/useHover";
-import { Tile, getTile } from "../worldgen/world";
+import { Tile } from "../worldgen/world";
 import { Name } from "./name";
 import { Tooltip } from "./tooltip";
 import { Motif } from "./motif";
@@ -13,6 +13,7 @@ import { Region } from "./region";
 import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
 import { Grid, GridItem } from "./grid";
+import { array2dGet, array2dGetIndex } from "../utils/array2d";
 
 const terrain = createTerrain(
   config.worldWidth * config.terrainResolution,
@@ -36,17 +37,17 @@ export function Map({
     x === null
       ? 0
       : Math.floor(
-          Math.min(x, renderWidth - 1) / (renderWidth / terrain.width)
+          Math.min(x, renderWidth - 1) / (renderWidth / terrain.xSize)
         );
   const pixelY =
     y === null
       ? null
       : Math.floor(
-          Math.min(y, renderHeight - 1) / (renderHeight / terrain.height)
+          Math.min(y, renderHeight - 1) / (renderHeight / terrain.ySize)
         );
-  const flipPixelY = pixelY === null ? 0 : terrain.height - pixelY - 1;
+  const flipPixelY = pixelY === null ? 0 : terrain.ySize - pixelY - 1;
 
-  const selectedTile = getTile(
+  const selectedTile = array2dGet(
     history.world,
     Math.floor(pixelX / config.terrainResolution),
     Math.floor(flipPixelY / config.terrainResolution)
@@ -65,11 +66,11 @@ export function Map({
         style={{
           display: "grid",
           gridTemplateColumns: `${
-            renderWidth / history.world?.width!
-          }px `.repeat(history.world?.width!),
-          gridTemplateRows: `${
-            renderHeight / history.world?.height!
-          }px `.repeat(history.world?.height!),
+            renderWidth / history.world?.xSize!
+          }px `.repeat(history.world?.xSize!),
+          gridTemplateRows: `${renderHeight / history.world?.ySize!}px `.repeat(
+            history.world?.ySize!
+          ),
           maxHeight: renderHeight,
           maxWidth: renderWidth,
           height: renderHeight,
@@ -77,13 +78,13 @@ export function Map({
         }}
         onMouseMove={handler}
       >
-        {history.world.cells.map((cell, index) => {
+        {history.world.values.map((tile, index) => {
           return (
             <MapTile
               key={index}
-              tile={cell}
-              gridRow={history.world?.height! - cell.y}
-              gridColumn={(index % history.world?.width!) + 1}
+              tile={tile}
+              gridRow={history.world?.ySize! - tile.y}
+              gridColumn={(index % history.world?.xSize!) + 1}
               history={history}
               language={language}
             />
@@ -108,11 +109,7 @@ export function Map({
             <>
               <GridItem>
                 Height:{" "}
-                {
-                  terrain.heights[
-                    getIndex(pixelX, flipPixelY, terrain.width, terrain.height)
-                  ]
-                }
+                {terrain.values[array2dGetIndex(terrain, pixelX, flipPixelY)]}
               </GridItem>
             </>
           )}

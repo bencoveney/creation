@@ -1,7 +1,8 @@
 import { createTileRegion, getDeities } from "../worldgen/populate";
 import { Being, History, Region } from "../worldgen";
-import { Tile, getTile } from "../worldgen/world";
+import { Tile } from "../worldgen/world";
 import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
+import { array2dGet } from "../utils/array2d";
 
 export function runMovement(history: History) {
   const deities = getDeities(history.beings);
@@ -14,7 +15,7 @@ export function runMovement(history: History) {
       } else if (path.length === 1) {
         // Already here. We are probably entering the world, otherwise we'd have a start/end.
         // Maybe it would be simpler to have a different category of activity for that.
-        const targetTile = getTile(history.world!, path[0].x, path[0].y);
+        const targetTile = array2dGet(history.world!, path[0].x, path[0].y);
         discoverLocation(deity, targetTile, history);
         const target = getFromLookup(history.regions, targetTile.location);
         deity.location = target.id;
@@ -22,7 +23,7 @@ export function runMovement(history: History) {
         deity.currentActivity = undefined;
       } else {
         path.shift();
-        const targetTile = getTile(history.world!, path[0].x, path[0].y);
+        const targetTile = array2dGet(history.world!, path[0].x, path[0].y);
         moveToLocation(deity, targetTile, history, previous);
       }
     }

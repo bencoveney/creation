@@ -1,11 +1,9 @@
+import { Array2d, array2dFrom } from "../utils/array2d";
 import { createPerlin } from "./perlin";
 
 export type Terrain = {
-  heights: number[];
-  width: number;
-  height: number;
   waterLevel: number;
-};
+} & Array2d<number>;
 
 export function createTerrain(width: number, height: number): Terrain {
   const heights2 = getHeights(width, 4).map((height) => height / 1);
@@ -20,18 +18,10 @@ export function createTerrain(width: number, height: number): Terrain {
     heights16,
     heights32
   ).map((height) => 1 - Math.abs(height));
-  return { heights, width, height, waterLevel: 0.5 };
-}
-
-function getXY(width: number, height: number, index: number) {
   return {
-    x: index % width,
-    y: Math.floor(index / height),
+    ...array2dFrom(width, height, heights),
+    waterLevel: 0.5,
   };
-}
-
-export function getIndex(x: number, y: number, width: number, height: number) {
-  return x + y * width;
 }
 
 function getHeights(dimension: number, noiseScale: number) {

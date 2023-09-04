@@ -1,9 +1,10 @@
 import { config } from "../config";
+import { array2dGet } from "../utils/array2d";
 import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
 import { randomChoice, rollDice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
-import { Tile, getTile, pathfind } from "../worldgen/world";
+import { Tile, pathfind } from "../worldgen/world";
 
 // Something along these lines.
 //
@@ -53,7 +54,7 @@ function getDeityTargetLocation(
   deity: Being,
   history: History
 ): Tile | undefined {
-  const possibleTiles: Tile[] = history.world!.cells.filter(
+  const possibleTiles: Tile[] = history.world!.values.filter(
     (tile) => tile.location != deity.location
   );
   if (possibleTiles.length === 0) {
@@ -83,7 +84,7 @@ function getPathToTargetLocation(
     return [targetLocation];
   }
   const fromTile = location.tile;
-  const toTile = getTile(world, targetLocation.x, targetLocation.y);
+  const toTile = array2dGet(world, targetLocation.x, targetLocation.y);
   const path = pathfind(history, world, fromTile, toTile);
   if (!path || path.length === 0) {
     console.error("weird");
