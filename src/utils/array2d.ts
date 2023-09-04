@@ -1,4 +1,5 @@
 import { empty } from "@bencoveney/utils/dist/array";
+import { normalize } from "./array";
 
 export type Array2d<T> = {
   xSize: number;
@@ -139,6 +140,32 @@ export function array2dMerge<T extends {}, U>(
   return array2dReplace(anyArr, values);
 }
 
+export function array2dSum(...arrs: Array2d<number>[]): Array2d<number> {
+  const anyArr = arrs[0];
+  const length = anyArr.values.length;
+  const values: number[] = [];
+  for (let index = 0; index < length; index++) {
+    values.push(0);
+    for (let arr = 0; arr < arrs.length; arr++) {
+      values[index] += arrs[arr].values[index];
+    }
+  }
+  return array2dReplace(anyArr, values);
+}
+
+export function array2dProduct(...arrs: Array2d<number>[]): Array2d<number> {
+  const anyArr = arrs[0];
+  const length = anyArr.values.length;
+  const values: number[] = [];
+  for (let index = 0; index < length; index++) {
+    values.push(0);
+    for (let arr = 0; arr < arrs.length; arr++) {
+      values[index] += arrs[arr].values[index];
+    }
+  }
+  return array2dReplace(anyArr, values);
+}
+
 export function array2dScale(
   arr: Array2d<number>,
   by: number
@@ -148,4 +175,8 @@ export function array2dScale(
     multiplied.push(arr.values[index] * by);
   }
   return array2dReplace(arr, multiplied);
+}
+
+export function array2dNormalize(arr: Array2d<number>): Array2d<number> {
+  return array2dReplace(arr, normalize(arr.values));
 }

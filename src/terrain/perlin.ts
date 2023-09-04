@@ -1,3 +1,5 @@
+import { array2dFrom } from "../utils/array2d";
+
 type Perlin = {
   get(x: number, y: number): number;
 };
@@ -15,7 +17,7 @@ function interp(x: number, a: number, b: number): number {
   return a + smootherstep(x) * (b - a);
 }
 
-export function createPerlin(): Perlin {
+function createPerlin(): Perlin {
   const gradients = new Map<string, { x: number; y: number }>();
   const memory = new Map<string, number>();
 
@@ -51,4 +53,29 @@ export function createPerlin(): Perlin {
   }
 
   return { get };
+}
+
+export function perlin2dArray(
+  xSize: number,
+  ySize: number,
+  noiseScale: number
+) {
+  const values = getPerlinValues(xSize, noiseScale).map((height) => height / 1);
+  return array2dFrom(xSize, ySize, values);
+}
+
+function getPerlinValues(dimension: number, noiseScale: number) {
+  const perlin = createPerlin();
+  const GRID_SIZE = 1 * noiseScale;
+  const RESOLUTION = dimension / noiseScale;
+  let num_pixels = GRID_SIZE / RESOLUTION;
+
+  const heights = [];
+  for (let x = 0; x < GRID_SIZE; x += num_pixels / GRID_SIZE) {
+    for (let y = 0; y < GRID_SIZE; y += num_pixels / GRID_SIZE) {
+      let v = perlin.get(x, y);
+      heights.push(v + 1);
+    }
+  }
+  return heights;
 }
