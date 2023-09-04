@@ -3,7 +3,9 @@ import { History, Being } from "../worldgen";
 import { Language, getWord, spellWord } from "../worldgen/language";
 import { Id } from "./id";
 import { Motif } from "./motif";
+import { Name } from "./name";
 import { Names } from "./names";
+import { Tags, TagsItem } from "./tags";
 
 export function Being({
   being,
@@ -14,22 +16,32 @@ export function Being({
   history: History;
   language: Language;
 }) {
+  const languageName = spellWord(getWord(language.name, language));
   return (
     <>
       <Id value={being.id} /> {being.name}:
       <Names name={being.name} history={history} />
       <Motif motif={being.motif} />
       {being.theme && `Deity of ${being.theme}`}
-      {Object.entries(being.relationships).map(([otherBeing, relationship]) => {
-        const otherBeingName = spellWord(
-          getWord(getFromLookup(history.beings, otherBeing).name, language)
-        );
-        return (
-          <p>
-            {`${otherBeingName} ${relationship.kind} ${relationship.encounters}`}
-          </p>
-        );
-      })}
+      <Tags>
+        {Object.entries(being.relationships).map(
+          ([otherBeing, relationship]) => {
+            const otherBeingName = spellWord(
+              getWord(getFromLookup(history.beings, otherBeing).name, language)
+            );
+            return (
+              <TagsItem key={otherBeing}>
+                <Name
+                  key={otherBeingName}
+                  languageName={languageName}
+                  word={otherBeingName}
+                />
+                : {`${relationship.kind} ${relationship.encounters}`}
+              </TagsItem>
+            );
+          }
+        )}
+      </Tags>
     </>
   );
 }

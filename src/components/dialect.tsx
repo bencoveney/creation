@@ -2,6 +2,7 @@ import { History, Dialect } from "../worldgen";
 import { getWord, spellPhoneme, spellWord } from "../worldgen/language";
 import { Id } from "./id";
 import { Names } from "./names";
+import { Tags, TagsItem } from "./tags";
 import { Tooltip } from "./tooltip";
 
 export function Dialect({
@@ -57,23 +58,14 @@ export function Dialect({
             .join(", ")}
         </li>
       </ul>
-      <ul style={{ margin: 0, padding: 0 }}>
-        {Object.entries(language.words).map(([word, voicing]) => {
-          return (
-            <li
-              key={word}
-              style={{
-                display: "inline-block",
-                margin: 2,
-                padding: 2,
-                border: "1px solid grey",
-              }}
-            >
-              {word}: <i>{spellWord(voicing)}</i>
-            </li>
-          );
-        })}
-      </ul>
+      <Tags>
+        {Object.entries(language.words).map(([word, voicing]) => (
+          <TagsItem key={word}>
+            {word}: <i>{spellWord(voicing)}</i>
+          </TagsItem>
+        ))}
+      </Tags>
+      <ul style={{ margin: 0, padding: 0 }}></ul>
     </>
   );
 }

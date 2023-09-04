@@ -11,6 +11,8 @@ https://stackoverflow.com/questions/18261982/output-range-of-perlin-noise
 https://digitalfreepen.com/2017/06/20/range-perlin-noise.html
 https://stackoverflow.com/questions/36796829/procedural-terrain-with-ridged-fractal-noise
 https://www.fractal-landscapes.co.uk/maths.html#erosion
+https://www.redblobgames.com/articles/noise/introduction.html
+https://www.redblobgames.com/maps/terrain-from-noise/
 
 ```css
 .grad {
