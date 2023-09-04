@@ -85,3 +85,67 @@ export function array2dIsInBounds<T>(
 ): boolean {
   return x >= 0 && x < arr.xSize && y >= 0 && y < arr.ySize;
 }
+
+export function array2dMap<T, U>(
+  arr: Array2d<T>,
+  mapper: (value: T, x: number, y: number, index: number) => U
+): Array2d<U> {
+  return {
+    xSize: arr.xSize,
+    ySize: arr.ySize,
+    values: arr.values.map((value, index) =>
+      mapper(value, index % arr.xSize, Math.floor(index / arr.ySize), index)
+    ),
+  };
+}
+
+export function array2dReplace<T, U>(
+  arr: Array2d<T>,
+  newValues: U[]
+): Array2d<U> {
+  return {
+    xSize: arr.xSize,
+    ySize: arr.ySize,
+    values: newValues,
+  };
+}
+
+export function array2dFlipY<T>(arr: Array2d<T>, y: number): number {
+  return arr.ySize - y - 1;
+}
+
+export function array2dMerge<T extends {}, U>(
+  arr: { [Property in keyof T]: Array2d<T[Property]> },
+  merger: (value: T, x: number, y: number, index: number) => U
+): Array2d<U> {
+  const keys = Object.keys(arr) as Array<keyof T>;
+  const anyArr = arr[keys[0]];
+  const length = anyArr.values.length;
+  const values: U[] = [];
+  const param: Partial<T> = {};
+  for (let index = 0; index < length; index++) {
+    for (let key = 0; key < keys.length; key++) {
+      param[keys[key]] = arr[keys[key]].values[index];
+    }
+    values.push(
+      merger(
+        param as T,
+        index % anyArr.xSize,
+        Math.floor(index / anyArr.ySize),
+        index
+      )
+    );
+  }
+  return array2dReplace(anyArr, values);
+}
+
+export function array2dScale(
+  arr: Array2d<number>,
+  by: number
+): Array2d<number> {
+  const multiplied = [];
+  for (let index = 0; index < arr.values.length; index++) {
+    multiplied.push(arr.values[index] * by);
+  }
+  return array2dReplace(arr, multiplied);
+}

@@ -1,4 +1,10 @@
-import { Array2d, array2dFrom } from "../utils/array2d";
+import {
+  Array2d,
+  array2dFrom,
+  array2dMap,
+  array2dMerge,
+  array2dScale,
+} from "../utils/array2d";
 import { createPerlin } from "./perlin";
 
 export type Terrain = {
@@ -6,22 +12,32 @@ export type Terrain = {
 } & Array2d<number>;
 
 export function createTerrain(width: number, height: number): Terrain {
-  const heights2 = getHeights(width, 4).map((height) => height / 1);
-  const heights4 = getHeights(width, 8).map((height) => height / 1);
-  const heights8 = getHeights(width, 16).map((height) => height / 2);
-  const heights16 = getHeights(width, 32).map((height) => height / 3);
-  const heights32 = getHeights(width, 64).map((height) => height / 4);
-  const heights = sumHeights(
-    heights2,
-    heights4,
-    heights8,
-    heights16,
-    heights32
-  ).map((height) => 1 - Math.abs(height));
+  const heights2 = perlin2dArray(width, height, 4);
+  const heights4 = perlin2dArray(width, height, 8);
+  const heights8 = array2dScale(perlin2dArray(width, height, 16), 1 / 2);
+  const heights16 = array2dScale(perlin2dArray(width, height, 32), 1 / 3);
+  const heights32 = array2dScale(perlin2dArray(width, height, 64), 1 / 4);
+  const heights = array2dMerge(
+    {
+      heights2,
+      heights4,
+      heights8,
+      heights16,
+      heights32,
+    },
+    ({ heights2, heights4, heights8, heights16, heights32 }) =>
+      heights2 + heights4 + heights8 + heights16 + heights32
+  );
+  const flipped = array2dMap(heights, (height) => 1 - Math.abs(height));
   return {
-    ...array2dFrom(width, height, heights),
+    ...flipped,
     waterLevel: 0.5,
   };
+}
+
+function perlin2dArray(xSize: number, ySize: number, noiseScale: number) {
+  const values = getHeights(xSize, noiseScale).map((height) => height / 1);
+  return array2dFrom(xSize, ySize, values);
 }
 
 function getHeights(dimension: number, noiseScale: number) {

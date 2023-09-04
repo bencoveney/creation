@@ -14,6 +14,6 @@ export function lerp(x: number, min: number, max: number) {
 }
 
 // Derive position (from 0 - 1) along range min -> max
-export function inverseLerp(x: number, a: number, b: number) {
-  return (x - a) / (b - a);
+export function inverseLerp(x: number, min: number, max: number) {
+  return (x - min) / (max - min);
 }

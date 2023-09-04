@@ -1,9 +1,14 @@
 import { useEffect, useRef } from "react";
 import { Terrain as TerrainModel } from "../terrain";
-import { getMinAndMax } from "../utils/array";
+import { normalize } from "../utils/array";
 import { Color, toHex } from "@bencoveney/utils/dist/color";
 import { inverseLerp, lerp } from "../utils/maths";
-import { array2dGetIndex } from "../utils/array2d";
+import {
+  array2dFlipY,
+  array2dGetIndex,
+  array2dMap,
+  array2dReplace,
+} from "../utils/array2d";
 
 export function Terrain({
   terrain,
@@ -26,29 +31,24 @@ export function Terrain({
       return;
     }
 
-    const { min, max } = getMinAndMax(terrain.values);
-
     const hoverIndex =
       hoverX !== null && hoverY !== null
         ? array2dGetIndex(terrain, hoverX, hoverY)
         : null;
 
-    for (let x = 0; x < terrain.xSize; x++) {
-      for (let y = 0; y < terrain.ySize; y++) {
-        const index = array2dGetIndex(terrain, x, y);
-        const height = index === hoverIndex ? 100 : terrain.values[index];
-        const scaledHeight = inverseLerp(height, min, max);
-        const color = getColor(scaledHeight);
+    const scaledTerrain = array2dReplace(terrain, normalize(terrain.values));
+    const colors = array2dMap(scaledTerrain, getColor);
+
+    array2dMap(colors, (color, x, y, index) => {
+      const flipY = array2dFlipY(colors, y);
+      if (index === hoverIndex) {
+        context.fillStyle = "#ff0000";
+        context.fillRect(x, flipY, 1, 1);
+      } else {
         context.fillStyle = toHex(color);
-        const flipY = terrain.ySize - y - 1;
-        if (index === hoverIndex && height >= 100) {
-          context.fillStyle = "#ff0000";
-          context.fillRect(x, flipY, 1, 1);
-        } else {
-          context.fillRect(x, flipY, 1, 1);
-        }
+        context.fillRect(x, flipY, 1, 1);
       }
-    }
+    });
   }, [canvasRef.current, hoverX, hoverY]);
   return (
     <canvas

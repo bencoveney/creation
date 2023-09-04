@@ -1,3 +1,5 @@
+import { inverseLerp } from "./maths";
+
 function getPairings<T>(values: T[]): [T, T][] {
   let result: [T, T][] = [];
   for (let first = 0; first < values.length - 1; first++) {
@@ -41,4 +43,9 @@ export function getMinAndMax(values: number[]): { min: number; max: number } {
     lowest = Math.min(lowest, values[i]);
   }
   return { min: lowest, max: highest };
+}
+
+export function normalize(values: number[]): number[] {
+  const { min, max } = getMinAndMax(values);
+  return values.map((value) => inverseLerp(value, min, max));
 }
