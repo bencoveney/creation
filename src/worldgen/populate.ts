@@ -18,6 +18,7 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
     kind: "deity",
     name: createDeityName(),
     theme,
+    relationships: {},
   });
 }
 

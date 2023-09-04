@@ -1,4 +1,3 @@
-import { config } from "../config";
 import { Logger, createLogger } from "../log";
 import { Lookup, createLookup } from "../utils/lookup";
 import { Language } from "./language";
@@ -30,6 +29,12 @@ export type Being = {
   currentActivity?: {
     moveToLocation: Coordinate;
     path: Coordinate[];
+  };
+  relationships: {
+    [being: string]: {
+      kind: string;
+      encounters: number;
+    };
   };
 };
 

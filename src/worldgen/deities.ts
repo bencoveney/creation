@@ -64,9 +64,22 @@ export type DeityTheme = {
 
 export function createInitialDeities(history: History) {
   const deityThemes = getDeityThemes();
-  deityThemes.forEach((deityTheme) => {
+  const deities = deityThemes.map((deityTheme) => {
     const deity = createDeity(history.beings, deityTheme.theme);
     history.log(`[[${deity.name}]] woke from their slumber.`);
+    return deity;
+  });
+  deityThemes.forEach((deityTheme) => {
+    const deity = deities.find((d) => d.theme === deityTheme.theme);
+    if (deityTheme.relationshipKind) {
+      deityTheme.relationshipTo?.forEach((relationshipTo) => {
+        const other = deities.find((d) => d.theme === relationshipTo);
+        deity!.relationships[other!.id] = {
+          kind: deityTheme.relationshipKind!,
+          encounters: 0,
+        };
+      });
+    }
   });
 }
 
@@ -99,9 +112,9 @@ export function getDeityThemes(): DeityTheme[] {
 
 function getRelationship(count: number): string {
   if (count === 2) {
-    return randomChoice(["Partner", "Lover"]);
+    return randomChoice(["sibling", "partner", "lover"]);
   } else {
-    return randomChoice(["Sibling", "Friend"]);
+    return randomChoice(["sibling"]);
   }
 }
 

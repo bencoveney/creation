@@ -130,7 +130,11 @@ export function Map({
                 .filter((deity) => deity.location === selectedRegion.id)
                 .map((deity, index) => (
                   <GridItem key={index}>
-                    <Being being={deity} history={history} />
+                    <Being
+                      being={deity}
+                      history={history}
+                      language={language}
+                    />
                   </GridItem>
                 ))}
             </>

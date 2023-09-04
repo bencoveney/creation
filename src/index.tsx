@@ -13,6 +13,7 @@ import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
 import { lookupFirstValue } from "./utils/lookup";
 import { config } from "./config";
+import { runGreeting } from "./systems/greeting";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -40,6 +41,8 @@ function Wrapper() {
           history.log.tick = tick;
           history.log.currentSystem = "movement";
           runMovement(history);
+          history.log.currentSystem = "greeting";
+          runGreeting(history);
           history.log.currentSystem = "artifactCreation";
           runArtifactCreation(history);
           history.log.currentSystem = "symbolAdoption";
