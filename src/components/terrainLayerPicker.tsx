@@ -1,5 +1,4 @@
 import { TerrainRegistry } from "../terrain/registry";
-import { Tags, TagsItem } from "./tags";
 
 export function TerrainLayerPicker({
   terrainRegistry,

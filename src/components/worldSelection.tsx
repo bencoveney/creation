@@ -6,12 +6,8 @@ import { Region } from "./region";
 import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
 import { Grid, GridItem } from "./grid";
-import { array2dGet, array2dGetIndex } from "../utils/array2d";
+import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
-import {
-  TerrainRegistryNumberEntry,
-  getTerrainLayer,
-} from "../terrain/registry";
 import { TerrainValues } from "./terrainValues";
 
 export function WorldSelection({
@@ -30,11 +26,6 @@ export function WorldSelection({
   if (!history.world) {
     return null;
   }
-  const { terrainRegistry } = history;
-  const { values: heights } = getTerrainLayer(
-    terrainRegistry,
-    "heights"
-  ) as TerrainRegistryNumberEntry;
 
   const selectedTile = array2dGet(
     history.world,

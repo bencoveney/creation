@@ -94,5 +94,3 @@ export function getBiome(
   }
   return Biome.Unknown;
 }
-
-// function getBiomeColor(height: string, biome: string) {}
