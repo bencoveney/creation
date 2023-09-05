@@ -146,5 +146,5 @@ export const config = {
   worldWidth: 10,
   worldHeight: 10,
   terrainResolution: 20,
-  // terrainPerlinRanges: [1, 4, 8, 16],
+  waterHeight: 0.46,
 };

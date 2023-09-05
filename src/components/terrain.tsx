@@ -9,6 +9,9 @@ import {
 import { TerrainRegistry, getTerrainLayer } from "../terrain/registry";
 import { getNumberColor, getStringColor } from "../terrain/color";
 
+const selectedColor = toHex({ r: 0, g: 255, b: 0 });
+const missingColor = { r: 0, g: 255, b: 0 };
+
 export function Terrain({
   terrain,
   layerName,
@@ -31,8 +34,9 @@ export function Terrain({
       colors = array2dMap(layer.values, getNumberColor);
       break;
     case "string":
-      colors = array2dMap(layer.values, (value) =>
-        getStringColor(value, layer.colorMap)
+      colors = array2dMap(
+        layer.values,
+        (value) => getStringColor(value, layer.colorMap) || missingColor
       );
       break;
   }
@@ -57,13 +61,15 @@ export function Terrain({
     array2dMap(colors, (color, x, y, index) => {
       const flipY = array2dFlipY(colors, y);
       if (index === hoverIndex) {
-        context.fillStyle = "#ff0000";
+        context.fillStyle = selectedColor;
         context.fillRect(x, flipY, 1, 1);
       } else {
         context.fillStyle = toHex(color);
         context.fillRect(x, flipY, 1, 1);
       }
     });
+
+    console.log("done rendering", canvasRef.current, hoverX, hoverY, colors);
   }, [canvasRef.current, hoverX, hoverY, colors]);
   return (
     <canvas

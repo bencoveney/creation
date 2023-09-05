@@ -1,6 +1,7 @@
 import { Color } from "@bencoveney/utils/dist/color";
 import { inverseLerp, lerp } from "../utils/maths";
 import { TerrainColorMap } from "./registry";
+import { config } from "../config";
 
 export function getNumberColor(value: number): Color {
   if (value < 0) {
@@ -47,16 +48,16 @@ export function getTerrainColor(height: number): Color {
       g: lerp(scale, 110, 163),
       b: lerp(scale, 128, 171),
     };
-  } else if (height >= 0.25 && height < 0.46) {
-    const scale = inverseLerp(height, 0.25, 0.46);
+  } else if (height >= 0.25 && height < config.waterHeight) {
+    const scale = inverseLerp(height, 0.25, config.waterHeight);
     return {
       r: lerp(scale, 50, 88),
       g: lerp(scale, 163, 219),
       b: lerp(scale, 171, 202),
     };
-  } else if (height >= 0.46 && height < 0.5) {
+  } else if (height >= config.waterHeight && height < 0.5) {
     // Sand
-    const scale = inverseLerp(height, 0.46, 0.5);
+    const scale = inverseLerp(height, config.waterHeight, 0.5);
     return {
       r: lerp(scale, 235, 148),
       g: lerp(scale, 196, 119),

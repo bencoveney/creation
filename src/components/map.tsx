@@ -69,6 +69,7 @@ export function Map({
       {history.world.values.map((tile, index) => {
         return (
           <div
+            key={index}
             style={{
               gridRow: history.world?.ySize! - tile.y,
               gridColumn: (index % history.world?.xSize!) + 1,
@@ -81,12 +82,7 @@ export function Map({
               boxSizing: "border-box",
             }}
           >
-            <MapTile
-              key={index}
-              tile={tile}
-              history={history}
-              language={language}
-            />
+            <MapTile tile={tile} history={history} language={language} />
           </div>
         );
       })}

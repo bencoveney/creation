@@ -7,7 +7,6 @@ import { runArtifactCreation } from "./systems/artifactCreation";
 import { runSymbolAdoption } from "./systems/symbolAdoption";
 import { createPlaybackControls } from "./playback";
 import { useEffect, useMemo, useState } from "react";
-import { Playback } from "./components/playback";
 import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
 import { lookupFirstValue } from "./utils/lookup";
@@ -25,16 +24,15 @@ function initialiseHistory() {
   return newHistory;
 }
 
+const history = initialiseHistory();
+
 function Wrapper() {
-  const [history, setHistory] = useState(initialiseHistory());
   const [, forceRerender] = useState({});
 
   const playbackControls = useMemo(
     () =>
       createPlaybackControls(
-        (_tick) => {
-          setHistory(initialiseHistory());
-        },
+        (_tick) => {},
         (tick) => {
           history.tick = tick;
           history.log.tick = tick;
@@ -52,26 +50,22 @@ function Wrapper() {
           return tick < config.runTicks;
         }
       ),
-    [history]
+    []
   );
 
   useEffect(() => {
-    if (getQueryBool("autorun")) {
+    if (playbackControls.canTick && getQueryBool("autorun")) {
       playbackControls.tickAll();
       console.log(history);
     }
-  }, [playbackControls, history]);
+  }, [playbackControls]);
 
-  const firstDialect = lookupFirstValue(history.dialects);
-
-  return firstDialect ? (
+  return (
     <Page
       history={history}
-      language={firstDialect.language}
+      language={lookupFirstValue(history.dialects).language}
       playbackControls={playbackControls}
     />
-  ) : (
-    <Playback {...playbackControls} />
   );
 }
 

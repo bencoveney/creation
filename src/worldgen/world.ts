@@ -1,11 +1,11 @@
 import { config } from "../config";
+import { TerrainAssessment, assessTerrain } from "../terrain/assess";
 import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import {
   Array2d,
   array2dCreate,
   array2dGet,
   array2dIsInBounds,
-  array2dSlice,
 } from "../utils/array2d";
 
 export type Tile = {
@@ -13,6 +13,7 @@ export type Tile = {
   y: number;
   location: string;
   terrainRegistry: TerrainRegistry;
+  terrainAssessment: TerrainAssessment;
 };
 
 export type World = Array2d<Tile>;
@@ -22,17 +23,21 @@ export function createWorld(
   height: number,
   terrainRegistry: TerrainRegistry
 ): World {
-  return array2dCreate(width, height, (x, y) => ({
-    x,
-    y,
-    location: "",
-    terrainRegistry: sliceTerrainRegistry(
+  return array2dCreate(width, height, (x, y) => {
+    const newTerrainRegistry = sliceTerrainRegistry(
       terrainRegistry,
       x,
       y,
       config.terrainResolution
-    ),
-  }));
+    );
+    return {
+      x,
+      y,
+      location: "",
+      terrainRegistry: newTerrainRegistry,
+      terrainAssessment: assessTerrain(newTerrainRegistry),
+    };
+  });
 }
 
 export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {

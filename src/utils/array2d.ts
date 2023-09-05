@@ -72,11 +72,8 @@ export function array2dGetIndex<T>(
 export function array2dGetCoords<T>(
   arr: Array2d<T>,
   index: number
-): { x: number; y: number } {
-  return {
-    x: index % arr.xSize,
-    y: Math.floor(index / arr.ySize),
-  };
+): [number, number] {
+  return [index % arr.xSize, Math.floor(index / arr.ySize)];
 }
 
 export function array2dIsInBounds<T>(
@@ -194,6 +191,34 @@ export function array2dSlice<T>(
       const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
       const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
       result.values[mappedIndex] = sourceValue;
+    }
+  }
+  return result;
+}
+
+const neighbourPositions = [
+  [-1, 0],
+  [1, 0],
+  [0, -1],
+  [0, 1],
+];
+
+export function array2dGetNeighbourIndices<T>(
+  arr: Array2d<T>,
+  index: number,
+  excluding?: number[]
+): number[] {
+  const [positionX, positionY] = array2dGetCoords(arr, index);
+  const result = [];
+  for (let neighbour = 0; neighbour < neighbourPositions.length; neighbour++) {
+    const [xOffset, yOffset] = neighbourPositions[neighbour];
+    const x = positionX + xOffset;
+    const y = positionY + yOffset;
+    if (array2dIsInBounds(arr, x, y)) {
+      const index = array2dGetIndex(arr, x, y);
+      if (!excluding?.includes(index)) {
+        result.push(index);
+      }
     }
   }
   return result;

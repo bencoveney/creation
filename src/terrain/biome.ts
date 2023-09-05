@@ -1,3 +1,4 @@
+import { config } from "../config";
 import { TerrainColorMap } from "./registry";
 
 export enum Biome {
@@ -68,7 +69,7 @@ export function getBiome(
   if (height < 0.25) {
     return Biome.DeepSea;
   }
-  if (height < 0.46) {
+  if (height < config.waterHeight) {
     return Biome.ShallowSea;
   }
   if (height < 0.5 && gradient < 0.35) {

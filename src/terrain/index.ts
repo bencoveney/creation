@@ -10,6 +10,7 @@ import {
 } from "../utils/array2d";
 import { biomeColorMap, getBiome } from "./biome";
 import { getTerrainColor } from "./color";
+import { featureColorMap, findFeatures } from "./features";
 import { perlin2dArray } from "./perlin";
 import { TerrainRegistry } from "./registry";
 
@@ -59,6 +60,8 @@ export function createTerrain(
   // );
   const colors = array2dMap(heights, getTerrainColor);
 
+  const features = findFeatures(heights);
+
   terrainRegistry.push(
     { name: "heights2", kind: "number", values: heights2 },
     { name: "heights4", kind: "number", values: heights4 },
@@ -69,6 +72,12 @@ export function createTerrain(
     { name: "gradient", kind: "number", values: gradient },
     { name: "temperature", kind: "number", values: temperature },
     { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
-    { name: "colors", kind: "color", values: colors }
+    { name: "colors", kind: "color", values: colors },
+    {
+      name: "features",
+      kind: "string",
+      values: features,
+      colorMap: featureColorMap,
+    }
   );
 }

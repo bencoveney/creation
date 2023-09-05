@@ -10,6 +10,7 @@ import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
 import { Terrain } from "./terrain";
+import { TileValues } from "./tileValues";
 
 export function WorldSelection({
   history,
@@ -41,6 +42,19 @@ export function WorldSelection({
   return (
     <Grid columns={1}>
       <GridItem>
+        <TerrainLayerPicker
+          terrainRegistry={history.terrainRegistry}
+          setTerrainLayer={setTerrainLayer}
+        />
+      </GridItem>
+      <GridItem>
+        <TerrainValues
+          terrainRegistry={history.terrainRegistry}
+          selectionX={selectionX}
+          selectionY={selectionY}
+        />
+      </GridItem>
+      <GridItem>
         <Terrain
           hoverX={null}
           hoverY={null}
@@ -49,38 +63,17 @@ export function WorldSelection({
         />
       </GridItem>
       <GridItem>
-        <div>
-          Terrain Position: ({selectionX}, {selectionY})
-        </div>
-        <div>
-          Tile Position: ({selectedTile.x}, {selectedTile.y})
-        </div>
-        <TerrainValues
-          terrainRegistry={history.terrainRegistry}
-          selectionX={selectionX}
-          selectionY={selectionY}
-        />
+        <TileValues tile={selectedTile} />
+        {selectedRegion && <Region region={selectedRegion} history={history} />}
       </GridItem>
-      <GridItem>
-        <TerrainLayerPicker
-          terrainRegistry={history.terrainRegistry}
-          setTerrainLayer={setTerrainLayer}
-        />
-      </GridItem>
-      {selectedRegion && (
-        <>
-          <GridItem>
-            <Region region={selectedRegion} history={history} />
-          </GridItem>
-          {getDeities(history.beings)
-            .filter((deity) => deity.location === selectedRegion.id)
-            .map((deity, index) => (
-              <GridItem key={index}>
-                <Being being={deity} history={history} language={language} />
-              </GridItem>
-            ))}
-        </>
-      )}
+      {selectedRegion &&
+        getDeities(history.beings)
+          .filter((deity) => deity.location === selectedRegion.id)
+          .map((deity, index) => (
+            <GridItem key={index}>
+              <Being being={deity} history={history} language={language} />
+            </GridItem>
+          ))}
     </Grid>
   );
 }
