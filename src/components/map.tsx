@@ -14,11 +14,11 @@ import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
 import { Grid, GridItem } from "./grid";
 import { array2dGet, array2dGetIndex } from "../utils/array2d";
-
-const terrain = createTerrain(
-  config.worldWidth * config.terrainResolution,
-  config.worldHeight * config.terrainResolution
-);
+import { TerrainLayerPicker } from "./terrainLayerPicker";
+import {
+  TerrainRegistryNumberEntry,
+  getTerrainLayer,
+} from "../terrain/registry";
 
 export function Map({
   history,
@@ -30,6 +30,11 @@ export function Map({
   if (!history.world) {
     return null;
   }
+  const { terrainRegistry } = history;
+  const { values: heights } = getTerrainLayer(
+    terrainRegistry,
+    "heights"
+  ) as TerrainRegistryNumberEntry;
   const renderWidth = 900;
   const renderHeight = 900;
   const [handler, x, y] = useHoverPosition();
@@ -37,15 +42,15 @@ export function Map({
     x === null
       ? 0
       : Math.floor(
-          Math.min(x, renderWidth - 1) / (renderWidth / terrain.xSize)
+          Math.min(x, renderWidth - 1) / (renderWidth / heights.xSize)
         );
   const pixelY =
     y === null
       ? null
       : Math.floor(
-          Math.min(y, renderHeight - 1) / (renderHeight / terrain.ySize)
+          Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
         );
-  const flipPixelY = pixelY === null ? 0 : terrain.ySize - pixelY - 1;
+  const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
 
   const selectedTile = array2dGet(
     history.world,
@@ -100,24 +105,31 @@ export function Map({
             zIndex: 0,
           }}
         >
-          <Terrain terrain={terrain} hoverX={pixelX} hoverY={flipPixelY} />
+          <Terrain
+            terrain={terrainRegistry}
+            hoverX={pixelX}
+            hoverY={flipPixelY}
+            layerName="colors"
+          />
         </div>
       </div>
       <div style={{ flexGrow: 1 }}>
-        <Grid title={`Terrain Summary (${pixelX}, ${flipPixelY})`} columns={1}>
-          {selectedRegion && (
-            <>
-              <GridItem>
-                Height:{" "}
-                {terrain.values[array2dGetIndex(terrain, pixelX, flipPixelY)]}
-              </GridItem>
-            </>
-          )}
-        </Grid>
-        <Grid
-          title={`Tile summary (${selectedTile.x}, ${selectedTile.y})`}
-          columns={1}
-        >
+        <Grid columns={1}>
+          <GridItem>
+            <div>
+              Terrain Position: ({pixelX}, {flipPixelY})
+            </div>
+            <div>
+              Tile Position: ({selectedTile.x}, {selectedTile.y})
+            </div>
+            <div>
+              Height:{" "}
+              {heights.values[array2dGetIndex(heights, pixelX, flipPixelY)]}
+            </div>
+          </GridItem>
+          <GridItem>
+            <TerrainLayerPicker terrainRegistry={history.terrainRegistry} />
+          </GridItem>
           {selectedRegion && (
             <>
               <GridItem>

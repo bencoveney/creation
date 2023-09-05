@@ -1,4 +1,7 @@
+import { config } from "../config";
 import { Logger, createLogger } from "../log";
+import { createTerrain } from "../terrain";
+import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, createLookup } from "../utils/lookup";
 import { Language } from "./language";
 import { Tile, World } from "./world";
@@ -59,9 +62,16 @@ export type History = {
   log: Logger;
   tick: number;
   world: null | World;
+  terrainRegistry: TerrainRegistry;
 };
 
 export function initHistory(): History {
+  const terrainRegistry: TerrainRegistry = [];
+  createTerrain(
+    config.worldWidth * config.terrainResolution,
+    config.worldHeight * config.terrainResolution,
+    terrainRegistry
+  );
   return {
     regions: createLookup<Region>(),
     beings: createLookup<Being>(),
@@ -70,6 +80,7 @@ export function initHistory(): History {
     log: createLogger(0),
     tick: 0,
     world: null,
+    terrainRegistry,
   };
 }
 
