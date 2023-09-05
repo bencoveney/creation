@@ -18,13 +18,19 @@ export function createTerrain(
   height: number,
   terrainRegistry: TerrainRegistry
 ) {
-  const heights2 = perlin2dArray(width, height, 4);
-  const heights4 = perlin2dArray(width, height, 8);
-  const heights8 = array2dScale(perlin2dArray(width, height, 16), 1 / 2);
-  const heights16 = array2dScale(perlin2dArray(width, height, 32), 1 / 3);
-  const heights32 = array2dScale(perlin2dArray(width, height, 64), 1 / 4);
+  const heights2 = array2dNormalize(perlin2dArray(width, height, 4));
+  const heights4 = array2dNormalize(perlin2dArray(width, height, 8));
+  const heights8 = array2dNormalize(perlin2dArray(width, height, 16));
+  const heights16 = array2dNormalize(perlin2dArray(width, height, 32));
+  const heights32 = array2dNormalize(perlin2dArray(width, height, 64));
   const heights = array2dNormalize(
-    array2dSum(heights2, heights4, heights8, heights16, heights32)
+    array2dSum(
+      heights2,
+      heights4,
+      array2dScale(heights8, 1 / 2),
+      array2dScale(heights16, 1 / 3),
+      array2dScale(heights32, 1 / 4)
+    )
   );
   // const flipped = array2dMap(
   //   array2dNormalize(heights),

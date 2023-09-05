@@ -46,7 +46,7 @@ export function Terrain({
         context.fillRect(x, flipY, 1, 1);
       }
     });
-  }, [canvasRef.current, hoverX, hoverY]);
+  }, [canvasRef.current, hoverX, hoverY, colors]);
   return (
     <canvas
       ref={canvasRef}

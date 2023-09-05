@@ -3,14 +3,19 @@ import { Tags, TagsItem } from "./tags";
 
 export function TerrainLayerPicker({
   terrainRegistry,
+  setTerrainLayer,
 }: {
   terrainRegistry: TerrainRegistry;
+  setTerrainLayer: (layer: string) => void;
 }) {
   return (
-    <Tags>
+    <>
+      <div>Terrain layer</div>
       {terrainRegistry.map((entry) => (
-        <TagsItem key={entry.name}>{entry.name}</TagsItem>
+        <button key={entry.name} onClick={() => setTerrainLayer(entry.name)}>
+          {entry.name}
+        </button>
       ))}
-    </Tags>
+    </>
   );
 }

@@ -19,6 +19,7 @@ import {
   TerrainRegistryNumberEntry,
   getTerrainLayer,
 } from "../terrain/registry";
+import { useState } from "react";
 
 export function Map({
   history,
@@ -30,6 +31,7 @@ export function Map({
   if (!history.world) {
     return null;
   }
+  const [terrainLayer, setTerrainLayer] = useState("colors");
   const { terrainRegistry } = history;
   const { values: heights } = getTerrainLayer(
     terrainRegistry,
@@ -109,7 +111,7 @@ export function Map({
             terrain={terrainRegistry}
             hoverX={pixelX}
             hoverY={flipPixelY}
-            layerName="colors"
+            layerName={terrainLayer}
           />
         </div>
       </div>
@@ -128,7 +130,10 @@ export function Map({
             </div>
           </GridItem>
           <GridItem>
-            <TerrainLayerPicker terrainRegistry={history.terrainRegistry} />
+            <TerrainLayerPicker
+              terrainRegistry={history.terrainRegistry}
+              setTerrainLayer={setTerrainLayer}
+            />
           </GridItem>
           {selectedRegion && (
             <>
