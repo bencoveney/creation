@@ -14,6 +14,8 @@ https://www.fractal-landscapes.co.uk/maths.html#erosion
 https://www.redblobgames.com/articles/noise/introduction.html
 https://www.redblobgames.com/maps/terrain-from-noise/
 
+https://nickmcd.me/2020/04/15/procedural-hydrology/
+
 ```css
 .grad {
   background: rgb(0, 55, 93);

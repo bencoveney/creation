@@ -31,7 +31,7 @@ export function getTerrainLayer(
 ): TerrainRegistryEntry {
   const result = terrainRegistry.find((layer) => layer.name === layerName);
   if (!result) {
-    throw new Error("Bad layer name");
+    throw new Error(`Bad layer name ${layerName}`);
   }
   return result;
 }

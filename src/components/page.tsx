@@ -1,13 +1,5 @@
 import { History } from "../worldgen";
-import {
-  Language,
-  getWord,
-  getWords,
-  spellPhoneme,
-  spellWord,
-  spellWords,
-} from "../worldgen/language";
-import { Map } from "./map";
+import { Language } from "../worldgen/language";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
@@ -17,6 +9,7 @@ import { Artifact } from "./artifact";
 import { Region } from "./region";
 import { Dialect } from "./dialect";
 import { lookupValues } from "../utils/lookup";
+import { World } from "./world";
 
 export function Page({
   history,
@@ -30,7 +23,7 @@ export function Page({
   return (
     <div>
       <Playback {...playbackControls} />
-      <Map history={history} language={language} />
+      <World history={history} language={language} />
       <Log history={history} language={language} />
       <Grid title="Regions">
         {lookupValues(history.regions).map((region) => {

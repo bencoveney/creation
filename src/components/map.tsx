@@ -1,38 +1,28 @@
 import { History } from "../worldgen";
-import { Language, getWords, spellWords } from "../worldgen/language";
+import { Language } from "../worldgen/language";
 import { Terrain } from "./terrain";
-import { getFromLookupSafe, lookupValues } from "../utils/lookup";
-import { config } from "../config";
 import { useHoverPosition } from "../hooks/useHover";
-import { Tile } from "../worldgen/world";
-import { Name } from "./name";
-import { Tooltip } from "./tooltip";
-import { Motif } from "./motif";
-import { Region } from "./region";
-import { getDeities } from "../worldgen/populate";
-import { Being } from "./being";
-import { Grid, GridItem } from "./grid";
-import { array2dGet, array2dGetIndex } from "../utils/array2d";
-import { TerrainLayerPicker } from "./terrainLayerPicker";
 import {
   TerrainRegistryNumberEntry,
   getTerrainLayer,
 } from "../terrain/registry";
-import { useState } from "react";
-import { toHex } from "@bencoveney/utils/dist/color";
-import { round } from "../utils/maths";
+import { MapTile } from "./mapTile";
+import { useEffect } from "react";
 
 export function Map({
   history,
   language,
+  terrainLayer,
+  setSelection,
 }: {
   history: History;
   language: Language;
+  terrainLayer: string;
+  setSelection: (coords: [number, number]) => void;
 }) {
   if (!history.world) {
     return null;
   }
-  const [terrainLayer, setTerrainLayer] = useState("colors");
   const { terrainRegistry } = history;
   const { values: heights } = getTerrainLayer(
     terrainRegistry,
@@ -54,231 +44,69 @@ export function Map({
           Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
         );
   const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
-
-  const selectedTile = array2dGet(
-    history.world,
-    Math.floor(pixelX / config.terrainResolution),
-    Math.floor(flipPixelY / config.terrainResolution)
-  );
-  const selectedRegion =
-    selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
+  useEffect(() => {
+    if (pixelX !== null && flipPixelY !== null) {
+      setSelection([pixelX, flipPixelY]);
+    }
+  }, [setSelection, x, y]);
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
+        display: "grid",
+        gridTemplateColumns: `${renderWidth / history.world?.xSize!}px `.repeat(
+          history.world?.xSize!
+        ),
+        gridTemplateRows: `${renderHeight / history.world?.ySize!}px `.repeat(
+          history.world?.ySize!
+        ),
+        maxHeight: renderHeight,
+        maxWidth: renderWidth,
+        height: renderHeight,
+        width: renderWidth,
       }}
+      onMouseMove={handler}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `${
-            renderWidth / history.world?.xSize!
-          }px `.repeat(history.world?.xSize!),
-          gridTemplateRows: `${renderHeight / history.world?.ySize!}px `.repeat(
-            history.world?.ySize!
-          ),
-          maxHeight: renderHeight,
-          maxWidth: renderWidth,
-          height: renderHeight,
-          width: renderWidth,
-        }}
-        onMouseMove={handler}
-      >
-        {history.world.values.map((tile, index) => {
-          return (
+      {history.world.values.map((tile, index) => {
+        return (
+          <div
+            style={{
+              gridRow: history.world?.ySize! - tile.y,
+              gridColumn: (index % history.world?.xSize!) + 1,
+              aspectRatio: 1,
+              zIndex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              padding: "10px",
+              boxSizing: "border-box",
+            }}
+          >
             <MapTile
               key={index}
               tile={tile}
-              gridRow={history.world?.ySize! - tile.y}
-              gridColumn={(index % history.world?.xSize!) + 1}
               history={history}
               language={language}
             />
-          );
-        })}
-        <div
-          style={{
-            gridRowStart: 1,
-            gridRowEnd: -1,
-            gridColumnStart: 1,
-            gridColumnEnd: -1,
-            aspectRatio: 1,
-            zIndex: 0,
-          }}
-        >
-          <Terrain
-            terrain={terrainRegistry}
-            hoverX={pixelX}
-            hoverY={flipPixelY}
-            layerName={terrainLayer}
-          />
-        </div>
+          </div>
+        );
+      })}
+      <div
+        style={{
+          gridRowStart: 1,
+          gridRowEnd: -1,
+          gridColumnStart: 1,
+          gridColumnEnd: -1,
+          aspectRatio: 1,
+          zIndex: 0,
+        }}
+      >
+        <Terrain
+          terrain={terrainRegistry}
+          hoverX={pixelX}
+          hoverY={flipPixelY}
+          layerName={terrainLayer}
+        />
       </div>
-      <div style={{ flexGrow: 1 }}>
-        <Grid columns={1}>
-          <GridItem>
-            <div>
-              Terrain Position: ({pixelX}, {flipPixelY})
-            </div>
-            <div>
-              Tile Position: ({selectedTile.x}, {selectedTile.y})
-            </div>
-            {terrainRegistry.map((entry) => {
-              switch (entry.kind) {
-                case "color":
-                  const color = array2dGet(entry.values, pixelX, flipPixelY);
-                  const hex = toHex(color);
-                  return (
-                    <div>
-                      {entry.name}
-                      {": "}
-                      <span style={{ backgroundColor: hex }}>{hex}</span>
-                    </div>
-                  );
-                case "number":
-                  return (
-                    <div>
-                      {entry.name}
-                      {": "}
-                      {round(array2dGet(entry.values, pixelX, flipPixelY), 3)}
-                    </div>
-                  );
-                case "string":
-                  return (
-                    <div>
-                      {entry.name}
-                      {": "}
-                      {array2dGet(entry.values, pixelX, flipPixelY)}
-                    </div>
-                  );
-              }
-            })}
-            <div>
-              Height:{" "}
-              {heights.values[array2dGetIndex(heights, pixelX, flipPixelY)]}
-            </div>
-          </GridItem>
-          <GridItem>
-            <TerrainLayerPicker
-              terrainRegistry={history.terrainRegistry}
-              setTerrainLayer={setTerrainLayer}
-            />
-          </GridItem>
-          {selectedRegion && (
-            <>
-              <GridItem>
-                <Region region={selectedRegion} history={history} />
-              </GridItem>
-              {getDeities(history.beings)
-                .filter((deity) => deity.location === selectedRegion.id)
-                .map((deity, index) => (
-                  <GridItem key={index}>
-                    <Being
-                      being={deity}
-                      history={history}
-                      language={language}
-                    />
-                  </GridItem>
-                ))}
-            </>
-          )}
-        </Grid>
-      </div>
-    </div>
-  );
-}
-
-function MapTile({
-  tile,
-  gridRow,
-  gridColumn,
-  history,
-  language,
-}: {
-  tile: Tile;
-  gridRow: number;
-  gridColumn: number;
-  history: History;
-  language: Language;
-}) {
-  const region = getFromLookupSafe(history.regions, tile.location);
-  const languageName = spellWords(getWords(language.name, language));
-  const beings = lookupValues(history.beings).filter(
-    (being) => being.location === tile.location
-  );
-  return (
-    <div
-      style={{
-        gridRow,
-        gridColumn,
-        aspectRatio: 1,
-        zIndex: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: "10px",
-        boxSizing: "border-box",
-      }}
-    >
-      {region?.name && (
-        <div
-          style={{
-            textAlign: "center",
-            fontSize: 10,
-            fontFamily: "sans-serif",
-            fontWeight: "bold",
-            lineHeight: 2,
-          }}
-        >
-          <span
-            style={{
-              backgroundColor: "black",
-              color: "white",
-              boxDecorationBreak: "clone",
-              borderRadius: 6,
-              padding: "6px 6px",
-            }}
-          >
-            <Name
-              languageName={languageName}
-              word={spellWords(getWords(region.name, language))}
-            />
-          </span>
-          <br />
-          {beings.length ? (
-            <span
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                lineHeight: 1.4,
-                boxDecorationBreak: "clone",
-                borderRadius: 6,
-                padding: "6px 6px",
-              }}
-            >
-              {beings.map((being, index) => (
-                <Tooltip
-                  key={index}
-                  label={spellWords(getWords(being.name, language))}
-                >
-                  <Motif motif={being.motif} />
-                </Tooltip>
-              ))}
-            </span>
-          ) : (
-            <span
-              style={{
-                lineHeight: 1.4,
-              }}
-            >
-              {"\u00A0"}
-            </span>
-          )}
-        </div>
-      )}
-      {}
     </div>
   );
 }
