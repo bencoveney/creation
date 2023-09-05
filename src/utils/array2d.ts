@@ -180,3 +180,21 @@ export function array2dScale(
 export function array2dNormalize(arr: Array2d<number>): Array2d<number> {
   return array2dReplace(arr, normalize(arr.values));
 }
+
+export function array2dSlice<T>(
+  arr: Array2d<T>,
+  fromX: number,
+  fromY: number,
+  xSize: number,
+  ySize: number
+): Array2d<T> {
+  const result = array2dCreate<T>(xSize, ySize);
+  for (let xOffset = 0; xOffset < xSize; xOffset++) {
+    for (let yOffset = 0; yOffset < ySize; yOffset++) {
+      const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
+      const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
+      result.values[mappedIndex] = sourceValue;
+    }
+  }
+  return result;
+}

@@ -41,6 +41,7 @@ export function World({
           selectionX={selectionX}
           selectionY={selectionY}
           setTerrainLayer={setTerrainLayer}
+          terrainLayer={terrainLayer}
         />
       </div>
     </div>

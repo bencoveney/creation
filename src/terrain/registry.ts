@@ -1,5 +1,5 @@
 import { Color } from "@bencoveney/utils/dist/color";
-import { Array2d } from "../utils/array2d";
+import { Array2d, array2dSlice } from "../utils/array2d";
 
 export type TerrainRegistryNumberEntry = {
   name: string;
@@ -34,4 +34,25 @@ export function getTerrainLayer(
     throw new Error(`Bad layer name ${layerName}`);
   }
   return result;
+}
+
+export function sliceTerrainRegistry(
+  terrainRegistry: TerrainRegistry,
+  x: number,
+  y: number,
+  resolution: number
+) {
+  const xTerrain = x * resolution;
+  const yTerrain = y * resolution;
+  const newTerrainRegistry: TerrainRegistry = terrainRegistry.map((entry) => ({
+    ...entry,
+    values: array2dSlice<any>(
+      entry.values,
+      xTerrain,
+      yTerrain,
+      resolution,
+      resolution
+    ),
+  }));
+  return newTerrainRegistry;
 }

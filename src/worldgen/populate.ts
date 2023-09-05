@@ -1,16 +1,24 @@
 import { Being, Region, History } from ".";
+import { config } from "../config";
 import { Lookup, lookupValues } from "../utils/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
 import { generateLanguage } from "./language";
-import { Tile } from "./world";
+import { Tile, createWorld } from "./world";
 
 export function populateWorld(history: History): void {
   history.dialects.set({
     language: generateLanguage(history),
   });
-  createWorld(history.regions);
+  createWorldRegion(history.regions);
   createInitialDeities(history);
+  if (history.regions.map.size >= 1 && !history.world) {
+    history.world = createWorld(
+      config.worldWidth,
+      config.worldHeight,
+      history.terrainRegistry
+    );
+  }
 }
 
 export function createDeity(beings: Lookup<Being>, theme: string): Being {
@@ -26,7 +34,7 @@ export function getDeities(beings: Lookup<Being>): Being[] {
   return lookupValues(beings).filter((being) => being.kind === "deity");
 }
 
-export function createWorld(regions: Lookup<Region>): Region {
+export function createWorldRegion(regions: Lookup<Region>): Region {
   return regions.set({
     name: createWorldName(),
   });

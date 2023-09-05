@@ -9,6 +9,7 @@ import { Grid, GridItem } from "./grid";
 import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
+import { Terrain } from "./terrain";
 
 export function WorldSelection({
   history,
@@ -16,12 +17,14 @@ export function WorldSelection({
   selectionX,
   selectionY,
   setTerrainLayer,
+  terrainLayer,
 }: {
   history: History;
   language: Language;
   selectionX: number;
   selectionY: number;
   setTerrainLayer: (name: string) => void;
+  terrainLayer: string;
 }) {
   if (!history.world) {
     return null;
@@ -37,6 +40,14 @@ export function WorldSelection({
 
   return (
     <Grid columns={1}>
+      <GridItem>
+        <Terrain
+          hoverX={null}
+          hoverY={null}
+          terrain={selectedTile.terrainRegistry}
+          layerName={terrainLayer}
+        />
+      </GridItem>
       <GridItem>
         <div>
           Terrain Position: ({selectionX}, {selectionY})

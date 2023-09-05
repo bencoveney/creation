@@ -5,7 +5,6 @@ import { Page } from "./components/page";
 import { runMovement } from "./systems/movement";
 import { runArtifactCreation } from "./systems/artifactCreation";
 import { runSymbolAdoption } from "./systems/symbolAdoption";
-import { runWorldFormation } from "./systems/worldFormation";
 import { createPlaybackControls } from "./playback";
 import { useEffect, useMemo, useState } from "react";
 import { Playback } from "./components/playback";
@@ -47,8 +46,6 @@ function Wrapper() {
           runArtifactCreation(history);
           history.log.currentSystem = "symbolAdoption";
           runSymbolAdoption(history);
-          history.log.currentSystem = "worldFormation";
-          runWorldFormation(history);
           history.log.currentSystem = "decision";
           runDecision(history);
           forceRerender({});

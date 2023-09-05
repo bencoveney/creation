@@ -23,7 +23,6 @@ export function Log({
   const [enabledSystems, setEnabledSystems] = useState([
     "init",
     "symbolAdoption",
-    "worldFormation",
     "decision",
     "artifactCreation",
   ]);

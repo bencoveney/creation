@@ -1,21 +1,38 @@
-import { History } from ".";
+import { config } from "../config";
+import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import {
   Array2d,
   array2dCreate,
   array2dGet,
   array2dIsInBounds,
+  array2dSlice,
 } from "../utils/array2d";
 
 export type Tile = {
   x: number;
   y: number;
   location: string;
+  terrainRegistry: TerrainRegistry;
 };
 
 export type World = Array2d<Tile>;
 
-export function createWorld(width: number, height: number): World {
-  return array2dCreate(width, height, (x, y) => ({ x, y, location: "" }));
+export function createWorld(
+  width: number,
+  height: number,
+  terrainRegistry: TerrainRegistry
+): World {
+  return array2dCreate(width, height, (x, y) => ({
+    x,
+    y,
+    location: "",
+    terrainRegistry: sliceTerrainRegistry(
+      terrainRegistry,
+      x,
+      y,
+      config.terrainResolution
+    ),
+  }));
 }
 
 export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
@@ -30,12 +47,7 @@ export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
     .map(([x, y]) => array2dGet(world, x, y));
 }
 
-export function pathfind(
-  history: History,
-  world: World,
-  from: Tile,
-  to: Tile
-): Tile[] {
+export function pathfind(world: World, from: Tile, to: Tile): Tile[] {
   const fromInfo: PathFindingTileInfo = {
     cameFrom: undefined,
     cost: 0,
