@@ -9,8 +9,9 @@ import { Grid, GridItem } from "./grid";
 import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
-import { Terrain } from "./terrain";
 import { TileValues } from "./tileValues";
+import { getTerrainLayer } from "../terrain/registry";
+import { Terrain } from "./terrain";
 
 export function WorldSelection({
   history,
@@ -38,6 +39,7 @@ export function WorldSelection({
   );
   const selectedRegion =
     selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
+  const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);
 
   return (
     <Grid columns={1}>
@@ -55,12 +57,7 @@ export function WorldSelection({
         />
       </GridItem>
       <GridItem>
-        <Terrain
-          hoverX={null}
-          hoverY={null}
-          terrain={selectedTile.terrainRegistry}
-          layerName={terrainLayer}
-        />
+        <Terrain layer={layer} hoverX={null} hoverY={null} />
       </GridItem>
       <GridItem>
         <TileValues tile={selectedTile} />

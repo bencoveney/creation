@@ -1,6 +1,6 @@
 import { History } from "../worldgen";
 import { Language } from "../worldgen/language";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Map } from "./map";
 import { WorldSelection } from "./worldSelection";
 
@@ -20,6 +20,18 @@ export function World({
   const [selection, setSelection] = useState([0, 0]);
   const [selectionX, selectionY] = selection;
 
+  const setSelectionComparer = useCallback(
+    (newSelection: [number, number]) => {
+      if (
+        selection[0] !== newSelection[0] ||
+        selection[1] !== newSelection[1]
+      ) {
+        setSelection(newSelection);
+      }
+    },
+    [selection]
+  );
+
   return (
     <div
       style={{
@@ -32,7 +44,7 @@ export function World({
         history={history}
         language={language}
         terrainLayer={terrainLayer}
-        setSelection={setSelection}
+        setSelection={setSelectionComparer}
       />
       <div style={{ flexGrow: 1 }}>
         <WorldSelection

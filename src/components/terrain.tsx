@@ -6,41 +6,21 @@ import {
   array2dGetIndex,
   array2dMap,
 } from "../utils/array2d";
-import { TerrainRegistry, getTerrainLayer } from "../terrain/registry";
+import { TerrainRegistryEntry } from "../terrain/registry";
 import { getNumberColor, getStringColor } from "../terrain/color";
 
 const selectedColor = toHex({ r: 0, g: 255, b: 0 });
 const missingColor = { r: 0, g: 255, b: 0 };
 
 export function Terrain({
-  terrain,
-  layerName,
+  layer,
   hoverX,
   hoverY,
 }: {
-  terrain: TerrainRegistry;
-  layerName: string;
+  layer: TerrainRegistryEntry;
   hoverX: number | null;
   hoverY: number | null;
 }) {
-  const layer = getTerrainLayer(terrain, layerName);
-
-  let colors: Array2d<Color>;
-  switch (layer.kind) {
-    case "color":
-      colors = layer.values;
-      break;
-    case "number":
-      colors = array2dMap(layer.values, getNumberColor);
-      break;
-    case "string":
-      colors = array2dMap(
-        layer.values,
-        (value) => getStringColor(value, layer.colorMap) || missingColor
-      );
-      break;
-  }
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,6 +31,22 @@ export function Terrain({
     const context = canvas.getContext("2d");
     if (!context) {
       return;
+    }
+
+    let colors: Array2d<Color>;
+    switch (layer.kind) {
+      case "color":
+        colors = layer.values;
+        break;
+      case "number":
+        colors = array2dMap(layer.values, getNumberColor);
+        break;
+      case "string":
+        colors = array2dMap(
+          layer.values,
+          (value) => getStringColor(value, layer.colorMap) || missingColor
+        );
+        break;
     }
 
     const hoverIndex =
@@ -68,14 +64,12 @@ export function Terrain({
         context.fillRect(x, flipY, 1, 1);
       }
     });
-
-    console.log("done rendering", canvasRef.current, hoverX, hoverY, colors);
-  }, [canvasRef.current, hoverX, hoverY, colors]);
+  }, [canvasRef.current, hoverX, hoverY, layer]);
   return (
     <canvas
       ref={canvasRef}
-      width={colors.xSize}
-      height={colors.ySize}
+      width={layer.values.xSize}
+      height={layer.values.ySize}
       style={{
         width: "100%",
         height: "100%",

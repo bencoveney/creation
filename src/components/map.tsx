@@ -48,7 +48,8 @@ export function Map({
     if (pixelX !== null && flipPixelY !== null) {
       setSelection([pixelX, flipPixelY]);
     }
-  }, [setSelection, x, y]);
+  }, [setSelection, pixelX, flipPixelY]);
+  const layer = getTerrainLayer(terrainRegistry, terrainLayer);
   return (
     <div
       style={{
@@ -96,12 +97,7 @@ export function Map({
           zIndex: 0,
         }}
       >
-        <Terrain
-          terrain={terrainRegistry}
-          hoverX={pixelX}
-          hoverY={flipPixelY}
-          layerName={terrainLayer}
-        />
+        <Terrain layer={layer} hoverX={pixelX} hoverY={flipPixelY} />
       </div>
     </div>
   );
