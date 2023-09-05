@@ -8,6 +8,8 @@ export enum Biome {
   Mountain = "Mountain",
   Snow = "Snow",
   Unknown = "Unknown",
+  Desert = "Desert",
+  Tundra = "Tundra",
 }
 
 export const biomeColorMap: TerrainColorMap = {
@@ -31,6 +33,16 @@ export const biomeColorMap: TerrainColorMap = {
     g: 116,
     b: 49,
   },
+  [Biome.Desert]: {
+    r: 255,
+    g: 242,
+    b: 179,
+  },
+  [Biome.Tundra]: {
+    r: 230,
+    g: 255,
+    b: 230,
+  },
   [Biome.Mountain]: {
     r: 112,
     g: 117,
@@ -48,7 +60,11 @@ export const biomeColorMap: TerrainColorMap = {
   },
 };
 
-export function getBiome(height: number, gradient: number): Biome {
+export function getBiome(
+  height: number,
+  temperature: number,
+  gradient: number
+): Biome {
   if (height < 0.25) {
     return Biome.DeepSea;
   }
@@ -62,6 +78,12 @@ export function getBiome(height: number, gradient: number): Biome {
     return Biome.Mountain;
   }
   if (height < 0.81) {
+    if (temperature > 0.7) {
+      return Biome.Desert;
+    }
+    if (temperature < 0.3) {
+      return Biome.Tundra;
+    }
     return Biome.Grass;
   }
   if (height < 0.96) {
