@@ -1,7 +1,6 @@
 import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { Terrain } from "./terrain";
-import { createTerrain } from "../terrain";
 import { getFromLookupSafe, lookupValues } from "../utils/lookup";
 import { config } from "../config";
 import { useHoverPosition } from "../hooks/useHover";
@@ -20,6 +19,8 @@ import {
   getTerrainLayer,
 } from "../terrain/registry";
 import { useState } from "react";
+import { toHex } from "@bencoveney/utils/dist/color";
+import { round } from "../utils/maths";
 
 export function Map({
   history,
@@ -124,6 +125,36 @@ export function Map({
             <div>
               Tile Position: ({selectedTile.x}, {selectedTile.y})
             </div>
+            {terrainRegistry.map((entry) => {
+              switch (entry.kind) {
+                case "color":
+                  const color = array2dGet(entry.values, pixelX, flipPixelY);
+                  const hex = toHex(color);
+                  return (
+                    <div>
+                      {entry.name}
+                      {": "}
+                      <span style={{ backgroundColor: hex }}>{hex}</span>
+                    </div>
+                  );
+                case "number":
+                  return (
+                    <div>
+                      {entry.name}
+                      {": "}
+                      {round(array2dGet(entry.values, pixelX, flipPixelY), 3)}
+                    </div>
+                  );
+                case "string":
+                  return (
+                    <div>
+                      {entry.name}
+                      {": "}
+                      {array2dGet(entry.values, pixelX, flipPixelY)}
+                    </div>
+                  );
+              }
+            })}
             <div>
               Height:{" "}
               {heights.values[array2dGetIndex(heights, pixelX, flipPixelY)]}

@@ -1,3 +1,5 @@
+import { TerrainColorMap } from "./registry";
+
 export enum Biome {
   DeepSea = "DeepSea",
   ShallowSea = "ShallowSea",
@@ -8,7 +10,7 @@ export enum Biome {
   Unknown = "Unknown",
 }
 
-export const biomeColorMap = {
+export const biomeColorMap: TerrainColorMap = {
   [Biome.DeepSea]: {
     r: 23,
     g: 110,
@@ -56,7 +58,7 @@ export function getBiome(height: number, gradient: number): Biome {
   if (height < 0.5 && gradient < 0.35) {
     return Biome.Beach;
   }
-  if (gradient > 0.75) {
+  if (gradient > 0.7) {
     return Biome.Mountain;
   }
   if (height < 0.81) {
