@@ -11,9 +11,17 @@ export type TerrainRegistryColorEntry = {
   kind: "color";
   values: Array2d<Color>;
 };
+export type TerrainColorMap = { [key: string]: Color };
+export type TerrainRegistryStringEntry = {
+  name: string;
+  kind: "string";
+  values: Array2d<string>;
+  colorMap: TerrainColorMap;
+};
 export type TerrainRegistryEntry =
   | TerrainRegistryNumberEntry
-  | TerrainRegistryColorEntry;
+  | TerrainRegistryColorEntry
+  | TerrainRegistryStringEntry;
 
 export type TerrainRegistry = TerrainRegistryEntry[];
 

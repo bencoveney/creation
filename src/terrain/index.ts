@@ -1,10 +1,14 @@
 import {
   Array2d,
+  array2dGet,
+  array2dIsInBounds,
   array2dMap,
+  array2dMerge,
   array2dNormalize,
   array2dScale,
   array2dSum,
 } from "../utils/array2d";
+import { biomeColorMap, getBiome } from "./biome";
 import { getTerrainColor } from "./color";
 import { perlin2dArray } from "./perlin";
 import { TerrainRegistry } from "./registry";
@@ -32,6 +36,20 @@ export function createTerrain(
       array2dScale(heights32, 1 / 4)
     )
   );
+  const gradient = array2dNormalize(
+    array2dMap(heights, (height, x, y) => {
+      const dx = array2dIsInBounds(heights, x + 1, y)
+        ? array2dGet(heights, x + 1, y) - height
+        : 0;
+      const dy = array2dIsInBounds(heights, x, y + 1)
+        ? array2dGet(heights, x, y + 1) - height
+        : 0;
+      return Math.sqrt(dx * dx + dy * dy);
+    })
+  );
+  const biome = array2dMerge({ heights, gradient }, ({ heights, gradient }) =>
+    getBiome(heights, gradient)
+  );
   // const flipped = array2dMap(
   //   array2dNormalize(heights),
   //   (height) => 1 - Math.abs(height - 0.5)
@@ -45,6 +63,8 @@ export function createTerrain(
     { name: "heights16", kind: "number", values: heights16 },
     { name: "heights32", kind: "number", values: heights32 },
     { name: "heights", kind: "number", values: heights },
+    { name: "gradient", kind: "number", values: gradient },
+    { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
     { name: "colors", kind: "color", values: colors }
   );
 }

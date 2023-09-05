@@ -1,8 +1,13 @@
 import { useEffect, useRef } from "react";
-import { toHex } from "@bencoveney/utils/dist/color";
-import { array2dFlipY, array2dGetIndex, array2dMap } from "../utils/array2d";
+import { Color, toHex } from "@bencoveney/utils/dist/color";
+import {
+  Array2d,
+  array2dFlipY,
+  array2dGetIndex,
+  array2dMap,
+} from "../utils/array2d";
 import { TerrainRegistry, getTerrainLayer } from "../terrain/registry";
-import { getNumberColor } from "../terrain/color";
+import { getNumberColor, getStringColor } from "../terrain/color";
 
 export function Terrain({
   terrain,
@@ -15,9 +20,22 @@ export function Terrain({
   hoverX: number | null;
   hoverY: number | null;
 }) {
-  const { values, kind } = getTerrainLayer(terrain, layerName);
+  const layer = getTerrainLayer(terrain, layerName);
 
-  const colors = kind === "color" ? values : array2dMap(values, getNumberColor);
+  let colors: Array2d<Color>;
+  switch (layer.kind) {
+    case "color":
+      colors = layer.values;
+      break;
+    case "number":
+      colors = array2dMap(layer.values, getNumberColor);
+      break;
+    case "string":
+      colors = array2dMap(layer.values, (value) =>
+        getStringColor(value, layer.colorMap)
+      );
+      break;
+  }
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {

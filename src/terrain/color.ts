@@ -1,5 +1,6 @@
 import { Color } from "@bencoveney/utils/dist/color";
 import { inverseLerp, lerp } from "../utils/maths";
+import { TerrainColorMap } from "./registry";
 
 export function getNumberColor(value: number): Color {
   if (value < 0) {
@@ -21,6 +22,13 @@ export function getNumberColor(value: number): Color {
     g: shade,
     b: shade,
   };
+}
+
+export function getStringColor(
+  value: string,
+  colorMap: TerrainColorMap
+): Color {
+  return colorMap[value];
 }
 
 export function getTerrainColor(height: number): Color {
