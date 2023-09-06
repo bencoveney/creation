@@ -147,4 +147,6 @@ export const config = {
   worldHeight: 10,
   terrainResolution: 20,
   waterHeight: 0.46,
+  waterStop1: 0.25,
+  waterStop2: 0.35,
 };

@@ -39,6 +39,23 @@ function dotProductGrid(
 
 function createPerlin(): Perlin {
   const gradients: Gradients = new Map();
+
+  return (x: number, y: number): number => {
+    let xf = Math.floor(x);
+    let yf = Math.floor(y);
+    let tl = dotProductGrid(gradients, x, y, xf, yf);
+    let tr = dotProductGrid(gradients, x, y, xf + 1, yf);
+    let bl = dotProductGrid(gradients, x, y, xf, yf + 1);
+    let br = dotProductGrid(gradients, x, y, xf + 1, yf + 1);
+    let xt = interp(x - xf, tl, tr);
+    let xb = interp(x - xf, bl, br);
+    let v = interp(y - yf, xt, xb);
+    return v;
+  };
+}
+
+function createPerlinWithMemory(): Perlin {
+  const gradients: Gradients = new Map();
   const memory: Memory = new Map();
 
   return (x: number, y: number): number => {

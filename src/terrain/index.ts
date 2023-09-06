@@ -5,6 +5,7 @@ import {
   array2dMap,
   array2dMerge,
   array2dNormalize,
+  array2dProduct,
   array2dScale,
   array2dSum,
 } from "../utils/array2d";
@@ -29,7 +30,7 @@ export function createTerrain(
   const heights8 = array2dNormalize(perlin2dArray(width, height, 16));
   const heights16 = array2dNormalize(perlin2dArray(width, height, 32));
   const heights32 = array2dNormalize(perlin2dArray(width, height, 64));
-  const heights = array2dNormalize(
+  const combinedHeights = array2dNormalize(
     array2dSum(
       heights2,
       heights4,
@@ -38,6 +39,8 @@ export function createTerrain(
       array2dScale(heights32, 1 / 4)
     )
   );
+  const heights = array2dProduct(combinedHeights, combinedHeights);
+  // TODO: angle calculations probably should be using a heightmap with water included.
   const temperature = array2dNormalize(perlin2dArray(width, height, 2));
   const gradient = array2dNormalize(
     array2dMap(heights, (height, x, y) => {
@@ -59,16 +62,21 @@ export function createTerrain(
       : 0;
     return Math.atan2(dy, dx);
   });
-  const sunlight = array2dNormalize(
+  const facingLeft = array2dNormalize(
     array2dMap(angle, (value) => -Math.abs(value))
   );
+  const sunlight = array2dNormalize(array2dProduct(gradient, facingLeft));
   const coast = findCoasts(heights);
   const biome = array2dMerge(
     { heights, temperature, gradient, coast },
     ({ heights, temperature, gradient, coast }) =>
       getBiome(heights, temperature, gradient, coast)
   );
-  const colors = array2dMap(heights, getTerrainColor);
+  const colors = array2dMerge(
+    { heights, temperature, biome, sunlight },
+    ({ heights, temperature, biome, sunlight }) =>
+      getTerrainColor(heights, temperature, biome, sunlight)
+  );
 
   const features = findFeatures(heights);
 
@@ -81,16 +89,17 @@ export function createTerrain(
     { name: "heights", kind: "number", values: heights },
     { name: "gradient", kind: "number", values: gradient },
     { name: "angle", kind: "number", values: array2dNormalize(angle) },
+    { name: "facingLeft", kind: "number", values: facingLeft },
     { name: "sunlight", kind: "number", values: sunlight },
     { name: "temperature", kind: "number", values: temperature },
     { name: "coast", kind: "number", values: coast },
     { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
-    { name: "colors", kind: "color", values: colors },
     {
       name: "features",
       kind: "string",
       values: features,
       colorMap: featureColorMap,
-    }
+    },
+    { name: "colors", kind: "color", values: colors }
   );
 }

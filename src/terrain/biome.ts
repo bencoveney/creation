@@ -67,16 +67,16 @@ export function getBiome(
   gradient: number,
   coast: number
 ): Biome {
-  if (height < 0.25) {
+  if (height < config.waterStop2) {
     return Biome.DeepSea;
   }
   if (height < config.waterHeight) {
     return Biome.ShallowSea;
   }
-  if (coast > 0.6 && gradient < 0.5) {
+  if (coast > 0.6 && gradient < 0.5 && height < 0.5) {
     return Biome.Beach;
   }
-  if (coast > 0.3 && gradient < 0.4) {
+  if (coast > 0.3 && gradient < 0.4 && height < 0.5) {
     return Biome.Beach;
   }
   if (gradient > 0.7) {
