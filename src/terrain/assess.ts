@@ -2,12 +2,14 @@ import { config } from "../config";
 import {
   TerrainRegistry,
   TerrainRegistryNumberEntry,
+  TerrainRegistryStringEntry,
   getTerrainLayer,
 } from "./registry";
 
 export type TerrainAssessment = {
   percentWater: number;
   averageTemp: number;
+  includesFeatures: string[];
 };
 
 export function assessTerrain(terrain: TerrainRegistry): TerrainAssessment {
@@ -27,10 +29,18 @@ export function assessTerrain(terrain: TerrainRegistry): TerrainAssessment {
     terrain,
     "temperature"
   ) as TerrainRegistryNumberEntry;
-  const totalTemperature = temperature.values.values.reduce((n, p) => n + p, 0);
+  const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
+
+  const includesFeatures = new Set<string>();
+  const features = getTerrainLayer(
+    terrain,
+    "features"
+  ) as TerrainRegistryStringEntry;
+  features.values.values.forEach((f) => includesFeatures.add(f));
 
   return {
     percentWater: waterCount / temperature.values.values.length,
     averageTemp: totalTemperature / temperature.values.values.length,
+    includesFeatures: [...includesFeatures.values()],
   };
 }

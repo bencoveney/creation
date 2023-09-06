@@ -9,6 +9,24 @@ import {
 import { TerrainColorMap } from "./registry";
 import { empty } from "@bencoveney/utils/dist/array";
 
+function getWaterFeature(area: number) {
+  if (area < 100) {
+    return "lake";
+  } else if (area < 500) {
+    return "sea";
+  } else {
+    return "ocean";
+  }
+}
+
+function getLandFeature(area: number) {
+  if (area < 500) {
+    return "island";
+  } else {
+    return "continent";
+  }
+}
+
 let id = 0;
 export function findFeatures(heights: Array2d<number>) {
   const tested: Set<number> = new Set();
@@ -22,15 +40,21 @@ export function findFeatures(heights: Array2d<number>) {
     }
     tested.add(index);
     if (value < config.waterHeight) {
-      const area = floodFill(heights, index, 0, config.waterHeight, tested);
-      const name = `water${id++}`;
+      const area = floodFill(heights, index, 0, config.waterHeight);
+      const name = `${getWaterFeature(area.length)}_${id++}`;
       for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
         const index = area[areaIndex];
         tested.add(index);
         features[index] = name;
       }
     } else {
-      features[index] = "";
+      const area = floodFill(heights, index, config.waterHeight, 2);
+      const name = `${getLandFeature(area.length)}_${id++}`;
+      for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
+        const index = area[areaIndex];
+        tested.add(index);
+        features[index] = name;
+      }
     }
   });
   let featuresArray = [];
@@ -44,11 +68,10 @@ function floodFill(
   arr: Array2d<number>,
   index: number,
   min: number,
-  max: number,
-  exclude: Set<number>
+  max: number
 ): number[] {
-  const result = [];
-  const tested = exclude;
+  const result = [index];
+  const tested = new Set([index]);
   let stack = array2dGetNeighbourIndices(arr, index);
   while (stack.length > 0) {
     const current = stack.pop()!;

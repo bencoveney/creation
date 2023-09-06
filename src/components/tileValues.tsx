@@ -9,9 +9,21 @@ export function TileValues({ tile }: { tile: Tile }) {
       </div>
       {Object.entries(tile.terrainAssessment).map(([key, value]) => (
         <div key={key}>
-          {key}: {round(value as number, 3)}
+          {key}: {stringify(value)}
         </div>
       ))}
     </>
   );
+}
+
+function stringify(value: any): string {
+  if (typeof value === "string") {
+    return value;
+  } else if (typeof value === "number") {
+    return round(value, 3).toString();
+  } else if (Array.isArray(value)) {
+    return value.map((i) => stringify(i)).join(", ");
+  } else {
+    return JSON.stringify(value);
+  }
 }
