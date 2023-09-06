@@ -9,6 +9,7 @@ import {
   array2dSum,
 } from "../utils/array2d";
 import { biomeColorMap, getBiome } from "./biome";
+import { findCoasts } from "./coasts";
 import { getTerrainColor } from "./color";
 import { featureColorMap, findFeatures } from "./features";
 import { perlin2dArray } from "./perlin";
@@ -37,7 +38,7 @@ export function createTerrain(
       array2dScale(heights32, 1 / 4)
     )
   );
-  const temperature = array2dNormalize(perlin2dArray(width, height, 4));
+  const temperature = array2dNormalize(perlin2dArray(width, height, 2));
   const gradient = array2dNormalize(
     array2dMap(heights, (height, x, y) => {
       const dx = array2dIsInBounds(heights, x + 1, y)
@@ -49,15 +50,12 @@ export function createTerrain(
       return Math.sqrt(dx * dx + dy * dy);
     })
   );
+  const coast = findCoasts(heights);
   const biome = array2dMerge(
-    { heights, temperature, gradient },
-    ({ heights, temperature, gradient }) =>
-      getBiome(heights, temperature, gradient)
+    { heights, temperature, gradient, coast },
+    ({ heights, temperature, gradient, coast }) =>
+      getBiome(heights, temperature, gradient, coast)
   );
-  // const flipped = array2dMap(
-  //   array2dNormalize(heights),
-  //   (height) => 1 - Math.abs(height - 0.5)
-  // );
   const colors = array2dMap(heights, getTerrainColor);
 
   const features = findFeatures(heights);
@@ -71,6 +69,7 @@ export function createTerrain(
     { name: "heights", kind: "number", values: heights },
     { name: "gradient", kind: "number", values: gradient },
     { name: "temperature", kind: "number", values: temperature },
+    { name: "coast", kind: "number", values: coast },
     { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
     { name: "colors", kind: "color", values: colors },
     {

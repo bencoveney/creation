@@ -64,7 +64,8 @@ export const biomeColorMap: TerrainColorMap = {
 export function getBiome(
   height: number,
   temperature: number,
-  gradient: number
+  gradient: number,
+  coast: number
 ): Biome {
   if (height < 0.25) {
     return Biome.DeepSea;
@@ -72,7 +73,10 @@ export function getBiome(
   if (height < config.waterHeight) {
     return Biome.ShallowSea;
   }
-  if (height < 0.5 && gradient < 0.35) {
+  if (coast > 0.6 && gradient < 0.5) {
+    return Biome.Beach;
+  }
+  if (coast > 0.3 && gradient < 0.4) {
     return Biome.Beach;
   }
   if (gradient > 0.7) {

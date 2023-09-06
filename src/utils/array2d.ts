@@ -196,22 +196,64 @@ export function array2dSlice<T>(
   return result;
 }
 
-const neighbourPositions = [
+export type NeighboursMask = [number, number][];
+
+/*
+   #
+  #@#
+   #
+*/
+export const neighbours4: NeighboursMask = [
   [-1, 0],
   [1, 0],
   [0, -1],
   [0, 1],
 ];
 
+/*
+  #####
+  #####
+  ##@##
+  #####
+  #####
+*/
+export const neighbours24: NeighboursMask = [
+  [-2, -2],
+  [-2, -1],
+  [-2, 0],
+  [-2, 1],
+  [-2, 2],
+  [-1, -2],
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [-1, 2],
+  [0, -2],
+  [0, -1],
+  [0, 1],
+  [0, 2],
+  [1, -2],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+  [1, 2],
+  [2, -2],
+  [2, -1],
+  [2, 0],
+  [2, 1],
+  [2, 2],
+];
+
 export function array2dGetNeighbourIndices<T>(
   arr: Array2d<T>,
   index: number,
+  neighbourMask: NeighboursMask,
   excluding?: Set<number>
 ): number[] {
   const [positionX, positionY] = array2dGetCoords(arr, index);
   const result = [];
-  for (let neighbour = 0; neighbour < neighbourPositions.length; neighbour++) {
-    const [xOffset, yOffset] = neighbourPositions[neighbour];
+  for (let neighbour = 0; neighbour < neighbourMask.length; neighbour++) {
+    const [xOffset, yOffset] = neighbourMask[neighbour];
     const x = positionX + xOffset;
     const y = positionY + yOffset;
     if (array2dIsInBounds(arr, x, y)) {

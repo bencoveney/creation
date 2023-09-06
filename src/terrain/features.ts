@@ -5,6 +5,7 @@ import {
   array2dGetNeighbourIndices,
   array2dMap,
   array2dReplace,
+  neighbours4,
 } from "../utils/array2d";
 import { TerrainColorMap } from "./registry";
 import { empty } from "@bencoveney/utils/dist/array";
@@ -72,13 +73,18 @@ function floodFill(
 ): number[] {
   const result = [index];
   const tested = new Set([index]);
-  let stack = array2dGetNeighbourIndices(arr, index);
+  let stack = array2dGetNeighbourIndices(arr, index, neighbours4);
   while (stack.length > 0) {
     const current = stack.pop()!;
     const value = arr.values[current];
     if (value >= min && value < max) {
       result.push(current);
-      const neighbours = array2dGetNeighbourIndices(arr, current, tested);
+      const neighbours = array2dGetNeighbourIndices(
+        arr,
+        current,
+        neighbours4,
+        tested
+      );
       for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
         tested.add(neighbours[neighbour]);
         stack.push(neighbours[neighbour]);
