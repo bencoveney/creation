@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState5(initialState) {
+          function useState6(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1097,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect3(create, deps) {
+          function useEffect4(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1109,7 +1109,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create, deps);
           }
-          function useCallback2(callback, deps) {
+          function useCallback3(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
@@ -1875,11 +1875,11 @@
           exports.memo = memo;
           exports.startTransition = startTransition;
           exports.unstable_act = act;
-          exports.useCallback = useCallback2;
+          exports.useCallback = useCallback3;
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect3;
+          exports.useEffect = useEffect4;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo2;
           exports.useReducer = useReducer;
           exports.useRef = useRef2;
-          exports.useState = useState5;
+          exports.useState = useState6;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2434,7 +2434,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment9 = 7;
+          var Fragment11 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3590,7 +3590,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment9:
+              case Fragment11:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -11076,8 +11076,8 @@
           function getTreeId() {
             var overflow = treeContextOverflow;
             var idWithLeadingBit = treeContextId;
-            var id2 = idWithLeadingBit & ~getLeadingBit(idWithLeadingBit);
-            return id2.toString(32) + overflow;
+            var id3 = idWithLeadingBit & ~getLeadingBit(idWithLeadingBit);
+            return id3.toString(32) + overflow;
           }
           function pushTreeFork(workInProgress2, totalChildren) {
             warnIfNotHydrating();
@@ -11106,9 +11106,9 @@
               var restOfBaseLength = baseLength - numberOfOverflowBits;
               var restOfLength = getBitLength(totalChildren) + restOfBaseLength;
               var restOfNewBits = slot << restOfBaseLength;
-              var id2 = restOfNewBits | restOfBaseId;
+              var id3 = restOfNewBits | restOfBaseId;
               var overflow = newOverflow + baseOverflow;
-              treeContextId = 1 << restOfLength | id2;
+              treeContextId = 1 << restOfLength | id3;
               treeContextOverflow = overflow;
             } else {
               var newBits = slot << baseLength;
@@ -11131,8 +11131,8 @@
           function getBitLength(number) {
             return 32 - clz32(number);
           }
-          function getLeadingBit(id2) {
-            return 1 << getBitLength(id2) - 1;
+          function getLeadingBit(id3) {
+            return 1 << getBitLength(id3) - 1;
           }
           function popTreeContext(workInProgress2) {
             while (workInProgress2 === treeForkProvider) {
@@ -13261,7 +13261,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment9) {
+              if (current2 === null || current2.tag !== Fragment11) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -13664,7 +13664,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment9) {
+                    if (child.tag === Fragment11) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -14836,26 +14836,26 @@
             var hook = mountWorkInProgressHook();
             var root3 = getWorkInProgressRoot();
             var identifierPrefix = root3.identifierPrefix;
-            var id2;
+            var id3;
             if (getIsHydrating()) {
               var treeId = getTreeId();
-              id2 = ":" + identifierPrefix + "R" + treeId;
+              id3 = ":" + identifierPrefix + "R" + treeId;
               var localId = localIdCounter++;
               if (localId > 0) {
-                id2 += "H" + localId.toString(32);
+                id3 += "H" + localId.toString(32);
               }
-              id2 += ":";
+              id3 += ":";
             } else {
               var globalClientId = globalClientIdCounter++;
-              id2 = ":" + identifierPrefix + "r" + globalClientId.toString(32) + ":";
+              id3 = ":" + identifierPrefix + "r" + globalClientId.toString(32) + ":";
             }
-            hook.memoizedState = id2;
-            return id2;
+            hook.memoizedState = id3;
+            return id3;
           }
           function updateId() {
             var hook = updateWorkInProgressHook();
-            var id2 = hook.memoizedState;
-            return id2;
+            var id3 = hook.memoizedState;
+            return id3;
           }
           function dispatchReducerAction(fiber, queue, action) {
             {
@@ -17839,7 +17839,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment9:
+              case Fragment11:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18112,7 +18112,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment9:
+              case Fragment11:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -18853,7 +18853,7 @@
                 switch (finishedWork.tag) {
                   case Profiler: {
                     var passiveEffectDuration = finishedWork.stateNode.passiveEffectDuration;
-                    var _finishedWork$memoize = finishedWork.memoizedProps, id2 = _finishedWork$memoize.id, onPostCommit = _finishedWork$memoize.onPostCommit;
+                    var _finishedWork$memoize = finishedWork.memoizedProps, id3 = _finishedWork$memoize.id, onPostCommit = _finishedWork$memoize.onPostCommit;
                     var commitTime2 = getCommitTime();
                     var phase = finishedWork.alternate === null ? "mount" : "update";
                     {
@@ -18862,7 +18862,7 @@
                       }
                     }
                     if (typeof onPostCommit === "function") {
-                      onPostCommit(id2, phase, passiveEffectDuration, commitTime2);
+                      onPostCommit(id3, phase, passiveEffectDuration, commitTime2);
                     }
                     var parentFiber = finishedWork.return;
                     outer:
@@ -22371,7 +22371,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment9, elements, key, mode);
+            var fiber = createFiber(Fragment11, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -22848,16 +22848,16 @@
             var copyWithSet = function(obj, path, value) {
               return copyWithSetImpl(obj, path, 0, value);
             };
-            var findHook = function(fiber, id2) {
+            var findHook = function(fiber, id3) {
               var currentHook2 = fiber.memoizedState;
-              while (currentHook2 !== null && id2 > 0) {
+              while (currentHook2 !== null && id3 > 0) {
                 currentHook2 = currentHook2.next;
-                id2--;
+                id3--;
               }
               return currentHook2;
             };
-            overrideHookState = function(fiber, id2, path, value) {
-              var hook = findHook(fiber, id2);
+            overrideHookState = function(fiber, id3, path, value) {
+              var hook = findHook(fiber, id3);
               if (hook !== null) {
                 var newState = copyWithSet(hook.memoizedState, path, value);
                 hook.memoizedState = newState;
@@ -22869,8 +22869,8 @@
                 }
               }
             };
-            overrideHookStateDeletePath = function(fiber, id2, path) {
-              var hook = findHook(fiber, id2);
+            overrideHookStateDeletePath = function(fiber, id3, path) {
+              var hook = findHook(fiber, id3);
               if (hook !== null) {
                 var newState = copyWithDelete(hook.memoizedState, path);
                 hook.memoizedState = newState;
@@ -22882,8 +22882,8 @@
                 }
               }
             };
-            overrideHookStateRenamePath = function(fiber, id2, oldPath, newPath) {
-              var hook = findHook(fiber, id2);
+            overrideHookStateRenamePath = function(fiber, id3, oldPath, newPath) {
+              var hook = findHook(fiber, id3);
               if (hook !== null) {
                 var newState = copyWithRename(hook.memoizedState, oldPath, newPath);
                 hook.memoizedState = newState;
@@ -23514,12 +23514,12 @@
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.rangeTo = exports.range = exports.empty = void 0;
-      function empty2(length) {
+      function empty3(length) {
         return new Array(length).fill(void 0);
       }
-      exports.empty = empty2;
+      exports.empty = empty3;
       function range(from, to) {
-        return empty2(to - from).map((_, index) => from + index);
+        return empty3(to - from).map((_, index) => from + index);
       }
       exports.range = range;
       function rangeTo(to) {
@@ -23529,36 +23529,38 @@
     }
   });
 
-  // node_modules/@bencoveney/utils/dist/color.js
-  var require_color = __commonJS({
-    "node_modules/@bencoveney/utils/dist/color.js"(exports) {
+  // node_modules/@bencoveney/utils/dist/vector.js
+  var require_vector = __commonJS({
+    "node_modules/@bencoveney/utils/dist/vector.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.toRgb = exports.fromHex = exports.toHex = exports.fromDec = exports.toDec = void 0;
-      function toDec({ r, g, b }) {
-        return (r << 16) + (g << 8) + b;
+      exports.distanceEuclidean3 = exports.distanceManhattan3 = exports.distanceEuclidean2 = exports.distanceManhattan2 = void 0;
+      function distanceManhattan2(from, to) {
+        const dX = Math.abs(to.x - from.x);
+        const dY = Math.abs(to.y - from.y);
+        return dX + dY;
       }
-      exports.toDec = toDec;
-      function fromDec(hexTriplet) {
-        return {
-          r: hexTriplet >> 16,
-          g: hexTriplet >> 8 & 255,
-          b: hexTriplet & 255
-        };
+      exports.distanceManhattan2 = distanceManhattan2;
+      function distanceEuclidean22(from, to) {
+        const x = Math.abs(to.x - from.x);
+        const y = Math.abs(to.y - from.y);
+        return Math.sqrt(x * x + y * y);
       }
-      exports.fromDec = fromDec;
-      function toHex2(color) {
-        return "#" + ((1 << 24) + toDec(color)).toString(16).substring(1, 7);
+      exports.distanceEuclidean2 = distanceEuclidean22;
+      function distanceManhattan3(from, to) {
+        const dX = Math.abs(to.x - from.x);
+        const dY = Math.abs(to.y - from.y);
+        const dZ = Math.abs(to.z - from.z);
+        return dX + dY + dZ;
       }
-      exports.toHex = toHex2;
-      function fromHex(hexidecimal) {
-        return fromDec(parseInt(hexidecimal.substring(1, 7), 16));
+      exports.distanceManhattan3 = distanceManhattan3;
+      function distanceEuclidean3(from, to) {
+        const x = Math.abs(to.x - from.x);
+        const y = Math.abs(to.y - from.y);
+        const z = Math.abs(to.z - from.z);
+        return Math.sqrt(x * x + y * y + z * z);
       }
-      exports.fromHex = fromHex;
-      function toRgb({ r, g, b }) {
-        return `rgb(${r}, ${g}, ${b})`;
-      }
-      exports.toRgb = toRgb;
+      exports.distanceEuclidean3 = distanceEuclidean3;
     }
   });
 
@@ -24430,11 +24432,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx20 = jsxWithValidationDynamic;
-          var jsxs12 = jsxWithValidationStatic;
+          var jsx24 = jsxWithValidationDynamic;
+          var jsxs18 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx20;
-          exports.jsxs = jsxs12;
+          exports.jsx = jsx24;
+          exports.jsxs = jsxs18;
         })();
       }
     }
@@ -24449,6 +24451,39 @@
       } else {
         module.exports = require_react_jsx_runtime_development();
       }
+    }
+  });
+
+  // node_modules/@bencoveney/utils/dist/color.js
+  var require_color = __commonJS({
+    "node_modules/@bencoveney/utils/dist/color.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.toRgb = exports.fromHex = exports.toHex = exports.fromDec = exports.toDec = void 0;
+      function toDec({ r, g, b }) {
+        return (r << 16) + (g << 8) + b;
+      }
+      exports.toDec = toDec;
+      function fromDec(hexTriplet) {
+        return {
+          r: hexTriplet >> 16,
+          g: hexTriplet >> 8 & 255,
+          b: hexTriplet & 255
+        };
+      }
+      exports.fromDec = fromDec;
+      function toHex3(color) {
+        return "#" + ((1 << 24) + toDec(color)).toString(16).substring(1, 7);
+      }
+      exports.toHex = toHex3;
+      function fromHex(hexidecimal) {
+        return fromDec(parseInt(hexidecimal.substring(1, 7), 16));
+      }
+      exports.fromHex = fromHex;
+      function toRgb({ r, g, b }) {
+        return `rgb(${r}, ${g}, ${b})`;
+      }
+      exports.toRgb = toRgb;
     }
   });
 
@@ -24603,8 +24638,10 @@
     movementChance: 0.2,
     worldWidth: 10,
     worldHeight: 10,
-    terrainResolution: 20
-    // terrainPerlinRanges: [1, 4, 8, 16],
+    terrainResolution: 20,
+    waterHeight: 0.46,
+    waterStop1: 0.25,
+    waterStop2: 0.35
   };
 
   // src/log.ts
@@ -24629,6 +24666,13 @@
   var import_array = __toESM(require_array(), 1);
 
   // src/utils/maths.ts
+  function round(value, decimalPlaces) {
+    const multiplier = Math.pow(10, decimalPlaces);
+    return Math.floor(value * multiplier) / multiplier;
+  }
+  function clamp(min, max, value) {
+    return Math.max(min, Math.min(max, value));
+  }
   function lerp(x, min, max) {
     return (1 - x) * min + max * x;
   }
@@ -24698,6 +24742,9 @@
   function array2dGetIndex(arr, x, y) {
     return x + y * arr.xSize;
   }
+  function array2dGetCoords(arr, index) {
+    return [index % arr.xSize, Math.floor(index / arr.ySize)];
+  }
   function array2dIsInBounds(arr, x, y) {
     return x >= 0 && x < arr.xSize && y >= 0 && y < arr.ySize;
   }
@@ -24720,6 +24767,27 @@
   function array2dFlipY(arr, y) {
     return arr.ySize - y - 1;
   }
+  function array2dMerge(arr, merger) {
+    const keys = Object.keys(arr);
+    const anyArr = arr[keys[0]];
+    const length = anyArr.values.length;
+    const values = [];
+    const param = {};
+    for (let index = 0; index < length; index++) {
+      for (let key = 0; key < keys.length; key++) {
+        param[keys[key]] = arr[keys[key]].values[index];
+      }
+      values.push(
+        merger(
+          param,
+          index % anyArr.xSize,
+          Math.floor(index / anyArr.ySize),
+          index
+        )
+      );
+    }
+    return array2dReplace(anyArr, values);
+  }
   function array2dSum(...arrs) {
     const anyArr = arrs[0];
     const length = anyArr.values.length;
@@ -24728,6 +24796,18 @@
       values.push(0);
       for (let arr = 0; arr < arrs.length; arr++) {
         values[index] += arrs[arr].values[index];
+      }
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dProduct(...arrs) {
+    const anyArr = arrs[0];
+    const length = anyArr.values.length;
+    const values = [];
+    for (let index = 0; index < length; index++) {
+      values.push(1);
+      for (let arr = 0; arr < arrs.length; arr++) {
+        values[index] *= arrs[arr].values[index];
       }
     }
     return array2dReplace(anyArr, values);
@@ -24741,6 +24821,185 @@
   }
   function array2dNormalize(arr) {
     return array2dReplace(arr, normalize(arr.values));
+  }
+  function array2dSlice(arr, fromX, fromY, xSize, ySize) {
+    const result = array2dCreate(xSize, ySize);
+    for (let xOffset = 0; xOffset < xSize; xOffset++) {
+      for (let yOffset = 0; yOffset < ySize; yOffset++) {
+        const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
+        const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
+        result.values[mappedIndex] = sourceValue;
+      }
+    }
+    return result;
+  }
+  var neighbours4 = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  ];
+  var neighbours24 = [
+    [-2, -2],
+    [-2, -1],
+    [-2, 0],
+    [-2, 1],
+    [-2, 2],
+    [-1, -2],
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [-1, 2],
+    [0, -2],
+    [0, -1],
+    [0, 1],
+    [0, 2],
+    [1, -2],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+    [1, 2],
+    [2, -2],
+    [2, -1],
+    [2, 0],
+    [2, 1],
+    [2, 2]
+  ];
+  function array2dGetNeighbourIndices(arr, index, neighbourMask, excluding) {
+    const [positionX, positionY] = array2dGetCoords(arr, index);
+    const result = [];
+    for (let neighbour = 0; neighbour < neighbourMask.length; neighbour++) {
+      const [xOffset, yOffset] = neighbourMask[neighbour];
+      const x = positionX + xOffset;
+      const y = positionY + yOffset;
+      if (array2dIsInBounds(arr, x, y)) {
+        const index2 = array2dGetIndex(arr, x, y);
+        if (!excluding?.has(index2)) {
+          result.push(index2);
+        }
+      }
+    }
+    return result;
+  }
+
+  // src/terrain/biome.ts
+  var biomeColorMap = {
+    ["DeepSea" /* DeepSea */]: {
+      r: 23,
+      g: 110,
+      b: 128
+    },
+    ["ShallowSea" /* ShallowSea */]: {
+      r: 50,
+      g: 163,
+      b: 171
+    },
+    ["Beach" /* Beach */]: {
+      r: 235,
+      g: 196,
+      b: 80
+    },
+    ["Grass" /* Grass */]: {
+      r: 18,
+      g: 116,
+      b: 49
+    },
+    ["Desert" /* Desert */]: {
+      r: 255,
+      g: 242,
+      b: 179
+    },
+    ["Tundra" /* Tundra */]: {
+      r: 230,
+      g: 255,
+      b: 230
+    },
+    ["Mountain" /* Mountain */]: {
+      r: 112,
+      g: 117,
+      b: 113
+    },
+    ["Snow" /* Snow */]: {
+      r: 236,
+      g: 240,
+      b: 240
+    },
+    ["Unknown" /* Unknown */]: {
+      r: 255,
+      g: 0,
+      b: 0
+    }
+  };
+  function getBiome(height, temperature, gradient, coast) {
+    if (height < config.waterStop2) {
+      return "DeepSea" /* DeepSea */;
+    }
+    if (height < config.waterHeight) {
+      return "ShallowSea" /* ShallowSea */;
+    }
+    if (coast > 0.6 && gradient < 0.5 && height < 0.5) {
+      return "Beach" /* Beach */;
+    }
+    if (coast > 0.3 && gradient < 0.4 && height < 0.5) {
+      return "Beach" /* Beach */;
+    }
+    if (gradient > 0.7) {
+      return "Mountain" /* Mountain */;
+    }
+    if (height < 0.81) {
+      if (temperature > 0.7) {
+        return "Desert" /* Desert */;
+      }
+      if (temperature < 0.3) {
+        return "Tundra" /* Tundra */;
+      }
+      return "Grass" /* Grass */;
+    }
+    if (height < 0.96) {
+      return "Mountain" /* Mountain */;
+    }
+    if (height <= 1) {
+      return "Snow" /* Snow */;
+    }
+    return "Unknown" /* Unknown */;
+  }
+
+  // src/terrain/coasts.ts
+  var import_vector = __toESM(require_vector(), 1);
+  var maxDistance = (0, import_vector.distanceEuclidean2)({ x: 0, y: 0 }, { x: 2, y: 2 });
+  function findCoasts(heights) {
+    const coasts = array2dMap(
+      heights,
+      (height) => height > config.waterHeight ? 0 : 1
+    );
+    array2dMap(coasts, (value, x, y, index) => {
+      if (value === 1) {
+        const neighbours = array2dGetNeighbourIndices(
+          coasts,
+          index,
+          neighbours24
+        );
+        for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
+          const neighbourIndex = neighbours[neighbour];
+          const current = coasts.values[neighbourIndex];
+          const [neighbourX, neighbourY] = array2dGetCoords(
+            coasts,
+            neighbourIndex
+          );
+          const distance = (0, import_vector.distanceEuclidean2)(
+            { x, y },
+            { x: neighbourX, y: neighbourY }
+          );
+          const coastal = inverseLerp(
+            maxDistance - distance * 0.9,
+            0,
+            maxDistance
+          );
+          coasts.values[neighbourIndex] = Math.max(current, coastal);
+        }
+      }
+    });
+    return coasts;
   }
 
   // src/terrain/color.ts
@@ -24765,65 +25024,229 @@
       b: shade
     };
   }
-  function getTerrainColor(height) {
-    if (height < 0.2) {
-      const scale = inverseLerp(height, 0, 0.2);
+  function getStringColor(value, colorMap) {
+    return colorMap[value];
+  }
+  function getTerrainColor(height, temperature, biome, sunlight) {
+    switch (biome) {
+      case "DeepSea" /* DeepSea */:
+      case "ShallowSea" /* ShallowSea */:
+        return getWaterColor(height, temperature);
+      case "Beach" /* Beach */:
+        return applySunlight(getSandColor(height, temperature), sunlight);
+      case "Desert" /* Desert */:
+      case "Grass" /* Grass */:
+      case "Tundra" /* Tundra */:
+        return applySunlight(getVegetationColor(height, temperature), sunlight);
+      case "Mountain" /* Mountain */:
+        return applySunlight(getCliffsColor(height, temperature), sunlight);
+      case "Snow" /* Snow */:
+        return applySunlight(getSnowColor(height, temperature), sunlight);
+      case "Unknown" /* Unknown */:
+        return { r: 255, g: 0, b: 0 };
+    }
+  }
+  function applySunlight(color, sunlight) {
+    const shadow = 1 - sunlight;
+    return validateColor({
+      r: color.r + lerp(shadow, 0, -color.r / 4),
+      g: color.g + lerp(shadow, 0, -color.g / 4),
+      b: color.b + lerp(shadow, 0, -color.b / 4)
+    });
+  }
+  function applyTemp(color, temperature) {
+    if (temperature <= 0.5) {
+      const scale = temperature * 2;
+      return clampColor({
+        r: color.r + lerp(scale, 50, 0),
+        g: color.g + lerp(scale, 50, 0),
+        b: color.b + lerp(scale, 100, 0)
+      });
+    } else {
+      const scale = (temperature - 0.5) * 2;
+      return clampColor({
+        ...color,
+        r: color.r + lerp(scale, 0, 150),
+        g: color.g + lerp(scale, 0, 50),
+        b: color.b + lerp(scale, 0, 50)
+      });
+    }
+  }
+  function clampColor(color) {
+    return {
+      r: clamp(0, 255, color.r),
+      g: clamp(0, 255, color.g),
+      b: clamp(0, 255, color.b)
+    };
+  }
+  function validateColor(color) {
+    if (Number.isNaN(color.r) || color.r < 0 || color.r > 255) {
+      throw new Error("Bad color");
+    }
+    if (Number.isNaN(color.g) || color.g < 0 || color.g > 255) {
+      throw new Error("Bad color");
+    }
+    if (Number.isNaN(color.b) || color.b < 0 || color.b > 255) {
+      throw new Error("Bad color");
+    }
+    return color;
+  }
+  function getSandColor(height, temperature) {
+    const scale = inverseLerp(height, config.waterHeight, 0.5);
+    return clampColor(
+      applyTemp(
+        {
+          r: lerp(scale, 235, 148),
+          g: lerp(scale, 196, 119),
+          b: lerp(scale, 80, 3)
+        },
+        temperature
+      )
+    );
+  }
+  function getWaterColor(height, temperature) {
+    if (height < config.waterStop1) {
+      const scale = inverseLerp(height, 0, config.waterStop1);
       return {
         r: lerp(scale, 0, 23),
         g: lerp(scale, 55, 110),
         b: lerp(scale, 93, 128)
       };
-    } else if (height >= 0.2 && height < 0.25) {
-      const scale = inverseLerp(height, 0.2, 0.25);
+    } else if (height >= config.waterStop1 && height < config.waterStop2) {
+      const scale = inverseLerp(height, config.waterStop1, config.waterStop2);
       return {
         r: lerp(scale, 23, 50),
         g: lerp(scale, 110, 163),
         b: lerp(scale, 128, 171)
       };
-    } else if (height >= 0.25 && height < 0.46) {
-      const scale = inverseLerp(height, 0.25, 0.46);
+    } else {
+      const scale = inverseLerp(height, config.waterStop2, config.waterHeight);
       return {
         r: lerp(scale, 50, 88),
         g: lerp(scale, 163, 219),
         b: lerp(scale, 171, 202)
       };
-    } else if (height >= 0.46 && height < 0.5) {
-      const scale = inverseLerp(height, 0.46, 0.5);
-      return {
-        r: lerp(scale, 235, 148),
-        g: lerp(scale, 196, 119),
-        b: lerp(scale, 80, 3)
-      };
-    } else if (height >= 0.5 && height < 0.67) {
-      const scale = inverseLerp(height, 0.5, 0.67);
-      return {
-        r: lerp(scale, 21, 18),
-        g: lerp(scale, 126, 116),
-        b: lerp(scale, 32, 49)
-      };
-    } else if (height >= 0.67 && height < 0.81) {
-      const scale = inverseLerp(height, 0.67, 0.81);
-      return {
-        r: lerp(scale, 18, 12),
-        g: lerp(scale, 116, 92),
-        b: lerp(scale, 49, 52)
-      };
-    } else if (height >= 0.81 && height < 0.96) {
-      const scale = inverseLerp(height, 0.81, 0.96);
-      return {
-        r: lerp(scale, 112, 76),
-        g: lerp(scale, 117, 79),
-        b: lerp(scale, 113, 100)
-      };
-    } else {
-      const scale = inverseLerp(height, 0.96, 1);
-      return {
-        r: lerp(scale, 236, 223),
-        g: lerp(scale, 240, 245),
-        b: lerp(scale, 240, 245)
-      };
     }
   }
+  function getVegetationColor(height, temperature) {
+    if (height < 0.67) {
+      const scale = inverseLerp(height, 0.5, 0.67);
+      return applyTemp(
+        {
+          r: lerp(scale, 21, 18),
+          g: lerp(scale, 126, 116),
+          b: lerp(scale, 32, 49)
+        },
+        temperature
+      );
+    } else {
+      const scale = inverseLerp(height, 0.67, 0.81);
+      return applyTemp(
+        {
+          r: lerp(scale, 18, 12),
+          g: lerp(scale, 116, 92),
+          b: lerp(scale, 49, 52)
+        },
+        temperature
+      );
+    }
+  }
+  function getCliffsColor(height, temperature) {
+    const scale = inverseLerp(height, 0.81, 0.96);
+    return {
+      r: lerp(scale, 112, 76),
+      g: lerp(scale, 117, 79),
+      b: lerp(scale, 113, 100)
+    };
+  }
+  function getSnowColor(height, temperature) {
+    const scale = inverseLerp(height, 0.96, 1);
+    return {
+      r: lerp(scale, 236, 223),
+      g: lerp(scale, 240, 245),
+      b: lerp(scale, 240, 245)
+    };
+  }
+
+  // src/terrain/features.ts
+  var import_array3 = __toESM(require_array(), 1);
+  function getWaterFeature(area) {
+    if (area < 100) {
+      return "lake";
+    } else if (area < 500) {
+      return "sea";
+    } else {
+      return "ocean";
+    }
+  }
+  function getLandFeature(area) {
+    if (area < 500) {
+      return "island";
+    } else {
+      return "continent";
+    }
+  }
+  var id = 0;
+  function findFeatures(heights) {
+    const tested = /* @__PURE__ */ new Set();
+    const features = (0, import_array3.empty)(heights.values.length).fill("");
+    array2dMap(heights, (value, x, y, index) => {
+      if (tested.has(index)) {
+        return;
+      }
+      tested.add(index);
+      if (value < config.waterHeight) {
+        const area = floodFill(heights, index, 0, config.waterHeight);
+        const name = `${getWaterFeature(area.length)}_${id++}`;
+        for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
+          const index2 = area[areaIndex];
+          tested.add(index2);
+          features[index2] = name;
+        }
+      } else {
+        const area = floodFill(heights, index, config.waterHeight, 2);
+        const name = `${getLandFeature(area.length)}_${id++}`;
+        for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
+          const index2 = area[areaIndex];
+          tested.add(index2);
+          features[index2] = name;
+        }
+      }
+    });
+    let featuresArray = [];
+    for (let index = 0; index < heights.values.values.length; index++) {
+      featuresArray.push(index);
+    }
+    return array2dReplace(heights, features);
+  }
+  function floodFill(arr, index, min, max) {
+    const result = [index];
+    const tested = /* @__PURE__ */ new Set([index]);
+    let stack = array2dGetNeighbourIndices(arr, index, neighbours4);
+    while (stack.length > 0) {
+      const current = stack.pop();
+      const value = arr.values[current];
+      if (value >= min && value < max) {
+        result.push(current);
+        const neighbours = array2dGetNeighbourIndices(
+          arr,
+          current,
+          neighbours4,
+          tested
+        );
+        for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
+          tested.add(neighbours[neighbour]);
+          stack.push(neighbours[neighbour]);
+        }
+      }
+    }
+    return result;
+  }
+  var white = { r: 0, g: 0, b: 0 };
+  var featureColorMap = {
+    // lol
+    "": white
+  };
 
   // src/terrain/perlin.ts
   function rand_vect() {
@@ -24836,39 +25259,32 @@
   function interp(x, a, b) {
     return a + smootherstep(x) * (b - a);
   }
+  function dotProductGrid(gradients, x, y, vx, vy) {
+    let g_vect;
+    let d_vect = { x: x - vx, y: y - vy };
+    const key = `${vx},${vy}`;
+    if (gradients.has(key)) {
+      g_vect = gradients.get(key);
+    } else {
+      g_vect = rand_vect();
+      gradients.set(key, g_vect);
+    }
+    return d_vect.x * g_vect.x + d_vect.y * g_vect.y;
+  }
   function createPerlin() {
     const gradients = /* @__PURE__ */ new Map();
-    const memory = /* @__PURE__ */ new Map();
-    function dotProductGrid(x, y, vx, vy) {
-      let g_vect;
-      let d_vect = { x: x - vx, y: y - vy };
-      const key = `${vx},${vy}`;
-      if (gradients.has(key)) {
-        g_vect = gradients.get(key);
-      } else {
-        g_vect = rand_vect();
-        gradients.set(key, g_vect);
-      }
-      return d_vect.x * g_vect.x + d_vect.y * g_vect.y;
-    }
-    function get(x, y) {
-      const key = `${x},${y}`;
-      if (memory.has(key)) {
-        return memory.get(key);
-      }
+    return (x, y) => {
       let xf = Math.floor(x);
       let yf = Math.floor(y);
-      let tl = dotProductGrid(x, y, xf, yf);
-      let tr = dotProductGrid(x, y, xf + 1, yf);
-      let bl = dotProductGrid(x, y, xf, yf + 1);
-      let br = dotProductGrid(x, y, xf + 1, yf + 1);
+      let tl = dotProductGrid(gradients, x, y, xf, yf);
+      let tr = dotProductGrid(gradients, x, y, xf + 1, yf);
+      let bl = dotProductGrid(gradients, x, y, xf, yf + 1);
+      let br = dotProductGrid(gradients, x, y, xf + 1, yf + 1);
       let xt = interp(x - xf, tl, tr);
       let xb = interp(x - xf, bl, br);
       let v = interp(y - yf, xt, xb);
-      memory.set(key, v);
       return v;
-    }
-    return { get };
+    };
   }
   function perlin2dArray(xSize, ySize, noiseScale) {
     const values = getPerlinValues(xSize, noiseScale).map((height) => height / 1);
@@ -24882,7 +25298,7 @@
     const heights = [];
     for (let x = 0; x < GRID_SIZE; x += num_pixels / GRID_SIZE) {
       for (let y = 0; y < GRID_SIZE; y += num_pixels / GRID_SIZE) {
-        let v = perlin.get(x, y);
+        let v = perlin(x, y);
         heights.push(v + 1);
       }
     }
@@ -24891,15 +25307,48 @@
 
   // src/terrain/index.ts
   function createTerrain(width, height, terrainRegistry) {
-    const heights2 = perlin2dArray(width, height, 4);
-    const heights4 = perlin2dArray(width, height, 8);
-    const heights8 = array2dScale(perlin2dArray(width, height, 16), 1 / 2);
-    const heights16 = array2dScale(perlin2dArray(width, height, 32), 1 / 3);
-    const heights32 = array2dScale(perlin2dArray(width, height, 64), 1 / 4);
-    const heights = array2dNormalize(
-      array2dSum(heights2, heights4, heights8, heights16, heights32)
+    const heights2 = array2dNormalize(perlin2dArray(width, height, 4));
+    const heights4 = array2dNormalize(perlin2dArray(width, height, 8));
+    const heights8 = array2dNormalize(perlin2dArray(width, height, 16));
+    const heights16 = array2dNormalize(perlin2dArray(width, height, 32));
+    const heights32 = array2dNormalize(perlin2dArray(width, height, 64));
+    const combinedHeights = array2dNormalize(
+      array2dSum(
+        heights2,
+        heights4,
+        array2dScale(heights8, 1 / 2),
+        array2dScale(heights16, 1 / 3),
+        array2dScale(heights32, 1 / 4)
+      )
     );
-    const colors = array2dMap(heights, getTerrainColor);
+    const heights = array2dProduct(combinedHeights, combinedHeights);
+    const temperature = array2dNormalize(perlin2dArray(width, height, 2));
+    const gradient = array2dNormalize(
+      array2dMap(heights, (height2, x, y) => {
+        const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height2 : 0;
+        const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height2 : 0;
+        return Math.sqrt(dx * dx + dy * dy);
+      })
+    );
+    const angle = array2dMap(heights, (height2, x, y) => {
+      const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height2 : 0;
+      const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height2 : 0;
+      return Math.atan2(dy, dx);
+    });
+    const facingLeft = array2dNormalize(
+      array2dMap(angle, (value) => -Math.abs(value))
+    );
+    const sunlight = array2dNormalize(array2dProduct(gradient, facingLeft));
+    const coast = findCoasts(heights);
+    const biome = array2dMerge(
+      { heights, temperature, gradient, coast },
+      ({ heights: heights3, temperature: temperature2, gradient: gradient2, coast: coast2 }) => getBiome(heights3, temperature2, gradient2, coast2)
+    );
+    const colors = array2dMerge(
+      { heights, temperature, biome, sunlight },
+      ({ heights: heights3, temperature: temperature2, biome: biome2, sunlight: sunlight2 }) => getTerrainColor(heights3, temperature2, biome2, sunlight2)
+    );
+    const features = findFeatures(heights);
     terrainRegistry.push(
       { name: "heights2", kind: "number", values: heights2 },
       { name: "heights4", kind: "number", values: heights4 },
@@ -24907,6 +25356,19 @@
       { name: "heights16", kind: "number", values: heights16 },
       { name: "heights32", kind: "number", values: heights32 },
       { name: "heights", kind: "number", values: heights },
+      { name: "gradient", kind: "number", values: gradient },
+      { name: "angle", kind: "number", values: array2dNormalize(angle) },
+      { name: "facingLeft", kind: "number", values: facingLeft },
+      { name: "sunlight", kind: "number", values: sunlight },
+      { name: "temperature", kind: "number", values: temperature },
+      { name: "coast", kind: "number", values: coast },
+      { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
+      {
+        name: "features",
+        kind: "string",
+        values: features,
+        colorMap: featureColorMap
+      },
       { name: "colors", kind: "color", values: colors }
     );
   }
@@ -24919,8 +25381,8 @@
       set: (value) => {
         let castValue = value;
         if (!castValue.id) {
-          const id2 = nextId();
-          castValue.id = id2;
+          const id3 = nextId();
+          castValue.id = id3;
         }
         map.set(castValue.id, castValue);
         return castValue;
@@ -24928,9 +25390,9 @@
       nextId
     };
   }
-  var id = 0;
+  var id2 = 0;
   function nextId() {
-    return "" + id++;
+    return "" + id2++;
   }
   function getFromLookup(lookup, key) {
     const found = getFromLookupSafe(lookup, key);
@@ -25072,11 +25534,11 @@
       });
     });
   }
-  function createInitialDeities(history) {
+  function createInitialDeities(history2) {
     const deityThemes = getDeityThemes();
     const deities = deityThemes.map((deityTheme) => {
-      const deity = createDeity(history.beings, deityTheme.theme);
-      history.log(`[[${deity.name}]] woke from their slumber.`);
+      const deity = createDeity(history2.beings, deityTheme.theme);
+      history2.log(`[[${deity.name}]] woke from their slumber.`);
       return deity;
     });
     deityThemes.forEach((deityTheme) => {
@@ -25364,7 +25826,7 @@
   function getWords(words, language) {
     return words.split(" ").map((word) => getWord(word, language));
   }
-  function generateLanguage(history) {
+  function generateLanguage(history2) {
     const phonemes = {
       singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
       dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
@@ -25383,13 +25845,155 @@
     return language;
   }
 
-  // src/worldgen/populate.ts
-  function populateWorld(history) {
-    history.dialects.set({
-      language: generateLanguage(history)
+  // src/terrain/registry.ts
+  function getTerrainLayer(terrainRegistry, layerName) {
+    const result = terrainRegistry.find((layer) => layer.name === layerName);
+    if (!result) {
+      throw new Error(`Bad layer name ${layerName}`);
+    }
+    return result;
+  }
+  function sliceTerrainRegistry(terrainRegistry, x, y, resolution) {
+    const xTerrain = x * resolution;
+    const yTerrain = y * resolution;
+    const newTerrainRegistry = terrainRegistry.map((entry) => ({
+      ...entry,
+      values: array2dSlice(
+        entry.values,
+        xTerrain,
+        yTerrain,
+        resolution,
+        resolution
+      )
+    }));
+    return newTerrainRegistry;
+  }
+
+  // src/terrain/assess.ts
+  function assessTerrain(terrain) {
+    const heights = getTerrainLayer(
+      terrain,
+      "heights"
+    );
+    let waterCount = 0;
+    for (let index = 0; index < heights.values.values.length; index++) {
+      const height = heights.values.values[index];
+      if (height < config.waterHeight) {
+        waterCount++;
+      }
+    }
+    const temperature = getTerrainLayer(
+      terrain,
+      "temperature"
+    );
+    const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
+    const includesFeatures = /* @__PURE__ */ new Set();
+    const features = getTerrainLayer(
+      terrain,
+      "features"
+    );
+    features.values.values.forEach((f) => includesFeatures.add(f));
+    return {
+      percentWater: waterCount / temperature.values.values.length,
+      averageTemp: totalTemperature / temperature.values.values.length,
+      includesFeatures: [...includesFeatures.values()]
+    };
+  }
+
+  // src/worldgen/world.ts
+  function createWorld(width, height, terrainRegistry) {
+    return array2dCreate(width, height, (x, y) => {
+      const newTerrainRegistry = sliceTerrainRegistry(
+        terrainRegistry,
+        x,
+        y,
+        config.terrainResolution
+      );
+      return {
+        x,
+        y,
+        location: "",
+        terrainRegistry: newTerrainRegistry,
+        terrainAssessment: assessTerrain(newTerrainRegistry)
+      };
     });
-    createWorld(history.regions);
-    createInitialDeities(history);
+  }
+  function getNeighbouringTiles(world, tile) {
+    return [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1]
+    ].map(([dx, dy]) => [tile.x + dx, tile.y + dy]).filter(([x, y]) => array2dIsInBounds(world, x, y)).map(([x, y]) => array2dGet(world, x, y));
+  }
+  function pathfind(world, from, to) {
+    const fromInfo = {
+      cameFrom: void 0,
+      cost: 0,
+      priority: heuristic(from, to)
+    };
+    const tilesIKnowAbout = /* @__PURE__ */ new Map();
+    tilesIKnowAbout.set(from, fromInfo);
+    const tilesIShouldCheck = /* @__PURE__ */ new Map();
+    tilesIShouldCheck.set(from, fromInfo);
+    let routeFound = false;
+    let sanityCheck = 0;
+    while (!routeFound && tilesIShouldCheck.size > 0 && sanityCheck++ < world.values.length) {
+      const [next, nextInfo] = getNextPossibleTile(tilesIShouldCheck);
+      tilesIShouldCheck.delete(next);
+      if (next === to) {
+        const route = [];
+        let stop = next;
+        while (stop) {
+          route.unshift(stop);
+          stop = tilesIKnowAbout.get(stop)?.cameFrom;
+        }
+        return route;
+      } else {
+        const neighbours = getNeighbouringTiles(world, next);
+        neighbours.forEach((neighbour) => {
+          const cost = nextInfo.cost + 1;
+          const priority = cost + heuristic(neighbour, to);
+          const known = tilesIKnowAbout.get(neighbour);
+          if (known !== void 0 && cost >= known.cost) {
+            return;
+          }
+          const neighbourInfo = { cost, cameFrom: next, priority };
+          tilesIKnowAbout.set(neighbour, neighbourInfo);
+          tilesIShouldCheck.set(neighbour, neighbourInfo);
+        });
+      }
+    }
+    throw new Error("Couldn't find path");
+  }
+  function getNextPossibleTile(tiles) {
+    const possibilities = [...tiles.entries()];
+    const sorted = possibilities.sort((a, b) => a[1].priority - b[1].priority);
+    return sorted[0];
+  }
+  function heuristic(from, to) {
+    return euclidianDistance(from, to);
+  }
+  function euclidianDistance(from, to) {
+    const deltaX = Math.abs(from.x - to.x);
+    const deltaY = Math.abs(from.y - to.y);
+    return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  }
+
+  // src/worldgen/populate.ts
+  function populateWorld(history2) {
+    history2.dialects.set({
+      language: generateLanguage(history2)
+    });
+    createWorldRegion(history2.regions);
+    createInitialDeities(history2);
+    if (history2.regions.map.size >= 1 && !history2.world) {
+      history2.world = createWorld(
+        config.worldWidth,
+        config.worldHeight,
+        history2.terrainRegistry
+      );
+    }
   }
   function createDeity(beings, theme) {
     return beings.set({
@@ -25402,7 +26006,7 @@
   function getDeities(beings) {
     return lookupValues(beings).filter((being) => being.kind === "deity");
   }
-  function createWorld(regions) {
+  function createWorldRegion(regions) {
     return regions.set({
       name: createWorldName()
     });
@@ -25493,91 +26097,120 @@
     return `deity_${deityNameCount++}`;
   }
 
-  // src/components/terrain.tsx
+  // src/hooks/useInput.tsx
   var import_react = __toESM(require_react(), 1);
-  var import_color2 = __toESM(require_color(), 1);
-
-  // src/terrain/registry.ts
-  function getTerrainLayer(terrainRegistry, layerName) {
-    const result = terrainRegistry.find((layer) => layer.name === layerName);
-    if (!result) {
-      throw new Error("Bad layer name");
-    }
-    return result;
-  }
-
-  // src/components/terrain.tsx
   var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
-  function Terrain({
-    terrain,
-    layerName,
-    hoverX,
-    hoverY
-  }) {
-    const { values, kind } = getTerrainLayer(terrain, layerName);
-    const colors = kind === "color" ? values : array2dMap(values, getNumberColor);
-    const canvasRef = (0, import_react.useRef)(null);
-    (0, import_react.useEffect)(() => {
-      const canvas = canvasRef.current;
-      if (!canvas) {
-        return;
-      }
-      const context = canvas.getContext("2d");
-      if (!context) {
-        return;
-      }
-      const hoverIndex = hoverX !== null && hoverY !== null ? array2dGetIndex(colors, hoverX, hoverY) : null;
-      array2dMap(colors, (color, x, y, index) => {
-        const flipY = array2dFlipY(colors, y);
-        if (index === hoverIndex) {
-          context.fillStyle = "#ff0000";
-          context.fillRect(x, flipY, 1, 1);
-        } else {
-          context.fillStyle = (0, import_color2.toHex)(color);
-          context.fillRect(x, flipY, 1, 1);
-        }
-      });
-    }, [canvasRef.current, hoverX, hoverY]);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-      "canvas",
+  function useInput() {
+    const [value, setValue] = (0, import_react.useState)("");
+    const input = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      "input",
       {
-        ref: canvasRef,
-        width: colors.xSize,
-        height: colors.ySize,
-        style: {
-          width: "100%",
-          height: "100%",
-          imageRendering: "pixelated",
-          margin: 0,
-          padding: 0
-        }
+        value,
+        onChange: (e) => setValue(e.target.value),
+        type: "text"
       }
     );
+    return [value, input];
   }
 
-  // src/hooks/useHover.tsx
+  // src/components/log.tsx
   var import_react2 = __toESM(require_react(), 1);
-  function useHoverPosition() {
-    const [pos, setPos] = (0, import_react2.useState)([null, null]);
-    const handleMouseMove = (0, import_react2.useCallback)(
-      (e) => {
-        const bounds = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - bounds.x;
-        const y = e.clientY - bounds.y;
-        setPos([x, y]);
-      },
-      [setPos]
+  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+  var logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
+  function formatLog(message, language) {
+    return message.replace(
+      logReplaceRegex,
+      (_, word) => `${spellWords(getWords(word, language))}`
     );
-    return [handleMouseMove, ...pos];
+  }
+  function Log({
+    history: history2,
+    language
+  }) {
+    const [filter, input] = useInput();
+    const [enabledSystems, setEnabledSystems] = (0, import_react2.useState)([
+      "init",
+      "symbolAdoption",
+      "decision",
+      "artifactCreation"
+    ]);
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+        input,
+        [...history2.log.knownSystems.values()].map((system) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+          "button",
+          {
+            onClick: () => {
+              const newEnabledSystems = enabledSystems.includes(system) ? enabledSystems.filter((sys) => sys !== system) : enabledSystems.concat(system);
+              setEnabledSystems(newEnabledSystems);
+            },
+            children: [
+              enabledSystems.includes(system) ? "\u{1F7E9}" : "\u{1F7E5}",
+              system
+            ]
+          },
+          system
+        ))
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { maxHeight: 500, maxWidth: 800, overflow: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { children: history2.log.entries.map(([tick, system, ...log]) => [
+        tick,
+        system,
+        formatLog(log.join(","), language)
+      ]).filter(([_t, system]) => enabledSystems.includes(system)).filter(([_t, _s, log]) => log.includes(filter)).map(([tick, system, ...log], index) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("li", { children: [
+          tick,
+          " ",
+          system,
+          " ",
+          formatLog(log.join(","), language)
+        ] }, index);
+      }) }) })
+    ] });
+  }
+
+  // src/components/playback.tsx
+  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+  function Playback({
+    tickOnce,
+    tickAll,
+    restart,
+    canTick,
+    tickCount
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { onClick: tickOnce, disabled: !canTick, children: "\u25B6\uFE0F Tick world" }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("button", { onClick: tickAll, disabled: !canTick, children: [
+        " ",
+        "\u23E9 Run world"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { onClick: restart, children: " \u{1F195} Restart" }),
+      "Tick: ",
+      tickCount
+    ] });
+  }
+
+  // src/components/id.tsx
+  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+  function Id({ value }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { color: "grey", fontFamily: "monospace" }, children: [
+      "#",
+      value
+    ] });
+  }
+
+  // src/components/motif.tsx
+  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+  function Motif({ motif }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_jsx_runtime5.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
   }
 
   // src/components/tooltip.tsx
-  var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   function Tooltip({
     children,
     label
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       "span",
       {
         title: label,
@@ -25591,80 +26224,50 @@
   }
 
   // src/components/name.tsx
-  var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
   function Name({
     languageName,
     word
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Tooltip, { label: `From the language ${languageName}`, children: word });
-  }
-
-  // src/components/motif.tsx
-  var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
-  function Motif({ motif }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_jsx_runtime4.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
-  }
-
-  // src/components/id.tsx
-  var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
-  function Id({ value }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { style: { color: "grey", fontFamily: "monospace" }, children: [
-      "#",
-      value
-    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Tooltip, { label: `From the language ${languageName}`, children: word });
   }
 
   // src/components/commaSeparate.tsx
-  var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
   function CommaSeparate({ children }) {
     if (!Array.isArray(children)) {
       return children;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children: children.map((child, i) => [i > 0 && ", ", child]) });
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_jsx_runtime8.Fragment, { children: children.map((child, i) => [i > 0 && ", ", child]) });
   }
 
   // src/components/names.tsx
-  var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
-  function Names({ name, history }) {
-    const translations = lookupEntries(history.dialects).map(
+  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+  function Names({ name, history: history2 }) {
+    const translations = lookupEntries(history2.dialects).map(
       ([dialectName, dialect]) => [
         dialectName,
         spellWord(getWord(dialect.language.name, dialect.language)),
         spellWords(getWords(name, dialect.language))
       ]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
       "Known as",
       " ",
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(CommaSeparate, { children: translations.map(([dialectName, languageName, word]) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Name, { languageName, word }, dialectName)) })
-    ] });
-  }
-
-  // src/components/region.tsx
-  var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  function Region({
-    region,
-    history
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Id, { value: region.id }),
-      " ",
-      region.name,
-      ":",
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Names, { name: region.name, history })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(CommaSeparate, { children: translations.map(([dialectName, languageName, word]) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Name, { languageName, word }, dialectName)) })
     ] });
   }
 
   // src/components/tags.tsx
-  var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   function Tags({ children }) {
     if (Array.isArray(children) && children.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("ul", { style: { margin: 0, padding: 0 }, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("ul", { style: { margin: 0, padding: 0 }, children });
   }
   function TagsItem({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
       "li",
       {
         style: {
@@ -25679,28 +26282,28 @@
   }
 
   // src/components/being.tsx
-  var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   function Being({
     being,
-    history,
+    history: history2,
     language
   }) {
     const languageName = spellWord(getWord(language.name, language));
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Id, { value: being.id }),
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Id, { value: being.id }),
       " ",
       being.name,
       ":",
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Names, { name: being.name, history }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Motif, { motif: being.motif }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Names, { name: being.name, history: history2 }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Motif, { motif: being.motif }),
       being.theme && `Deity of ${being.theme}`,
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Tags, { children: Object.entries(being.relationships).map(
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Tags, { children: Object.entries(being.relationships).map(
         ([otherBeing, relationship]) => {
           const otherBeingName = spellWord(
-            getWord(getFromLookup(history.beings, otherBeing).name, language)
+            getWord(getFromLookup(history2.beings, otherBeing).name, language)
           );
-          return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(TagsItem, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(TagsItem, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
               Name,
               {
                 languageName,
@@ -25717,7 +26320,7 @@
   }
 
   // src/components/grid.tsx
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   function Grid({
     children,
     minWidth = 175,
@@ -25727,7 +26330,7 @@
     if (Array.isArray(children) && children.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
       "div",
       {
         style: {
@@ -25737,14 +26340,14 @@
           margin: 10
         },
         children: [
-          title && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { gridColumn: "1/-1", margin: 0 }, children: title }),
+          title && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h2", { style: { gridColumn: "1/-1", margin: 0 }, children: title }),
           children
         ]
       }
     );
   }
   function GridItem({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       "div",
       {
         style: {
@@ -25756,24 +26359,271 @@
     );
   }
 
-  // src/components/terrainLayerPicker.tsx
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  function TerrainLayerPicker({
-    terrainRegistry
+  // src/components/artifact.tsx
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+  function Artifact({
+    artifact,
+    history: history2
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Tags, { children: terrainRegistry.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(TagsItem, { children: entry.name }, entry.name)) });
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Id, { value: artifact.id }),
+      " ",
+      artifact.name,
+      ":",
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Names, { name: artifact.name, history: history2 }),
+      artifact.object
+    ] });
+  }
+
+  // src/components/region.tsx
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  function Region({
+    region,
+    history: history2
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Id, { value: region.id }),
+      " ",
+      region.name,
+      ":",
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Names, { name: region.name, history: history2 })
+    ] });
+  }
+
+  // src/components/dialect.tsx
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  function Dialect({
+    dialect,
+    history: history2
+  }) {
+    const { id: id3, language } = dialect;
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Id, { value: id3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Names, { name: language.name, history: history2 }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("ul", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          "Structure:",
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Tooltip, { label: "Onset", children: [
+            "[",
+            language.syllableStructure.minOnset,
+            "-",
+            language.syllableStructure.maxOnset,
+            "]"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Tooltip, { label: "Nucleus", children: [
+            "[",
+            language.syllableStructure.minNucleus,
+            "-",
+            language.syllableStructure.maxNucleus,
+            "]"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Tooltip, { label: "Coda", children: [
+            "[",
+            language.syllableStructure.minCoda,
+            "-",
+            language.syllableStructure.maxCoda,
+            "]"
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          "Single Vowels:",
+          " ",
+          language.phonemes.singleVowels.map((phoneme) => spellPhoneme(phoneme)).join(", ")
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          "Dipthongs:",
+          " ",
+          language.phonemes.dipthongs.map((phoneme) => spellPhoneme(phoneme)).join(", ")
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          "Unvoiced Constonants:",
+          " ",
+          language.phonemes.unvoicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
+          "Voiced Constonants:",
+          " ",
+          language.phonemes.voicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tags, { children: Object.entries(language.words).map(([word, voicing]) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(TagsItem, { children: [
+        word,
+        ": ",
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { children: spellWord(voicing) })
+      ] }, word)) }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("ul", { style: { margin: 0, padding: 0 } })
+    ] });
+  }
+
+  // src/components/world.tsx
+  var import_react6 = __toESM(require_react(), 1);
+
+  // src/components/terrain.tsx
+  var import_react3 = __toESM(require_react(), 1);
+  var import_color2 = __toESM(require_color(), 1);
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  var selectedColor = (0, import_color2.toHex)({ r: 0, g: 255, b: 0 });
+  var missingColor = { r: 0, g: 255, b: 0 };
+  function Terrain({
+    layer,
+    hoverX,
+    hoverY
+  }) {
+    const canvasRef = (0, import_react3.useRef)(null);
+    (0, import_react3.useEffect)(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) {
+        return;
+      }
+      const context = canvas.getContext("2d");
+      if (!context) {
+        return;
+      }
+      let colors;
+      switch (layer.kind) {
+        case "color":
+          colors = layer.values;
+          break;
+        case "number":
+          colors = array2dMap(layer.values, getNumberColor);
+          break;
+        case "string":
+          colors = array2dMap(
+            layer.values,
+            (value) => getStringColor(value, layer.colorMap) || missingColor
+          );
+          break;
+      }
+      const hoverIndex = hoverX !== null && hoverY !== null ? array2dGetIndex(colors, hoverX, hoverY) : null;
+      array2dMap(colors, (color, x, y, index) => {
+        const flipY = array2dFlipY(colors, y);
+        if (index === hoverIndex) {
+          context.fillStyle = selectedColor;
+          context.fillRect(x, flipY, 1, 1);
+        } else {
+          context.fillStyle = (0, import_color2.toHex)(color);
+          context.fillRect(x, flipY, 1, 1);
+        }
+      });
+    }, [canvasRef.current, hoverX, hoverY, layer]);
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      "canvas",
+      {
+        ref: canvasRef,
+        width: layer.values.xSize,
+        height: layer.values.ySize,
+        style: {
+          width: "100%",
+          height: "100%",
+          imageRendering: "pixelated",
+          margin: 0,
+          padding: 0
+        }
+      }
+    );
+  }
+
+  // src/hooks/useHover.tsx
+  var import_react4 = __toESM(require_react(), 1);
+  function useHoverPosition() {
+    const [pos, setPos] = (0, import_react4.useState)([null, null]);
+    const handleMouseMove = (0, import_react4.useCallback)(
+      (e) => {
+        const bounds = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - bounds.x;
+        const y = e.clientY - bounds.y;
+        setPos([x, y]);
+      },
+      [setPos]
+    );
+    return [handleMouseMove, ...pos];
+  }
+
+  // src/components/mapTile.tsx
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  function MapTile({
+    tile,
+    history: history2,
+    language
+  }) {
+    const region = getFromLookupSafe(history2.regions, tile.location);
+    if (!region?.name) {
+      return null;
+    }
+    const languageName = spellWords(getWords(language.name, language));
+    const beings = lookupValues(history2.beings).filter(
+      (being) => being.location === tile.location
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+      "div",
+      {
+        style: {
+          textAlign: "center",
+          fontSize: 10,
+          fontFamily: "sans-serif",
+          fontWeight: "bold",
+          lineHeight: 2
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            Name,
+            {
+              languageName,
+              word: spellWords(getWords(region.name, language))
+            }
+          ) }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("br", {}),
+          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            Tooltip,
+            {
+              label: spellWords(getWords(being.name, language)),
+              children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Motif, { motif: being.motif })
+            },
+            index
+          )) }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            "span",
+            {
+              style: {
+                lineHeight: 1.4
+              },
+              children: "\xA0"
+            }
+          )
+        ]
+      }
+    );
+  }
+  function BlackLabel({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      "span",
+      {
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          lineHeight: 1.4,
+          boxDecorationBreak: "clone",
+          borderRadius: 6,
+          padding: "6px 6px"
+        },
+        children
+      }
+    );
   }
 
   // src/components/map.tsx
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+  var import_react5 = __toESM(require_react(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   function Map2({
-    history,
-    language
+    history: history2,
+    language,
+    terrainLayer,
+    setSelection
   }) {
-    if (!history.world) {
+    if (!history2.world) {
       return null;
     }
-    const { terrainRegistry } = history;
+    const { terrainRegistry } = history2;
     const { values: heights } = getTerrainLayer(
       terrainRegistry,
       "heights"
@@ -25788,13 +26638,220 @@
       Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
     );
     const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
-    const selectedTile = array2dGet(
-      history.world,
-      Math.floor(pixelX / config.terrainResolution),
-      Math.floor(flipPixelY / config.terrainResolution)
+    (0, import_react5.useEffect)(() => {
+      if (pixelX !== null && flipPixelY !== null) {
+        setSelection([pixelX, flipPixelY]);
+      }
+    }, [setSelection, pixelX, flipPixelY]);
+    const layer = getTerrainLayer(terrainRegistry, terrainLayer);
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+      "div",
+      {
+        style: {
+          display: "grid",
+          gridTemplateColumns: `${renderWidth / history2.world?.xSize}px `.repeat(
+            history2.world?.xSize
+          ),
+          gridTemplateRows: `${renderHeight / history2.world?.ySize}px `.repeat(
+            history2.world?.ySize
+          ),
+          maxHeight: renderHeight,
+          maxWidth: renderWidth,
+          height: renderHeight,
+          width: renderWidth
+        },
+        onMouseMove: handler,
+        children: [
+          history2.world.values.map((tile, index) => {
+            return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              "div",
+              {
+                style: {
+                  gridRow: history2.world?.ySize - tile.y,
+                  gridColumn: index % history2.world?.xSize + 1,
+                  aspectRatio: 1,
+                  zIndex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  padding: "10px",
+                  boxSizing: "border-box"
+                },
+                children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MapTile, { tile, history: history2, language })
+              },
+              index
+            );
+          }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            "div",
+            {
+              style: {
+                gridRowStart: 1,
+                gridRowEnd: -1,
+                gridColumnStart: 1,
+                gridColumnEnd: -1,
+                aspectRatio: 1,
+                zIndex: 0
+              },
+              children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
+            }
+          )
+        ]
+      }
     );
-    const selectedRegion = selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+  }
+
+  // src/components/terrainLayerPicker.tsx
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  function TerrainLayerPicker({
+    terrainRegistry,
+    setTerrainLayer
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { children: "Terrain layer" }),
+      terrainRegistry.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("button", { onClick: () => setTerrainLayer(entry.name), children: entry.name }, entry.name))
+    ] });
+  }
+
+  // src/components/terrainValues.tsx
+  var import_color4 = __toESM(require_color(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  function TerrainValues({
+    terrainRegistry,
+    selectionX,
+    selectionY
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
+        "Terrain Position: (",
+        selectionX,
+        ", ",
+        selectionY,
+        ")"
+      ] }),
+      terrainRegistry.map((entry) => {
+        switch (entry.kind) {
+          case "color":
+            const color = array2dGet(entry.values, selectionX, selectionY);
+            const hex = (0, import_color4.toHex)(color);
+            return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
+              entry.name,
+              ": ",
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { style: { backgroundColor: hex }, children: hex })
+            ] }, entry.name);
+          case "number":
+            return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
+              entry.name,
+              ": ",
+              round(array2dGet(entry.values, selectionX, selectionY), 3)
+            ] }, entry.name);
+          case "string":
+            return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
+              entry.name,
+              ": ",
+              array2dGet(entry.values, selectionX, selectionY)
+            ] }, entry.name);
+        }
+      })
+    ] });
+  }
+
+  // src/components/tileValues.tsx
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
+  function TileValues({ tile }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
+        "Tile Position: (",
+        tile.x,
+        ", ",
+        tile.y,
+        ")"
+      ] }),
+      Object.entries(tile.terrainAssessment).map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
+        key,
+        ": ",
+        stringify(value)
+      ] }, key))
+    ] });
+  }
+  function stringify(value) {
+    if (typeof value === "string") {
+      return value;
+    } else if (typeof value === "number") {
+      return round(value, 3).toString();
+    } else if (Array.isArray(value)) {
+      return value.map((i) => stringify(i)).join(", ");
+    } else {
+      return JSON.stringify(value);
+    }
+  }
+
+  // src/components/worldSelection.tsx
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+  function WorldSelection({
+    history: history2,
+    language,
+    selectionX,
+    selectionY,
+    setTerrainLayer,
+    terrainLayer
+  }) {
+    if (!history2.world) {
+      return null;
+    }
+    const selectedTile = array2dGet(
+      history2.world,
+      Math.floor(selectionX / config.terrainResolution),
+      Math.floor(selectionY / config.terrainResolution)
+    );
+    const selectedRegion = selectedTile && getFromLookupSafe(history2.regions, selectedTile.location);
+    const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(Grid, { columns: 1, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        TerrainLayerPicker,
+        {
+          terrainRegistry: history2.terrainRegistry,
+          setTerrainLayer
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+        TerrainValues,
+        {
+          terrainRegistry: history2.terrainRegistry,
+          selectionX,
+          selectionY
+        }
+      ) }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Terrain, { layer, hoverX: null, hoverY: null }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(GridItem, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TileValues, { tile: selectedTile }),
+        selectedRegion && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Region, { region: selectedRegion, history: history2 })
+      ] }),
+      selectedRegion && getDeities(history2.beings).filter((deity) => deity.location === selectedRegion.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Being, { being: deity, history: history2, language }) }, index))
+    ] });
+  }
+
+  // src/components/world.tsx
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+  function World({
+    history: history2,
+    language
+  }) {
+    if (!history2.world) {
+      return null;
+    }
+    const [terrainLayer, setTerrainLayer] = (0, import_react6.useState)("colors");
+    const [selection, setSelection] = (0, import_react6.useState)([0, 0]);
+    const [selectionX, selectionY] = selection;
+    const setSelectionComparer = (0, import_react6.useCallback)(
+      (newSelection) => {
+        if (selection[0] !== newSelection[0] || selection[1] !== newSelection[1]) {
+          setSelection(newSelection);
+        }
+      },
+      [selection]
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
       "div",
       {
         style: {
@@ -25803,436 +26860,100 @@
           alignItems: "flex-start"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-            "div",
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            Map2,
             {
-              style: {
-                display: "grid",
-                gridTemplateColumns: `${renderWidth / history.world?.xSize}px `.repeat(history.world?.xSize),
-                gridTemplateRows: `${renderHeight / history.world?.ySize}px `.repeat(
-                  history.world?.ySize
-                ),
-                maxHeight: renderHeight,
-                maxWidth: renderWidth,
-                height: renderHeight,
-                width: renderWidth
-              },
-              onMouseMove: handler,
-              children: [
-                history.world.values.map((tile, index) => {
-                  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                    MapTile,
-                    {
-                      tile,
-                      gridRow: history.world?.ySize - tile.y,
-                      gridColumn: index % history.world?.xSize + 1,
-                      history,
-                      language
-                    },
-                    index
-                  );
-                }),
-                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                  "div",
-                  {
-                    style: {
-                      gridRowStart: 1,
-                      gridRowEnd: -1,
-                      gridColumnStart: 1,
-                      gridColumnEnd: -1,
-                      aspectRatio: 1,
-                      zIndex: 0
-                    },
-                    children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                      Terrain,
-                      {
-                        terrain: terrainRegistry,
-                        hoverX: pixelX,
-                        hoverY: flipPixelY,
-                        layerName: "colors"
-                      }
-                    )
-                  }
-                )
-              ]
+              history: history2,
+              language,
+              terrainLayer,
+              setSelection: setSelectionComparer
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(Grid, { columns: 1, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(GridItem, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-                "Terrain Position: (",
-                pixelX,
-                ", ",
-                flipPixelY,
-                ")"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-                "Tile Position: (",
-                selectedTile.x,
-                ", ",
-                selectedTile.y,
-                ")"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-                "Height:",
-                " ",
-                heights.values[array2dGetIndex(heights, pixelX, flipPixelY)]
-              ] })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(TerrainLayerPicker, { terrainRegistry: history.terrainRegistry }) }),
-            selectedRegion && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Region, { region: selectedRegion, history }) }),
-              getDeities(history.beings).filter((deity) => deity.location === selectedRegion.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                Being,
-                {
-                  being: deity,
-                  history,
-                  language
-                }
-              ) }, index))
-            ] })
-          ] }) })
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            WorldSelection,
+            {
+              history: history2,
+              language,
+              selectionX,
+              selectionY,
+              setTerrainLayer,
+              terrainLayer
+            }
+          ) })
         ]
       }
     );
   }
-  function MapTile({
-    tile,
-    gridRow,
-    gridColumn,
-    history,
-    language
-  }) {
-    const region = getFromLookupSafe(history.regions, tile.location);
-    const languageName = spellWords(getWords(language.name, language));
-    const beings = lookupValues(history.beings).filter(
-      (being) => being.location === tile.location
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-      "div",
-      {
-        style: {
-          gridRow,
-          gridColumn,
-          aspectRatio: 1,
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "10px",
-          boxSizing: "border-box"
-        },
-        children: region?.name && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-          "div",
-          {
-            style: {
-              textAlign: "center",
-              fontSize: 10,
-              fontFamily: "sans-serif",
-              fontWeight: "bold",
-              lineHeight: 2
-            },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                "span",
-                {
-                  style: {
-                    backgroundColor: "black",
-                    color: "white",
-                    boxDecorationBreak: "clone",
-                    borderRadius: 6,
-                    padding: "6px 6px"
-                  },
-                  children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                    Name,
-                    {
-                      languageName,
-                      word: spellWords(getWords(region.name, language))
-                    }
-                  )
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("br", {}),
-              beings.length ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                "span",
-                {
-                  style: {
-                    backgroundColor: "black",
-                    color: "white",
-                    lineHeight: 1.4,
-                    boxDecorationBreak: "clone",
-                    borderRadius: 6,
-                    padding: "6px 6px"
-                  },
-                  children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                    Tooltip,
-                    {
-                      label: spellWords(getWords(being.name, language)),
-                      children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Motif, { motif: being.motif })
-                    },
-                    index
-                  ))
-                }
-              ) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-                "span",
-                {
-                  style: {
-                    lineHeight: 1.4
-                  },
-                  children: "\xA0"
-                }
-              )
-            ]
-          }
-        )
-      }
-    );
-  }
-
-  // src/hooks/useInput.tsx
-  var import_react3 = __toESM(require_react(), 1);
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  function useInput() {
-    const [value, setValue] = (0, import_react3.useState)("");
-    const input = /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-      "input",
-      {
-        value,
-        onChange: (e) => setValue(e.target.value),
-        type: "text"
-      }
-    );
-    return [value, input];
-  }
-
-  // src/components/log.tsx
-  var import_react4 = __toESM(require_react(), 1);
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  var logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-  function formatLog(message, language) {
-    return message.replace(
-      logReplaceRegex,
-      (_, word) => `${spellWords(getWords(word, language))}`
-    );
-  }
-  function Log({
-    history,
-    language
-  }) {
-    const [filter, input] = useInput();
-    const [enabledSystems, setEnabledSystems] = (0, import_react4.useState)([
-      "init",
-      "symbolAdoption",
-      "worldFormation",
-      "decision",
-      "artifactCreation"
-    ]);
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-        input,
-        [...history.log.knownSystems.values()].map((system) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
-          "button",
-          {
-            onClick: () => {
-              const newEnabledSystems = enabledSystems.includes(system) ? enabledSystems.filter((sys) => sys !== system) : enabledSystems.concat(system);
-              setEnabledSystems(newEnabledSystems);
-            },
-            children: [
-              enabledSystems.includes(system) ? "\u{1F7E9}" : "\u{1F7E5}",
-              system
-            ]
-          },
-          system
-        ))
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { maxHeight: 500, maxWidth: 800, overflow: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("ul", { children: history.log.entries.map(([tick, system, ...log]) => [
-        tick,
-        system,
-        formatLog(log.join(","), language)
-      ]).filter(([_t, system]) => enabledSystems.includes(system)).filter(([_t, _s, log]) => log.includes(filter)).map(([tick, system, ...log], index) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
-          tick,
-          " ",
-          system,
-          " ",
-          formatLog(log.join(","), language)
-        ] }, index);
-      }) }) })
-    ] });
-  }
-
-  // src/components/playback.tsx
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  function Playback({
-    tickOnce,
-    tickAll,
-    restart,
-    canTick,
-    tickCount
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: tickOnce, disabled: !canTick, children: "\u25B6\uFE0F Tick world" }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("button", { onClick: tickAll, disabled: !canTick, children: [
-        " ",
-        "\u23E9 Run world"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { onClick: restart, children: " \u{1F195} Restart" }),
-      "Tick: ",
-      tickCount
-    ] });
-  }
-
-  // src/components/artifact.tsx
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  function Artifact({
-    artifact,
-    history
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Id, { value: artifact.id }),
-      " ",
-      artifact.name,
-      ":",
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Names, { name: artifact.name, history }),
-      artifact.object
-    ] });
-  }
-
-  // src/components/dialect.tsx
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  function Dialect({
-    dialect,
-    history
-  }) {
-    const { id: id2, language } = dialect;
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Id, { value: id2 }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Names, { name: language.name, history }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("ul", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Structure:",
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(Tooltip, { label: "Onset", children: [
-            "[",
-            language.syllableStructure.minOnset,
-            "-",
-            language.syllableStructure.maxOnset,
-            "]"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(Tooltip, { label: "Nucleus", children: [
-            "[",
-            language.syllableStructure.minNucleus,
-            "-",
-            language.syllableStructure.maxNucleus,
-            "]"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(Tooltip, { label: "Coda", children: [
-            "[",
-            language.syllableStructure.minCoda,
-            "-",
-            language.syllableStructure.maxCoda,
-            "]"
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Single Vowels:",
-          " ",
-          language.phonemes.singleVowels.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Dipthongs:",
-          " ",
-          language.phonemes.dipthongs.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Unvoiced Constonants:",
-          " ",
-          language.phonemes.unvoicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Voiced Constonants:",
-          " ",
-          language.phonemes.voicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Tags, { children: Object.entries(language.words).map(([word, voicing]) => /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(TagsItem, { children: [
-        word,
-        ": ",
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("i", { children: spellWord(voicing) })
-      ] }, word)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("ul", { style: { margin: 0, padding: 0 } })
-    ] });
-  }
 
   // src/components/page.tsx
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   function Page({
-    history,
+    history: history2,
     language,
     playbackControls
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Playback, { ...playbackControls }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Map2, { history, language }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Log, { history, language }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Grid, { title: "Regions", children: lookupValues(history.regions).map((region) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Region, { region, history }) }, region.id);
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Playback, { ...playbackControls }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(World, { history: history2, language }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Log, { history: history2, language }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Regions", children: lookupValues(history2.regions).map((region) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Region, { region, history: history2 }) }, region.id);
       }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Grid, { title: "Beings", children: lookupValues(history.beings).map((being) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Being, { being, history, language }) }, being.id);
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Beings", children: lookupValues(history2.beings).map((being) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Being, { being, history: history2, language }) }, being.id);
       }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Grid, { title: "Artifacts", children: lookupValues(history.artifacts).map((artifact) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Artifact, { artifact, history }) }, artifact.id);
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Artifacts", children: lookupValues(history2.artifacts).map((artifact) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Artifact, { artifact, history: history2 }) }, artifact.id);
       }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history.dialects).map((dialect) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Dialect, { dialect, history }) }, dialect.id);
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history2.dialects).map((dialect) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Dialect, { dialect, history: history2 }) }, dialect.id);
       }) })
     ] });
   }
 
   // src/systems/movement.ts
-  function runMovement(history) {
-    const deities = getDeities(history.beings);
+  function runMovement(history2) {
+    const deities = getDeities(history2.beings);
     deities.forEach((deity) => {
       if (deity.currentActivity) {
-        const previous = getFromLookupSafe(history.regions, deity.location);
+        const previous = getFromLookupSafe(history2.regions, deity.location);
         const path = deity.currentActivity.path;
         if (path.length === 0) {
           console.error("weird");
         } else if (path.length === 1) {
-          const targetTile = array2dGet(history.world, path[0].x, path[0].y);
-          discoverLocation(deity, targetTile, history);
-          const target = getFromLookup(history.regions, targetTile.location);
+          const targetTile = array2dGet(history2.world, path[0].x, path[0].y);
+          discoverLocation(deity, targetTile, history2);
+          const target = getFromLookup(history2.regions, targetTile.location);
           deity.location = target.id;
-          history.log(`[[${deity.name}]] completed their journey`);
+          history2.log(`[[${deity.name}]] completed their journey`);
           deity.currentActivity = void 0;
         } else {
           path.shift();
-          const targetTile = array2dGet(history.world, path[0].x, path[0].y);
-          moveToLocation(deity, targetTile, history, previous);
+          const targetTile = array2dGet(history2.world, path[0].x, path[0].y);
+          moveToLocation(deity, targetTile, history2, previous);
         }
       }
     });
   }
-  function moveToLocation(deity, targetTile, history, previous) {
-    discoverLocation(deity, targetTile, history);
-    const target = getFromLookup(history.regions, targetTile.location);
+  function moveToLocation(deity, targetTile, history2, previous) {
+    discoverLocation(deity, targetTile, history2);
+    const target = getFromLookup(history2.regions, targetTile.location);
     deity.location = target.id;
     if (previous) {
-      history.log(
+      history2.log(
         `[[${deity.name}]] moved from [[${previous.name}]] to [[${target.name}]]`
       );
     } else {
-      history.log(`[[${deity.name}]] entered the world in [[${target.name}]]`);
+      history2.log(`[[${deity.name}]] entered the world in [[${target.name}]]`);
     }
   }
-  function discoverLocation(deity, targetTile, history) {
+  function discoverLocation(deity, targetTile, history2) {
     if (targetTile.location) {
       return;
     }
-    const region = createTileRegion(history.regions, targetTile);
+    const region = createTileRegion(history2.regions, targetTile);
     const regionNameParts = region.name.split(" ").map((part) => `[[${part}]]`).join(" ");
-    history.log(`[[${deity.name}]] discovered the region of ${regionNameParts}`);
+    history2.log(`[[${deity.name}]] discovered the region of ${regionNameParts}`);
     deity.location = region.id;
   }
 
@@ -26251,18 +26972,18 @@
     return `artifact_${artifactNameCount++}`;
   }
   var count = 0;
-  function runArtifactCreation(history) {
+  function runArtifactCreation(history2) {
     if (!artifactSelection) {
       artifactSelection = randomSelection(config.artifactItems);
     }
     if (count >= config.artifactItems.length) {
       return;
     }
-    const deities = getDeities(history.beings);
+    const deities = getDeities(history2.beings);
     const locationIds = Array.from(
       new Set(
         deities.map((deity) => deity.location).filter((location) => !!location).filter(
-          (location) => getFromLookup(history.regions, location)?.name !== "world_0"
+          (location) => getFromLookup(history2.regions, location)?.name !== "world_0"
         )
       )
     );
@@ -26277,20 +26998,20 @@
         return;
       }
       count++;
-      const artifact = createArtifact(deitiesAtLocation, history.artifacts);
+      const artifact = createArtifact(deitiesAtLocation, history2.artifacts);
       const deityNames = commaSeparate(
         deitiesAtLocation.map((being) => `[[${being.name}]]`)
       );
-      const locationName = getFromLookup(history.regions, locationId)?.name;
-      history.log(
+      const locationName = getFromLookup(history2.regions, locationId)?.name;
+      history2.log(
         `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${locationName}]]`
       );
     });
   }
 
   // src/systems/symbolAdoption.ts
-  function runSymbolAdoption(history) {
-    const deities = getDeities(history.beings);
+  function runSymbolAdoption(history2) {
+    const deities = getDeities(history2.beings);
     const needSymbol = deities.filter((deity) => !deity.motif);
     if (!needSymbol.length) {
       return;
@@ -26300,95 +27021,9 @@
       kind: "symbol",
       value: randomChoice(config.motifs).name
     };
-    history.log(
+    history2.log(
       `[[${target.name}]] adopted the ${target.motif?.value} as their symbol`
     );
-  }
-
-  // src/worldgen/world.ts
-  function createWorld2(width, height) {
-    return array2dCreate(width, height, (x, y) => ({ x, y, location: "" }));
-  }
-  function getNeighbouringTiles(world, tile) {
-    return [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1]
-    ].map(([dx, dy]) => [tile.x + dx, tile.y + dy]).filter(([x, y]) => array2dIsInBounds(world, x, y)).map(([x, y]) => array2dGet(world, x, y));
-  }
-  function pathfind(history, world, from, to) {
-    const fromInfo = {
-      cameFrom: void 0,
-      cost: 0,
-      priority: heuristic(from, to)
-    };
-    const tilesIKnowAbout = /* @__PURE__ */ new Map();
-    tilesIKnowAbout.set(from, fromInfo);
-    const tilesIShouldCheck = /* @__PURE__ */ new Map();
-    tilesIShouldCheck.set(from, fromInfo);
-    let routeFound = false;
-    let sanityCheck = 0;
-    while (!routeFound && tilesIShouldCheck.size > 0 && sanityCheck++ < world.values.length) {
-      const [next, nextInfo] = getNextPossibleTile(tilesIShouldCheck);
-      tilesIShouldCheck.delete(next);
-      if (next === to) {
-        const route = [];
-        let stop = next;
-        while (stop) {
-          route.unshift(stop);
-          stop = tilesIKnowAbout.get(stop)?.cameFrom;
-        }
-        return route;
-      } else {
-        const neighbours = getNeighbouringTiles(world, next);
-        neighbours.forEach((neighbour) => {
-          const cost = nextInfo.cost + 1;
-          const priority = cost + heuristic(neighbour, to);
-          const known = tilesIKnowAbout.get(neighbour);
-          if (known !== void 0 && cost >= known.cost) {
-            return;
-          }
-          const neighbourInfo = { cost, cameFrom: next, priority };
-          tilesIKnowAbout.set(neighbour, neighbourInfo);
-          tilesIShouldCheck.set(neighbour, neighbourInfo);
-        });
-      }
-    }
-    throw new Error("Couldn't find path");
-  }
-  function getNextPossibleTile(tiles) {
-    const possibilities = [...tiles.entries()];
-    const sorted = possibilities.sort((a, b) => a[1].priority - b[1].priority);
-    return sorted[0];
-  }
-  function heuristic(from, to) {
-    return euclidianDistance(from, to);
-  }
-  function euclidianDistance(from, to) {
-    const deltaX = Math.abs(from.x - to.x);
-    const deltaY = Math.abs(from.y - to.y);
-    return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  }
-
-  // src/systems/worldFormation.ts
-  function runWorldFormation(history) {
-    const deities = getDeities(history.beings);
-    if (history.regions.map.size >= 1 && !history.world) {
-      const worldRegion = history.regions.map.values().next().value;
-      history.world = createWorld2(config.worldWidth, config.worldHeight);
-      const inWorldDeities = deities.filter((d) => d.location === worldRegion.id);
-      if (inWorldDeities.length > 0) {
-        const inWorldDeityNames = commaSeparate(
-          inWorldDeities.map((being) => `[[${being.name}]]`)
-        );
-        history.log(
-          `the world of [[${worldRegion.name}]] was given form by ${inWorldDeityNames}`
-        );
-      } else {
-        history.log(`the world of [[${worldRegion.name}]] was given form`);
-      }
-    }
   }
 
   // src/playback.ts
@@ -26418,41 +27053,41 @@
   }
 
   // src/index.tsx
-  var import_react5 = __toESM(require_react(), 1);
+  var import_react7 = __toESM(require_react(), 1);
 
   // src/systems/decision.ts
-  function runDecision(history) {
-    const worldIsReady = !!history.world;
+  function runDecision(history2) {
+    const worldIsReady = !!history2.world;
     if (!worldIsReady) {
       return;
     }
-    const deities = getDeities(history.beings);
+    const deities = getDeities(history2.beings);
     const availableDeities = deities.filter((deity) => !deity.currentActivity);
     availableDeities.forEach((deity) => {
       const willMove = rollDice(config.movementChance);
       if (!willMove) {
         return;
       }
-      const targetLocation = getDeityTargetLocation(deity, history);
+      const targetLocation = getDeityTargetLocation(deity, history2);
       if (!targetLocation) {
         return;
       }
       let targetRegionName = "an unknown land";
       if (targetLocation.location) {
-        const region = getFromLookup(history.regions, targetLocation.location);
+        const region = getFromLookup(history2.regions, targetLocation.location);
         if (region?.name) {
           targetRegionName = `[[${region.name}]]`;
         }
       }
-      history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
+      history2.log(`[[${deity.name}]] set out for ${targetRegionName}`);
       deity.currentActivity = {
         moveToLocation: targetLocation,
-        path: getPathToTargetLocation(deity, targetLocation, history)
+        path: getPathToTargetLocation(deity, targetLocation, history2)
       };
     });
   }
-  function getDeityTargetLocation(deity, history) {
-    const possibleTiles = history.world.values.filter(
+  function getDeityTargetLocation(deity, history2) {
+    const possibleTiles = history2.world.values.filter(
       (tile) => tile.location != deity.location
     );
     if (possibleTiles.length === 0) {
@@ -26466,19 +27101,19 @@
       return randomChoice(possibleTiles);
     }
   }
-  function getPathToTargetLocation(deity, targetLocation, history) {
-    const world = history.world;
+  function getPathToTargetLocation(deity, targetLocation, history2) {
+    const world = history2.world;
     if (!world) {
       console.error("weird");
       return [];
     }
-    const location = getFromLookupSafe(history.regions, deity.location);
+    const location = getFromLookupSafe(history2.regions, deity.location);
     if (!location || !location.tile) {
       return [targetLocation];
     }
     const fromTile = location.tile;
     const toTile = array2dGet(world, targetLocation.x, targetLocation.y);
-    const path = pathfind(history, world, fromTile, toTile);
+    const path = pathfind(world, fromTile, toTile);
     if (!path || path.length === 0) {
       console.error("weird");
     }
@@ -26495,12 +27130,12 @@
   }
 
   // src/systems/greeting.ts
-  function runGreeting(history) {
-    const deities = getDeities(history.beings);
+  function runGreeting(history2) {
+    const deities = getDeities(history2.beings);
     const locationIds = Array.from(
       new Set(
         deities.map((deity) => deity.location).filter((location) => !!location).filter(
-          (location) => getFromLookup(history.regions, location)?.name !== "world_0"
+          (location) => getFromLookup(history2.regions, location)?.name !== "world_0"
         )
       )
     );
@@ -26524,7 +27159,7 @@
   }
 
   // src/index.tsx
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
   if (!root) {
     throw new Error("Could not find #root in document");
@@ -26534,13 +27169,12 @@
     populateWorld(newHistory);
     return newHistory;
   }
+  var history = initialiseHistory();
   function Wrapper() {
-    const [history, setHistory] = (0, import_react5.useState)(initialiseHistory());
-    const [, forceRerender] = (0, import_react5.useState)({});
-    const playbackControls = (0, import_react5.useMemo)(
+    const [, forceRerender] = (0, import_react7.useState)({});
+    const playbackControls = (0, import_react7.useMemo)(
       () => createPlaybackControls(
         (_tick) => {
-          setHistory(initialiseHistory());
         },
         (tick) => {
           history.tick = tick;
@@ -26553,33 +27187,30 @@
           runArtifactCreation(history);
           history.log.currentSystem = "symbolAdoption";
           runSymbolAdoption(history);
-          history.log.currentSystem = "worldFormation";
-          runWorldFormation(history);
           history.log.currentSystem = "decision";
           runDecision(history);
           forceRerender({});
           return tick < config.runTicks;
         }
       ),
-      [history]
+      []
     );
-    (0, import_react5.useEffect)(() => {
-      if (getQueryBool("autorun")) {
+    (0, import_react7.useEffect)(() => {
+      if (playbackControls.canTick && getQueryBool("autorun")) {
         playbackControls.tickAll();
         console.log(history);
       }
-    }, [playbackControls, history]);
-    const firstDialect = lookupFirstValue(history.dialects);
-    return firstDialect ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+    }, [playbackControls]);
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
       Page,
       {
         history,
-        language: firstDialect.language,
+        language: lookupFirstValue(history.dialects).language,
         playbackControls
       }
-    ) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Playback, { ...playbackControls });
+    );
   }
-  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Wrapper, {}));
+  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Wrapper, {}));
 })();
 /*! Bundled license information:
 
