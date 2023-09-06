@@ -50,6 +50,18 @@ export function createTerrain(
       return Math.sqrt(dx * dx + dy * dy);
     })
   );
+  const angle = array2dMap(heights, (height, x, y) => {
+    const dx = array2dIsInBounds(heights, x + 1, y)
+      ? array2dGet(heights, x + 1, y) - height
+      : 0;
+    const dy = array2dIsInBounds(heights, x, y + 1)
+      ? array2dGet(heights, x, y + 1) - height
+      : 0;
+    return Math.atan2(dy, dx);
+  });
+  const sunlight = array2dNormalize(
+    array2dMap(angle, (value) => -Math.abs(value))
+  );
   const coast = findCoasts(heights);
   const biome = array2dMerge(
     { heights, temperature, gradient, coast },
@@ -68,6 +80,8 @@ export function createTerrain(
     { name: "heights32", kind: "number", values: heights32 },
     { name: "heights", kind: "number", values: heights },
     { name: "gradient", kind: "number", values: gradient },
+    { name: "angle", kind: "number", values: array2dNormalize(angle) },
+    { name: "sunlight", kind: "number", values: sunlight },
     { name: "temperature", kind: "number", values: temperature },
     { name: "coast", kind: "number", values: coast },
     { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
