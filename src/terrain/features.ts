@@ -11,22 +11,22 @@ import { empty } from "@bencoveney/utils/dist/array";
 
 let id = 0;
 export function findFeatures(heights: Array2d<number>) {
-  const tested: number[] = [];
+  const tested: Set<number> = new Set();
   const features: string[] = (
     empty(heights.values.length) as unknown[] as string[]
   ).fill("");
   array2dMap(heights, (value, x, y, index) => {
     // Check if this has already been tagged
-    if (tested.includes(index)) {
+    if (tested.has(index)) {
       return;
     }
-    tested.push(index);
+    tested.add(index);
     if (value < config.waterHeight) {
-      const area = floodFill(heights, index, 0, config.waterHeight);
-      tested.push(...area);
+      const area = floodFill(heights, index, 0, config.waterHeight, tested);
       const name = `water${id++}`;
       for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
         const index = area[areaIndex];
+        tested.add(index);
         features[index] = name;
       }
     } else {
@@ -44,10 +44,11 @@ function floodFill(
   arr: Array2d<number>,
   index: number,
   min: number,
-  max: number
+  max: number,
+  exclude: Set<number>
 ): number[] {
   const result = [];
-  const tested = [index];
+  const tested = exclude;
   let stack = array2dGetNeighbourIndices(arr, index);
   while (stack.length > 0) {
     const current = stack.pop()!;
@@ -55,8 +56,10 @@ function floodFill(
     if (value >= min && value < max) {
       result.push(current);
       const neighbours = array2dGetNeighbourIndices(arr, current, tested);
-      tested.push(...neighbours);
-      stack.push(...neighbours);
+      for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
+        tested.add(neighbours[neighbour]);
+        stack.push(neighbours[neighbour]);
+      }
     }
   }
   return result;

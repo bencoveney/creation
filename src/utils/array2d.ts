@@ -206,7 +206,7 @@ const neighbourPositions = [
 export function array2dGetNeighbourIndices<T>(
   arr: Array2d<T>,
   index: number,
-  excluding?: number[]
+  excluding?: Set<number>
 ): number[] {
   const [positionX, positionY] = array2dGetCoords(arr, index);
   const result = [];
@@ -216,7 +216,7 @@ export function array2dGetNeighbourIndices<T>(
     const y = positionY + yOffset;
     if (array2dIsInBounds(arr, x, y)) {
       const index = array2dGetIndex(arr, x, y);
-      if (!excluding?.includes(index)) {
+      if (!excluding?.has(index)) {
         result.push(index);
       }
     }
