@@ -11,14 +11,16 @@ import {
   array2dScale,
   array2dSum,
 } from "../utils/array2d";
-import { inverseLerp } from "../utils/maths";
 import { biomeColorMap, getBiome } from "./biome";
 import { findCoasts } from "./coasts";
 import { getTerrainColor } from "./color";
 import { featureColorMap, findFeatures } from "./features";
+import { findAngle, findGradient } from "./normals";
 import { perlin2dArray } from "./perlin";
 import { TerrainRegistry } from "./registry";
 import { identifyRivers, runRainfall } from "./rivers";
+import { getIcebergs, getSand, getSnow } from "./snowSandIcebergs";
+import { plantVegetation } from "./vegetation";
 
 export type Terrain = {
   // waterLevel: number;
@@ -52,51 +54,12 @@ export function createTerrain(
     )
   );
   const temperature = array2dNormalize(perlin2dArray(width, height, 2));
-  const snow = array2dMerge(
-    { noise, temperature },
-    ({ noise, temperature }) => {
-      if (temperature < 0.25) {
-        return 1;
-      }
-      if (temperature < 0.3) {
-        const scaled = inverseLerp(temperature, 0.25, 0.3);
-        return scaled < noise ? 1 : 0;
-      } else return 0;
-    }
-  );
-  const sand = array2dMerge(
-    { noise, temperature },
-    ({ noise, temperature }) => {
-      if (temperature > 0.75) {
-        return 1;
-      }
-      if (temperature > 0.7) {
-        const scaled = inverseLerp(temperature, 0.75, 0.7);
-        return scaled < noise ? 1 : 0;
-      } else return 0;
-    }
-  );
+  const snow = getSnow(noise, heights, temperature);
+  const sand = getSand(noise, heights, temperature);
+  const icebergs = getIcebergs(noise, heights, heightP32, temperature);
   // TODO: angle calculations probably should be using a heightmap with water included.
-  const gradient = array2dNormalize(
-    array2dMap(heights, (height, x, y) => {
-      const dx = array2dIsInBounds(heights, x + 1, y)
-        ? array2dGet(heights, x + 1, y) - height
-        : 0;
-      const dy = array2dIsInBounds(heights, x, y + 1)
-        ? array2dGet(heights, x, y + 1) - height
-        : 0;
-      return Math.sqrt(dx * dx + dy * dy);
-    })
-  );
-  const angle = array2dMap(heights, (height, x, y) => {
-    const dx = array2dIsInBounds(heights, x + 1, y)
-      ? array2dGet(heights, x + 1, y) - height
-      : 0;
-    const dy = array2dIsInBounds(heights, x, y + 1)
-      ? array2dGet(heights, x, y + 1) - height
-      : 0;
-    return Math.atan2(dy, dx);
-  });
+  const gradient = findGradient(heights);
+  const angle = findAngle(heights);
   const facingLeft = array2dNormalize(
     array2dMap(angle, (value) => -Math.abs(value))
   );
@@ -112,10 +75,42 @@ export function createTerrain(
   const rainfall = runRainfall(heights, angle);
   const rivers = identifyRivers(rainfall);
 
+  const vegetation = plantVegetation(temperature, coast, heightP8);
+
   const colors = array2dMerge(
-    { heights, temperature, biome, sunlight, snow, sand, rivers },
-    ({ heights, temperature, biome, sunlight, snow, sand, rivers }) =>
-      getTerrainColor(heights, temperature, biome, sunlight, snow, sand, rivers)
+    {
+      heights,
+      temperature,
+      biome,
+      sunlight,
+      snow,
+      sand,
+      icebergs,
+      rivers,
+      vegetation,
+    },
+    ({
+      heights,
+      temperature,
+      biome,
+      sunlight,
+      snow,
+      sand,
+      icebergs,
+      rivers,
+      vegetation,
+    }) =>
+      getTerrainColor(
+        heights,
+        temperature,
+        biome,
+        sunlight,
+        snow,
+        sand,
+        icebergs,
+        rivers,
+        vegetation
+      )
   );
 
   terrainRegistry.push(
@@ -136,6 +131,8 @@ export function createTerrain(
     { name: "temperature", kind: "number", values: temperature },
     { name: "snow", kind: "number", values: snow },
     { name: "sand", kind: "number", values: sand },
+    { name: "icebergs", kind: "number", values: icebergs },
+    { name: "vegetation", kind: "number", values: vegetation },
     { name: "coast", kind: "number", values: coast },
     { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
     { name: "rainfall", kind: "number", values: array2dNormalize(rainfall) },

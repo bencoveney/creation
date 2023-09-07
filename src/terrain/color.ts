@@ -40,53 +40,66 @@ export function getTerrainColor(
   sunlight: number,
   snow: number,
   sand: number,
-  rivers: number
+  icebergs: number,
+  rivers: number,
+  vegetation: number
 ): Color {
   if (rivers === 1) {
     return applySunlight(
       applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
-      sunlight
+      sunlight,
+      1 / 4
     );
   }
   switch (biome) {
     case Biome.DeepSea:
     case Biome.ShallowSea:
-      return getWaterColor(height, temperature);
+      return applySnow(getWaterColor(height, temperature), icebergs, 1);
     case Biome.Beach:
       return applySunlight(
         applySand(
-          applySnow(getSandColor(height, temperature), snow, 0.5),
+          applySnow(getSandColor(height, temperature), snow, 0.8),
           sand,
           0.5
         ),
-        sunlight
+        sunlight,
+        1 / 4
       );
     case Biome.Desert:
     case Biome.Grass:
     case Biome.Tundra:
+      const color =
+        vegetation === 1
+          ? getVegetationColor(height, temperature)
+          : getGroundColor(height, temperature);
       return applySunlight(
-        applySand(
-          applySnow(getVegetationColor(height, temperature), snow, 0.9),
-          sand,
-          0.9
-        ),
-        sunlight
+        applySand(applySnow(color, snow, 0.9), sand, 0.9),
+        sunlight,
+        1 / 4
       );
     case Biome.Mountain:
-      return applySunlight(getCliffsColor(height, temperature), sunlight);
+      return applySunlight(
+        getCliffsColor(height, temperature),
+        sunlight,
+        1 / 4
+      );
     case Biome.Snow:
-      return applySunlight(getSnowColor(height, temperature), sunlight);
+      return applySunlight(getSnowColor(height, temperature), sunlight, 1 / 4);
     case Biome.Unknown:
       return { r: 255, g: 0, b: 0 };
   }
 }
 
-function applySunlight(color: Color, sunlight: number): Color {
+function applySunlight(
+  color: Color,
+  sunlight: number,
+  strength: number
+): Color {
   const shadow = 1 - sunlight;
   return validateColor({
-    r: color.r + lerp(shadow, 0, -color.r / 4),
-    g: color.g + lerp(shadow, 0, -color.g / 4),
-    b: color.b + lerp(shadow, 0, -color.b / 4),
+    r: color.r + lerp(shadow, 0, -color.r * strength),
+    g: color.g + lerp(shadow, 0, -color.g * strength),
+    b: color.b + lerp(shadow, 0, -color.b * strength),
   });
 }
 
@@ -188,14 +201,30 @@ function getWaterColor(height: number, temperature: number): Color {
   }
 }
 
-function getVegetationColor(height: number, temperature: number): Color {
+const ground1 = {
+  r: 21,
+  g: 126,
+  b: 32,
+};
+const ground2 = {
+  r: 18,
+  g: 116,
+  b: 49,
+};
+const ground3 = {
+  r: 12,
+  g: 92,
+  b: 52,
+};
+
+function getGroundColor(height: number, temperature: number): Color {
   if (height < 0.67) {
     const scale = inverseLerp(height, 0.5, 0.67);
     return applyTemp(
       {
-        r: lerp(scale, 21, 18),
-        g: lerp(scale, 126, 116),
-        b: lerp(scale, 32, 49),
+        r: lerp(scale, ground1.r, ground2.r),
+        g: lerp(scale, ground1.g, ground2.g),
+        b: lerp(scale, ground1.b, ground2.b),
       },
       temperature
     );
@@ -203,9 +232,49 @@ function getVegetationColor(height: number, temperature: number): Color {
     const scale = inverseLerp(height, 0.67, 0.81);
     return applyTemp(
       {
-        r: lerp(scale, 18, 12),
-        g: lerp(scale, 116, 92),
-        b: lerp(scale, 49, 52),
+        r: lerp(scale, ground2.r, ground3.r),
+        g: lerp(scale, ground2.g, ground3.g),
+        b: lerp(scale, ground2.b, ground3.b),
+      },
+      temperature
+    );
+  }
+}
+
+const vegetation1 = {
+  r: 4,
+  g: 61,
+  b: 10,
+};
+const vegetation2 = {
+  r: 4,
+  g: 48,
+  b: 18,
+};
+const vegetation3 = {
+  r: 1,
+  g: 71,
+  b: 36,
+};
+
+function getVegetationColor(height: number, temperature: number): Color {
+  if (height < 0.67) {
+    const scale = inverseLerp(height, 0.5, 0.67);
+    return applyTemp(
+      {
+        r: lerp(scale, vegetation1.r, vegetation2.r),
+        g: lerp(scale, vegetation1.g, vegetation2.g),
+        b: lerp(scale, vegetation1.b, vegetation2.b),
+      },
+      temperature
+    );
+  } else {
+    const scale = inverseLerp(height, 0.67, 0.81);
+    return applyTemp(
+      {
+        r: lerp(scale, vegetation2.r, vegetation3.r),
+        g: lerp(scale, vegetation2.g, vegetation3.g),
+        b: lerp(scale, vegetation2.b, vegetation3.b),
       },
       temperature
     );
