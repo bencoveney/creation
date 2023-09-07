@@ -73,7 +73,11 @@ export function getTerrainColor(
           ? getVegetationColor(height, temperature)
           : getGroundColor(height, temperature);
       return applySunlight(
-        applySand(applySnow(color, snow, 0.9), sand, 0.9),
+        applySand(
+          applySnow(color, snow, vegetation === 1 ? 0.1 : 0.9),
+          sand,
+          vegetation === 1 ? 0.1 : 0.9
+        ),
         sunlight,
         1 / 4
       );
