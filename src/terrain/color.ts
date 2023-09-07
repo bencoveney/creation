@@ -37,18 +37,41 @@ export function getTerrainColor(
   height: number,
   temperature: number,
   biome: Biome,
-  sunlight: number
+  sunlight: number,
+  snow: number,
+  sand: number,
+  rivers: number
 ): Color {
+  if (rivers === 1) {
+    return applySunlight(
+      applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
+      sunlight
+    );
+  }
   switch (biome) {
     case Biome.DeepSea:
     case Biome.ShallowSea:
       return getWaterColor(height, temperature);
     case Biome.Beach:
-      return applySunlight(getSandColor(height, temperature), sunlight);
+      return applySunlight(
+        applySand(
+          applySnow(getSandColor(height, temperature), snow, 0.5),
+          sand,
+          0.5
+        ),
+        sunlight
+      );
     case Biome.Desert:
     case Biome.Grass:
     case Biome.Tundra:
-      return applySunlight(getVegetationColor(height, temperature), sunlight);
+      return applySunlight(
+        applySand(
+          applySnow(getVegetationColor(height, temperature), snow, 0.9),
+          sand,
+          0.9
+        ),
+        sunlight
+      );
     case Biome.Mountain:
       return applySunlight(getCliffsColor(height, temperature), sunlight);
     case Biome.Snow:
@@ -65,6 +88,24 @@ function applySunlight(color: Color, sunlight: number): Color {
     g: color.g + lerp(shadow, 0, -color.g / 4),
     b: color.b + lerp(shadow, 0, -color.b / 4),
   });
+}
+
+function applySnow(color: Color, snow: number, amount: number): Color {
+  const snowAmount = snow * amount;
+  return {
+    r: lerp(snowAmount, color.r, 230),
+    g: lerp(snowAmount, color.g, 230),
+    b: lerp(snowAmount, color.b, 230),
+  };
+}
+
+function applySand(color: Color, snow: number, amount: number): Color {
+  const snowAmount = snow * amount;
+  return {
+    r: lerp(snowAmount, color.r, 235),
+    g: lerp(snowAmount, color.g, 196),
+    b: lerp(snowAmount, color.b, 80),
+  };
 }
 
 function applyTemp(color: Color, temperature: number): Color {

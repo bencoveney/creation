@@ -1,5 +1,6 @@
 import {
   Array2d,
+  array2dCreate,
   array2dFlip,
   array2dGet,
   array2dIsInBounds,
@@ -10,12 +11,14 @@ import {
   array2dScale,
   array2dSum,
 } from "../utils/array2d";
+import { inverseLerp } from "../utils/maths";
 import { biomeColorMap, getBiome } from "./biome";
 import { findCoasts } from "./coasts";
 import { getTerrainColor } from "./color";
 import { featureColorMap, findFeatures } from "./features";
 import { perlin2dArray } from "./perlin";
 import { TerrainRegistry } from "./registry";
+import { identifyRivers, runRainfall } from "./rivers";
 
 export type Terrain = {
   // waterLevel: number;
@@ -26,6 +29,7 @@ export function createTerrain(
   height: number,
   terrainRegistry: TerrainRegistry
 ) {
+  const noise = array2dCreate(width, height, () => Math.random());
   const heightP2 = array2dNormalize(perlin2dArray(width, height, 2));
   const heightP4 = array2dNormalize(perlin2dArray(width, height, 4));
   const heightP8 = array2dNormalize(perlin2dArray(width, height, 8));
@@ -47,8 +51,32 @@ export function createTerrain(
       )
     )
   );
-  // TODO: angle calculations probably should be using a heightmap with water included.
   const temperature = array2dNormalize(perlin2dArray(width, height, 2));
+  const snow = array2dMerge(
+    { noise, temperature },
+    ({ noise, temperature }) => {
+      if (temperature < 0.25) {
+        return 1;
+      }
+      if (temperature < 0.3) {
+        const scaled = inverseLerp(temperature, 0.25, 0.3);
+        return scaled < noise ? 1 : 0;
+      } else return 0;
+    }
+  );
+  const sand = array2dMerge(
+    { noise, temperature },
+    ({ noise, temperature }) => {
+      if (temperature > 0.75) {
+        return 1;
+      }
+      if (temperature > 0.7) {
+        const scaled = inverseLerp(temperature, 0.75, 0.7);
+        return scaled < noise ? 1 : 0;
+      } else return 0;
+    }
+  );
+  // TODO: angle calculations probably should be using a heightmap with water included.
   const gradient = array2dNormalize(
     array2dMap(heights, (height, x, y) => {
       const dx = array2dIsInBounds(heights, x + 1, y)
@@ -79,15 +107,19 @@ export function createTerrain(
     ({ heights, temperature, gradient, coast, rockHardness }) =>
       getBiome(heights, temperature, gradient, coast, rockHardness)
   );
-  const colors = array2dMerge(
-    { heights, temperature, biome, sunlight },
-    ({ heights, temperature, biome, sunlight }) =>
-      getTerrainColor(heights, temperature, biome, sunlight)
-  );
 
   const features = findFeatures(heights);
+  const rainfall = runRainfall(heights, angle);
+  const rivers = identifyRivers(rainfall);
+
+  const colors = array2dMerge(
+    { heights, temperature, biome, sunlight, snow, sand, rivers },
+    ({ heights, temperature, biome, sunlight, snow, sand, rivers }) =>
+      getTerrainColor(heights, temperature, biome, sunlight, snow, sand, rivers)
+  );
 
   terrainRegistry.push(
+    { name: "noise", kind: "number", values: noise },
     { name: "heightP2", kind: "number", values: heightP2 },
     { name: "heightP4", kind: "number", values: heightP4 },
     { name: "heightP8", kind: "number", values: heightP8 },
@@ -102,8 +134,12 @@ export function createTerrain(
     { name: "facingLeft", kind: "number", values: facingLeft },
     { name: "sunlight", kind: "number", values: sunlight },
     { name: "temperature", kind: "number", values: temperature },
+    { name: "snow", kind: "number", values: snow },
+    { name: "sand", kind: "number", values: sand },
     { name: "coast", kind: "number", values: coast },
     { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
+    { name: "rainfall", kind: "number", values: array2dNormalize(rainfall) },
+    { name: "rivers", kind: "number", values: rivers },
     {
       name: "features",
       kind: "string",

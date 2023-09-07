@@ -19,7 +19,7 @@ export function array2dCreate<T>(
   init?: Filler<T>
 ): Array2d<T> {
   const size = xSize * ySize;
-  if (init) {
+  if (init !== undefined) {
     if (isFillFunc(init)) {
       return {
         xSize,
