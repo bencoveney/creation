@@ -128,3 +128,11 @@ function euclidianDistance(from: Tile, to: Tile): number {
   const deltaY = Math.abs(from.y - to.y);
   return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 }
+
+export function getTile(world: World, x: number, y: number): Tile {
+  return array2dGet(
+    world,
+    Math.floor(x / config.terrainResolution),
+    Math.floor(y / config.terrainResolution)
+  );
+}

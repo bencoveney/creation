@@ -265,3 +265,13 @@ export function array2dGetNeighbourIndices<T>(
   }
   return result;
 }
+
+export function array2dFlip<T>(arr: Array2d<T>) {
+  const result = [];
+  for (let x = arr.xSize - 1; x >= 0; x--) {
+    for (let y = arr.ySize - 1; y >= 0; y--) {
+      result.push(array2dGet(arr, x, y));
+    }
+  }
+  return array2dReplace(arr, result);
+}

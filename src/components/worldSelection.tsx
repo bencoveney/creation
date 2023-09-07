@@ -12,6 +12,7 @@ import { TerrainValues } from "./terrainValues";
 import { TileValues } from "./tileValues";
 import { getTerrainLayer } from "../terrain/registry";
 import { Terrain } from "./terrain";
+import { getTile } from "../worldgen/world";
 
 export function WorldSelection({
   history,
@@ -32,11 +33,7 @@ export function WorldSelection({
     return null;
   }
 
-  const selectedTile = array2dGet(
-    history.world,
-    Math.floor(selectionX / config.terrainResolution),
-    Math.floor(selectionY / config.terrainResolution)
-  );
+  const selectedTile = getTile(history.world, selectionX, selectionY);
   const selectedRegion =
     selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
   const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);

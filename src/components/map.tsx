@@ -8,6 +8,7 @@ import {
 } from "../terrain/registry";
 import { MapTile } from "./mapTile";
 import { useEffect } from "react";
+import { getTile } from "../worldgen/world";
 
 export function Map({
   history,
@@ -44,6 +45,10 @@ export function Map({
           Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
         );
   const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
+  const selectedTile =
+    pixelX !== null &&
+    flipPixelY !== null &&
+    getTile(history.world, pixelX, flipPixelY);
   useEffect(() => {
     if (pixelX !== null && flipPixelY !== null) {
       setSelection([pixelX, flipPixelY]);
@@ -67,26 +72,23 @@ export function Map({
       }}
       onMouseMove={handler}
     >
-      {history.world.values.map((tile, index) => {
-        return (
-          <div
-            key={index}
-            style={{
-              gridRow: history.world?.ySize! - tile.y,
-              gridColumn: (index % history.world?.xSize!) + 1,
-              aspectRatio: 1,
-              zIndex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: "10px",
-              boxSizing: "border-box",
-            }}
-          >
-            <MapTile tile={tile} history={history} language={language} />
-          </div>
-        );
-      })}
+      {selectedTile && (
+        <div
+          style={{
+            gridRow: history.world.ySize - selectedTile.y,
+            gridColumn: selectedTile.x + 1,
+            aspectRatio: 1,
+            zIndex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "10px",
+            boxSizing: "border-box",
+          }}
+        >
+          <MapTile tile={selectedTile} history={history} language={language} />
+        </div>
+      )}
       <div
         style={{
           gridRowStart: 1,

@@ -1,5 +1,6 @@
 import {
   Array2d,
+  array2dFlip,
   array2dGet,
   array2dIsInBounds,
   array2dMap,
@@ -25,21 +26,27 @@ export function createTerrain(
   height: number,
   terrainRegistry: TerrainRegistry
 ) {
-  const heights2 = array2dNormalize(perlin2dArray(width, height, 4));
-  const heights4 = array2dNormalize(perlin2dArray(width, height, 8));
-  const heights8 = array2dNormalize(perlin2dArray(width, height, 16));
-  const heights16 = array2dNormalize(perlin2dArray(width, height, 32));
-  const heights32 = array2dNormalize(perlin2dArray(width, height, 64));
-  const combinedHeights = array2dNormalize(
+  const heightP2 = array2dNormalize(perlin2dArray(width, height, 2));
+  const heightP4 = array2dNormalize(perlin2dArray(width, height, 4));
+  const heightP8 = array2dNormalize(perlin2dArray(width, height, 8));
+  const heightP16 = array2dNormalize(perlin2dArray(width, height, 16));
+  const heightP32 = array2dNormalize(perlin2dArray(width, height, 32));
+  const heightP64 = array2dNormalize(perlin2dArray(width, height, 64));
+  const rockHardness = array2dFlip(heightP16);
+  const roughness = array2dFlip(heightP4);
+  const heights = array2dNormalize(
     array2dSum(
-      heights2,
-      heights4,
-      array2dScale(heights8, 1 / 2),
-      array2dScale(heights16, 1 / 3),
-      array2dScale(heights32, 1 / 4)
+      heightP2,
+      heightP4,
+      array2dScale(heightP8, 1 / 2),
+      array2dScale(heightP16, 1 / 3),
+      array2dProduct(heightP32, roughness, rockHardness, heightP4),
+      array2dScale(
+        array2dProduct(heightP64, roughness, rockHardness, heightP4),
+        4 / 5
+      )
     )
   );
-  const heights = array2dProduct(combinedHeights, combinedHeights);
   // TODO: angle calculations probably should be using a heightmap with water included.
   const temperature = array2dNormalize(perlin2dArray(width, height, 2));
   const gradient = array2dNormalize(
@@ -68,9 +75,9 @@ export function createTerrain(
   const sunlight = array2dNormalize(array2dProduct(gradient, facingLeft));
   const coast = findCoasts(heights);
   const biome = array2dMerge(
-    { heights, temperature, gradient, coast },
-    ({ heights, temperature, gradient, coast }) =>
-      getBiome(heights, temperature, gradient, coast)
+    { heights, temperature, gradient, coast, rockHardness },
+    ({ heights, temperature, gradient, coast, rockHardness }) =>
+      getBiome(heights, temperature, gradient, coast, rockHardness)
   );
   const colors = array2dMerge(
     { heights, temperature, biome, sunlight },
@@ -81,11 +88,14 @@ export function createTerrain(
   const features = findFeatures(heights);
 
   terrainRegistry.push(
-    { name: "heights2", kind: "number", values: heights2 },
-    { name: "heights4", kind: "number", values: heights4 },
-    { name: "heights8", kind: "number", values: heights8 },
-    { name: "heights16", kind: "number", values: heights16 },
-    { name: "heights32", kind: "number", values: heights32 },
+    { name: "heightP2", kind: "number", values: heightP2 },
+    { name: "heightP4", kind: "number", values: heightP4 },
+    { name: "heightP8", kind: "number", values: heightP8 },
+    { name: "heightP16", kind: "number", values: heightP16 },
+    { name: "heightP32", kind: "number", values: heightP32 },
+    { name: "heightP64", kind: "number", values: heightP64 },
+    { name: "rockHardness", kind: "number", values: rockHardness },
+    { name: "roughness", kind: "number", values: roughness },
     { name: "heights", kind: "number", values: heights },
     { name: "gradient", kind: "number", values: gradient },
     { name: "angle", kind: "number", values: array2dNormalize(angle) },
