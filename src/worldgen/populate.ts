@@ -1,11 +1,14 @@
 import { Being, Region, History } from ".";
 import { config } from "../config";
-import { createNeeds } from "../systems/needs";
+import {
+  createDeityNeeds,
+  createDeityPreferences,
+} from "../state/decision/factories";
 import { Lookup, lookupValues } from "../utils/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
 import { generateLanguage } from "./language";
-import { Tile, createWorld } from "./world";
+import { createWorld } from "./world";
 
 export function populateWorld(history: History): void {
   history.dialects.set({
@@ -24,7 +27,8 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
     name: createDeityName(),
     theme,
     relationships: {},
-    needs: createNeeds(),
+    needs: createDeityNeeds(),
+    preferences: createDeityPreferences(),
   });
 }
 

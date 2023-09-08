@@ -3,7 +3,7 @@ import { Being, History, Region } from "../worldgen";
 import { Tile } from "../worldgen/world";
 import { getFromLookupSafe } from "../utils/lookup";
 import { array2dGet } from "../utils/array2d";
-import { actionBroadcast, actionRevokeWhere } from "./needs";
+import { updateDiscoveredTileActions } from "../state/decision/factories";
 
 export function runMovement(history: History) {
   const deities = getDeities(history.beings);
@@ -59,16 +59,7 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
     return;
   }
   targetTile.discovered = true;
-  actionBroadcast(history, {
-    action: "travel",
-    satisfies: "explore",
-    location: targetTile,
-    strength: 0.5,
-    requires: {
-      location: "different",
-    },
-  });
-  actionRevokeWhere(history, "discover", targetTile);
+  updateDiscoveredTileActions(history, targetTile);
   const regionNameParts = targetTile.name
     .split(" ")
     .map((part) => `[[${part}]]`)

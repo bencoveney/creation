@@ -1,6 +1,8 @@
 import { config } from "../config";
 import { Logger, createLogger } from "../log";
-import { Needs, HasAvailableActions } from "../systems/needs";
+import { HasAvailableActions } from "../state/decision/action";
+import { Needs } from "../state/decision/need";
+import { Preferences } from "../state/decision/preference";
 import { createTerrain } from "../terrain";
 import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, createLookup } from "../utils/lookup";
@@ -42,6 +44,7 @@ export type Being = {
     };
   };
   needs: Needs;
+  preferences: Preferences;
 };
 
 export type Dialect = {

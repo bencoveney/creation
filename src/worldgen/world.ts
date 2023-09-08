@@ -1,6 +1,6 @@
 import { History, Region } from ".";
 import { config } from "../config";
-import { actionBroadcast } from "../systems/needs";
+import { updateInitialTileActions } from "../state/decision/factories";
 import { TerrainAssessment, assessTerrain } from "../terrain/assess";
 import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import {
@@ -42,24 +42,7 @@ export function createWorld(
       discovered: false,
       name: createRegionName(),
     } as NeedsId<Tile>) as Tile;
-    actionBroadcast(history, {
-      action: "discover",
-      satisfies: "explore",
-      strength: 1,
-      location: tile,
-      requires: {
-        location: "different",
-      },
-    });
-    actionBroadcast(history, {
-      action: "rest",
-      satisfies: "rest",
-      strength: 0.5,
-      location: tile,
-      requires: {
-        location: "same",
-      },
-    });
+    updateInitialTileActions(history, tile);
     return tile;
   });
 }

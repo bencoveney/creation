@@ -1,10 +1,10 @@
+import { getHighestPriorityAction } from "../state/decision";
 import { array2dGet } from "../utils/array2d";
 import { getFromLookupSafe } from "../utils/lookup";
 import { randomChoice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
 import { Tile, pathfind } from "../worldgen/world";
-import { getHighestPriorityAction } from "./needs";
 
 // Something along these lines.
 //
@@ -32,6 +32,7 @@ export function runDecision(history: History) {
       const action = getHighestPriorityAction(
         availableActions,
         deity.needs,
+        deity.preferences,
         currentLocation
       );
 
