@@ -1,4 +1,4 @@
-import { config } from "../config";
+import { config } from "../../config";
 import { TerrainColorMap } from "./registry";
 
 export enum Biome {

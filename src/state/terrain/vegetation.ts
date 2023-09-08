@@ -1,4 +1,4 @@
-import { Array2d, array2dMerge } from "../utils/array2d";
+import { Array2d, array2dMerge } from "../../utils/array2d";
 
 export function plantVegetation(
   temperature: Array2d<number>,

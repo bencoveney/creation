@@ -1,7 +1,7 @@
 import { Color } from "@bencoveney/utils/dist/color";
-import { clamp, inverseLerp, lerp } from "../utils/maths";
+import { clamp, inverseLerp, lerp } from "../../utils/maths";
 import { TerrainColorMap } from "./registry";
-import { config } from "../config";
+import { config } from "../../config";
 import { Biome } from "./biome";
 
 export function getNumberColor(value: number): Color {

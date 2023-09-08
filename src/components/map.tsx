@@ -5,7 +5,7 @@ import { useHoverPosition } from "../hooks/useHover";
 import {
   TerrainRegistryNumberEntry,
   getTerrainLayer,
-} from "../terrain/registry";
+} from "../state/terrain/registry";
 import { MapTile } from "./mapTile";
 import { useEffect } from "react";
 import { getTile } from "../worldgen/world";

@@ -1,12 +1,12 @@
 import { Color } from "@bencoveney/utils/dist/color";
-import { config } from "../config";
+import { config } from "../../config";
 import {
   Array2d,
   array2dGetNeighbourIndices,
   array2dMap,
   array2dReplace,
   neighbours4,
-} from "../utils/array2d";
+} from "../../utils/array2d";
 import { TerrainColorMap } from "./registry";
 import { empty } from "@bencoveney/utils/dist/array";
 

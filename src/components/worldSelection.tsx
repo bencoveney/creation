@@ -10,7 +10,7 @@ import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
 import { TileValues } from "./tileValues";
-import { getTerrainLayer } from "../terrain/registry";
+import { getTerrainLayer } from "../state/terrain/registry";
 import { Terrain } from "./terrain";
 import { getTile } from "../worldgen/world";
 

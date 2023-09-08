@@ -1,6 +1,6 @@
-import { config } from "../config";
-import { Array2d, array2dMerge } from "../utils/array2d";
-import { inverseLerp } from "../utils/maths";
+import { config } from "../../config";
+import { Array2d, array2dMerge } from "../../utils/array2d";
+import { inverseLerp } from "../../utils/maths";
 
 export function getSnow(
   noise: Array2d<number>,

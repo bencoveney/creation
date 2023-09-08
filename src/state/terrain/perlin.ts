@@ -1,4 +1,4 @@
-import { array2dFrom } from "../utils/array2d";
+import { array2dFrom } from "../../utils/array2d";
 
 type Perlin = (x: number, y: number) => number;
 

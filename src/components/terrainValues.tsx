@@ -1,5 +1,5 @@
 import { toHex } from "@bencoveney/utils/dist/color";
-import { TerrainRegistry } from "../terrain/registry";
+import { TerrainRegistry } from "../state/terrain/registry";
 import { array2dGet } from "../utils/array2d";
 import { round } from "../utils/maths";
 

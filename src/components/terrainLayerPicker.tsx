@@ -1,4 +1,4 @@
-import { TerrainRegistry } from "../terrain/registry";
+import { TerrainRegistry } from "../state/terrain/registry";
 
 export function TerrainLayerPicker({
   terrainRegistry,

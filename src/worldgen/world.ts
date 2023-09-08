@@ -1,8 +1,11 @@
 import { History, Region } from ".";
 import { config } from "../config";
 import { updateInitialTileActions } from "../state/decision/factories";
-import { TerrainAssessment, assessTerrain } from "../terrain/assess";
-import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
+import { TerrainAssessment, assessTerrain } from "../state/terrain/assess";
+import {
+  TerrainRegistry,
+  sliceTerrainRegistry,
+} from "../state/terrain/registry";
 import {
   Array2d,
   array2dCreate,
