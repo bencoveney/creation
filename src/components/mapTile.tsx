@@ -1,6 +1,6 @@
 import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
-import { getFromLookupSafe, lookupValues } from "../utils/lookup";
+import { lookupValues } from "../utils/lookup";
 import { Tile } from "../worldgen/world";
 import { Name } from "./name";
 import { Tooltip } from "./tooltip";
@@ -16,13 +16,12 @@ export function MapTile({
   history: History;
   language: Language;
 }) {
-  const region = getFromLookupSafe(history.regions, tile.location);
-  if (!region?.name) {
+  if (!tile.discovered) {
     return null;
   }
   const languageName = spellWords(getWords(language.name, language));
   const beings = lookupValues(history.beings).filter(
-    (being) => being.location === tile.location
+    (being) => being.location === tile.id
   );
   return (
     <div
@@ -37,7 +36,7 @@ export function MapTile({
       <BlackLabel>
         <Name
           languageName={languageName}
-          word={spellWords(getWords(region.name, language))}
+          word={spellWords(getWords(tile.name, language))}
         />
       </BlackLabel>
       <br />

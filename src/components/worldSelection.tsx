@@ -34,8 +34,6 @@ export function WorldSelection({
   }
 
   const selectedTile = getTile(history.world, selectionX, selectionY);
-  const selectedRegion =
-    selectedTile && getFromLookupSafe(history.regions, selectedTile.location);
   const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);
 
   return (
@@ -58,11 +56,11 @@ export function WorldSelection({
       </GridItem>
       <GridItem>
         <TileValues tile={selectedTile} />
-        {selectedRegion && <Region region={selectedRegion} history={history} />}
+        {selectedTile && <Region region={selectedTile} history={history} />}
       </GridItem>
-      {selectedRegion &&
+      {selectedTile &&
         getDeities(history.beings)
-          .filter((deity) => deity.location === selectedRegion.id)
+          .filter((deity) => deity.location === selectedTile.id)
           .map((deity, index) => (
             <GridItem key={index}>
               <Being being={deity} history={history} language={language} />

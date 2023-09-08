@@ -45,6 +45,7 @@ export function createWorld(
     actionBroadcast(history, {
       action: "discover",
       satisfies: "explore",
+      strength: 1,
       location: tile,
     });
     return tile;
@@ -128,13 +129,13 @@ function heuristic(from: Tile, to: Tile): number {
   return euclidianDistance(from, to);
 }
 
-function manhattanDistance(from: Tile, to: Tile): number {
+export function manhattanDistance(from: Tile, to: Tile): number {
   const deltaX = Math.abs(from.x - to.x);
   const deltaY = Math.abs(from.y - to.y);
   return deltaX + deltaY;
 }
 
-function euclidianDistance(from: Tile, to: Tile): number {
+export function euclidianDistance(from: Tile, to: Tile): number {
   const deltaX = Math.abs(from.x - to.x);
   const deltaY = Math.abs(from.y - to.y);
   return Math.sqrt(deltaX * deltaX + deltaY * deltaY);

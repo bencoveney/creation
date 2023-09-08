@@ -5,6 +5,7 @@ import { randomChoice, rollDice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
 import { Tile, pathfind } from "../worldgen/world";
+import { getHighestPriorityAction } from "./needs";
 
 // Something along these lines.
 //
@@ -22,8 +23,29 @@ export function runDecision(history: History) {
   }
 
   const deities = getDeities(history.beings);
+  const availableActions = history.availableActions;
   const availableDeities = deities.filter((deity) => !deity.currentActivity);
   availableDeities.forEach((deity) => {
+    const currentLocation = history.world!.values.find(
+      (tile) => tile.id === deity.location
+    );
+    if (currentLocation) {
+      getHighestPriorityAction(
+        availableActions.filter((action) => {
+          if (
+            action.location === currentLocation &&
+            (action.action === "travel" || action.action === "discover")
+          ) {
+            return false;
+          } else {
+            return true;
+          }
+        }),
+        deity.needs,
+        currentLocation
+      );
+    }
+
     const willMove = rollDice(config.movementChance);
     if (!willMove) {
       return;

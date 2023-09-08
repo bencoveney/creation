@@ -24,6 +24,7 @@ export function runMovement(history: History) {
         deity.location = target.id;
         history.log(`[[${deity.name}]] completed their journey`);
         deity.currentActivity = undefined;
+        deity.needs.explore.currentValue = 1;
       } else {
         path.shift();
         const target = array2dGet(history.world!, path[0].x, path[0].y);
@@ -40,14 +41,15 @@ function moveToLocation(
   previous?: Region
 ) {
   discoverLocation(deity, targetTile, history);
-  const target = getFromLookup(history.regions, targetTile.id);
-  deity.location = target.id;
+  deity.location = targetTile.id;
   if (previous) {
     history.log(
-      `[[${deity.name}]] moved from [[${previous.name}]] to [[${target.name}]]`
+      `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`
     );
   } else {
-    history.log(`[[${deity.name}]] entered the world in [[${target.name}]]`);
+    history.log(
+      `[[${deity.name}]] entered the world in [[${targetTile.name}]]`
+    );
   }
 }
 
@@ -61,6 +63,7 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
     action: "travel",
     satisfies: "explore",
     location: targetTile,
+    strength: 0.5,
   });
   actionRevokeWhere(history, "discover", targetTile);
   const regionNameParts = targetTile.name

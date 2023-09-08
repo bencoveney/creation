@@ -9,6 +9,7 @@ import {
 import { MapTile } from "./mapTile";
 import { useEffect } from "react";
 import { getTile } from "../worldgen/world";
+import { clamp } from "../utils/maths";
 
 export function Map({
   history,
@@ -35,14 +36,22 @@ export function Map({
   const pixelX =
     x === null
       ? 0
-      : Math.floor(
-          Math.min(x, renderWidth - 1) / (renderWidth / heights.xSize)
+      : clamp(
+          0,
+          heights.xSize,
+          Math.floor(
+            Math.min(x, renderWidth - 1) / (renderWidth / heights.xSize)
+          )
         );
   const pixelY =
     y === null
       ? null
-      : Math.floor(
-          Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
+      : clamp(
+          0,
+          heights.ySize,
+          Math.floor(
+            Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
+          )
         );
   const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
   const selectedTile =

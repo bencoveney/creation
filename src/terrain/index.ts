@@ -2,8 +2,6 @@ import {
   Array2d,
   array2dCreate,
   array2dFlip,
-  array2dGet,
-  array2dIsInBounds,
   array2dMap,
   array2dMerge,
   array2dNormalize,

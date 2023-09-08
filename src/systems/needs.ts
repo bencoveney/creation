@@ -1,6 +1,8 @@
+import { config } from "../config";
+import { inverseLerp } from "../utils/maths";
 import { History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
-import { Tile } from "../worldgen/world";
+import { Tile, euclidianDistance } from "../worldgen/world";
 
 export type Need = {
   currentValue: number;
@@ -17,6 +19,7 @@ export type Needs = {
 export type Action = {
   action: "travel" | "discover";
   satisfies: keyof Needs;
+  strength: number;
   location: Tile;
 };
 
@@ -25,11 +28,7 @@ export type HasAvailableActions = {
 };
 
 export function runNeeds(history: History): void {
-  console.log(history.availableActions);
   getDeities(history.beings).forEach((deity) => updateNeeds(deity.needs));
-  // Get deities.
-  // For each need:
-  // - Reduce by drainRate
 }
 
 export function createNeeds(): Needs {
@@ -87,4 +86,49 @@ export function actionRevokeWhere(
         availableAction.location === location
       )
   );
+}
+
+const maxDistance = euclidianDistance(
+  { x: 0, y: 0 } as any,
+  { x: config.worldWidth, y: config.worldHeight } as any
+);
+export function getHighestPriorityAction(
+  actions: Action[],
+  needs: Needs,
+  from: Tile
+) {
+  const prioritisedActions = [...actions].sort((a, b) => {
+    const aNeed = needs[a.satisfies].currentValue;
+    const bNeed = needs[b.satisfies].currentValue;
+    const aDistance = inverseLerp(
+      euclidianDistance(from, a.location),
+      maxDistance,
+      0
+    );
+    const bDistance = inverseLerp(
+      euclidianDistance(from, b.location),
+      maxDistance,
+      0
+    );
+    return bNeed * a.strength * bDistance - aNeed * a.strength * aDistance;
+  });
+  console.log(
+    from,
+    prioritisedActions.map((action) => {
+      const need = needs[action.satisfies].currentValue;
+      const distance = inverseLerp(
+        euclidianDistance(from, action.location),
+        maxDistance,
+        0
+      );
+      return {
+        ...action,
+        need,
+        distance,
+        strength: action.strength,
+        needDistance: need * action.strength * distance,
+      };
+    })
+  );
+  return prioritisedActions[0];
 }
