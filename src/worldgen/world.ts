@@ -1,4 +1,6 @@
+import { History, Region } from ".";
 import { config } from "../config";
+import { actionBroadcast } from "../systems/needs";
 import { TerrainAssessment, assessTerrain } from "../terrain/assess";
 import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import {
@@ -7,36 +9,45 @@ import {
   array2dGet,
   array2dIsInBounds,
 } from "../utils/array2d";
+import { NeedsId } from "../utils/lookup";
+import { createRegionName } from "./populate";
 
 export type Tile = {
   x: number;
   y: number;
-  location: string;
   terrainRegistry: TerrainRegistry;
   terrainAssessment: TerrainAssessment;
-};
+} & Region;
 
 export type World = Array2d<Tile>;
 
 export function createWorld(
+  history: History,
   width: number,
-  height: number,
-  terrainRegistry: TerrainRegistry
+  height: number
 ): World {
   return array2dCreate(width, height, (x, y) => {
     const newTerrainRegistry = sliceTerrainRegistry(
-      terrainRegistry,
+      history.terrainRegistry,
       x,
       y,
       config.terrainResolution
     );
-    return {
+    const tile = history.regions.set({
       x,
       y,
       location: "",
       terrainRegistry: newTerrainRegistry,
       terrainAssessment: assessTerrain(newTerrainRegistry),
-    };
+      discovered: false,
+      name: createRegionName(),
+    } as NeedsId<Tile>) as Tile;
+    actionBroadcast(history, {
+      action: "discover",
+      satisfies: "explore",
+      location: tile,
+    });
+    return tile;
   });
 }
 

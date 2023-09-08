@@ -1,5 +1,6 @@
 import { config } from "../config";
 import { Logger, createLogger } from "../log";
+import { Needs, HasAvailableActions } from "../systems/needs";
 import { createTerrain } from "../terrain";
 import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, createLookup } from "../utils/lookup";
@@ -10,6 +11,7 @@ export type Region = {
   id: string;
   name: string;
   tile?: Tile;
+  discovered: Boolean;
 };
 
 export type Motif = {
@@ -39,6 +41,7 @@ export type Being = {
       encounters: number;
     };
   };
+  needs: Needs;
 };
 
 export type Dialect = {
@@ -54,7 +57,7 @@ export type Artifact = {
   inPosessionOf: string;
 };
 
-export type History = {
+export type History = HasAvailableActions & {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
   dialects: Lookup<Dialect>;
@@ -81,6 +84,7 @@ export function initHistory(): History {
     tick: 0,
     world: null,
     terrainRegistry,
+    availableActions: [],
   };
 }
 

@@ -12,6 +12,7 @@ import { getQueryBool } from "./utils/queryParams";
 import { lookupFirstValue } from "./utils/lookup";
 import { config } from "./config";
 import { runGreeting } from "./systems/greeting";
+import { runNeeds } from "./systems/needs";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -36,6 +37,8 @@ function Wrapper() {
         (tick) => {
           history.tick = tick;
           history.log.tick = tick;
+          history.log.currentSystem = "needs";
+          runNeeds(history);
           history.log.currentSystem = "movement";
           runMovement(history);
           history.log.currentSystem = "greeting";

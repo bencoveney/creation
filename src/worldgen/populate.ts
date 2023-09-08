@@ -1,5 +1,6 @@
 import { Being, Region, History } from ".";
 import { config } from "../config";
+import { createNeeds } from "../systems/needs";
 import { Lookup, lookupValues } from "../utils/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
@@ -13,11 +14,7 @@ export function populateWorld(history: History): void {
   createWorldRegion(history.regions);
   createInitialDeities(history);
   if (history.regions.map.size >= 1 && !history.world) {
-    history.world = createWorld(
-      config.worldWidth,
-      config.worldHeight,
-      history.terrainRegistry
-    );
+    history.world = createWorld(history, config.worldWidth, config.worldHeight);
   }
 }
 
@@ -27,6 +24,7 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
     name: createDeityName(),
     theme,
     relationships: {},
+    needs: createNeeds(),
   });
 }
 
@@ -37,16 +35,8 @@ export function getDeities(beings: Lookup<Being>): Being[] {
 export function createWorldRegion(regions: Lookup<Region>): Region {
   return regions.set({
     name: createWorldName(),
+    discovered: true,
   });
-}
-
-export function createTileRegion(regions: Lookup<Region>, tile: Tile): Region {
-  const result = regions.set({
-    name: createRegionName(),
-    tile,
-  });
-  tile.location = result.id;
-  return result;
 }
 
 const regionPlaces = [
@@ -126,7 +116,7 @@ function createWorldName(): string {
   return `world_${worldNameCount++}`;
 }
 
-function createRegionName(): string {
+export function createRegionName(): string {
   const mode = randomInt(0, 3);
   switch (mode) {
     case 0:

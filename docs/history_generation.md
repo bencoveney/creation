@@ -22,6 +22,7 @@ https://www.youtube.com/watch?v=v8zwPdPvN10
 https://www.bay12games.com/dwarves/dev.html
 http://aurorawiki.pentarch.org/index.php?title=Main_Page
 https://www.youtube.com/watch?v=mcmQmyu4Aok
+https://www.youtube.com/watch?v=4mgK2hL33Vw
 
 ## Deities
 
