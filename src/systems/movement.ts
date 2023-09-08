@@ -1,7 +1,7 @@
 import { getDeities } from "../worldgen/populate";
 import { Being, History, Region } from "../worldgen";
 import { Tile } from "../worldgen/world";
-import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
+import { getFromLookupSafe } from "../utils/lookup";
 import { array2dGet } from "../utils/array2d";
 import { actionBroadcast, actionRevokeWhere } from "./needs";
 

@@ -130,7 +130,7 @@ export function getHighestPriorityAction(
       maxDistance,
       0
     );
-    return bNeed * a.strength * bDistance - aNeed * a.strength * aDistance;
+    return bNeed * b.strength * bDistance - aNeed * a.strength * aDistance;
   });
   // console.log(
   //   from,

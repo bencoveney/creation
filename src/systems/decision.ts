@@ -1,7 +1,6 @@
-import { config } from "../config";
 import { array2dGet } from "../utils/array2d";
-import { getFromLookup, getFromLookupSafe } from "../utils/lookup";
-import { randomChoice, rollDice } from "../utils/random";
+import { getFromLookupSafe } from "../utils/lookup";
+import { randomChoice } from "../utils/random";
 import { Being, Coordinate, History } from "../worldgen";
 import { getDeities } from "../worldgen/populate";
 import { Tile, pathfind } from "../worldgen/world";
@@ -30,29 +29,45 @@ export function runDecision(history: History) {
       (tile) => tile.id === deity.location
     );
     if (currentLocation) {
-      getHighestPriorityAction(availableActions, deity.needs, currentLocation);
+      const action = getHighestPriorityAction(
+        availableActions,
+        deity.needs,
+        currentLocation
+      );
+
+      deity.needs[action.satisfies].currentValue = 1;
+
+      if (action.action === "discover" || action.action === "travel") {
+        const targetRegionName = !action.location.discovered
+          ? "an unknown land"
+          : `[[${action.location.name}]]`;
+        history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
+        deity.currentActivity = {
+          moveToLocation: action.location,
+          path: getPathToTargetLocation(deity, action.location, history),
+        };
+      } else {
+        const targetRegionName = !action.location.discovered
+          ? "an unknown land"
+          : `[[${action.location.name}]]`;
+        history.log(`[[${deity.name}]] rested in ${targetRegionName}`);
+      }
+    } else {
+      const targetLocation = getDeityTargetLocation(deity, history);
+      if (!targetLocation) {
+        return;
+      }
+
+      const targetRegionName = !targetLocation.discovered
+        ? "an unknown land"
+        : `[[${targetLocation.name}]]`;
+      history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
+
+      deity.currentActivity = {
+        moveToLocation: targetLocation,
+        path: getPathToTargetLocation(deity, targetLocation, history),
+      };
     }
-
-    const willMove = rollDice(config.movementChance);
-    if (!willMove) {
-      deity.needs.rest.currentValue = 1;
-      return;
-    }
-
-    const targetLocation = getDeityTargetLocation(deity, history);
-    if (!targetLocation) {
-      return;
-    }
-
-    const targetRegionName = !targetLocation.discovered
-      ? "an unknown land"
-      : `[[${targetLocation.name}]]`;
-    history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
-
-    deity.currentActivity = {
-      moveToLocation: targetLocation,
-      path: getPathToTargetLocation(deity, targetLocation, history),
-    };
   });
 }
 
