@@ -34,13 +34,9 @@ export function runDecision(history: History) {
       return;
     }
 
-    let targetRegionName = "an unknown land";
-    if (targetLocation.location) {
-      const region = getFromLookup(history.regions, targetLocation.location);
-      if (region?.name) {
-        targetRegionName = `[[${region.name}]]`;
-      }
-    }
+    const targetRegionName = !targetLocation.discovered
+      ? "an unknown land"
+      : `[[${targetLocation.name}]]`;
     history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
 
     deity.currentActivity = {
@@ -55,13 +51,13 @@ function getDeityTargetLocation(
   history: History
 ): Tile | undefined {
   const possibleTiles: Tile[] = history.world!.values.filter(
-    (tile) => tile.location != deity.location
+    (tile) => tile.id != deity.location
   );
   if (possibleTiles.length === 0) {
     console.log("Nowhere can be moved to");
     return;
   }
-  const undiscovered = possibleTiles.filter((tile) => !tile.location);
+  const undiscovered = possibleTiles.filter((tile) => !tile.discovered);
   if (undiscovered.length > 0) {
     return randomChoice(undiscovered);
   } else {
