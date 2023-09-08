@@ -64,6 +64,9 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
     satisfies: "explore",
     location: targetTile,
     strength: 0.5,
+    requires: {
+      location: "different",
+    },
   });
   actionRevokeWhere(history, "discover", targetTile);
   const regionNameParts = targetTile.name

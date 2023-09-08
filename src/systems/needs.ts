@@ -17,10 +17,13 @@ export type Needs = {
 };
 
 export type Action = {
-  action: "travel" | "discover";
+  action: "travel" | "discover" | "rest";
   satisfies: keyof Needs;
   strength: number;
   location: Tile;
+  requires: {
+    location?: "different" | "same";
+  };
 };
 
 export type HasAvailableActions = {
@@ -97,9 +100,26 @@ export function getHighestPriorityAction(
   needs: Needs,
   from: Tile
 ) {
-  const prioritisedActions = [...actions].sort((a, b) => {
-    const aNeed = needs[a.satisfies].currentValue;
-    const bNeed = needs[b.satisfies].currentValue;
+  const filteredActions = actions.filter((action) => {
+    switch (action.requires.location) {
+      case "different":
+        if (action.location === from) {
+          return false;
+        }
+        break;
+      case "same":
+        if (action.location !== from) {
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    return true;
+  });
+  const prioritisedActions = filteredActions.sort((a, b) => {
+    const aNeed = 1 - needs[a.satisfies].currentValue;
+    const bNeed = 1 - needs[b.satisfies].currentValue;
     const aDistance = inverseLerp(
       euclidianDistance(from, a.location),
       maxDistance,
@@ -112,23 +132,23 @@ export function getHighestPriorityAction(
     );
     return bNeed * a.strength * bDistance - aNeed * a.strength * aDistance;
   });
-  console.log(
-    from,
-    prioritisedActions.map((action) => {
-      const need = needs[action.satisfies].currentValue;
-      const distance = inverseLerp(
-        euclidianDistance(from, action.location),
-        maxDistance,
-        0
-      );
-      return {
-        ...action,
-        need,
-        distance,
-        strength: action.strength,
-        needDistance: need * action.strength * distance,
-      };
-    })
-  );
+  // console.log(
+  //   from,
+  //   prioritisedActions.map((action) => {
+  //     const need = 1 - needs[action.satisfies].currentValue;
+  //     const distance = inverseLerp(
+  //       euclidianDistance(from, action.location),
+  //       maxDistance,
+  //       0
+  //     );
+  //     return {
+  //       ...action,
+  //       need,
+  //       distance,
+  //       strength: action.strength,
+  //       needDistance: need * action.strength * distance,
+  //     };
+  //   })
+  // );
   return prioritisedActions[0];
 }

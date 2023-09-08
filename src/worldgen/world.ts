@@ -47,6 +47,18 @@ export function createWorld(
       satisfies: "explore",
       strength: 1,
       location: tile,
+      requires: {
+        location: "different",
+      },
+    });
+    actionBroadcast(history, {
+      action: "rest",
+      satisfies: "rest",
+      strength: 0.5,
+      location: tile,
+      requires: {
+        location: "same",
+      },
     });
     return tile;
   });

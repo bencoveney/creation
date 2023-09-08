@@ -30,24 +30,12 @@ export function runDecision(history: History) {
       (tile) => tile.id === deity.location
     );
     if (currentLocation) {
-      getHighestPriorityAction(
-        availableActions.filter((action) => {
-          if (
-            action.location === currentLocation &&
-            (action.action === "travel" || action.action === "discover")
-          ) {
-            return false;
-          } else {
-            return true;
-          }
-        }),
-        deity.needs,
-        currentLocation
-      );
+      getHighestPriorityAction(availableActions, deity.needs, currentLocation);
     }
 
     const willMove = rollDice(config.movementChance);
     if (!willMove) {
+      deity.needs.rest.currentValue = 1;
       return;
     }
 
