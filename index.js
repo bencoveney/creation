@@ -472,7 +472,7 @@
               }
             }
           }
-          var ReactElement2 = function(type, key, ref, self, source, owner, props) {
+          var ReactElement3 = function(type, key, ref, self, source, owner, props) {
             var element = {
               // This tag allows us to uniquely identify this as a React Element
               $$typeof: REACT_ELEMENT_TYPE,
@@ -573,10 +573,10 @@
                 }
               }
             }
-            return ReactElement2(type, key, ref, self, source, ReactCurrentOwner.current, props);
+            return ReactElement3(type, key, ref, self, source, ReactCurrentOwner.current, props);
           }
           function cloneAndReplaceKey(oldElement, newKey) {
-            var newElement = ReactElement2(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
+            var newElement = ReactElement3(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
           function cloneElement(element, config2, children) {
@@ -625,7 +625,7 @@
               }
               props.children = childArray;
             }
-            return ReactElement2(element.type, key, ref, self, source, owner, props);
+            return ReactElement3(element.type, key, ref, self, source, owner, props);
           }
           function isValidElement(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
@@ -756,9 +756,9 @@
               return children;
             }
             var result = [];
-            var count2 = 0;
+            var count = 0;
             mapIntoArray(children, result, "", "", function(child) {
-              return func.call(context, child, count2++);
+              return func.call(context, child, count++);
             });
             return result;
           }
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState6(initialState) {
+          function useState7(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo2;
           exports.useReducer = useReducer;
           exports.useRef = useRef2;
-          exports.useState = useState6;
+          exports.useState = useState7;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2434,7 +2434,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment11 = 7;
+          var Fragment12 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3590,7 +3590,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment11:
+              case Fragment12:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -13261,7 +13261,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment11) {
+              if (current2 === null || current2.tag !== Fragment12) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -13664,7 +13664,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment11) {
+                    if (child.tag === Fragment12) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -17839,7 +17839,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment11:
+              case Fragment12:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18112,7 +18112,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment11:
+              case Fragment12:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -22371,7 +22371,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment11, elements, key, mode);
+            var fiber = createFiber(Fragment12, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -24122,7 +24122,7 @@
               });
             }
           }
-          var ReactElement2 = function(type, key, ref, self, source, owner, props) {
+          var ReactElement3 = function(type, key, ref, self, source, owner, props) {
             var element = {
               // This tag allows us to uniquely identify this as a React Element
               $$typeof: REACT_ELEMENT_TYPE,
@@ -24205,7 +24205,7 @@
                   defineRefPropWarningGetter(props, displayName);
                 }
               }
-              return ReactElement2(type, key, ref, self, source, ReactCurrentOwner.current, props);
+              return ReactElement3(type, key, ref, self, source, ReactCurrentOwner.current, props);
             }
           }
           var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
@@ -24432,11 +24432,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx24 = jsxWithValidationDynamic;
-          var jsxs18 = jsxWithValidationStatic;
+          var jsx26 = jsxWithValidationDynamic;
+          var jsxs19 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx24;
-          exports.jsxs = jsxs18;
+          exports.jsx = jsx26;
+          exports.jsxs = jsxs19;
         })();
       }
     }
@@ -24704,7 +24704,7 @@
   }
   function array2dCreate(xSize, ySize, init) {
     const size = xSize * ySize;
-    if (init) {
+    if (init !== void 0) {
       if (isFillFunc(init)) {
         return {
           xSize,
@@ -24881,8 +24881,17 @@
     }
     return result;
   }
+  function array2dFlip(arr) {
+    const result = [];
+    for (let x = arr.xSize - 1; x >= 0; x--) {
+      for (let y = arr.ySize - 1; y >= 0; y--) {
+        result.push(array2dGet(arr, x, y));
+      }
+    }
+    return array2dReplace(arr, result);
+  }
 
-  // src/terrain/biome.ts
+  // src/state/terrain/biome.ts
   var biomeColorMap = {
     ["DeepSea" /* DeepSea */]: {
       r: 23,
@@ -24930,17 +24939,17 @@
       b: 0
     }
   };
-  function getBiome(height, temperature, gradient, coast) {
+  function getBiome(height, temperature, gradient, coast, rockHardness) {
     if (height < config.waterStop2) {
       return "DeepSea" /* DeepSea */;
     }
     if (height < config.waterHeight) {
       return "ShallowSea" /* ShallowSea */;
     }
-    if (coast > 0.6 && gradient < 0.5 && height < 0.5) {
+    if (coast > 0.6 && gradient < 0.5 && height < 0.5 && rockHardness < 0.5) {
       return "Beach" /* Beach */;
     }
-    if (coast > 0.3 && gradient < 0.4 && height < 0.5) {
+    if (coast > 0.3 && gradient < 0.4 && height < 0.5 && rockHardness < 0.5) {
       return "Beach" /* Beach */;
     }
     if (gradient > 0.7) {
@@ -24964,7 +24973,7 @@
     return "Unknown" /* Unknown */;
   }
 
-  // src/terrain/coasts.ts
+  // src/state/terrain/coasts.ts
   var import_vector = __toESM(require_vector(), 1);
   var maxDistance = (0, import_vector.distanceEuclidean2)({ x: 0, y: 0 }, { x: 2, y: 2 });
   function findCoasts(heights) {
@@ -25002,7 +25011,7 @@
     return coasts;
   }
 
-  // src/terrain/color.ts
+  // src/state/terrain/color.ts
   function getNumberColor(value) {
     if (value < 0) {
       return {
@@ -25027,32 +25036,76 @@
   function getStringColor(value, colorMap) {
     return colorMap[value];
   }
-  function getTerrainColor(height, temperature, biome, sunlight) {
+  function getTerrainColor(height, temperature, biome, sunlight, snow, sand, icebergs, rivers, vegetation) {
+    if (rivers === 1) {
+      return applySunlight(
+        applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
+        sunlight,
+        1 / 4
+      );
+    }
     switch (biome) {
       case "DeepSea" /* DeepSea */:
       case "ShallowSea" /* ShallowSea */:
-        return getWaterColor(height, temperature);
+        return applySnow(getWaterColor(height, temperature), icebergs, 1);
       case "Beach" /* Beach */:
-        return applySunlight(getSandColor(height, temperature), sunlight);
+        return applySunlight(
+          applySand(
+            applySnow(getSandColor(height, temperature), snow, 0.8),
+            sand,
+            0.5
+          ),
+          sunlight,
+          1 / 4
+        );
       case "Desert" /* Desert */:
       case "Grass" /* Grass */:
       case "Tundra" /* Tundra */:
-        return applySunlight(getVegetationColor(height, temperature), sunlight);
+        const color = vegetation === 1 ? getVegetationColor(height, temperature) : getGroundColor(height, temperature);
+        return applySunlight(
+          applySand(
+            applySnow(color, snow, vegetation === 1 ? 0.1 : 0.9),
+            sand,
+            vegetation === 1 ? 0.1 : 0.9
+          ),
+          sunlight,
+          1 / 4
+        );
       case "Mountain" /* Mountain */:
-        return applySunlight(getCliffsColor(height, temperature), sunlight);
+        return applySunlight(
+          getCliffsColor(height, temperature),
+          sunlight,
+          1 / 4
+        );
       case "Snow" /* Snow */:
-        return applySunlight(getSnowColor(height, temperature), sunlight);
+        return applySunlight(getSnowColor(height, temperature), sunlight, 1 / 4);
       case "Unknown" /* Unknown */:
         return { r: 255, g: 0, b: 0 };
     }
   }
-  function applySunlight(color, sunlight) {
+  function applySunlight(color, sunlight, strength) {
     const shadow = 1 - sunlight;
     return validateColor({
-      r: color.r + lerp(shadow, 0, -color.r / 4),
-      g: color.g + lerp(shadow, 0, -color.g / 4),
-      b: color.b + lerp(shadow, 0, -color.b / 4)
+      r: color.r + lerp(shadow, 0, -color.r * strength),
+      g: color.g + lerp(shadow, 0, -color.g * strength),
+      b: color.b + lerp(shadow, 0, -color.b * strength)
     });
+  }
+  function applySnow(color, snow, amount) {
+    const snowAmount = snow * amount;
+    return {
+      r: lerp(snowAmount, color.r, 230),
+      g: lerp(snowAmount, color.g, 230),
+      b: lerp(snowAmount, color.b, 230)
+    };
+  }
+  function applySand(color, snow, amount) {
+    const snowAmount = snow * amount;
+    return {
+      r: lerp(snowAmount, color.r, 235),
+      g: lerp(snowAmount, color.g, 196),
+      b: lerp(snowAmount, color.b, 80)
+    };
   }
   function applyTemp(color, temperature) {
     if (temperature <= 0.5) {
@@ -25128,14 +25181,29 @@
       };
     }
   }
-  function getVegetationColor(height, temperature) {
+  var ground1 = {
+    r: 21,
+    g: 126,
+    b: 32
+  };
+  var ground2 = {
+    r: 18,
+    g: 116,
+    b: 49
+  };
+  var ground3 = {
+    r: 12,
+    g: 92,
+    b: 52
+  };
+  function getGroundColor(height, temperature) {
     if (height < 0.67) {
       const scale = inverseLerp(height, 0.5, 0.67);
       return applyTemp(
         {
-          r: lerp(scale, 21, 18),
-          g: lerp(scale, 126, 116),
-          b: lerp(scale, 32, 49)
+          r: lerp(scale, ground1.r, ground2.r),
+          g: lerp(scale, ground1.g, ground2.g),
+          b: lerp(scale, ground1.b, ground2.b)
         },
         temperature
       );
@@ -25143,9 +25211,47 @@
       const scale = inverseLerp(height, 0.67, 0.81);
       return applyTemp(
         {
-          r: lerp(scale, 18, 12),
-          g: lerp(scale, 116, 92),
-          b: lerp(scale, 49, 52)
+          r: lerp(scale, ground2.r, ground3.r),
+          g: lerp(scale, ground2.g, ground3.g),
+          b: lerp(scale, ground2.b, ground3.b)
+        },
+        temperature
+      );
+    }
+  }
+  var vegetation1 = {
+    r: 4,
+    g: 61,
+    b: 10
+  };
+  var vegetation2 = {
+    r: 4,
+    g: 48,
+    b: 18
+  };
+  var vegetation3 = {
+    r: 1,
+    g: 71,
+    b: 36
+  };
+  function getVegetationColor(height, temperature) {
+    if (height < 0.67) {
+      const scale = inverseLerp(height, 0.5, 0.67);
+      return applyTemp(
+        {
+          r: lerp(scale, vegetation1.r, vegetation2.r),
+          g: lerp(scale, vegetation1.g, vegetation2.g),
+          b: lerp(scale, vegetation1.b, vegetation2.b)
+        },
+        temperature
+      );
+    } else {
+      const scale = inverseLerp(height, 0.67, 0.81);
+      return applyTemp(
+        {
+          r: lerp(scale, vegetation2.r, vegetation3.r),
+          g: lerp(scale, vegetation2.g, vegetation3.g),
+          b: lerp(scale, vegetation2.b, vegetation3.b)
         },
         temperature
       );
@@ -25168,7 +25274,7 @@
     };
   }
 
-  // src/terrain/features.ts
+  // src/state/terrain/features.ts
   var import_array3 = __toESM(require_array(), 1);
   function getWaterFeature(area) {
     if (area < 100) {
@@ -25248,7 +25354,25 @@
     "": white
   };
 
-  // src/terrain/perlin.ts
+  // src/state/terrain/normals.ts
+  function findGradient(heights) {
+    return array2dNormalize(
+      array2dMap(heights, (height, x, y) => {
+        const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height : 0;
+        const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height : 0;
+        return Math.sqrt(dx * dx + dy * dy);
+      })
+    );
+  }
+  function findAngle(heights) {
+    return array2dMap(heights, (height, x, y) => {
+      const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height : 0;
+      const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height : 0;
+      return Math.atan2(dy, dx);
+    });
+  }
+
+  // src/state/terrain/perlin.ts
   function rand_vect() {
     let theta = Math.random() * 2 * Math.PI;
     return { x: Math.cos(theta), y: Math.sin(theta) };
@@ -25305,64 +25429,229 @@
     return heights;
   }
 
-  // src/terrain/index.ts
+  // src/state/terrain/rivers.ts
+  function runRainfall(heights, angles) {
+    const rainfall = array2dCreate(angles.xSize, angles.ySize, 0);
+    for (let index = 0; index < rainfall.values.length; index++) {
+      createRaindrop(heights, rainfall, angles, index);
+    }
+    return rainfall;
+  }
+  function identifyRivers(rainfall) {
+    return array2dMap(rainfall, (value) => value > 30 ? 1 : 0);
+  }
+  function createRaindrop(heights, rivers, angles, fromIndex) {
+    const visited = /* @__PURE__ */ new Set();
+    let currentIndex = fromIndex;
+    for (let i = 0; i < 100; i++) {
+      if (visited.has(currentIndex)) {
+        return;
+      }
+      visited.add(currentIndex);
+      if (heights.values[currentIndex] < config.waterHeight) {
+        return;
+      }
+      rivers.values[currentIndex] = rivers.values[currentIndex] + 1;
+      const currentPos = array2dGetCoords(rivers, currentIndex);
+      const angle = angles.values[currentIndex];
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
+      Math.sin(angle);
+      const adjustedDx = Math.abs(dx) > Math.abs(dy) ? dx > 0 ? Math.ceil(dx) : Math.floor(dx) : 0;
+      const adjustedDy = Math.abs(dx) > Math.abs(dy) ? 0 : dy > 0 ? Math.ceil(dy) : Math.floor(dy);
+      if (!array2dIsInBounds(
+        rivers,
+        currentPos[0] - adjustedDx,
+        currentPos[1] - adjustedDy
+      )) {
+        return;
+      }
+      const nextIndex = array2dGetIndex(
+        rivers,
+        currentPos[0] - adjustedDx,
+        currentPos[1] - adjustedDy
+      );
+      if (nextIndex < 0 || nextIndex >= rivers.values.length) {
+        return;
+      }
+      currentIndex = nextIndex;
+    }
+  }
+
+  // src/state/terrain/snowSandIcebergs.ts
+  function getSnow(noise, height, temperature) {
+    return array2dMerge(
+      { noise, height, temperature },
+      ({ noise: noise2, height: height2, temperature: temperature2 }) => {
+        if (height2 < config.waterHeight) {
+          return 0;
+        }
+        if (temperature2 < 0.25) {
+          return 1;
+        }
+        if (temperature2 < 0.3) {
+          const scaled = inverseLerp(temperature2, 0.25, 0.3);
+          return scaled < noise2 ? 1 : 0;
+        } else
+          return 0;
+      }
+    );
+  }
+  function getSand(noise, height, temperature) {
+    return array2dMerge(
+      { noise, height, temperature },
+      ({ noise: noise2, height: height2, temperature: temperature2 }) => {
+        if (height2 < config.waterHeight) {
+          return 0;
+        }
+        if (temperature2 > 0.75) {
+          return 1;
+        }
+        if (temperature2 > 0.7) {
+          const scaled = inverseLerp(temperature2, 0.75, 0.7);
+          return scaled < noise2 ? 1 : 0;
+        } else
+          return 0;
+      }
+    );
+  }
+  function getIcebergs(noise, heights, heightP32, temperature) {
+    return array2dMerge(
+      { noise, heights, heightP32, temperature },
+      ({ noise: noise2, heights: heights2, heightP32: heightP322, temperature: temperature2 }) => {
+        if (heights2 > config.waterHeight) {
+          return 0;
+        }
+        let isFrozen = 0;
+        if (temperature2 < 0.25) {
+          isFrozen = 1;
+        }
+        if (temperature2 < 0.3) {
+          const scaled = inverseLerp(temperature2, 0.25, 0.3);
+          isFrozen = scaled < noise2 ? 1 : 0;
+        }
+        if (isFrozen) {
+          const frozenAmount = inverseLerp(temperature2, 0.3, 0);
+          const icebergChance = frozenAmount > heightP322;
+          return icebergChance ? 1 : 0;
+        }
+        return 0;
+      }
+    );
+  }
+
+  // src/state/terrain/vegetation.ts
+  function plantVegetation(temperature, heightP8) {
+    return array2dMerge(
+      { temperature, heightP8 },
+      ({ temperature: temperature2, heightP8: heightP82 }) => {
+        const suitability = 1 - Math.abs(temperature2 - 0.5) * 2;
+        return suitability - 0.35 > heightP82 ? 1 : 0;
+      }
+    );
+  }
+
+  // src/state/terrain/index.ts
   function createTerrain(width, height, terrainRegistry) {
-    const heights2 = array2dNormalize(perlin2dArray(width, height, 4));
-    const heights4 = array2dNormalize(perlin2dArray(width, height, 8));
-    const heights8 = array2dNormalize(perlin2dArray(width, height, 16));
-    const heights16 = array2dNormalize(perlin2dArray(width, height, 32));
-    const heights32 = array2dNormalize(perlin2dArray(width, height, 64));
-    const combinedHeights = array2dNormalize(
+    const noise = array2dCreate(width, height, () => Math.random());
+    const heightP2 = array2dNormalize(perlin2dArray(width, height, 2));
+    const heightP4 = array2dNormalize(perlin2dArray(width, height, 4));
+    const heightP8 = array2dNormalize(perlin2dArray(width, height, 8));
+    const heightP16 = array2dNormalize(perlin2dArray(width, height, 16));
+    const heightP32 = array2dNormalize(perlin2dArray(width, height, 32));
+    const heightP64 = array2dNormalize(perlin2dArray(width, height, 64));
+    const rockHardness = array2dFlip(heightP16);
+    const roughness = array2dFlip(heightP4);
+    const heights = array2dNormalize(
       array2dSum(
-        heights2,
-        heights4,
-        array2dScale(heights8, 1 / 2),
-        array2dScale(heights16, 1 / 3),
-        array2dScale(heights32, 1 / 4)
+        heightP2,
+        heightP4,
+        array2dScale(heightP8, 1 / 2),
+        array2dScale(heightP16, 1 / 3),
+        array2dProduct(heightP32, roughness, rockHardness, heightP4),
+        array2dScale(
+          array2dProduct(heightP64, roughness, rockHardness, heightP4),
+          4 / 5
+        )
       )
     );
-    const heights = array2dProduct(combinedHeights, combinedHeights);
     const temperature = array2dNormalize(perlin2dArray(width, height, 2));
-    const gradient = array2dNormalize(
-      array2dMap(heights, (height2, x, y) => {
-        const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height2 : 0;
-        const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height2 : 0;
-        return Math.sqrt(dx * dx + dy * dy);
-      })
-    );
-    const angle = array2dMap(heights, (height2, x, y) => {
-      const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height2 : 0;
-      const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height2 : 0;
-      return Math.atan2(dy, dx);
-    });
+    const snow = getSnow(noise, heights, temperature);
+    const sand = getSand(noise, heights, temperature);
+    const icebergs = getIcebergs(noise, heights, heightP32, temperature);
+    const gradient = findGradient(heights);
+    const angle = findAngle(heights);
     const facingLeft = array2dNormalize(
       array2dMap(angle, (value) => -Math.abs(value))
     );
     const sunlight = array2dNormalize(array2dProduct(gradient, facingLeft));
     const coast = findCoasts(heights);
     const biome = array2dMerge(
-      { heights, temperature, gradient, coast },
-      ({ heights: heights3, temperature: temperature2, gradient: gradient2, coast: coast2 }) => getBiome(heights3, temperature2, gradient2, coast2)
-    );
-    const colors = array2dMerge(
-      { heights, temperature, biome, sunlight },
-      ({ heights: heights3, temperature: temperature2, biome: biome2, sunlight: sunlight2 }) => getTerrainColor(heights3, temperature2, biome2, sunlight2)
+      { heights, temperature, gradient, coast, rockHardness },
+      ({ heights: heights2, temperature: temperature2, gradient: gradient2, coast: coast2, rockHardness: rockHardness2 }) => getBiome(heights2, temperature2, gradient2, coast2, rockHardness2)
     );
     const features = findFeatures(heights);
+    const rainfall = runRainfall(heights, angle);
+    const rivers = identifyRivers(rainfall);
+    const vegetation = plantVegetation(temperature, heightP8);
+    const colors = array2dMerge(
+      {
+        heights,
+        temperature,
+        biome,
+        sunlight,
+        snow,
+        sand,
+        icebergs,
+        rivers,
+        vegetation
+      },
+      ({
+        heights: heights2,
+        temperature: temperature2,
+        biome: biome2,
+        sunlight: sunlight2,
+        snow: snow2,
+        sand: sand2,
+        icebergs: icebergs2,
+        rivers: rivers2,
+        vegetation: vegetation4
+      }) => getTerrainColor(
+        heights2,
+        temperature2,
+        biome2,
+        sunlight2,
+        snow2,
+        sand2,
+        icebergs2,
+        rivers2,
+        vegetation4
+      )
+    );
     terrainRegistry.push(
-      { name: "heights2", kind: "number", values: heights2 },
-      { name: "heights4", kind: "number", values: heights4 },
-      { name: "heights8", kind: "number", values: heights8 },
-      { name: "heights16", kind: "number", values: heights16 },
-      { name: "heights32", kind: "number", values: heights32 },
+      { name: "noise", kind: "number", values: noise },
+      { name: "heightP2", kind: "number", values: heightP2 },
+      { name: "heightP4", kind: "number", values: heightP4 },
+      { name: "heightP8", kind: "number", values: heightP8 },
+      { name: "heightP16", kind: "number", values: heightP16 },
+      { name: "heightP32", kind: "number", values: heightP32 },
+      { name: "heightP64", kind: "number", values: heightP64 },
+      { name: "rockHardness", kind: "number", values: rockHardness },
+      { name: "roughness", kind: "number", values: roughness },
       { name: "heights", kind: "number", values: heights },
       { name: "gradient", kind: "number", values: gradient },
       { name: "angle", kind: "number", values: array2dNormalize(angle) },
       { name: "facingLeft", kind: "number", values: facingLeft },
       { name: "sunlight", kind: "number", values: sunlight },
       { name: "temperature", kind: "number", values: temperature },
+      { name: "snow", kind: "number", values: snow },
+      { name: "sand", kind: "number", values: sand },
+      { name: "icebergs", kind: "number", values: icebergs },
+      { name: "vegetation", kind: "number", values: vegetation },
       { name: "coast", kind: "number", values: coast },
       { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
+      { name: "rainfall", kind: "number", values: array2dNormalize(rainfall) },
+      { name: "rivers", kind: "number", values: rivers },
       {
         name: "features",
         kind: "string",
@@ -25433,14 +25722,160 @@
       log: createLogger(0),
       tick: 0,
       world: null,
-      terrainRegistry
+      terrainRegistry,
+      availableActions: []
     };
   }
-  function commaSeparate(values) {
-    if (values.length === 1) {
-      return values[0];
+
+  // src/state/decision/action.ts
+  function actionBroadcast(hasActions, ...toAdd) {
+    hasActions.availableActions = hasActions.availableActions.concat(toAdd);
+  }
+  function actionRevokeWhere(hasActions, action, location, target, allowClaim) {
+    const prevLength = hasActions.availableActions.length;
+    const filtered = hasActions.availableActions.filter((availableAction) => {
+      const actionMatch = availableAction.action === action;
+      const locationMatch = availableAction.location === location;
+      if (target !== void 0) {
+        const targetMatch = availableAction.target === target;
+        return !(actionMatch && locationMatch && targetMatch);
+      }
+      return !(actionMatch && locationMatch);
+    });
+    if (!allowClaim && prevLength === filtered.length) {
+      throw new Error("Expected to revoke something");
     }
-    return `${values.slice(0, values.length - 1).join(", ")} and ${values[values.length - 1]}`;
+    hasActions.availableActions = filtered;
+  }
+
+  // src/state/decision/need.ts
+  function createNeeds() {
+    return {
+      socialise: createNeed(),
+      create: createNeed(),
+      rest: createNeed(),
+      explore: createNeed()
+    };
+  }
+  function createNeed() {
+    return {
+      currentValue: Math.random(),
+      drainRate: Math.random()
+    };
+  }
+  function satisfyNeed(hasNeeds, action) {
+    hasNeeds.needs[action.satisfies].currentValue = 0.5 + Math.random() * 0.5;
+  }
+  function updateNeeds(needs) {
+    updateNeed(needs.socialise);
+    updateNeed(needs.create);
+    updateNeed(needs.rest);
+    updateNeed(needs.explore);
+  }
+  function updateNeed(need) {
+    need.currentValue = Math.max(0, need.currentValue - need.drainRate);
+  }
+
+  // src/state/decision/preference.ts
+  function createPreferences() {
+    return {
+      discover: Math.random(),
+      rest: Math.random(),
+      travel: Math.random(),
+      createArtifact: Math.random(),
+      adoptSymbol: Math.random(),
+      conversation: Math.random()
+    };
+  }
+  function createStrongPreference() {
+    return Math.random() * 0.5 + 0.5;
+  }
+  function createWeakPreference() {
+    return Math.random() * 0.5;
+  }
+
+  // src/state/decision/factories.ts
+  function createDeityPreferences() {
+    return {
+      ...createPreferences(),
+      adoptSymbol: createStrongPreference(),
+      rest: createWeakPreference(),
+      createArtifact: createWeakPreference(),
+      conversation: createWeakPreference()
+    };
+  }
+  function createDeityNeeds() {
+    return {
+      ...createNeeds()
+    };
+  }
+  function updateInitialTileActions(history3, tile) {
+    actionBroadcast(history3, {
+      action: "discover",
+      satisfies: "explore",
+      location: tile,
+      requires: {
+        location: "different"
+      }
+    });
+    actionBroadcast(history3, {
+      action: "rest",
+      satisfies: "rest",
+      location: tile,
+      requires: {
+        location: "same"
+      }
+    });
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        action: "createArtifact",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "present"
+        }
+      });
+    }
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        action: "adoptSymbol",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "missing"
+        }
+      });
+    }
+  }
+  function updateDiscoveredTileActions(history3, tile) {
+    actionBroadcast(history3, {
+      action: "travel",
+      satisfies: "explore",
+      location: tile,
+      requires: {
+        location: "different"
+      }
+    });
+    actionRevokeWhere(history3, "discover", tile);
+  }
+  function updateArtifactCreatedTileActions(history3, tile) {
+    actionRevokeWhere(history3, "createArtifact", tile, void 0, true);
+  }
+  function updateBeingEnteredTileActions(history3, tile, being) {
+    actionBroadcast(history3, {
+      action: "conversation",
+      satisfies: "socialise",
+      location: tile,
+      target: being,
+      requires: {
+        location: "same"
+      }
+    });
+  }
+  function updateBeingExitedTileActions(history3, tile, being) {
+    actionRevokeWhere(history3, "conversation", tile, being);
   }
 
   // src/utils/random.ts
@@ -25470,28 +25905,6 @@
   }
   function rollDice(chanceOfSuccess) {
     return Math.random() < chanceOfSuccess;
-  }
-  function randomSelection(items) {
-    let remainingItems = shuffle(items);
-    return () => {
-      const result = remainingItems.pop();
-      if (!result) {
-        throw new Error("Probably a mistake");
-      }
-      return result;
-    };
-  }
-  function shuffle(items) {
-    const result = [...items];
-    let counter = result.length;
-    while (counter > 0) {
-      let index = Math.floor(Math.random() * counter);
-      counter--;
-      let temp = result[counter];
-      result[counter] = result[index];
-      result[index] = temp;
-    }
-    return result;
   }
 
   // src/worldgen/deities.ts
@@ -25534,11 +25947,11 @@
       });
     });
   }
-  function createInitialDeities(history2) {
+  function createInitialDeities(history3) {
     const deityThemes = getDeityThemes();
     const deities = deityThemes.map((deityTheme) => {
-      const deity = createDeity(history2.beings, deityTheme.theme);
-      history2.log(`[[${deity.name}]] woke from their slumber.`);
+      const deity = createDeity(history3.beings, deityTheme.theme);
+      history3.log(`[[${deity.name}]] woke from their slumber.`);
       return deity;
     });
     deityThemes.forEach((deityTheme) => {
@@ -25575,8 +25988,8 @@
     });
     return groups;
   }
-  function getRelationship(count2) {
-    if (count2 === 2) {
+  function getRelationship(count) {
+    if (count === 2) {
       return randomChoice(["sibling", "partner", "lover"]);
     } else {
       return randomChoice(["sibling"]);
@@ -25826,7 +26239,7 @@
   function getWords(words, language) {
     return words.split(" ").map((word) => getWord(word, language));
   }
-  function generateLanguage(history2) {
+  function generateLanguage(history3) {
     const phonemes = {
       singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
       dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
@@ -25845,7 +26258,7 @@
     return language;
   }
 
-  // src/terrain/registry.ts
+  // src/state/terrain/registry.ts
   function getTerrainLayer(terrainRegistry, layerName) {
     const result = terrainRegistry.find((layer) => layer.name === layerName);
     if (!result) {
@@ -25869,7 +26282,7 @@
     return newTerrainRegistry;
   }
 
-  // src/terrain/assess.ts
+  // src/state/terrain/assess.ts
   function assessTerrain(terrain) {
     const heights = getTerrainLayer(
       terrain,
@@ -25901,21 +26314,25 @@
   }
 
   // src/worldgen/world.ts
-  function createWorld(width, height, terrainRegistry) {
+  function createWorld(history3, width, height) {
     return array2dCreate(width, height, (x, y) => {
       const newTerrainRegistry = sliceTerrainRegistry(
-        terrainRegistry,
+        history3.terrainRegistry,
         x,
         y,
         config.terrainResolution
       );
-      return {
+      const tile = history3.regions.set({
         x,
         y,
         location: "",
         terrainRegistry: newTerrainRegistry,
-        terrainAssessment: assessTerrain(newTerrainRegistry)
-      };
+        terrainAssessment: assessTerrain(newTerrainRegistry),
+        discovered: false,
+        name: createRegionName()
+      });
+      updateInitialTileActions(history3, tile);
+      return tile;
     });
   }
   function getNeighbouringTiles(world, tile) {
@@ -25979,20 +26396,23 @@
     const deltaY = Math.abs(from.y - to.y);
     return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
   }
+  function getTile(world, x, y) {
+    return array2dGet(
+      world,
+      Math.floor(x / config.terrainResolution),
+      Math.floor(y / config.terrainResolution)
+    );
+  }
 
   // src/worldgen/populate.ts
-  function populateWorld(history2) {
-    history2.dialects.set({
-      language: generateLanguage(history2)
+  function populateWorld(history3) {
+    history3.dialects.set({
+      language: generateLanguage(history3)
     });
-    createWorldRegion(history2.regions);
-    createInitialDeities(history2);
-    if (history2.regions.map.size >= 1 && !history2.world) {
-      history2.world = createWorld(
-        config.worldWidth,
-        config.worldHeight,
-        history2.terrainRegistry
-      );
+    createWorldRegion(history3.regions);
+    createInitialDeities(history3);
+    if (history3.regions.map.size >= 1 && !history3.world) {
+      history3.world = createWorld(history3, config.worldWidth, config.worldHeight);
     }
   }
   function createDeity(beings, theme) {
@@ -26000,24 +26420,24 @@
       kind: "deity",
       name: createDeityName(),
       theme,
-      relationships: {}
+      relationships: {},
+      needs: createDeityNeeds(),
+      preferences: createDeityPreferences()
     });
   }
   function getDeities(beings) {
     return lookupValues(beings).filter((being) => being.kind === "deity");
   }
+  function getDeitiesByActivity(beings, kind) {
+    return getDeities(beings).filter(
+      (being) => being.currentActivity?.kind === kind
+    );
+  }
   function createWorldRegion(regions) {
     return regions.set({
-      name: createWorldName()
+      name: createWorldName(),
+      discovered: true
     });
-  }
-  function createTileRegion(regions, tile) {
-    const result = regions.set({
-      name: createRegionName(),
-      tile
-    });
-    tile.location = result.id;
-    return result;
   }
   var regionPlaces = [
     "woods",
@@ -26124,7 +26544,7 @@
     );
   }
   function Log({
-    history: history2,
+    history: history3,
     language
   }) {
     const [filter, input] = useInput();
@@ -26137,7 +26557,7 @@
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
         input,
-        [...history2.log.knownSystems.values()].map((system) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+        [...history3.log.knownSystems.values()].map((system) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
           "button",
           {
             onClick: () => {
@@ -26152,7 +26572,7 @@
           system
         ))
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { maxHeight: 500, maxWidth: 800, overflow: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { children: history2.log.entries.map(([tick, system, ...log]) => [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { maxHeight: 500, maxWidth: 800, overflow: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { children: history3.log.entries.map(([tick, system, ...log]) => [
         tick,
         system,
         formatLog(log.join(","), language)
@@ -26243,8 +26663,8 @@
 
   // src/components/names.tsx
   var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-  function Names({ name, history: history2 }) {
-    const translations = lookupEntries(history2.dialects).map(
+  function Names({ name, history: history3 }) {
+    const translations = lookupEntries(history3.dialects).map(
       ([dialectName, dialect]) => [
         dialectName,
         spellWord(getWord(dialect.language.name, dialect.language)),
@@ -26285,7 +26705,7 @@
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
   function Being({
     being,
-    history: history2,
+    history: history3,
     language
   }) {
     const languageName = spellWord(getWord(language.name, language));
@@ -26294,13 +26714,13 @@
       " ",
       being.name,
       ":",
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Names, { name: being.name, history: history2 }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Names, { name: being.name, history: history3 }),
       /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Motif, { motif: being.motif }),
       being.theme && `Deity of ${being.theme}`,
       /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Tags, { children: Object.entries(being.relationships).map(
         ([otherBeing, relationship]) => {
           const otherBeingName = spellWord(
-            getWord(getFromLookup(history2.beings, otherBeing).name, language)
+            getWord(getFromLookup(history3.beings, otherBeing).name, language)
           );
           return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(TagsItem, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
@@ -26363,14 +26783,14 @@
   var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   function Artifact({
     artifact,
-    history: history2
+    history: history3
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Id, { value: artifact.id }),
       " ",
       artifact.name,
       ":",
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Names, { name: artifact.name, history: history2 }),
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Names, { name: artifact.name, history: history3 }),
       artifact.object
     ] });
   }
@@ -26379,14 +26799,14 @@
   var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
   function Region({
     region,
-    history: history2
+    history: history3
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Id, { value: region.id }),
       " ",
       region.name,
       ":",
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Names, { name: region.name, history: history2 })
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Names, { name: region.name, history: history3 })
     ] });
   }
 
@@ -26394,12 +26814,12 @@
   var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
   function Dialect({
     dialect,
-    history: history2
+    history: history3
   }) {
     const { id: id3, language } = dialect;
     return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Id, { value: id3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Names, { name: language.name, history: history2 }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Names, { name: language.name, history: history3 }),
       /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("ul", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("li", { children: [
           "Structure:",
@@ -26544,16 +26964,15 @@
   var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   function MapTile({
     tile,
-    history: history2,
+    history: history3,
     language
   }) {
-    const region = getFromLookupSafe(history2.regions, tile.location);
-    if (!region?.name) {
+    if (!tile.discovered) {
       return null;
     }
     const languageName = spellWords(getWords(language.name, language));
-    const beings = lookupValues(history2.beings).filter(
-      (being) => being.location === tile.location
+    const beings = lookupValues(history3.beings).filter(
+      (being) => being.location === tile.id
     );
     return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
       "div",
@@ -26570,7 +26989,7 @@
             Name,
             {
               languageName,
-              word: spellWords(getWords(region.name, language))
+              word: spellWords(getWords(tile.name, language))
             }
           ) }),
           /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("br", {}),
@@ -26615,15 +27034,15 @@
   var import_react5 = __toESM(require_react(), 1);
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   function Map2({
-    history: history2,
+    history: history3,
     language,
     terrainLayer,
     setSelection
   }) {
-    if (!history2.world) {
+    if (!history3.world) {
       return null;
     }
-    const { terrainRegistry } = history2;
+    const { terrainRegistry } = history3;
     const { values: heights } = getTerrainLayer(
       terrainRegistry,
       "heights"
@@ -26631,13 +27050,22 @@
     const renderWidth = 900;
     const renderHeight = 900;
     const [handler, x, y] = useHoverPosition();
-    const pixelX = x === null ? 0 : Math.floor(
-      Math.min(x, renderWidth - 1) / (renderWidth / heights.xSize)
+    const pixelX = x === null ? 0 : clamp(
+      0,
+      heights.xSize,
+      Math.floor(
+        Math.min(x, renderWidth - 1) / (renderWidth / heights.xSize)
+      )
     );
-    const pixelY = y === null ? null : Math.floor(
-      Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
+    const pixelY = y === null ? null : clamp(
+      0,
+      heights.ySize,
+      Math.floor(
+        Math.min(y, renderHeight - 1) / (renderHeight / heights.ySize)
+      )
     );
     const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
+    const selectedTile = pixelX !== null && flipPixelY !== null && getTile(history3.world, pixelX, flipPixelY);
     (0, import_react5.useEffect)(() => {
       if (pixelX !== null && flipPixelY !== null) {
         setSelection([pixelX, flipPixelY]);
@@ -26649,11 +27077,11 @@
       {
         style: {
           display: "grid",
-          gridTemplateColumns: `${renderWidth / history2.world?.xSize}px `.repeat(
-            history2.world?.xSize
+          gridTemplateColumns: `${renderWidth / history3.world?.xSize}px `.repeat(
+            history3.world?.xSize
           ),
-          gridTemplateRows: `${renderHeight / history2.world?.ySize}px `.repeat(
-            history2.world?.ySize
+          gridTemplateRows: `${renderHeight / history3.world?.ySize}px `.repeat(
+            history3.world?.ySize
           ),
           maxHeight: renderHeight,
           maxWidth: renderWidth,
@@ -26662,26 +27090,23 @@
         },
         onMouseMove: handler,
         children: [
-          history2.world.values.map((tile, index) => {
-            return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
-              "div",
-              {
-                style: {
-                  gridRow: history2.world?.ySize - tile.y,
-                  gridColumn: index % history2.world?.xSize + 1,
-                  aspectRatio: 1,
-                  zIndex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  padding: "10px",
-                  boxSizing: "border-box"
-                },
-                children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MapTile, { tile, history: history2, language })
+          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            "div",
+            {
+              style: {
+                gridRow: history3.world.ySize - selectedTile.y,
+                gridColumn: selectedTile.x + 1,
+                aspectRatio: 1,
+                zIndex: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: "10px",
+                boxSizing: "border-box"
               },
-              index
-            );
-          }),
+              children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MapTile, { tile: selectedTile, history: history3, language })
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             "div",
             {
@@ -26789,35 +27214,30 @@
   // src/components/worldSelection.tsx
   var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   function WorldSelection({
-    history: history2,
+    history: history3,
     language,
     selectionX,
     selectionY,
     setTerrainLayer,
     terrainLayer
   }) {
-    if (!history2.world) {
+    if (!history3.world) {
       return null;
     }
-    const selectedTile = array2dGet(
-      history2.world,
-      Math.floor(selectionX / config.terrainResolution),
-      Math.floor(selectionY / config.terrainResolution)
-    );
-    const selectedRegion = selectedTile && getFromLookupSafe(history2.regions, selectedTile.location);
+    const selectedTile = getTile(history3.world, selectionX, selectionY);
     const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);
     return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(Grid, { columns: 1, children: [
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
         TerrainLayerPicker,
         {
-          terrainRegistry: history2.terrainRegistry,
+          terrainRegistry: history3.terrainRegistry,
           setTerrainLayer
         }
       ) }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
         TerrainValues,
         {
-          terrainRegistry: history2.terrainRegistry,
+          terrainRegistry: history3.terrainRegistry,
           selectionX,
           selectionY
         }
@@ -26825,19 +27245,19 @@
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Terrain, { layer, hoverX: null, hoverY: null }) }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(GridItem, { children: [
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TileValues, { tile: selectedTile }),
-        selectedRegion && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Region, { region: selectedRegion, history: history2 })
+        selectedTile && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Region, { region: selectedTile, history: history3 })
       ] }),
-      selectedRegion && getDeities(history2.beings).filter((deity) => deity.location === selectedRegion.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Being, { being: deity, history: history2, language }) }, index))
+      selectedTile && getDeities(history3.beings).filter((deity) => deity.location === selectedTile.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Being, { being: deity, history: history3, language }) }, index))
     ] });
   }
 
   // src/components/world.tsx
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   function World({
-    history: history2,
+    history: history3,
     language
   }) {
-    if (!history2.world) {
+    if (!history3.world) {
       return null;
     }
     const [terrainLayer, setTerrainLayer] = (0, import_react6.useState)("colors");
@@ -26863,7 +27283,7 @@
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Map2,
             {
-              history: history2,
+              history: history3,
               language,
               terrainLayer,
               setSelection: setSelectionComparer
@@ -26872,7 +27292,7 @@
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             WorldSelection,
             {
-              history: history2,
+              history: history3,
               language,
               selectionX,
               selectionY,
@@ -26885,84 +27305,143 @@
     );
   }
 
-  // src/components/page.tsx
+  // src/components/tab.tsx
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+  function Tab({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { children });
+  }
+
+  // src/components/tabs.tsx
+  var import_react7 = __toESM(require_react(), 1);
+
+  // src/utils/queryParams.ts
+  function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+  function getQueryBool(name) {
+    return getQueryParam(name) === "1";
+  }
+  function modifyQueryParam(name, value) {
+    const params = new URLSearchParams(window.location.search);
+    params.set(name, value);
+    var newPathname = window.location.pathname + "?" + params.toString();
+    history.pushState(null, "", newPathname);
+  }
+
+  // src/components/tabs.tsx
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+  function Tabs({ children }) {
+    const childrenArray = Array.isArray(children) ? children : [children];
+    const labels = childrenArray.map((child) => {
+      if (child.type !== Tab) {
+        throw new Error("Bad tab element");
+      }
+      return child.props.label;
+    });
+    const [selected, setSelected] = (0, import_react7.useState)(getQueryParam("tab") || labels[0]);
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: { display: "flex" }, children: labels.map((label) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+        "div",
+        {
+          style: {
+            padding: 10,
+            borderBottomStyle: "solid",
+            borderBottomColor: "greenyellow",
+            borderBottomWidth: selected === label ? 3 : 0
+          },
+          onClick: () => {
+            modifyQueryParam("tab", label);
+            setSelected(label);
+          },
+          children: label
+        },
+        label
+      )) }),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { children: childrenArray.find((child) => child.props.label === selected) })
+    ] });
+  }
+
+  // src/components/page.tsx
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   function Page({
-    history: history2,
+    history: history3,
     language,
     playbackControls
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Playback, { ...playbackControls }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(World, { history: history2, language }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Log, { history: history2, language }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Regions", children: lookupValues(history2.regions).map((region) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Region, { region, history: history2 }) }, region.id);
-      }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Beings", children: lookupValues(history2.beings).map((being) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Being, { being, history: history2, language }) }, being.id);
-      }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Artifacts", children: lookupValues(history2.artifacts).map((artifact) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Artifact, { artifact, history: history2 }) }, artifact.id);
-      }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history2.dialects).map((dialect) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Dialect, { dialect, history: history2 }) }, dialect.id);
-      }) })
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Playback, { ...playbackControls }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Tabs, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(World, { history: history3, language }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Tab, { label: "Log", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Log, { history: history3, language }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Tab, { label: "Regions", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Grid, { title: "Regions", children: lookupValues(history3.regions).map((region) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Region, { region, history: history3 }) }, region.id);
+        }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Tab, { label: "Beings", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Grid, { title: "Beings", children: lookupValues(history3.beings).map((being) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Being, { being, history: history3, language }) }, being.id);
+        }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Tab, { label: "Artifacts", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Grid, { title: "Artifacts", children: lookupValues(history3.artifacts).map((artifact) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Artifact, { artifact, history: history3 }) }, artifact.id);
+        }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Tab, { label: "Dialects", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history3.dialects).map((dialect) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Dialect, { dialect, history: history3 }) }, dialect.id);
+        }) }) })
+      ] })
     ] });
   }
 
   // src/systems/movement.ts
-  function runMovement(history2) {
-    const deities = getDeities(history2.beings);
+  function runMovement(history3) {
+    const deities = getDeitiesByActivity(history3.beings, "movement");
     deities.forEach((deity) => {
-      if (deity.currentActivity) {
-        const previous = getFromLookupSafe(history2.regions, deity.location);
-        const path = deity.currentActivity.path;
-        if (path.length === 0) {
-          console.error("weird");
-        } else if (path.length === 1) {
-          const targetTile = array2dGet(history2.world, path[0].x, path[0].y);
-          discoverLocation(deity, targetTile, history2);
-          const target = getFromLookup(history2.regions, targetTile.location);
-          deity.location = target.id;
-          history2.log(`[[${deity.name}]] completed their journey`);
-          deity.currentActivity = void 0;
-        } else {
-          path.shift();
-          const targetTile = array2dGet(history2.world, path[0].x, path[0].y);
-          moveToLocation(deity, targetTile, history2, previous);
-        }
+      const previous = getFromLookupSafe(history3.regions, deity.location);
+      if (previous) {
+        updateBeingExitedTileActions(history3, previous, deity);
+      }
+      const path = deity.currentActivity.path;
+      if (path.length === 0) {
+        throw new Error("what");
+      }
+      const next = path.pop();
+      const target = array2dGet(history3.world, next.x, next.y);
+      moveToLocation(deity, target, history3, previous);
+      deity.location = target.id;
+      updateBeingEnteredTileActions(history3, target, deity);
+      if (path.length === 0) {
+        history3.log(`[[${deity.name}]] completed their journey`);
+        deity.currentActivity = void 0;
       }
     });
   }
-  function moveToLocation(deity, targetTile, history2, previous) {
-    discoverLocation(deity, targetTile, history2);
-    const target = getFromLookup(history2.regions, targetTile.location);
-    deity.location = target.id;
+  function moveToLocation(deity, targetTile, history3, previous) {
+    discoverLocation(deity, targetTile, history3);
+    deity.location = targetTile.id;
     if (previous) {
-      history2.log(
-        `[[${deity.name}]] moved from [[${previous.name}]] to [[${target.name}]]`
+      history3.log(
+        `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`
       );
     } else {
-      history2.log(`[[${deity.name}]] entered the world in [[${target.name}]]`);
+      history3.log(
+        `[[${deity.name}]] entered the world in [[${targetTile.name}]]`
+      );
     }
   }
-  function discoverLocation(deity, targetTile, history2) {
-    if (targetTile.location) {
+  function discoverLocation(deity, targetTile, history3) {
+    if (targetTile.discovered) {
       return;
     }
-    const region = createTileRegion(history2.regions, targetTile);
-    const regionNameParts = region.name.split(" ").map((part) => `[[${part}]]`).join(" ");
-    history2.log(`[[${deity.name}]] discovered the region of ${regionNameParts}`);
-    deity.location = region.id;
+    targetTile.discovered = true;
+    updateDiscoveredTileActions(history3, targetTile);
+    const regionNameParts = targetTile.name.split(" ").map((part) => `[[${part}]]`).join(" ");
+    history3.log(`[[${deity.name}]] discovered the region of ${regionNameParts}`);
+    deity.location = targetTile.id;
   }
 
   // src/systems/artifactCreation.ts
-  var artifactSelection;
   function createArtifact(creators, artifacts) {
     return artifacts.set({
       name: createArtifactName(),
-      object: artifactSelection(),
+      object: randomChoice(config.artifactItems),
       creators: creators.map((creator) => creator.id),
       inPosessionOf: randomChoice(creators.map((creator) => creator.id))
     });
@@ -26971,59 +27450,33 @@
   function createArtifactName() {
     return `artifact_${artifactNameCount++}`;
   }
-  var count = 0;
-  function runArtifactCreation(history2) {
-    if (!artifactSelection) {
-      artifactSelection = randomSelection(config.artifactItems);
-    }
-    if (count >= config.artifactItems.length) {
-      return;
-    }
-    const deities = getDeities(history2.beings);
-    const locationIds = Array.from(
-      new Set(
-        deities.map((deity) => deity.location).filter((location) => !!location).filter(
-          (location) => getFromLookup(history2.regions, location)?.name !== "world_0"
-        )
-      )
-    );
-    locationIds.forEach((locationId) => {
-      const deitiesAtLocation = deities.filter(
-        (deity) => deity.location === locationId
+  function runArtifactCreation(history3) {
+    const deities = getDeitiesByActivity(history3.beings, "createArtifact");
+    deities.forEach((deity) => {
+      const artifact = createArtifact([deity], history3.artifacts);
+      const deityNames = `[[${deity.name}]]`;
+      const tile = getFromLookup(history3.regions, deity.location);
+      history3.log(
+        `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`
       );
-      if (deitiesAtLocation.length < 2) {
-        return;
-      }
-      if (count >= config.artifactItems.length) {
-        return;
-      }
-      count++;
-      const artifact = createArtifact(deitiesAtLocation, history2.artifacts);
-      const deityNames = commaSeparate(
-        deitiesAtLocation.map((being) => `[[${being.name}]]`)
-      );
-      const locationName = getFromLookup(history2.regions, locationId)?.name;
-      history2.log(
-        `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${locationName}]]`
-      );
+      deity.currentActivity = void 0;
+      updateArtifactCreatedTileActions(history3, tile);
     });
   }
 
   // src/systems/symbolAdoption.ts
-  function runSymbolAdoption(history2) {
-    const deities = getDeities(history2.beings);
-    const needSymbol = deities.filter((deity) => !deity.motif);
-    if (!needSymbol.length) {
-      return;
-    }
-    const target = randomChoice(needSymbol);
-    target.motif = {
-      kind: "symbol",
-      value: randomChoice(config.motifs).name
-    };
-    history2.log(
-      `[[${target.name}]] adopted the ${target.motif?.value} as their symbol`
-    );
+  function runSymbolAdoption(history3) {
+    const deities = getDeitiesByActivity(history3.beings, "adoptSymbol");
+    deities.forEach((deity) => {
+      deity.motif = {
+        kind: "symbol",
+        value: randomChoice(config.motifs).name
+      };
+      history3.log(
+        `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`
+      );
+      deity.currentActivity = void 0;
+    });
   }
 
   // src/playback.ts
@@ -27053,61 +27506,152 @@
   }
 
   // src/index.tsx
-  var import_react7 = __toESM(require_react(), 1);
+  var import_react8 = __toESM(require_react(), 1);
+
+  // src/state/decision/index.ts
+  var maxDistance2 = euclidianDistance(
+    { x: 0, y: 0 },
+    { x: config.worldWidth, y: config.worldHeight }
+  );
+  function getHighestPriorityAction(actions, being, from) {
+    const { needs, preferences } = being;
+    const filteredActions = actions.filter((action) => {
+      switch (action.requires.location) {
+        case "different":
+          if (action.location === from) {
+            return false;
+          }
+          break;
+        case "same":
+          if (action.location !== from) {
+            return false;
+          }
+          break;
+        default:
+          break;
+      }
+      switch (action.requires.motif) {
+        case "missing":
+          if (being.motif) {
+            return false;
+          }
+          break;
+        case "present":
+          if (!being.motif) {
+            return false;
+          }
+          break;
+        default:
+          break;
+      }
+      if (action.target && action.target.id === being.id) {
+        return false;
+      }
+      return true;
+    });
+    const prioritisedActions = filteredActions.sort((a, b) => {
+      const aNeed = 1 - needs[a.satisfies].currentValue;
+      const bNeed = 1 - needs[b.satisfies].currentValue;
+      const aDistance = inverseLerp(
+        euclidianDistance(from, a.location),
+        maxDistance2,
+        0
+      );
+      const bDistance = inverseLerp(
+        euclidianDistance(from, b.location),
+        maxDistance2,
+        0
+      );
+      return bNeed * preferences[b.action] * bDistance - aNeed * preferences[a.action] * aDistance;
+    });
+    return prioritisedActions[0];
+  }
 
   // src/systems/decision.ts
-  function runDecision(history2) {
-    const worldIsReady = !!history2.world;
+  function runDecision(history3) {
+    const worldIsReady = !!history3.world;
     if (!worldIsReady) {
       return;
     }
-    const deities = getDeities(history2.beings);
+    const deities = getDeities(history3.beings);
+    const availableActions = history3.availableActions;
     const availableDeities = deities.filter((deity) => !deity.currentActivity);
     availableDeities.forEach((deity) => {
-      const willMove = rollDice(config.movementChance);
-      if (!willMove) {
-        return;
-      }
-      const targetLocation = getDeityTargetLocation(deity, history2);
-      if (!targetLocation) {
-        return;
-      }
-      let targetRegionName = "an unknown land";
-      if (targetLocation.location) {
-        const region = getFromLookup(history2.regions, targetLocation.location);
-        if (region?.name) {
-          targetRegionName = `[[${region.name}]]`;
+      const currentLocation = history3.world.values.find(
+        (tile) => tile.id === deity.location
+      );
+      if (currentLocation) {
+        const action = getHighestPriorityAction(
+          availableActions,
+          deity,
+          currentLocation
+        );
+        satisfyNeed(deity, action);
+        const targetRegionName = !action.location.discovered ? "an unknown land" : `[[${action.location.name}]]`;
+        if (action.action === "discover" || action.action === "travel") {
+          deity.currentActivity = {
+            kind: "movement",
+            moveToLocation: action.location,
+            path: getPathToTargetLocation(deity, action.location, history3)
+          };
+        } else if (action.action === "createArtifact") {
+          deity.currentActivity = {
+            kind: "createArtifact"
+          };
+        } else if (action.action === "adoptSymbol") {
+          deity.currentActivity = {
+            kind: "adoptSymbol"
+          };
+        } else if (action.action === "conversation") {
+          if (!action.target) {
+            console.error("what");
+            return;
+          }
+          deity.currentActivity = {
+            kind: "conversation",
+            target: action.target.id
+          };
         }
+        history3.log(
+          `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`
+        );
+      } else {
+        const targetLocation = getDeityTargetLocation(deity, history3);
+        if (!targetLocation) {
+          return;
+        }
+        const targetRegionName = !targetLocation.discovered ? "an unknown land" : `[[${targetLocation.name}]]`;
+        history3.log(`[[${deity.name}]] set out for ${targetRegionName}`);
+        deity.currentActivity = {
+          kind: "movement",
+          moveToLocation: targetLocation,
+          path: getPathToTargetLocation(deity, targetLocation, history3)
+        };
       }
-      history2.log(`[[${deity.name}]] set out for ${targetRegionName}`);
-      deity.currentActivity = {
-        moveToLocation: targetLocation,
-        path: getPathToTargetLocation(deity, targetLocation, history2)
-      };
     });
   }
-  function getDeityTargetLocation(deity, history2) {
-    const possibleTiles = history2.world.values.filter(
-      (tile) => tile.location != deity.location
+  function getDeityTargetLocation(deity, history3) {
+    const possibleTiles = history3.world.values.filter(
+      (tile) => tile.id != deity.location
     );
     if (possibleTiles.length === 0) {
       console.log("Nowhere can be moved to");
       return;
     }
-    const undiscovered = possibleTiles.filter((tile) => !tile.location);
+    const undiscovered = possibleTiles.filter((tile) => !tile.discovered);
     if (undiscovered.length > 0) {
       return randomChoice(undiscovered);
     } else {
       return randomChoice(possibleTiles);
     }
   }
-  function getPathToTargetLocation(deity, targetLocation, history2) {
-    const world = history2.world;
+  function getPathToTargetLocation(deity, targetLocation, history3) {
+    const world = history3.world;
     if (!world) {
       console.error("weird");
       return [];
     }
-    const location = getFromLookupSafe(history2.regions, deity.location);
+    const location = getFromLookupSafe(history3.regions, deity.location);
     if (!location || !location.tile) {
       return [targetLocation];
     }
@@ -27120,46 +27664,39 @@
     return path;
   }
 
-  // src/utils/queryParams.ts
-  function getQueryParam(name) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(name);
-  }
-  function getQueryBool(name) {
-    return getQueryParam(name) === "1";
-  }
-
-  // src/systems/greeting.ts
-  function runGreeting(history2) {
-    const deities = getDeities(history2.beings);
-    const locationIds = Array.from(
-      new Set(
-        deities.map((deity) => deity.location).filter((location) => !!location).filter(
-          (location) => getFromLookup(history2.regions, location)?.name !== "world_0"
-        )
-      )
-    );
-    locationIds.forEach((locationId) => {
-      const deitiesAtLocation = deities.filter(
-        (deity) => deity.location === locationId
+  // src/systems/conversation.ts
+  function runConversation(history3) {
+    const deities = getDeitiesByActivity(history3.beings, "conversation");
+    deities.forEach((deity) => {
+      const activity = deity.currentActivity;
+      const target = getFromLookup(history3.beings, activity.target);
+      const location = getFromLookup(history3.regions, deity.location);
+      deity.currentActivity = void 0;
+      if (target.location !== deity.location) {
+        console.warn("conversationFailed");
+        return;
+      }
+      history3.log(
+        `[[${deity.name}]] talked to [[${target.name}]] in [[${location.name}]]`
       );
-      deitiesAtLocation.forEach((deity) => {
-        deitiesAtLocation.filter((other) => other.id !== deity.id).forEach((other) => {
-          if (deity.relationships[other.id]) {
-            deity.relationships[other.id].encounters++;
-          } else {
-            deity.relationships[other.id] = {
-              kind: "acquaintance",
-              encounters: 1
-            };
-          }
-        });
-      });
+      if (deity.relationships[target.id]) {
+        deity.relationships[target.id].encounters++;
+      } else {
+        deity.relationships[target.id] = {
+          kind: "acquaintance",
+          encounters: 1
+        };
+      }
     });
   }
 
+  // src/systems/needs.ts
+  function runNeeds(history3) {
+    getDeities(history3.beings).forEach((deity) => updateNeeds(deity.needs));
+  }
+
   // src/index.tsx
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
   if (!root) {
     throw new Error("Could not find #root in document");
@@ -27169,48 +27706,50 @@
     populateWorld(newHistory);
     return newHistory;
   }
-  var history = initialiseHistory();
+  var history2 = initialiseHistory();
   function Wrapper() {
-    const [, forceRerender] = (0, import_react7.useState)({});
-    const playbackControls = (0, import_react7.useMemo)(
+    const [, forceRerender] = (0, import_react8.useState)({});
+    const playbackControls = (0, import_react8.useMemo)(
       () => createPlaybackControls(
         (_tick) => {
         },
         (tick) => {
-          history.tick = tick;
-          history.log.tick = tick;
-          history.log.currentSystem = "movement";
-          runMovement(history);
-          history.log.currentSystem = "greeting";
-          runGreeting(history);
-          history.log.currentSystem = "artifactCreation";
-          runArtifactCreation(history);
-          history.log.currentSystem = "symbolAdoption";
-          runSymbolAdoption(history);
-          history.log.currentSystem = "decision";
-          runDecision(history);
+          history2.tick = tick;
+          history2.log.tick = tick;
+          history2.log.currentSystem = "decision";
+          runDecision(history2);
+          history2.log.currentSystem = "needs";
+          runNeeds(history2);
+          history2.log.currentSystem = "conversation";
+          runConversation(history2);
+          history2.log.currentSystem = "artifactCreation";
+          runArtifactCreation(history2);
+          history2.log.currentSystem = "symbolAdoption";
+          runSymbolAdoption(history2);
+          history2.log.currentSystem = "movement";
+          runMovement(history2);
           forceRerender({});
           return tick < config.runTicks;
         }
       ),
       []
     );
-    (0, import_react7.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       if (playbackControls.canTick && getQueryBool("autorun")) {
         playbackControls.tickAll();
-        console.log(history);
+        console.log(history2);
       }
     }, [playbackControls]);
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
       Page,
       {
-        history,
-        language: lookupFirstValue(history.dialects).language,
+        history: history2,
+        language: lookupFirstValue(history2.dialects).language,
         playbackControls
       }
     );
   }
-  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Wrapper, {}));
+  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Wrapper, {}));
 })();
 /*! Bundled license information:
 
