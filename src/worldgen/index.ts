@@ -37,11 +37,16 @@ export type CurrentCreateArtifactActivity = {
 export type CurrentAdoptSymbolActivity = {
   kind: "adoptSymbol";
 };
+export type CurrentConversationActivity = {
+  kind: "conversation";
+  target: Being["id"];
+};
 
 export type CurrentActivity =
   | CurrentMovementActivity
   | CurrentCreateArtifactActivity
-  | CurrentAdoptSymbolActivity;
+  | CurrentAdoptSymbolActivity
+  | CurrentConversationActivity;
 
 export type Being = HasNeeds & {
   id: string;

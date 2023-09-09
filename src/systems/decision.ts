@@ -56,6 +56,15 @@ export function runDecision(history: History) {
         deity.currentActivity = {
           kind: "adoptSymbol",
         };
+      } else if (action.action === "conversation") {
+        if (!action.target) {
+          console.error("what");
+          return;
+        }
+        deity.currentActivity = {
+          kind: "conversation",
+          target: action.target.id,
+        };
       }
 
       history.log(

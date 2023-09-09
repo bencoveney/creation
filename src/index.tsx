@@ -11,7 +11,7 @@ import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
 import { lookupFirstValue } from "./utils/lookup";
 import { config } from "./config";
-import { runGreeting } from "./systems/greeting";
+import { runConversation } from "./systems/conversation";
 import { runNeeds } from "./systems/needs";
 
 const root = document.getElementById("root");
@@ -37,18 +37,22 @@ function Wrapper() {
         (tick) => {
           history.tick = tick;
           history.log.tick = tick;
+          // Order is roughly:
+          // - Make a decision
+          // - Act on it
+          //   - Do systems first that are least likely to invalidate others.
+          history.log.currentSystem = "decision";
+          runDecision(history);
           history.log.currentSystem = "needs";
           runNeeds(history);
-          history.log.currentSystem = "movement";
-          runMovement(history);
-          history.log.currentSystem = "greeting";
-          runGreeting(history);
+          history.log.currentSystem = "conversation";
+          runConversation(history);
           history.log.currentSystem = "artifactCreation";
           runArtifactCreation(history);
           history.log.currentSystem = "symbolAdoption";
           runSymbolAdoption(history);
-          history.log.currentSystem = "decision";
-          runDecision(history);
+          history.log.currentSystem = "movement";
+          runMovement(history);
           forceRerender({});
           return tick < config.runTicks;
         }

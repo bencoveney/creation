@@ -13,3 +13,7 @@ Procedural world/history generation
   - Height squared
   - Ridged noise
   - Roughness map
+- Split page into tabs
+- Display deity needs
+- Display deity logs
+- Display decision frequency

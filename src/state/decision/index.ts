@@ -43,6 +43,9 @@ export function getHighestPriorityAction(
       default:
         break;
     }
+    if (action.target && action.target.id === being.id) {
+      return false;
+    }
     return true;
   });
   const prioritisedActions = filteredActions.sort((a, b) => {

@@ -1,10 +1,18 @@
+import { Being } from "../../worldgen";
 import { Tile } from "../../worldgen/world";
 import { Needs } from "./need";
 
 export type Action = {
-  action: "travel" | "discover" | "rest" | "createArtifact" | "adoptSymbol";
+  action:
+    | "travel"
+    | "discover"
+    | "rest"
+    | "createArtifact"
+    | "adoptSymbol"
+    | "conversation";
   satisfies: keyof Needs;
   location: Tile;
+  target?: Being;
   requires: {
     location?: "different" | "same";
     motif?: "present" | "missing";
@@ -34,13 +42,22 @@ export function actionRevoke(
 export function actionRevokeWhere(
   hasActions: HasAvailableActions,
   action: Action["action"],
-  location: Tile
+  location: Tile,
+  target?: Being,
+  allowClaim?: boolean
 ): void {
-  hasActions.availableActions = hasActions.availableActions.filter(
-    (availableAction) =>
-      !(
-        availableAction.action === action &&
-        availableAction.location === location
-      )
-  );
+  const prevLength = hasActions.availableActions.length;
+  const filtered = hasActions.availableActions.filter((availableAction) => {
+    const actionMatch = availableAction.action === action;
+    const locationMatch = availableAction.location === location;
+    if (target !== undefined) {
+      const targetMatch = availableAction.target === target;
+      return !(actionMatch && locationMatch && targetMatch);
+    }
+    return !(actionMatch && locationMatch);
+  });
+  if (!allowClaim && prevLength === filtered.length) {
+    throw new Error("Expected to revoke something");
+  }
+  hasActions.availableActions = filtered;
 }
