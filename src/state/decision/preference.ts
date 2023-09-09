@@ -7,6 +7,7 @@ export function createPreferences(): Preferences {
     discover: Math.random(),
     rest: Math.random(),
     travel: Math.random(),
+    createArtifact: Math.random(),
   };
 }
 

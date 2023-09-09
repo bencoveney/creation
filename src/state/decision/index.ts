@@ -50,23 +50,5 @@ export function getHighestPriorityAction(
       aNeed * preferences[a.action] * aDistance
     );
   });
-  // console.log(
-  //   from,
-  //   prioritisedActions.map((action) => {
-  //     const need = 1 - needs[action.satisfies].currentValue;
-  //     const distance = inverseLerp(
-  //       euclidianDistance(from, action.location),
-  //       maxDistance,
-  //       0
-  //     );
-  //     return {
-  //       ...action,
-  //       need,
-  //       distance,
-  //       strength: action.strength,
-  //       needDistance: need * action.strength * distance,
-  //     };
-  //   })
-  // );
   return prioritisedActions[0];
 }

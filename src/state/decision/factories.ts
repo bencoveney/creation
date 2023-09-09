@@ -13,11 +13,14 @@ export function createDeityPreferences(): Preferences {
     ...createPreferences(),
     travel: createWeakPreference(),
     rest: createWeakPreference(),
+    createArtifact: createWeakPreference(),
   };
 }
 
 export function createDeityNeeds(): Needs {
-  return createNeeds();
+  return {
+    ...createNeeds(),
+  };
 }
 
 export function updateInitialTileActions(history: History, tile: Tile): void {
@@ -37,6 +40,16 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
       location: "same",
     },
   });
+  if (Math.random() > 0.5) {
+    actionBroadcast(history, {
+      action: "createArtifact",
+      satisfies: "create",
+      location: tile,
+      requires: {
+        location: "same",
+      },
+    });
+  }
 }
 
 export function updateDiscoveredTileActions(
@@ -52,4 +65,11 @@ export function updateDiscoveredTileActions(
     },
   });
   actionRevokeWhere(history, "discover", tile);
+}
+
+export function updateArtifactCreatedTileActions(
+  history: History,
+  tile: Tile
+): void {
+  actionRevokeWhere(history, "createArtifact", tile);
 }

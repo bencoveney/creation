@@ -2,7 +2,7 @@ import { Tile } from "../../worldgen/world";
 import { Needs } from "./need";
 
 export type Action = {
-  action: "travel" | "discover" | "rest";
+  action: "travel" | "discover" | "rest" | "createArtifact";
   satisfies: keyof Needs;
   location: Tile;
   requires: {
@@ -32,7 +32,7 @@ export function actionRevoke(
 
 export function actionRevokeWhere(
   hasActions: HasAvailableActions,
-  action: "travel" | "discover",
+  action: Action["action"],
   location: Tile
 ): void {
   hasActions.availableActions = hasActions.availableActions.filter(

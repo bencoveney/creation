@@ -8,7 +8,7 @@ import { updateDiscoveredTileActions } from "../state/decision/factories";
 export function runMovement(history: History) {
   const deities = getDeities(history.beings);
   deities.forEach((deity) => {
-    if (deity.currentActivity) {
+    if (deity.currentActivity?.kind === "movement") {
       const previous = getFromLookupSafe(
         history.regions,
         deity.location
@@ -24,7 +24,6 @@ export function runMovement(history: History) {
         deity.location = target.id;
         history.log(`[[${deity.name}]] completed their journey`);
         deity.currentActivity = undefined;
-        deity.needs.explore.currentValue = 1;
       } else {
         path.shift();
         const target = array2dGet(history.world!, path[0].x, path[0].y);

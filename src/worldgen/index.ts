@@ -1,7 +1,7 @@
 import { config } from "../config";
 import { Logger, createLogger } from "../log";
 import { HasAvailableActions } from "../state/decision/action";
-import { Needs } from "../state/decision/need";
+import { HasNeeds, Needs } from "../state/decision/need";
 import { Preferences } from "../state/decision/preference";
 import { createTerrain } from "../state/terrain";
 import { TerrainRegistry } from "../state/terrain/registry";
@@ -26,24 +26,28 @@ export type Coordinate = {
   y: number;
 };
 
-export type Being = {
+export type Being = HasNeeds & {
   id: string;
   kind: "deity";
   name: string;
   theme?: string;
   location?: string; // Region ID.
   motif?: Motif;
-  currentActivity?: {
-    moveToLocation: Coordinate;
-    path: Coordinate[];
-  };
+  currentActivity?:
+    | {
+        kind: "movement";
+        moveToLocation: Coordinate;
+        path: Coordinate[];
+      }
+    | {
+        kind: "createArtifact";
+      };
   relationships: {
     [being: string]: {
       kind: string;
       encounters: number;
     };
   };
-  needs: Needs;
   preferences: Preferences;
 };
 

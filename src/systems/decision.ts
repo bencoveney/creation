@@ -1,4 +1,5 @@
 import { getHighestPriorityAction } from "../state/decision";
+import { satisfyNeed } from "../state/decision/need";
 import { array2dGet } from "../utils/array2d";
 import { getFromLookupSafe } from "../utils/lookup";
 import { randomChoice } from "../utils/random";
@@ -36,23 +37,27 @@ export function runDecision(history: History) {
         currentLocation
       );
 
-      deity.needs[action.satisfies].currentValue = 1;
+      satisfyNeed(deity, action);
+
+      const targetRegionName = !action.location.discovered
+        ? "an unknown land"
+        : `[[${action.location.name}]]`;
 
       if (action.action === "discover" || action.action === "travel") {
-        const targetRegionName = !action.location.discovered
-          ? "an unknown land"
-          : `[[${action.location.name}]]`;
-        history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
         deity.currentActivity = {
+          kind: "movement",
           moveToLocation: action.location,
           path: getPathToTargetLocation(deity, action.location, history),
         };
-      } else {
-        const targetRegionName = !action.location.discovered
-          ? "an unknown land"
-          : `[[${action.location.name}]]`;
-        history.log(`[[${deity.name}]] rested in ${targetRegionName}`);
+      } else if (action.action === "createArtifact") {
+        deity.currentActivity = {
+          kind: "createArtifact",
+        };
       }
+
+      history.log(
+        `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`
+      );
     } else {
       const targetLocation = getDeityTargetLocation(deity, history);
       if (!targetLocation) {
@@ -65,6 +70,7 @@ export function runDecision(history: History) {
       history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
 
       deity.currentActivity = {
+        kind: "movement",
         moveToLocation: targetLocation,
         path: getPathToTargetLocation(deity, targetLocation, history),
       };
