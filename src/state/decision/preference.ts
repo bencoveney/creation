@@ -8,6 +8,7 @@ export function createPreferences(): Preferences {
     rest: Math.random(),
     travel: Math.random(),
     createArtifact: Math.random(),
+    adoptSymbol: Math.random(),
   };
 }
 

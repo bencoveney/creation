@@ -1,4 +1,4 @@
-import { getDeities } from "../worldgen/populate";
+import { getDeities, getDeitiesByActivity } from "../worldgen/populate";
 import { Artifact, Being, History } from "../worldgen";
 import { randomChoice } from "../utils/random";
 import { Lookup, getFromLookup } from "../utils/lookup";
@@ -24,17 +24,15 @@ function createArtifactName(): string {
 }
 
 export function runArtifactCreation(history: History) {
-  const deities = getDeities(history.beings);
+  const deities = getDeitiesByActivity(history.beings, "createArtifact");
   deities.forEach((deity) => {
-    if (deity.currentActivity?.kind === "createArtifact") {
-      const artifact = createArtifact([deity], history.artifacts);
-      const deityNames = `[[${deity.name}]]`;
-      const tile = getFromLookup(history.regions, deity.location!) as Tile;
-      history.log(
-        `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`
-      );
-      deity.currentActivity = undefined;
-      updateArtifactCreatedTileActions(history, tile);
-    }
+    const artifact = createArtifact([deity], history.artifacts);
+    const deityNames = `[[${deity.name}]]`;
+    const tile = getFromLookup(history.regions, deity.location!) as Tile;
+    history.log(
+      `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`
+    );
+    deity.currentActivity = undefined;
+    updateArtifactCreatedTileActions(history, tile);
   });
 }

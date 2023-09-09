@@ -2,11 +2,12 @@ import { Tile } from "../../worldgen/world";
 import { Needs } from "./need";
 
 export type Action = {
-  action: "travel" | "discover" | "rest" | "createArtifact";
+  action: "travel" | "discover" | "rest" | "createArtifact" | "adoptSymbol";
   satisfies: keyof Needs;
   location: Tile;
   requires: {
     location?: "different" | "same";
+    motif?: "present" | "missing";
   };
 };
 

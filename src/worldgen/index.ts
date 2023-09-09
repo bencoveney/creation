@@ -26,6 +26,23 @@ export type Coordinate = {
   y: number;
 };
 
+export type CurrentMovementActivity = {
+  kind: "movement";
+  moveToLocation: Coordinate;
+  path: Coordinate[];
+};
+export type CurrentCreateArtifactActivity = {
+  kind: "createArtifact";
+};
+export type CurrentAdoptSymbolActivity = {
+  kind: "adoptSymbol";
+};
+
+export type CurrentActivity =
+  | CurrentMovementActivity
+  | CurrentCreateArtifactActivity
+  | CurrentAdoptSymbolActivity;
+
 export type Being = HasNeeds & {
   id: string;
   kind: "deity";
@@ -33,15 +50,7 @@ export type Being = HasNeeds & {
   theme?: string;
   location?: string; // Region ID.
   motif?: Motif;
-  currentActivity?:
-    | {
-        kind: "movement";
-        moveToLocation: Coordinate;
-        path: Coordinate[];
-      }
-    | {
-        kind: "createArtifact";
-      };
+  currentActivity?: CurrentActivity;
   relationships: {
     [being: string]: {
       kind: string;

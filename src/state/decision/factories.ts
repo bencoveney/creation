@@ -47,6 +47,18 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
       location: tile,
       requires: {
         location: "same",
+        motif: "present",
+      },
+    });
+  }
+  if (Math.random() > 0.5) {
+    actionBroadcast(history, {
+      action: "adoptSymbol",
+      satisfies: "create",
+      location: tile,
+      requires: {
+        location: "same",
+        motif: "missing",
       },
     });
   }

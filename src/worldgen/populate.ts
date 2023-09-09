@@ -1,4 +1,4 @@
-import { Being, Region, History } from ".";
+import { Being, Region, History, CurrentActivity } from ".";
 import { config } from "../config";
 import {
   createDeityNeeds,
@@ -34,6 +34,15 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
 
 export function getDeities(beings: Lookup<Being>): Being[] {
   return lookupValues(beings).filter((being) => being.kind === "deity");
+}
+
+export function getDeitiesByActivity(
+  beings: Lookup<Being>,
+  kind: CurrentActivity["kind"]
+): Being[] {
+  return getDeities(beings).filter(
+    (being) => being.currentActivity?.kind === kind
+  );
 }
 
 export function createWorldRegion(regions: Lookup<Region>): Region {

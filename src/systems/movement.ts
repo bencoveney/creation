@@ -1,34 +1,29 @@
-import { getDeities } from "../worldgen/populate";
-import { Being, History, Region } from "../worldgen";
+import { getDeities, getDeitiesByActivity } from "../worldgen/populate";
+import { Being, CurrentMovementActivity, History, Region } from "../worldgen";
 import { Tile } from "../worldgen/world";
 import { getFromLookupSafe } from "../utils/lookup";
 import { array2dGet } from "../utils/array2d";
 import { updateDiscoveredTileActions } from "../state/decision/factories";
 
 export function runMovement(history: History) {
-  const deities = getDeities(history.beings);
+  const deities = getDeitiesByActivity(history.beings, "movement");
   deities.forEach((deity) => {
-    if (deity.currentActivity?.kind === "movement") {
-      const previous = getFromLookupSafe(
-        history.regions,
-        deity.location
-      ) as Tile;
-      const path = deity.currentActivity.path;
-      if (path.length === 0) {
-        console.error("weird");
-      } else if (path.length === 1) {
-        // Already here. We are probably entering the world, otherwise we'd have a start/end.
-        // Maybe it would be simpler to have a different category of activity for that.
-        const target = array2dGet(history.world!, path[0].x, path[0].y) as Tile;
-        discoverLocation(deity, target, history);
-        deity.location = target.id;
-        history.log(`[[${deity.name}]] completed their journey`);
-        deity.currentActivity = undefined;
-      } else {
-        path.shift();
-        const target = array2dGet(history.world!, path[0].x, path[0].y);
-        moveToLocation(deity, target, history, previous);
-      }
+    const previous = getFromLookupSafe(history.regions, deity.location) as Tile;
+    const path = (deity.currentActivity as CurrentMovementActivity).path;
+    if (path.length === 0) {
+      console.error("weird");
+    } else if (path.length === 1) {
+      // Already here. We are probably entering the world, otherwise we'd have a start/end.
+      // Maybe it would be simpler to have a different category of activity for that.
+      const target = array2dGet(history.world!, path[0].x, path[0].y) as Tile;
+      discoverLocation(deity, target, history);
+      deity.location = target.id;
+      history.log(`[[${deity.name}]] completed their journey`);
+      deity.currentActivity = undefined;
+    } else {
+      path.shift();
+      const target = array2dGet(history.world!, path[0].x, path[0].y);
+      moveToLocation(deity, target, history, previous);
     }
   });
 }

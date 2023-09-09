@@ -32,8 +32,7 @@ export function runDecision(history: History) {
     if (currentLocation) {
       const action = getHighestPriorityAction(
         availableActions,
-        deity.needs,
-        deity.preferences,
+        deity,
         currentLocation
       );
 
@@ -52,6 +51,10 @@ export function runDecision(history: History) {
       } else if (action.action === "createArtifact") {
         deity.currentActivity = {
           kind: "createArtifact",
+        };
+      } else if (action.action === "adoptSymbol") {
+        deity.currentActivity = {
+          kind: "adoptSymbol",
         };
       }
 

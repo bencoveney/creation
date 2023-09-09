@@ -1,9 +1,8 @@
 import { config } from "../../config";
 import { inverseLerp } from "../../utils/maths";
+import { Being } from "../../worldgen";
 import { euclidianDistance, Tile } from "../../worldgen/world";
 import { Action } from "./action";
-import { Needs } from "./need";
-import { Preferences } from "./preference";
 
 const maxDistance = euclidianDistance(
   { x: 0, y: 0 } as any,
@@ -11,10 +10,10 @@ const maxDistance = euclidianDistance(
 );
 export function getHighestPriorityAction(
   actions: Action[],
-  needs: Needs,
-  preferences: Preferences,
+  being: Being,
   from: Tile
 ) {
+  const { needs, preferences } = being;
   const filteredActions = actions.filter((action) => {
     switch (action.requires.location) {
       case "different":
@@ -24,6 +23,20 @@ export function getHighestPriorityAction(
         break;
       case "same":
         if (action.location !== from) {
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    switch (action.requires.motif) {
+      case "missing":
+        if (being.motif) {
+          return false;
+        }
+        break;
+      case "present":
+        if (!being.motif) {
           return false;
         }
         break;
