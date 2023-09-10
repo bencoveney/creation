@@ -21,8 +21,9 @@ export function TextInput({
       {label}:
       <input
         style={{
-          padding: `${spacer.small}px`,
+          padding: `${spacer.xSmall}px`,
           margin: 0,
+          marginLeft: `${spacer.small}px`,
           borderStyle: "solid",
           fontSize: inputFontSize,
         }}

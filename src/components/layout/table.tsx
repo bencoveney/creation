@@ -23,6 +23,7 @@ export function Table({
         position: "relative",
         height: "100%",
         overflow: "auto",
+        gridAutoRows: "min-content",
       }}
     >
       {cells.map((child, index) => (

@@ -61,6 +61,7 @@ export function Log({
       }
       return true;
     });
+  const limitedLogs = selectedLogs.slice(0, 200);
   return (
     <FixedTop>
       <Toolbar>
@@ -80,56 +81,63 @@ export function Log({
           </Button>
         ))}
       </Toolbar>
-      <Table cols={5}>
-        <span>Year</span>
-        <span>System</span>
-        <span>Message</span>
-        <span>Beings</span>
-        <span>Location</span>
-        {selectedLogs.map(([tick, system, log, deities, locations], index) => {
-          return (
-            <Fragment key={index}>
-              <div style={{ textAlign: "right" }}>{tick}</div>
-              <div>{system}</div>
-              <div>{log}</div>
-              <div
-                style={{
-                  display: "grid",
-                  gridAutoFlow: "column",
-                  gridAutoColumns: "min-content",
-                  gridGap: spacer.small,
-                }}
-              >
-                {deities.map((id) => (
-                  <InspectLink
-                    key={id}
-                    kind="being"
-                    id={id}
-                    inspect={inspect}
-                  />
-                ))}
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridAutoFlow: "column",
-                  gridAutoColumns: "min-content",
-                  gridGap: spacer.small,
-                }}
-              >
-                {locations.map((id) => (
-                  <InspectLink
-                    key={id}
-                    kind="region"
-                    id={id}
-                    inspect={inspect}
-                  />
-                ))}
-              </div>
-            </Fragment>
-          );
-        })}
-      </Table>
+      <FixedTop>
+        {limitedLogs.length !== selectedLogs.length ? (
+          <div style={{ padding: spacer.medium, textAlign: "center" }}>
+            Showing first {limitedLogs.length} of {selectedLogs.length}
+          </div>
+        ) : null}
+        <Table cols={5}>
+          <span>Year</span>
+          <span>System</span>
+          <span>Message</span>
+          <span>Beings</span>
+          <span>Location</span>
+          {limitedLogs.map(([tick, system, log, deities, locations], index) => {
+            return (
+              <Fragment key={index}>
+                <div style={{ textAlign: "right" }}>{tick}</div>
+                <div>{system}</div>
+                <div>{log}</div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridAutoFlow: "column",
+                    gridAutoColumns: "min-content",
+                    gridGap: spacer.small,
+                  }}
+                >
+                  {deities.map((id) => (
+                    <InspectLink
+                      key={id}
+                      kind="being"
+                      id={id}
+                      inspect={inspect}
+                    />
+                  ))}
+                </div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridAutoFlow: "column",
+                    gridAutoColumns: "min-content",
+                    gridGap: spacer.small,
+                  }}
+                >
+                  {locations.map((id) => (
+                    <InspectLink
+                      key={id}
+                      kind="region"
+                      id={id}
+                      inspect={inspect}
+                    />
+                  ))}
+                </div>
+              </Fragment>
+            );
+          })}
+        </Table>
+      </FixedTop>
     </FixedTop>
   );
 }
