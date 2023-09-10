@@ -1,10 +1,10 @@
-import { History } from "../worldgen";
-import { Language, getWords, spellWords } from "../worldgen/language";
-import { lookupValues } from "../utils/lookup";
-import { Tile } from "../worldgen/world";
-import { Name } from "./name";
-import { Tooltip } from "./tooltip";
-import { Motif } from "./motif";
+import { History } from "../../worldgen";
+import { Language, getWords, spellWords } from "../../worldgen/language";
+import { lookupValues } from "../../utils/lookup";
+import { Tile } from "../../worldgen/world";
+import { Name } from "./../name";
+import { Tooltip } from "./../layout/tooltip";
+import { Motif } from "./../motif";
 import { PropsWithChildren } from "react";
 
 export function MapTile({

@@ -1,9 +1,9 @@
 import { History, Dialect } from "../worldgen";
 import { spellPhoneme, spellWord } from "../worldgen/language";
-import { Id } from "./id";
+import { Id } from "./layout/id";
 import { Names } from "./names";
-import { Tags, TagsItem } from "./tags";
-import { Tooltip } from "./tooltip";
+import { Tags, TagsItem } from "./layout/tags";
+import { Tooltip } from "./layout/tooltip";
 
 export function Dialect({
   dialect,

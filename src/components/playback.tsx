@@ -1,22 +1,32 @@
 import { PlaybackControls } from "../playback";
+import { getQueryBool, modifyQueryBool } from "../utils/queryParams";
+import { Button } from "./layout/button";
+
+const toggleAutorun = () => {
+  const current = getQueryBool("autorun");
+  modifyQueryBool("autorun", !current);
+};
+
+const restart = () => {
+  window.location.reload();
+};
 
 export function Playback({
   tickOnce,
   tickAll,
-  restart,
   canTick,
   tickCount,
 }: PlaybackControls) {
   return (
     <div>
-      <button onClick={tickOnce} disabled={!canTick}>
+      <Button onClick={tickOnce} disabled={!canTick}>
         ▶️ Tick world
-      </button>
-      <button onClick={tickAll} disabled={!canTick}>
-        {" "}
+      </Button>
+      <Button onClick={tickAll} disabled={!canTick}>
         ⏩ Run world
-      </button>
-      <button onClick={restart}> 🆕 Restart</button>
+      </Button>
+      <Button onClick={restart}>🔃 Restart</Button>
+      <Button onClick={toggleAutorun}>🏃 Toggle autorun</Button>
       Tick: {tickCount}
     </div>
   );

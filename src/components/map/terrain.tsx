@@ -5,9 +5,9 @@ import {
   array2dFlipY,
   array2dGetIndex,
   array2dMap,
-} from "../utils/array2d";
-import { TerrainRegistryEntry } from "../state/terrain/registry";
-import { getNumberColor, getStringColor } from "../state/terrain/color";
+} from "../../utils/array2d";
+import { TerrainRegistryEntry } from "../../state/terrain/registry";
+import { getNumberColor, getStringColor } from "../../state/terrain/color";
 
 const selectedColor = toHex({ r: 0, g: 255, b: 0 });
 const missingColor = { r: 0, g: 255, b: 0 };

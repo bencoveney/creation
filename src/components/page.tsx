@@ -4,14 +4,16 @@ import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
 import { Being } from "./being";
-import { Grid, GridItem } from "./grid";
+import { Grid, GridItem } from "./layout/grid";
 import { Artifact } from "./artifact";
 import { Region } from "./region";
 import { Dialect } from "./dialect";
 import { lookupValues } from "../utils/lookup";
 import { World } from "./world";
-import { Tab } from "./tab";
-import { Tabs } from "./tabs";
+import { Tab } from "./layout/tab";
+import { Tabs } from "./layout/tabs";
+import { FixedTop } from "./layout/fixedTop";
+import { Toolbar } from "./layout/toolbar";
 
 export function Page({
   history,
@@ -23,8 +25,10 @@ export function Page({
   playbackControls: PlaybackControls;
 }) {
   return (
-    <>
-      <Playback {...playbackControls} />
+    <FixedTop>
+      <Toolbar>
+        <Playback {...playbackControls} />
+      </Toolbar>
       <Tabs>
         <Tab label={"World"}>
           <World history={history} language={language} />
@@ -77,6 +81,6 @@ export function Page({
           </Grid>
         </Tab>
       </Tabs>
-    </>
+    </FixedTop>
   );
 }

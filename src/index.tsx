@@ -32,31 +32,28 @@ function Wrapper() {
 
   const playbackControls = useMemo(
     () =>
-      createPlaybackControls(
-        (_tick) => {},
-        (tick) => {
-          history.tick = tick;
-          history.log.tick = tick;
-          // Order is roughly:
-          // - Make a decision
-          // - Act on it
-          //   - Do systems first that are least likely to invalidate others.
-          history.log.currentSystem = "decision";
-          runDecision(history);
-          history.log.currentSystem = "needs";
-          runNeeds(history);
-          history.log.currentSystem = "conversation";
-          runConversation(history);
-          history.log.currentSystem = "artifactCreation";
-          runArtifactCreation(history);
-          history.log.currentSystem = "symbolAdoption";
-          runSymbolAdoption(history);
-          history.log.currentSystem = "movement";
-          runMovement(history);
-          forceRerender({});
-          return tick < config.runTicks;
-        }
-      ),
+      createPlaybackControls((tick) => {
+        history.tick = tick;
+        history.log.tick = tick;
+        // Order is roughly:
+        // - Make a decision
+        // - Act on it
+        //   - Do systems first that are least likely to invalidate others.
+        history.log.currentSystem = "decision";
+        runDecision(history);
+        history.log.currentSystem = "needs";
+        runNeeds(history);
+        history.log.currentSystem = "conversation";
+        runConversation(history);
+        history.log.currentSystem = "artifactCreation";
+        runArtifactCreation(history);
+        history.log.currentSystem = "symbolAdoption";
+        runSymbolAdoption(history);
+        history.log.currentSystem = "movement";
+        runMovement(history);
+        forceRerender({});
+        return tick < config.runTicks;
+      }),
     []
   );
 

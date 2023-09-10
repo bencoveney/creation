@@ -5,13 +5,13 @@ import { config } from "../config";
 import { Region } from "./region";
 import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
-import { Grid, GridItem } from "./grid";
+import { Grid, GridItem } from "./layout/grid";
 import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
 import { TileValues } from "./tileValues";
 import { getTerrainLayer } from "../state/terrain/registry";
-import { Terrain } from "./terrain";
+import { Terrain } from "./map/terrain";
 import { getTile } from "../worldgen/world";
 
 export function WorldSelection({

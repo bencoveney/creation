@@ -1,5 +1,5 @@
 import { History, Region } from "../worldgen";
-import { Id } from "./id";
+import { Id } from "./layout/id";
 import { Names } from "./names";
 
 export function Region({

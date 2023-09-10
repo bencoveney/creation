@@ -1,7 +1,7 @@
 import { History } from "../worldgen";
 import { Language } from "../worldgen/language";
 import { useCallback, useState } from "react";
-import { Map } from "./map";
+import { Map } from "./map/map";
 import { WorldSelection } from "./worldSelection";
 
 export function World({

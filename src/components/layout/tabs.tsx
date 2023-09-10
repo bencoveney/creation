@@ -1,6 +1,9 @@
 import { PropsWithChildren, ReactElement, useState } from "react";
 import { Tab } from "./tab";
-import { getQueryParam, modifyQueryParam } from "../utils/queryParams";
+import { getQueryParam, modifyQueryParam } from "../../utils/queryParams";
+import { FixedTop } from "./fixedTop";
+import { Button } from "./button";
+import { Toolbar } from "./toolbar";
 
 export function Tabs({ children }: PropsWithChildren) {
   const childrenArray: ReactElement[] = Array.isArray(children)
@@ -14,27 +17,22 @@ export function Tabs({ children }: PropsWithChildren) {
   });
   const [selected, setSelected] = useState(getQueryParam("tab") || labels[0]);
   return (
-    <div>
-      <div style={{ display: "flex" }}>
+    <FixedTop>
+      <Toolbar>
         {labels.map((label) => (
-          <div
+          <Button
             key={label}
-            style={{
-              padding: 10,
-              borderBottomStyle: "solid",
-              borderBottomColor: "greenyellow",
-              borderBottomWidth: selected === label ? 3 : 0,
-            }}
+            selected={selected === label}
             onClick={() => {
               modifyQueryParam("tab", label);
               setSelected(label);
             }}
           >
             {label}
-          </div>
+          </Button>
         ))}
-      </div>
-      <div>{childrenArray.find((child) => child.props.label === selected)}</div>
-    </div>
+      </Toolbar>
+      {childrenArray.find((child) => child.props.label === selected)}
+    </FixedTop>
   );
 }

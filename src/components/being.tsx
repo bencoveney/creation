@@ -1,11 +1,11 @@
 import { getFromLookup } from "../utils/lookup";
 import { History, Being } from "../worldgen";
 import { Language, getWord, spellWord } from "../worldgen/language";
-import { Id } from "./id";
+import { Id } from "./layout/id";
 import { Motif } from "./motif";
 import { Name } from "./name";
 import { Names } from "./names";
-import { Tags, TagsItem } from "./tags";
+import { Tags, TagsItem } from "./layout/tags";
 
 export function Being({
   being,

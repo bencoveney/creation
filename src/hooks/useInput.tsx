@@ -1,12 +1,13 @@
 import { ReactElement, useState } from "react";
+import { TextInput } from "../components/layout/textInput";
 
-export function useInput(): [string, ReactElement] {
+export function useInput(label: string): [string, ReactElement] {
   const [value, setValue] = useState("");
   const input = (
-    <input
+    <TextInput
+      label={label}
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      type="text"
     />
   );
   return [value, input];

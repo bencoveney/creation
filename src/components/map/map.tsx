@@ -1,15 +1,15 @@
-import { History } from "../worldgen";
-import { Language } from "../worldgen/language";
+import { History } from "../../worldgen";
+import { Language } from "../../worldgen/language";
 import { Terrain } from "./terrain";
-import { useHoverPosition } from "../hooks/useHover";
+import { useHoverPosition } from "../../hooks/useHover";
 import {
   TerrainRegistryNumberEntry,
   getTerrainLayer,
-} from "../state/terrain/registry";
+} from "../../state/terrain/registry";
 import { MapTile } from "./mapTile";
 import { useEffect } from "react";
-import { getTile } from "../worldgen/world";
-import { clamp } from "../utils/maths";
+import { getTile } from "../../worldgen/world";
+import { clamp } from "../../utils/maths";
 
 export function Map({
   history,

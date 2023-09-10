@@ -1,7 +1,7 @@
 import { lookupEntries } from "../utils/lookup";
 import { History } from "../worldgen";
 import { getWord, getWords, spellWord, spellWords } from "../worldgen/language";
-import { CommaSeparate } from "./commaSeparate";
+import { CommaSeparate } from "./layout/commaSeparate";
 import { Name } from "./name";
 
 export function Names({ name, history }: { name: string; history: History }) {

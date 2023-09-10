@@ -3,6 +3,9 @@ import { Language, getWords, spellWords } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";
 import { useState } from "react";
+import { FixedTop } from "./layout/fixedTop";
+import { Button } from "./layout/button";
+import { Toolbar } from "./layout/toolbar";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -19,7 +22,7 @@ export function Log({
   history: History;
   language: Language;
 }) {
-  const [filter, input] = useInput();
+  const [filter, input] = useInput("Filter");
   const [enabledSystems, setEnabledSystems] = useState([
     "init",
     "symbolAdoption",
@@ -27,11 +30,11 @@ export function Log({
     "artifactCreation",
   ]);
   return (
-    <>
-      <div>
+    <FixedTop>
+      <Toolbar>
         {input}
         {[...history.log.knownSystems.values()].map((system) => (
-          <button
+          <Button
             key={system}
             onClick={() => {
               const newEnabledSystems = enabledSystems.includes(system)
@@ -42,28 +45,26 @@ export function Log({
           >
             {enabledSystems.includes(system) ? "🟩" : "🟥"}
             {system}
-          </button>
+          </Button>
         ))}
-      </div>
-      <div style={{ maxHeight: 500, maxWidth: 800, overflow: "auto" }}>
-        <ul>
-          {history.log.entries
-            .map<LogEntry>(([tick, system, ...log]) => [
-              tick,
-              system,
-              formatLog(log.join(","), language),
-            ])
-            .filter(([_t, system]) => enabledSystems.includes(system))
-            .filter(([_t, _s, log]) => log.includes(filter))
-            .map(([tick, system, ...log], index) => {
-              return (
-                <li key={index}>
-                  {tick} {system} {formatLog(log.join(","), language)}
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-    </>
+      </Toolbar>
+      <ul>
+        {history.log.entries
+          .map<LogEntry>(([tick, system, ...log]) => [
+            tick,
+            system,
+            formatLog(log.join(","), language),
+          ])
+          .filter(([_t, system]) => enabledSystems.includes(system))
+          .filter(([_t, _s, log]) => log.includes(filter))
+          .map(([tick, system, ...log], index) => {
+            return (
+              <li key={index}>
+                {tick} {system} {formatLog(log.join(","), language)}
+              </li>
+            );
+          })}
+      </ul>
+    </FixedTop>
   );
 }
