@@ -1,6 +1,6 @@
 import { History } from "../worldgen";
 import { randomChoice } from "../utils/random";
-import { getDeities, getDeitiesByActivity } from "../worldgen/populate";
+import { getDeitiesByActivity } from "../worldgen/populate";
 import { config } from "../config";
 
 export function runSymbolAdoption(history: History) {
@@ -11,7 +11,9 @@ export function runSymbolAdoption(history: History) {
       value: randomChoice(config.motifs).name,
     };
     history.log(
-      `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`
+      `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`,
+      [deity.id],
+      deity.location ? [deity.location] : []
     );
     deity.currentActivity = undefined;
   });

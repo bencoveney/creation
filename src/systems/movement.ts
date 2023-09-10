@@ -33,7 +33,11 @@ export function runMovement(history: History) {
     deity.location = target.id;
     updateBeingEnteredTileActions(history, target, deity);
     if (path.length === 0) {
-      history.log(`[[${deity.name}]] completed their journey`);
+      history.log(
+        `[[${deity.name}]] completed their journey`,
+        [deity.id],
+        [target.id]
+      );
       deity.currentActivity = undefined;
     }
   });
@@ -49,11 +53,15 @@ function moveToLocation(
   deity.location = targetTile.id;
   if (previous) {
     history.log(
-      `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`
+      `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
+      [deity.id],
+      [targetTile.id]
     );
   } else {
     history.log(
-      `[[${deity.name}]] entered the world in [[${targetTile.name}]]`
+      `[[${deity.name}]] entered the world in [[${targetTile.name}]]`,
+      [deity.id],
+      [targetTile.id]
     );
   }
 }
@@ -69,6 +77,10 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
     .split(" ")
     .map((part) => `[[${part}]]`)
     .join(" ");
-  history.log(`[[${deity.name}]] discovered the region of ${regionNameParts}`);
+  history.log(
+    `[[${deity.name}]] discovered the region of ${regionNameParts}`,
+    [deity.id],
+    [targetTile.id]
+  );
   deity.location = targetTile.id;
 }

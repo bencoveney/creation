@@ -42,12 +42,16 @@ export function runDecision(history: History) {
         ? "an unknown land"
         : `[[${action.location.name}]]`;
 
+      const locationIds: string[] = [currentLocation.id];
+      const beingIds: string[] = [deity.id];
+
       if (action.action === "discover" || action.action === "travel") {
         deity.currentActivity = {
           kind: "movement",
           moveToLocation: action.location,
           path: getPathToTargetLocation(deity, action.location, history),
         };
+        locationIds.push(action.location.id);
       } else if (action.action === "createArtifact") {
         deity.currentActivity = {
           kind: "createArtifact",
@@ -65,10 +69,13 @@ export function runDecision(history: History) {
           kind: "conversation",
           target: action.target.id,
         };
+        beingIds.push(action.target.id);
       }
 
       history.log(
-        `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`
+        `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`,
+        beingIds,
+        locationIds
       );
     } else {
       const targetLocation = getDeityTargetLocation(deity, history);
@@ -79,7 +86,11 @@ export function runDecision(history: History) {
       const targetRegionName = !targetLocation.discovered
         ? "an unknown land"
         : `[[${targetLocation.name}]]`;
-      history.log(`[[${deity.name}]] set out for ${targetRegionName}`);
+      history.log(
+        `[[${deity.name}]] set out for ${targetRegionName} in ${targetRegionName}`,
+        [deity.id],
+        [targetLocation.id]
+      );
 
       deity.currentActivity = {
         kind: "movement",

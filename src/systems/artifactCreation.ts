@@ -30,7 +30,9 @@ export function runArtifactCreation(history: History) {
     const deityNames = `[[${deity.name}]]`;
     const tile = getFromLookup(history.regions, deity.location!) as Tile;
     history.log(
-      `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`
+      `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
+      [deity.id],
+      [tile.id]
     );
     deity.currentActivity = undefined;
     updateArtifactCreatedTileActions(history, tile);

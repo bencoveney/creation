@@ -66,7 +66,7 @@ export function createInitialDeities(history: History) {
   const deityThemes = getDeityThemes();
   const deities = deityThemes.map((deityTheme) => {
     const deity = createDeity(history.beings, deityTheme.theme);
-    history.log(`[[${deity.name}]] woke from their slumber.`);
+    history.log(`[[${deity.name}]] woke from their slumber.`, [deity.id], []);
     return deity;
   });
   deityThemes.forEach((deityTheme) => {
