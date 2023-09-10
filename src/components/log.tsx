@@ -8,6 +8,8 @@ import { Button } from "./layout/button";
 import { Toolbar } from "./layout/toolbar";
 import { Table } from "./layout/table";
 import { InspectProps } from "../hooks/useInspect";
+import { InspectLink } from "./inspectLink";
+import { spacer } from "./layout/theme";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -22,8 +24,7 @@ export function Log({
   language,
   being,
   location,
-  inspectBeing,
-  inspectRegion,
+  inspect,
 }: {
   history: History;
   language: Language;
@@ -91,18 +92,38 @@ export function Log({
               <div style={{ textAlign: "right" }}>{tick}</div>
               <div>{system}</div>
               <div>{log}</div>
-              <div>
+              <div
+                style={{
+                  display: "grid",
+                  gridAutoFlow: "column",
+                  gridAutoColumns: "min-content",
+                  gridGap: spacer.small,
+                }}
+              >
                 {deities.map((id) => (
-                  <span key={id} onClick={() => inspectBeing(id)}>
-                    {id}
-                  </span>
+                  <InspectLink
+                    key={id}
+                    kind="being"
+                    id={id}
+                    inspect={inspect}
+                  />
                 ))}
               </div>
-              <div>
+              <div
+                style={{
+                  display: "grid",
+                  gridAutoFlow: "column",
+                  gridAutoColumns: "min-content",
+                  gridGap: spacer.small,
+                }}
+              >
                 {locations.map((id) => (
-                  <span key={id} onClick={() => inspectRegion(id)}>
-                    {id}
-                  </span>
+                  <InspectLink
+                    key={id}
+                    kind="region"
+                    id={id}
+                    inspect={inspect}
+                  />
                 ))}
               </div>
             </Fragment>

@@ -42,7 +42,7 @@ export function Table({
                   backgroundColor: backgroundColorPale,
                 }
               : {
-                  padding: spacer.small,
+                  padding: spacer.xSmall,
                   borderBottomColor: getForState(
                     theme.borderBottomColor,
                     false,

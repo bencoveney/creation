@@ -26,7 +26,7 @@ export function Page({
   language: Language;
   playbackControls: PlaybackControls;
 }) {
-  const [inspected, inspectBeing, inspectRegion] = useInspect();
+  const [inspected, inspect] = useInspect();
   return (
     <FixedTop>
       <Toolbar>
@@ -43,12 +43,7 @@ export function Page({
           <World history={history} language={language} />
         </Tab>
         <Tab label={"Log"}>
-          <Log
-            history={history}
-            language={language}
-            inspectBeing={inspectBeing}
-            inspectRegion={inspectRegion}
-          />
+          <Log history={history} language={language} inspect={inspect} />
         </Tab>
         <Tab label={"Regions"}>
           <Grid title="Regions">
@@ -100,8 +95,7 @@ export function Page({
               history={history}
               language={language}
               inspected={inspected}
-              inspectBeing={inspectBeing}
-              inspectRegion={inspectRegion}
+              inspect={inspect}
             />
           </Tab>
         )}

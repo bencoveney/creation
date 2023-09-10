@@ -1,4 +1,5 @@
 export const spacer = {
+  xSmall: 3,
   small: 5,
   medium: 10,
 };

@@ -11,8 +11,7 @@ export function Inspect({
   history,
   language,
   inspected,
-  inspectBeing,
-  inspectRegion,
+  inspect,
 }: {
   history: History;
   language: Language;
@@ -26,8 +25,7 @@ export function Inspect({
           history={history}
           language={language}
           being={being}
-          inspectBeing={inspectBeing}
-          inspectRegion={inspectRegion}
+          inspect={inspect}
         />
       );
     case "region":
@@ -37,8 +35,7 @@ export function Inspect({
           history={history}
           language={language}
           region={region}
-          inspectBeing={inspectBeing}
-          inspectRegion={inspectRegion}
+          inspect={inspect}
         />
       );
     default:
@@ -50,8 +47,7 @@ function InspectBeing({
   history,
   language,
   being,
-  inspectBeing,
-  inspectRegion,
+  inspect,
 }: {
   history: History;
   language: Language;
@@ -64,8 +60,7 @@ function InspectBeing({
         history={history}
         language={language}
         being={being.id}
-        inspectBeing={inspectBeing}
-        inspectRegion={inspectRegion}
+        inspect={inspect}
       />
     </VerticalSplit>
   );
@@ -75,12 +70,21 @@ function InspectRegion({
   history,
   language,
   region,
-  inspectBeing,
-  inspectRegion,
+  inspect,
 }: {
   history: History;
   language: Language;
   region: Region;
 } & InspectProps) {
-  return <RegionComponent history={history} region={region} />;
+  return (
+    <VerticalSplit>
+      <RegionComponent history={history} region={region} />
+      <Log
+        history={history}
+        language={language}
+        location={region.id}
+        inspect={inspect}
+      />
+    </VerticalSplit>
+  );
 }
