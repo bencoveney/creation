@@ -26588,8 +26588,9 @@
             "input",
             {
               style: {
-                padding: `${spacer.small}px`,
+                padding: `${spacer.xSmall}px`,
                 margin: 0,
+                marginLeft: `${spacer.small}px`,
                 borderStyle: "solid",
                 fontSize: inputFontSize
               },
@@ -26756,7 +26757,8 @@
           gridTemplateColumns: `max-content max-content auto max-content max-content`,
           position: "relative",
           height: "100%",
-          overflow: "auto"
+          overflow: "auto",
+          gridAutoRows: "min-content"
         },
         children: cells.map((child, index) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
           "div",
@@ -26858,6 +26860,7 @@
       }
       return true;
     });
+    const limitedLogs = selectedLogs.slice(0, 200);
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(FixedTop, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Toolbar, { children: [
         input,
@@ -26876,59 +26879,67 @@
           system
         ))
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Table, { cols: 5, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Year" }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "System" }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Message" }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Beings" }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Location" }),
-        selectedLogs.map(([tick, system, log, deities, locations], index) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_react3.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { textAlign: "right" }, children: tick }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: system }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: log }),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-              "div",
-              {
-                style: {
-                  display: "grid",
-                  gridAutoFlow: "column",
-                  gridAutoColumns: "min-content",
-                  gridGap: spacer.small
-                },
-                children: deities.map((id3) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-                  InspectLink,
-                  {
-                    kind: "being",
-                    id: id3,
-                    inspect
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(FixedTop, { children: [
+        limitedLogs.length !== selectedLogs.length ? /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { padding: spacer.medium, textAlign: "center" }, children: [
+          "Showing first ",
+          limitedLogs.length,
+          " of ",
+          selectedLogs.length
+        ] }) : null,
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Table, { cols: 5, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Year" }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "System" }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Message" }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Beings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Location" }),
+          limitedLogs.map(([tick, system, log, deities, locations], index) => {
+            return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_react3.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { textAlign: "right" }, children: tick }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: system }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { children: log }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                "div",
+                {
+                  style: {
+                    display: "grid",
+                    gridAutoFlow: "column",
+                    gridAutoColumns: "min-content",
+                    gridGap: spacer.small
                   },
-                  id3
-                ))
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-              "div",
-              {
-                style: {
-                  display: "grid",
-                  gridAutoFlow: "column",
-                  gridAutoColumns: "min-content",
-                  gridGap: spacer.small
-                },
-                children: locations.map((id3) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-                  InspectLink,
-                  {
-                    kind: "region",
-                    id: id3,
-                    inspect
+                  children: deities.map((id3) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                    InspectLink,
+                    {
+                      kind: "being",
+                      id: id3,
+                      inspect
+                    },
+                    id3
+                  ))
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                "div",
+                {
+                  style: {
+                    display: "grid",
+                    gridAutoFlow: "column",
+                    gridAutoColumns: "min-content",
+                    gridGap: spacer.small
                   },
-                  id3
-                ))
-              }
-            )
-          ] }, index);
-        })
+                  children: locations.map((id3) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                    InspectLink,
+                    {
+                      kind: "region",
+                      id: id3,
+                      inspect
+                    },
+                    id3
+                  ))
+                }
+              )
+            ] }, index);
+          })
+        ] })
       ] })
     ] });
   }
