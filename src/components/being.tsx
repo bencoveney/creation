@@ -6,6 +6,8 @@ import { Motif } from "./motif";
 import { Name } from "./name";
 import { Names } from "./names";
 import { Tags, TagsItem } from "./layout/tags";
+import { Needs } from "./needs";
+import { CurrentActivity } from "./currentActivity";
 
 export function Being({
   being,
@@ -42,18 +44,10 @@ export function Being({
           }
         )}
       </Tags>
+      <Needs needs={being.needs} />
+      {being.currentActivity && (
+        <CurrentActivity currentActivity={being.currentActivity} />
+      )}
     </>
   );
 }
-
-const buh = {
-  "2": { kind: "acquaintance", encounters: 1 },
-  "7": { kind: "acquaintance", encounters: 1 },
-  "10": { kind: "acquaintance", encounters: 1 },
-  "11": { kind: "acquaintance", encounters: 1 },
-  "12": { kind: "acquaintance", encounters: 1 },
-  "13": { kind: "acquaintance", encounters: 5 },
-  "14": { kind: "acquaintance", encounters: 1 },
-  "15": { kind: "acquaintance", encounters: 1 },
-  "16": { kind: "acquaintance", encounters: 4 },
-};
