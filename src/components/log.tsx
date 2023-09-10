@@ -2,11 +2,12 @@ import { History } from "../worldgen";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { FixedTop } from "./layout/fixedTop";
 import { Button } from "./layout/button";
 import { Toolbar } from "./layout/toolbar";
 import { Table } from "./layout/table";
+import { InspectProps } from "../hooks/useInspect";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -21,12 +22,14 @@ export function Log({
   language,
   being,
   location,
+  inspectBeing,
+  inspectRegion,
 }: {
   history: History;
   language: Language;
   being?: string;
   location?: string;
-}) {
+} & InspectProps) {
   const [filter, input] = useInput("Filter");
   const [enabledSystems, setEnabledSystems] = useState([
     "init",
@@ -82,15 +85,27 @@ export function Log({
         <span>Message</span>
         <span>Beings</span>
         <span>Location</span>
-        {selectedLogs.map(([tick, system, log, deities, locations]) => {
+        {selectedLogs.map(([tick, system, log, deities, locations], index) => {
           return (
-            <>
+            <Fragment key={index}>
               <div style={{ textAlign: "right" }}>{tick}</div>
               <div>{system}</div>
               <div>{log}</div>
-              <div>{deities.join(", ")}</div>
-              <div>{locations.join(", ")}</div>
-            </>
+              <div>
+                {deities.map((id) => (
+                  <span key={id} onClick={() => inspectBeing(id)}>
+                    {id}
+                  </span>
+                ))}
+              </div>
+              <div>
+                {locations.map((id) => (
+                  <span key={id} onClick={() => inspectRegion(id)}>
+                    {id}
+                  </span>
+                ))}
+              </div>
+            </Fragment>
           );
         })}
       </Table>

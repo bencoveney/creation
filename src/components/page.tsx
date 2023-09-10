@@ -14,6 +14,8 @@ import { Tab } from "./layout/tab";
 import { Tabs } from "./layout/tabs";
 import { FixedTop } from "./layout/fixedTop";
 import { Toolbar } from "./layout/toolbar";
+import { useInspect } from "../hooks/useInspect";
+import { Inspect } from "./inspect";
 
 export function Page({
   history,
@@ -24,17 +26,29 @@ export function Page({
   language: Language;
   playbackControls: PlaybackControls;
 }) {
+  const [inspected, inspectBeing, inspectRegion] = useInspect();
   return (
     <FixedTop>
       <Toolbar>
         <Playback {...playbackControls} />
       </Toolbar>
-      <Tabs>
+      <Tabs
+        selectedTab={
+          inspected !== null
+            ? `Inspect ${inspected.kind} #${inspected.id}`
+            : undefined
+        }
+      >
         <Tab label={"World"}>
           <World history={history} language={language} />
         </Tab>
         <Tab label={"Log"}>
-          <Log history={history} language={language} />
+          <Log
+            history={history}
+            language={language}
+            inspectBeing={inspectBeing}
+            inspectRegion={inspectRegion}
+          />
         </Tab>
         <Tab label={"Regions"}>
           <Grid title="Regions">
@@ -80,6 +94,17 @@ export function Page({
             })}
           </Grid>
         </Tab>
+        {inspected && (
+          <Tab label={`Inspect ${inspected.kind} #${inspected.id}`}>
+            <Inspect
+              history={history}
+              language={language}
+              inspected={inspected}
+              inspectBeing={inspectBeing}
+              inspectRegion={inspectRegion}
+            />
+          </Tab>
+        )}
       </Tabs>
     </FixedTop>
   );
