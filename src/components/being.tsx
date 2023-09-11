@@ -8,6 +8,7 @@ import { Names } from "./names";
 import { Tags, TagsItem } from "./layout/tags";
 import { Needs } from "./needs";
 import { CurrentActivity } from "./currentActivity";
+import { Preferences } from "./preferences";
 
 export function Being({
   being,
@@ -45,6 +46,7 @@ export function Being({
         )}
       </Tags>
       <Needs needs={being.needs} />
+      <Preferences preferences={being.preferences} />
       {being.currentActivity && (
         <CurrentActivity currentActivity={being.currentActivity} />
       )}
