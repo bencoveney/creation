@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 export type Inspected = {
-  kind: "being" | "region";
+  kind: "being" | "region" | "artifact";
   id: string;
 };
 

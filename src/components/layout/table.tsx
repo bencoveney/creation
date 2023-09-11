@@ -19,7 +19,7 @@ export function Table({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: `max-content max-content auto max-content max-content`,
+        gridTemplateColumns: `max-content max-content auto max-content max-content max-content`,
         position: "relative",
         height: "100%",
         overflow: "auto",

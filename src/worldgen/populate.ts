@@ -29,6 +29,7 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
     relationships: {},
     needs: createDeityNeeds(),
     preferences: createDeityPreferences(),
+    holding: [],
   });
 }
 

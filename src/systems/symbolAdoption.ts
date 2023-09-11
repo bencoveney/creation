@@ -13,7 +13,8 @@ export function runSymbolAdoption(history: History) {
     history.log(
       `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`,
       [deity.id],
-      deity.location ? [deity.location] : []
+      deity.location ? [deity.location] : [],
+      []
     );
     deity.currentActivity = undefined;
   });

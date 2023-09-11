@@ -9,7 +9,8 @@ export type Action = {
     | "rest"
     | "createArtifact"
     | "adoptSymbol"
-    | "conversation";
+    | "conversation"
+    | "giveArtifact";
   satisfies: keyof Needs;
   location: Tile;
   target?: Being;

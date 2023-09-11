@@ -61,7 +61,12 @@ export function Page({
             {lookupValues(history.beings).map((being) => {
               return (
                 <GridItem key={being.id}>
-                  <Being being={being} history={history} language={language} />
+                  <Being
+                    being={being}
+                    history={history}
+                    language={language}
+                    inspect={inspect}
+                  />
                 </GridItem>
               );
             })}

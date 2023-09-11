@@ -36,7 +36,8 @@ export function runMovement(history: History) {
       history.log(
         `[[${deity.name}]] completed their journey`,
         [deity.id],
-        [target.id]
+        [target.id],
+        []
       );
       deity.currentActivity = undefined;
     }
@@ -55,13 +56,15 @@ function moveToLocation(
     history.log(
       `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
       [deity.id],
-      [targetTile.id]
+      [targetTile.id],
+      []
     );
   } else {
     history.log(
       `[[${deity.name}]] entered the world in [[${targetTile.name}]]`,
       [deity.id],
-      [targetTile.id]
+      [targetTile.id],
+      []
     );
   }
 }
@@ -80,7 +83,8 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
   history.log(
     `[[${deity.name}]] discovered the region of ${regionNameParts}`,
     [deity.id],
-    [targetTile.id]
+    [targetTile.id],
+    []
   );
   deity.location = targetTile.id;
 }

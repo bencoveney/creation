@@ -75,7 +75,8 @@ export function runDecision(history: History) {
       history.log(
         `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`,
         beingIds,
-        locationIds
+        locationIds,
+        []
       );
     } else {
       const targetLocation = getDeityTargetLocation(deity, history);
@@ -89,7 +90,8 @@ export function runDecision(history: History) {
       history.log(
         `[[${deity.name}]] set out for ${targetRegionName} in ${targetRegionName}`,
         [deity.id],
-        [targetLocation.id]
+        [targetLocation.id],
+        []
       );
 
       deity.currentActivity = {

@@ -9,16 +9,19 @@ import { Tags, TagsItem } from "./layout/tags";
 import { Needs } from "./needs";
 import { CurrentActivity } from "./currentActivity";
 import { Preferences } from "./preferences";
+import { Holding } from "./holding";
+import { InspectProps } from "../hooks/useInspect";
 
 export function Being({
   being,
   history,
   language,
+  inspect,
 }: {
   being: Being;
   history: History;
   language: Language;
-}) {
+} & InspectProps) {
   const languageName = spellWord(getWord(language.name, language));
   return (
     <>
@@ -50,6 +53,7 @@ export function Being({
       {being.currentActivity && (
         <CurrentActivity currentActivity={being.currentActivity} />
       )}
+      <Holding artifacts={being.holding} inspect={inspect} />
     </>
   );
 }

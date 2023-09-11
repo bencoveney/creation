@@ -1,7 +1,12 @@
-export type LogEntry = [number, string, string, string[], string[]];
+export type LogEntry = [number, string, string, string[], string[], string[]];
 
 export type Logger = {
-  (message: string, beingsInvolved: string[], regionsInvolved: string[]): void;
+  (
+    message: string,
+    beingsInvolved: string[],
+    regionsInvolved: string[],
+    artifactsInvolved: string[]
+  ): void;
   tick: number;
   entries: LogEntry[];
   currentSystem: string;
@@ -13,7 +18,8 @@ export function createLogger(tick: number): Logger {
   const logger: Logger = ((
     message: string,
     beingsInvolved: string[],
-    regionsInvolved: string[]
+    regionsInvolved: string[],
+    artifactsInvolved: string[]
   ) => {
     logger.knownSystems.add(logger.currentSystem);
     entries.push([
@@ -22,6 +28,7 @@ export function createLogger(tick: number): Logger {
       message,
       beingsInvolved,
       regionsInvolved,
+      artifactsInvolved,
     ]);
   }) as Logger;
   logger.tick = tick;

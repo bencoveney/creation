@@ -24,29 +24,31 @@ export function Log({
   language,
   being,
   location,
+  artifact,
+  initialSystems,
   inspect,
 }: {
   history: History;
   language: Language;
   being?: string;
   location?: string;
+  artifact?: string;
+  initialSystems?: string[];
 } & InspectProps) {
   const [filter, input] = useInput("Filter");
-  const [enabledSystems, setEnabledSystems] = useState([
-    "init",
-    "symbolAdoption",
-    "decision",
-    "artifactCreation",
-  ]);
+  const [enabledSystems, setEnabledSystems] = useState(
+    initialSystems || ["init", "decision"]
+  );
   const selectedLogs = history.log.entries
-    .map<LogEntry>(([tick, system, log, deities, locations]) => [
+    .map<LogEntry>(([tick, system, log, deities, locations, artifacts]) => [
       tick,
       system,
       formatLog(log, language),
       deities,
       locations,
+      artifacts,
     ])
-    .filter(([_t, system, log, beings, locations]) => {
+    .filter(([_t, system, log, beings, locations, artifacts]) => {
       if (!enabledSystems.includes(system)) {
         return false;
       }
@@ -57,6 +59,9 @@ export function Log({
         return false;
       }
       if (location && !locations.includes(location)) {
+        return false;
+      }
+      if (artifact && !artifacts.includes(artifact)) {
         return false;
       }
       return true;
@@ -87,55 +92,75 @@ export function Log({
             Showing first {limitedLogs.length} of {selectedLogs.length}
           </div>
         ) : null}
-        <Table cols={5}>
+        <Table cols={6}>
           <span>Year</span>
           <span>System</span>
           <span>Message</span>
           <span>Beings</span>
-          <span>Location</span>
-          {limitedLogs.map(([tick, system, log, deities, locations], index) => {
-            return (
-              <Fragment key={index}>
-                <div style={{ textAlign: "right" }}>{tick}</div>
-                <div>{system}</div>
-                <div>{log}</div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridAutoFlow: "column",
-                    gridAutoColumns: "min-content",
-                    gridGap: spacer.small,
-                  }}
-                >
-                  {deities.map((id) => (
-                    <InspectLink
-                      key={id}
-                      kind="being"
-                      id={id}
-                      inspect={inspect}
-                    />
-                  ))}
-                </div>
-                <div
-                  style={{
-                    display: "grid",
-                    gridAutoFlow: "column",
-                    gridAutoColumns: "min-content",
-                    gridGap: spacer.small,
-                  }}
-                >
-                  {locations.map((id) => (
-                    <InspectLink
-                      key={id}
-                      kind="region"
-                      id={id}
-                      inspect={inspect}
-                    />
-                  ))}
-                </div>
-              </Fragment>
-            );
-          })}
+          <span>Locations</span>
+          <span>Artifacts</span>
+          {limitedLogs.map(
+            ([tick, system, log, deities, locations, artifacts], index) => {
+              return (
+                <Fragment key={index}>
+                  <div style={{ textAlign: "right" }}>{tick}</div>
+                  <div>{system}</div>
+                  <div>{log}</div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridAutoFlow: "column",
+                      gridAutoColumns: "min-content",
+                      gridGap: spacer.small,
+                    }}
+                  >
+                    {deities.map((id) => (
+                      <InspectLink
+                        key={id}
+                        kind="being"
+                        id={id}
+                        inspect={inspect}
+                      />
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridAutoFlow: "column",
+                      gridAutoColumns: "min-content",
+                      gridGap: spacer.small,
+                    }}
+                  >
+                    {locations.map((id) => (
+                      <InspectLink
+                        key={id}
+                        kind="region"
+                        id={id}
+                        inspect={inspect}
+                      />
+                    ))}
+                  </div>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridAutoFlow: "column",
+                      gridAutoColumns: "min-content",
+                      gridGap: spacer.small,
+                    }}
+                  >
+                    {artifacts.map((id) => (
+                      <InspectLink
+                        key={id}
+                        kind="artifact"
+                        id={id}
+                        inspect={inspect}
+                      />
+                    ))}
+                  </div>
+                </Fragment>
+              );
+            }
+          )}
         </Table>
       </FixedTop>
     </FixedTop>

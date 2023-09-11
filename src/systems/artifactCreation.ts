@@ -27,13 +27,14 @@ export function runArtifactCreation(history: History) {
   const deities = getDeitiesByActivity(history.beings, "createArtifact");
   deities.forEach((deity) => {
     const artifact = createArtifact([deity], history.artifacts);
-    const deityNames = `[[${deity.name}]]`;
     const tile = getFromLookup(history.regions, deity.location!) as Tile;
     history.log(
-      `${deityNames} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
+      `[[${deity.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
       [deity.id],
-      [tile.id]
+      [tile.id],
+      [artifact.id]
     );
+    deity.holding.push(artifact.id);
     deity.currentActivity = undefined;
     updateArtifactCreatedTileActions(history, tile);
   });

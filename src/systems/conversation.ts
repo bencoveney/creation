@@ -16,7 +16,8 @@ export function runConversation(history: History) {
     history.log(
       `[[${deity.name}]] talked to [[${target.name}]]`,
       [deity.id, target.id],
-      [location.id]
+      [location.id],
+      []
     );
     if (deity.relationships[target.id]) {
       deity.relationships[target.id].encounters++;

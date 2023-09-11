@@ -1,7 +1,7 @@
 import { config } from "../config";
 import { Logger, createLogger } from "../log";
 import { HasAvailableActions } from "../state/decision/action";
-import { HasNeeds, Needs } from "../state/decision/need";
+import { HasNeeds } from "../state/decision/need";
 import { Preferences } from "../state/decision/preference";
 import { createTerrain } from "../state/terrain";
 import { TerrainRegistry } from "../state/terrain/registry";
@@ -56,6 +56,7 @@ export type Being = HasNeeds & {
   location?: string; // Region ID.
   motif?: Motif;
   currentActivity?: CurrentActivity;
+  holding: string[];
   relationships: {
     [being: string]: {
       kind: string;

@@ -23,6 +23,9 @@ export const config = {
     "necklace",
     "eyeglass",
     "map",
+    "drum",
+    "horn",
+    "bell",
   ],
   themes: [
     {

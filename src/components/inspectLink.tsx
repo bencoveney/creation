@@ -9,7 +9,7 @@ export function InspectLink({ id, kind, inspect }: Inspected & InspectProps) {
       style={{ minWidth: 100 }}
       compact
     >
-      🔎{kind === "being" ? "🧍" : "🏞️"}
+      🔎{kind === "being" ? "🧍" : kind === "artifact" ? "⚙️" : "🏞️"}
       <Id value={id} />
     </Button>
   );
