@@ -16,3 +16,5 @@ Procedural world/history generation
 - Display deity needs
 - Display deity logs
 - Display decision frequency
+- artifacts can be given stored, stolen - started giveArtifact
+- activities take time

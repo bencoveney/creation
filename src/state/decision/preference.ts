@@ -10,6 +10,7 @@ export function createPreferences(): Preferences {
     createArtifact: Math.random(),
     adoptSymbol: Math.random(),
     conversation: Math.random(),
+    giveArtifact: Math.random(),
   };
 }
 

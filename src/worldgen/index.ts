@@ -48,6 +48,13 @@ export type CurrentActivity =
   | CurrentAdoptSymbolActivity
   | CurrentConversationActivity;
 
+export type Relationships = {
+  [being: string]: {
+    kind: string;
+    encounters: number;
+  };
+};
+
 export type Being = HasNeeds & {
   id: string;
   kind: "deity";
@@ -57,13 +64,9 @@ export type Being = HasNeeds & {
   motif?: Motif;
   currentActivity?: CurrentActivity;
   holding: string[];
-  relationships: {
-    [being: string]: {
-      kind: string;
-      encounters: number;
-    };
-  };
+  relationships: Relationships;
   preferences: Preferences;
+  timesChosen: Preferences;
 };
 
 export type Dialect = {

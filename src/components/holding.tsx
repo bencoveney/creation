@@ -5,7 +5,15 @@ export function Holding({
   artifacts,
   inspect,
 }: { artifacts: string[] } & InspectProps) {
-  return artifacts.map((id) => (
-    <InspectLink key={id} id={id} kind="artifact" inspect={inspect} />
-  ));
+  if (artifacts.length === 0) {
+    return null;
+  }
+  return (
+    <>
+      <h3>Holding</h3>
+      {artifacts.map((id) => (
+        <InspectLink key={id} id={id} kind="artifact" inspect={inspect} />
+      ))}
+    </>
+  );
 }

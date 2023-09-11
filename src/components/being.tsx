@@ -1,16 +1,15 @@
-import { getFromLookup } from "../utils/lookup";
 import { History, Being } from "../worldgen";
 import { Language, getWord, spellWord } from "../worldgen/language";
 import { Id } from "./layout/id";
 import { Motif } from "./motif";
-import { Name } from "./name";
 import { Names } from "./names";
-import { Tags, TagsItem } from "./layout/tags";
 import { Needs } from "./needs";
 import { CurrentActivity } from "./currentActivity";
 import { Preferences } from "./preferences";
 import { Holding } from "./holding";
 import { InspectProps } from "../hooks/useInspect";
+import { TimesChosen } from "./timesChosen";
+import { Relationships } from "./relationships";
 
 export function Being({
   being,
@@ -29,31 +28,19 @@ export function Being({
       <Names name={being.name} history={history} />
       <Motif motif={being.motif} />
       {being.theme && `Deity of ${being.theme}`}
-      <Tags>
-        {Object.entries(being.relationships).map(
-          ([otherBeing, relationship]) => {
-            const otherBeingName = spellWord(
-              getWord(getFromLookup(history.beings, otherBeing).name, language)
-            );
-            return (
-              <TagsItem key={otherBeing}>
-                <Name
-                  key={otherBeingName}
-                  languageName={languageName}
-                  word={otherBeingName}
-                />
-                : {`${relationship.kind} ${relationship.encounters}`}
-              </TagsItem>
-            );
-          }
-        )}
-      </Tags>
       <Needs needs={being.needs} />
       <Preferences preferences={being.preferences} />
+      <TimesChosen timesChosen={being.timesChosen} />
       {being.currentActivity && (
         <CurrentActivity currentActivity={being.currentActivity} />
       )}
       <Holding artifacts={being.holding} inspect={inspect} />
+      <Relationships
+        relationships={being.relationships}
+        history={history}
+        language={language}
+        inspect={inspect}
+      />
     </>
   );
 }

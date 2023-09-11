@@ -21,6 +21,7 @@ export function VerticalSplit({ children }: PropsWithChildren) {
           zIndex: 1,
           position: "relative",
           flex: "0 0 50%",
+          overflow: "auto",
           boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.1)",
         }}
       >

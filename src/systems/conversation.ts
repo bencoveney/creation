@@ -23,7 +23,7 @@ export function runConversation(history: History) {
       deity.relationships[target.id].encounters++;
     } else {
       deity.relationships[target.id] = {
-        kind: "acquaintance",
+        kind: "met",
         encounters: 1,
       };
     }

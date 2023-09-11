@@ -28,7 +28,7 @@ export function createNeeds(): Needs {
 export function createNeed(): Need {
   return {
     currentValue: Math.random(),
-    drainRate: Math.random(),
+    drainRate: Math.random() * 0.1,
   };
 }
 

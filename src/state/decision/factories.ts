@@ -18,6 +18,7 @@ export function createDeityPreferences(): Preferences {
     rest: createWeakPreference(),
     createArtifact: createWeakPreference(),
     conversation: createWeakPreference(),
+    giveArtifact: createWeakPreference(),
   };
 }
 

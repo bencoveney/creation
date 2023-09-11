@@ -4,6 +4,7 @@ import {
   createDeityNeeds,
   createDeityPreferences,
 } from "../state/decision/factories";
+import { Preferences } from "../state/decision/preference";
 import { Lookup, lookupValues } from "../utils/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
@@ -29,6 +30,9 @@ export function createDeity(beings: Lookup<Being>, theme: string): Being {
     relationships: {},
     needs: createDeityNeeds(),
     preferences: createDeityPreferences(),
+    timesChosen: Object.fromEntries(
+      Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
+    ) as Preferences,
     holding: [],
   });
 }

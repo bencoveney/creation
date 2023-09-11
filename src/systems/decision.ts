@@ -37,6 +37,7 @@ export function runDecision(history: History) {
       );
 
       satisfyNeed(deity, action);
+      deity.timesChosen[action.action]++;
 
       const targetRegionName = !action.location.discovered
         ? "an unknown land"
