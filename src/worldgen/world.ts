@@ -13,7 +13,7 @@ import {
   array2dIsInBounds,
 } from "../utils/array2d";
 import { NeedsId } from "../state/history/lookup";
-import { createRegionName } from "../state/language/factories";
+import { createRegionName } from "../state/language";
 
 export type Tile = {
   x: number;

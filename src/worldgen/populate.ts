@@ -9,7 +9,7 @@ import { Lookup, lookupValues } from "../state/history/lookup";
 import { createInitialDeities } from "./deities";
 import { generateLanguage } from "../state/language/language";
 import { createWorld } from "./world";
-import { createDeityName, createWorldName } from "../state/language/factories";
+import { createDeityName, createWorldName } from "../state/language";
 
 export function populateWorld(history: History): void {
   history.dialects.set({
