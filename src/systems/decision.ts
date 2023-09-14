@@ -5,7 +5,8 @@ import { getFromLookupSafe } from "../state/history/lookup";
 import { randomChoice } from "../utils/random";
 import { Being, Coordinate, History } from "../state/history";
 import { getDeities } from "../worldgen/populate";
-import { Tile, pathfind } from "../state/world";
+import { Tile } from "../state/world";
+import { pathfind } from "../state/world/pathfind";
 
 // Something along these lines.
 //
