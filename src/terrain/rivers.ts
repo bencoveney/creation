@@ -1,12 +1,12 @@
-import { config } from "../../config";
+import { config } from "../config";
 import {
   Array2d,
   array2dCreate,
-  array2dGetCoords,
-  array2dGetIndex,
-  array2dIsInBounds,
   array2dMap,
-} from "../../utils/array2d";
+  array2dGetCoords,
+  array2dIsInBounds,
+  array2dGetIndex,
+} from "../utils/array2d";
 
 export function runRainfall(
   heights: Array2d<number>,

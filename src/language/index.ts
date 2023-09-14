@@ -1,5 +1,5 @@
-import { config } from "../../config";
-import { flipCoin, randomChoice, randomInt } from "../../utils/random";
+import { config } from "../config";
+import { flipCoin, randomChoice, randomInt } from "../utils/random";
 
 export function describeNoun(nouns: string[], adjectices: string[]) {
   return flipCoin()

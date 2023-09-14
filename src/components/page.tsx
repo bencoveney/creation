@@ -1,5 +1,5 @@
-import { History } from "../state/history";
-import { Language } from "../state/language/language";
+import { History } from "../history";
+import { Language } from "../language/language";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
@@ -8,7 +8,7 @@ import { Grid, GridItem } from "./layout/grid";
 import { Artifact } from "./artifact";
 import { Region } from "./region";
 import { Dialect } from "./dialect";
-import { lookupValues } from "../state/history/lookup";
+import { lookupValues } from "../history/lookup";
 import { World } from "./world";
 import { Tab } from "./layout/tab";
 import { Tabs } from "./layout/tabs";

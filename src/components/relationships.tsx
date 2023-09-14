@@ -1,6 +1,6 @@
-import { getFromLookup } from "../state/history/lookup";
-import { History, Relationships } from "../state/history";
-import { Language, getWord, spellWord } from "../state/language/language";
+import { getFromLookup } from "../history/lookup";
+import { History, Relationships } from "../history";
+import { Language, getWord, spellWord } from "../language/language";
 import { Name } from "./name";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";

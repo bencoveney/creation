@@ -1,14 +1,9 @@
-import {
-  Artifact,
-  Being,
-  History,
-  getDeitiesByActivity,
-} from "../state/history";
+import { Artifact, Being, History, getDeitiesByActivity } from "../history";
 import { randomChoice } from "../utils/random";
-import { Lookup, getFromLookup } from "../state/history/lookup";
+import { Lookup, getFromLookup } from "../history/lookup";
 import { config } from "../config";
-import { updateArtifactCreatedTileActions } from "../state/decision/factories";
-import { Tile } from "../state/world";
+import { updateArtifactCreatedTileActions } from "../decision/factories";
+import { Tile } from "../world";
 
 export function createArtifact(
   creators: Being[],

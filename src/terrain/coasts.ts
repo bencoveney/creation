@@ -1,13 +1,13 @@
 import { distanceEuclidean2 } from "@bencoveney/utils/dist/vector";
-import { config } from "../../config";
+import { config } from "../config";
 import {
   Array2d,
-  array2dGetCoords,
-  array2dGetNeighbourIndices,
   array2dMap,
+  array2dGetNeighbourIndices,
   neighbours24,
-} from "../../utils/array2d";
-import { inverseLerp } from "../../utils/maths";
+  array2dGetCoords,
+} from "../utils/array2d";
+import { inverseLerp } from "../utils/maths";
 
 const maxDistance = distanceEuclidean2({ x: 0, y: 0 }, { x: 2, y: 2 });
 

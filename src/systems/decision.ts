@@ -1,11 +1,11 @@
-import { getHighestPriorityAction } from "../state/decision";
-import { satisfyNeed } from "../state/decision/need";
+import { getHighestPriorityAction } from "../decision";
+import { satisfyNeed } from "../decision/need";
 import { array2dGet } from "../utils/array2d";
-import { getFromLookupSafe } from "../state/history/lookup";
+import { getFromLookupSafe } from "../history/lookup";
 import { randomChoice } from "../utils/random";
-import { Being, Coordinate, History, getDeities } from "../state/history";
-import { Tile } from "../state/world";
-import { pathfind } from "../state/world/pathfind";
+import { Being, Coordinate, History, getDeities } from "../history";
+import { Tile } from "../world";
+import { pathfind } from "../world/pathfind";
 
 // Something along these lines.
 //

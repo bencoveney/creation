@@ -1,5 +1,5 @@
 import { Color } from "@bencoveney/utils/dist/color";
-import { Array2d, array2dSlice } from "../../utils/array2d";
+import { Array2d, array2dSlice } from "../utils/array2d";
 
 export type TerrainRegistryNumberEntry = {
   name: string;

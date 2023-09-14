@@ -1,4 +1,4 @@
-import { History, Artifact } from "../state/history";
+import { History, Artifact } from "../history";
 import { Id } from "./layout/id";
 import { Names } from "./names";
 

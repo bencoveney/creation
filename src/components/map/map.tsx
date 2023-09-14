@@ -1,14 +1,14 @@
-import { History } from "../../state/history";
-import { Language } from "../../state/language/language";
+import { History } from "../../history";
+import { Language } from "../../language/language";
 import { Terrain } from "./terrain";
 import { useHoverPosition } from "../../hooks/useHover";
 import {
   TerrainRegistryNumberEntry,
   getTerrainLayer,
-} from "../../state/terrain/registry";
+} from "../../terrain/registry";
 import { MapTile } from "./mapTile";
 import { useEffect } from "react";
-import { getTile } from "../../state/world";
+import { getTile } from "../../world";
 import { clamp } from "../../utils/maths";
 
 export function Map({

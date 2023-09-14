@@ -1,5 +1,5 @@
 import { config } from "../config";
-import { Being } from "../state/history";
+import { Being } from "../history";
 
 export function Motif({ motif }: { motif: Being["motif"] | undefined }) {
   return (

@@ -1,4 +1,4 @@
-import { CurrentActivity } from "../state/history";
+import { CurrentActivity } from "../history";
 
 export function CurrentActivity({
   currentActivity,

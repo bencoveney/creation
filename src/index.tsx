@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { initialiseHistory } from "./state/history/factories";
 import { Page } from "./components/page";
 import { runMovement } from "./systems/movement";
 import { runArtifactCreation } from "./systems/artifactCreation";
@@ -8,11 +7,12 @@ import { createPlaybackControls } from "./playback";
 import { useEffect, useMemo, useState } from "react";
 import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
-import { lookupFirstValue } from "./state/history/lookup";
 import { config } from "./config";
 import { runConversation } from "./systems/conversation";
 import { runNeeds } from "./systems/needs";
 import { runArtifactGiving } from "./systems/artifactGiving";
+import { initialiseHistory } from "./history/factories";
+import { lookupFirstValue } from "./history/lookup";
 
 const root = document.getElementById("root");
 if (!root) {

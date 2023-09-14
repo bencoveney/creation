@@ -1,4 +1,4 @@
-import { Preferences } from "../state/decision/preference";
+import { Preferences } from "../decision/preference";
 import { round } from "../utils/maths";
 
 export function TimesChosen({ timesChosen }: { timesChosen: Preferences }) {

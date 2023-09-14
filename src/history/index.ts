@@ -1,8 +1,8 @@
-import { Logger } from "../../log";
-import { HasAvailableActions } from "../../state/decision/action";
-import { HasNeeds } from "../../state/decision/need";
-import { Preferences } from "../../state/decision/preference";
-import { TerrainRegistry } from "../../state/terrain/registry";
+import { Logger } from "../log";
+import { HasAvailableActions } from "../decision/action";
+import { HasNeeds } from "../decision/need";
+import { Preferences } from "../decision/preference";
+import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, lookupValues } from "./lookup";
 import { Language } from "../language/language";
 import { Tile, World } from "../world";

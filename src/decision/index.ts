@@ -1,5 +1,5 @@
-import { config } from "../../config";
-import { inverseLerp } from "../../utils/maths";
+import { config } from "../config";
+import { inverseLerp } from "../utils/maths";
 import { Being } from "../history";
 import { Tile } from "../world";
 import { euclidianDistance } from "../world/pathfind";

@@ -1,14 +1,14 @@
 import { Color } from "@bencoveney/utils/dist/color";
-import { config } from "../../config";
-import {
-  Array2d,
-  array2dGetNeighbourIndices,
-  array2dMap,
-  array2dReplace,
-  neighbours4,
-} from "../../utils/array2d";
 import { TerrainColorMap } from "./registry";
 import { empty } from "@bencoveney/utils/dist/array";
+import { config } from "../config";
+import {
+  Array2d,
+  array2dMap,
+  array2dReplace,
+  array2dGetNeighbourIndices,
+  neighbours4,
+} from "../utils/array2d";
 
 function getWaterFeature(area: number) {
   if (area < 100) {

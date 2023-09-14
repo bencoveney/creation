@@ -1,9 +1,9 @@
-import { getFromLookup } from "../state/history/lookup";
+import { getFromLookup } from "../history/lookup";
 import {
   CurrentConversationActivity,
   History,
   getDeitiesByActivity,
-} from "../state/history";
+} from "../history";
 
 export function runConversation(history: History) {
   const deities = getDeitiesByActivity(history.beings, "conversation");

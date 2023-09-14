@@ -1,14 +1,14 @@
-import { History, getDeities } from "../state/history";
-import { Language } from "../state/language/language";
+import { History, getDeities } from "../history";
+import { Language } from "../language/language";
 import { Region } from "./region";
 import { Being } from "./being";
 import { Grid, GridItem } from "./layout/grid";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
 import { TileValues } from "./tileValues";
-import { getTerrainLayer } from "../state/terrain/registry";
+import { getTerrainLayer } from "../terrain/registry";
 import { Terrain } from "./map/terrain";
-import { getTile } from "../state/world";
+import { getTile } from "../world";
 import { InspectProps } from "../hooks/useInspect";
 
 export function WorldSelection({

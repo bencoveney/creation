@@ -1,5 +1,5 @@
-import { History, Being } from "../state/history";
-import { Language, getWord, spellWord } from "../state/language/language";
+import { History, Being } from "../history";
+import { Language, getWord, spellWord } from "../language/language";
 import { Id } from "./layout/id";
 import { Motif } from "./motif";
 import { Names } from "./names";

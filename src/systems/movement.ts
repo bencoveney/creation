@@ -5,15 +5,15 @@ import {
   History,
   Region,
   getDeitiesByActivity,
-} from "../state/history";
-import { Tile } from "../state/world";
-import { getFromLookupSafe } from "../state/history/lookup";
+} from "../history";
+import { Tile } from "../world";
+import { getFromLookupSafe } from "../history/lookup";
 import { array2dGet } from "../utils/array2d";
 import {
   updateBeingEnteredTileActions,
   updateBeingExitedTileActions,
   updateDiscoveredTileActions,
-} from "../state/decision/factories";
+} from "../decision/factories";
 
 export function runMovement(history: History) {
   const deities = getDeitiesByActivity(history.beings, "movement");

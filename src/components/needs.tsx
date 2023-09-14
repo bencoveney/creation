@@ -1,4 +1,4 @@
-import { Needs } from "../state/decision/need";
+import { Needs } from "../decision/need";
 import { round } from "../utils/maths";
 
 export function Needs({ needs }: { needs: Needs }) {

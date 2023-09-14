@@ -2,9 +2,9 @@ import {
   CurrentGiveArtifactActivity,
   History,
   getDeitiesByActivity,
-} from "../state/history";
-import { getFromLookup } from "../state/history/lookup";
-import { Tile } from "../state/world";
+} from "../history";
+import { getFromLookup } from "../history/lookup";
+import { Tile } from "../world";
 
 export function runArtifactGiving(history: History) {
   const deities = getDeitiesByActivity(history.beings, "giveArtifact");

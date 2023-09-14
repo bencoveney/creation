@@ -1,11 +1,11 @@
-import { Artifact, Being, CurrentActivity, Dialect, History, Region } from ".";
-import { config } from "../../config";
+import { Artifact, Being, Dialect, History, Region } from ".";
+import { config } from "../config";
 import {
   randomChoice,
   randomChoices,
   randomInt,
   rollDice,
-} from "../../utils/random";
+} from "../utils/random";
 import {
   createDeityNeeds,
   createDeityPreferences,
@@ -14,8 +14,8 @@ import { Preferences } from "../decision/preference";
 import { createDeityName, createWorldName } from "../language";
 import { generateLanguage } from "../language/language";
 import { createWorld } from "../world";
-import { Lookup, createLookup, lookupValues } from "./lookup";
-import { createLogger } from "../../log";
+import { Lookup, createLookup } from "./lookup";
+import { createLogger } from "../log";
 import { createTerrain } from "../terrain";
 import { TerrainRegistry } from "../terrain/registry";
 

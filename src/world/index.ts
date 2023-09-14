@@ -1,11 +1,11 @@
 import { History, Region } from "../history/index";
-import { config } from "../../config";
 import { updateInitialTileActions } from "../decision/factories";
 import { TerrainAssessment, assessTerrain } from "../terrain/assess";
 import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
-import { Array2d, array2dCreate, array2dGet } from "../../utils/array2d";
 import { NeedsId } from "../history/lookup";
 import { createRegionName } from "../language";
+import { Array2d, array2dCreate, array2dGet } from "../utils/array2d";
+import { config } from "../config";
 
 export type Tile = {
   x: number;

@@ -1,10 +1,10 @@
 import {
   Array2d,
-  array2dGet,
-  array2dIsInBounds,
-  array2dMap,
   array2dNormalize,
-} from "../../utils/array2d";
+  array2dMap,
+  array2dIsInBounds,
+  array2dGet,
+} from "../utils/array2d";
 
 export function findGradient(heights: Array2d<number>): Array2d<number> {
   return array2dNormalize(

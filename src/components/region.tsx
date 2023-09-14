@@ -1,4 +1,4 @@
-import { History, Region } from "../state/history";
+import { History, Region } from "../history";
 import { Id } from "./layout/id";
 import { Names } from "./names";
 

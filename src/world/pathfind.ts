@@ -1,5 +1,5 @@
 import { Tile, World } from ".";
-import { array2dGet, array2dIsInBounds } from "../../utils/array2d";
+import { array2dIsInBounds, array2dGet } from "../utils/array2d";
 
 export function getNeighbouringTiles(world: World, tile: Tile): Tile[] {
   return [

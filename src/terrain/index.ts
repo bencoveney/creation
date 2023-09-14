@@ -8,7 +8,7 @@ import {
   array2dProduct,
   array2dScale,
   array2dSum,
-} from "../../utils/array2d";
+} from "../utils/array2d";
 import { biomeColorMap, getBiome } from "./biome";
 import { findCoasts } from "./coasts";
 import { getTerrainColor } from "./color";

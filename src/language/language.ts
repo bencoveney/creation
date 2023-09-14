@@ -1,6 +1,6 @@
+import { config } from "../config";
 import { History } from "../history";
-import { config } from "../../config";
-import { flipCoin, randomChoice, randomInt } from "../../utils/random";
+import { flipCoin, randomChoice, randomInt } from "../utils/random";
 
 export enum Phoneme {
   // Single vowels

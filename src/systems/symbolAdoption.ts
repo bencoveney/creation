@@ -1,7 +1,6 @@
-import { History } from "../state/history";
 import { randomChoice } from "../utils/random";
-import { getDeitiesByActivity } from "../state/history";
 import { config } from "../config";
+import { getDeitiesByActivity, History } from "../history";
 
 export function runSymbolAdoption(history: History) {
   const deities = getDeitiesByActivity(history.beings, "adoptSymbol");
