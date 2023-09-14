@@ -1,5 +1,14 @@
 export function randomChoice<T>(items: T[]): T {
-  // TODO Return value should be undefined if array is empty
+  if (items.length === 0) {
+    throw new Error("Probably a mistake");
+  }
+  return items[randomInt(0, items.length)];
+}
+
+export function randomChoiceSafe<T>(items: T[]): T | undefined {
+  if (items.length === 0) {
+    return undefined;
+  }
   return items[randomInt(0, items.length)];
 }
 
@@ -31,16 +40,17 @@ export function rollDice(chanceOfSuccess: number): boolean {
   return Math.random() < chanceOfSuccess;
 }
 
-export function randomSelection<T>(items: T[]): () => T {
-  let remainingItems = shuffle(items);
-  return () => {
-    const result = remainingItems.pop();
-    if (!result) {
-      throw new Error("Probably a mistake");
-    }
-    return result;
-  };
-}
+// Stateful :()
+// export function randomSelection<T>(items: T[]): () => T {
+//   let remainingItems = shuffle(items);
+//   return () => {
+//     const result = remainingItems.pop();
+//     if (!result) {
+//       throw new Error("Probably a mistake");
+//     }
+//     return result;
+//   };
+// }
 
 export function shuffle<T>(items: T[]): T[] {
   const result = [...items];

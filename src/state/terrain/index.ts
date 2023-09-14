@@ -73,7 +73,7 @@ export function createTerrain(
   const rainfall = runRainfall(heights, angle);
   const rivers = identifyRivers(rainfall);
 
-  const vegetation = plantVegetation(temperature, heightP8);
+  const vegetation = plantVegetation(temperature, heightP8, noise);
 
   const colors = array2dMerge(
     {
