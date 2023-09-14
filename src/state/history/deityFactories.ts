@@ -1,12 +1,18 @@
-import { History } from "../state/history";
-import { config } from "../config";
+import { Being, History } from "../history";
+import { config } from "../../config";
 import {
   randomChoice,
   randomChoices,
   randomInt,
   rollDice,
-} from "../utils/random";
-import { createDeity } from "./populate";
+} from "../../utils/random";
+import {
+  createDeityNeeds,
+  createDeityPreferences,
+} from "../decision/factories";
+import { Preferences } from "../decision/preference";
+import { createDeityName } from "../language";
+import { Lookup } from "./lookup";
 
 export type Theme = {
   name: string;
@@ -56,7 +62,7 @@ function populateThemesByTag() {
   });
 }
 
-export type DeityTheme = {
+type DeityTheme = {
   theme: string;
   relationshipKind?: string;
   relationshipTo?: string[];
@@ -88,7 +94,7 @@ export function createInitialDeities(history: History) {
   });
 }
 
-export function getDeityThemes(): DeityTheme[] {
+function getDeityThemes(): DeityTheme[] {
   populatethemesByName();
   populateThemesByCategory();
   populateThemesByTag();
@@ -121,6 +127,21 @@ function getRelationship(count: number): string {
   } else {
     return randomChoice(["sibling"]);
   }
+}
+
+function createDeity(beings: Lookup<Being>, theme: string): Being {
+  return beings.set({
+    kind: "deity",
+    name: createDeityName(),
+    theme,
+    relationships: {},
+    needs: createDeityNeeds(),
+    preferences: createDeityPreferences(),
+    timesChosen: Object.fromEntries(
+      Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
+    ) as Preferences,
+    holding: [],
+  });
 }
 
 // Other stuff to maybe incorporate.

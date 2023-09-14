@@ -1,15 +1,10 @@
 import { Being, Region, History, CurrentActivity } from "../state/history";
 import { config } from "../config";
-import {
-  createDeityNeeds,
-  createDeityPreferences,
-} from "../state/decision/factories";
-import { Preferences } from "../state/decision/preference";
 import { Lookup, lookupValues } from "../state/history/lookup";
-import { createInitialDeities } from "./deities";
+import { createInitialDeities } from "../state/history/deityFactories";
 import { generateLanguage } from "../state/language/language";
 import { createWorld } from "../state/world";
-import { createDeityName, createWorldName } from "../state/language";
+import { createWorldName } from "../state/language";
 
 export function populateWorld(history: History): void {
   history.dialects.set({
@@ -20,21 +15,6 @@ export function populateWorld(history: History): void {
   if (history.regions.map.size >= 1 && !history.world) {
     history.world = createWorld(history, config.worldWidth, config.worldHeight);
   }
-}
-
-export function createDeity(beings: Lookup<Being>, theme: string): Being {
-  return beings.set({
-    kind: "deity",
-    name: createDeityName(),
-    theme,
-    relationships: {},
-    needs: createDeityNeeds(),
-    preferences: createDeityPreferences(),
-    timesChosen: Object.fromEntries(
-      Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
-    ) as Preferences,
-    holding: [],
-  });
 }
 
 export function getDeities(beings: Lookup<Being>): Being[] {
