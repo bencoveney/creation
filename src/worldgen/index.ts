@@ -34,6 +34,12 @@ export type CurrentMovementActivity = {
 export type CurrentCreateArtifactActivity = {
   kind: "createArtifact";
 };
+
+export type CurrentGiveArtifactActivity = {
+  kind: "giveArtifact";
+  target: Being["id"];
+  artifact: Artifact["id"];
+};
 export type CurrentAdoptSymbolActivity = {
   kind: "adoptSymbol";
 };
@@ -45,6 +51,7 @@ export type CurrentConversationActivity = {
 export type CurrentActivity =
   | CurrentMovementActivity
   | CurrentCreateArtifactActivity
+  | CurrentGiveArtifactActivity
   | CurrentAdoptSymbolActivity
   | CurrentConversationActivity;
 

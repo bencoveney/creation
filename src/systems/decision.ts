@@ -57,6 +57,21 @@ export function runDecision(history: History) {
         deity.currentActivity = {
           kind: "createArtifact",
         };
+      } else if (action.action === "giveArtifact") {
+        if (!action.target) {
+          console.error("what");
+          return;
+        }
+        const artifact = randomChoice(deity.holding);
+        if (!artifact) {
+          console.error("what");
+          return;
+        }
+        deity.currentActivity = {
+          kind: "giveArtifact",
+          target: action.target.id,
+          artifact: artifact,
+        };
       } else if (action.action === "adoptSymbol") {
         deity.currentActivity = {
           kind: "adoptSymbol",

@@ -124,7 +124,7 @@ function InspectArtifact({
         history={history}
         language={language}
         artifact={artifact.id}
-        initialSystems={["artifactCreation"]}
+        initialSystems={["artifactCreation", "artifactGiving"]}
         inspect={inspect}
       />
     </VerticalSplit>

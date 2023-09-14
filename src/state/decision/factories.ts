@@ -107,6 +107,16 @@ export function updateBeingEnteredTileActions(
       location: "same",
     },
   });
+  actionBroadcast(history, {
+    action: "giveArtifact",
+    satisfies: "socialise",
+    location: tile,
+    target: being,
+    requires: {
+      location: "same",
+      holdingArtifact: true,
+    },
+  });
 }
 
 export function updateBeingExitedTileActions(
@@ -115,4 +125,5 @@ export function updateBeingExitedTileActions(
   being: Being
 ): void {
   actionRevokeWhere(history, "conversation", tile, being);
+  actionRevokeWhere(history, "giveArtifact", tile, being);
 }

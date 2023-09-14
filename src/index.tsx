@@ -13,6 +13,7 @@ import { lookupFirstValue } from "./utils/lookup";
 import { config } from "./config";
 import { runConversation } from "./systems/conversation";
 import { runNeeds } from "./systems/needs";
+import { runArtifactGiving } from "./systems/artifactGiving";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -47,6 +48,8 @@ function Wrapper() {
         runConversation(history);
         history.log.currentSystem = "artifactCreation";
         runArtifactCreation(history);
+        history.log.currentSystem = "artifactGiving";
+        runArtifactGiving(history);
         history.log.currentSystem = "symbolAdoption";
         runSymbolAdoption(history);
         history.log.currentSystem = "movement";

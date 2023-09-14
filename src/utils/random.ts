@@ -1,4 +1,5 @@
 export function randomChoice<T>(items: T[]): T {
+  // TODO Return value should be undefined if array is empty
   return items[randomInt(0, items.length)];
 }
 

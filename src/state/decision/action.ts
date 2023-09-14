@@ -17,6 +17,7 @@ export type Action = {
   requires: {
     location?: "different" | "same";
     motif?: "present" | "missing";
+    holdingArtifact?: boolean;
   };
 };
 

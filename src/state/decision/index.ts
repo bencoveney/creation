@@ -43,6 +43,11 @@ export function getHighestPriorityAction(
       default:
         break;
     }
+    if (action.requires.holdingArtifact) {
+      if (being.holding.length === 0) {
+        return false;
+      }
+    }
     if (action.target && action.target.id === being.id) {
       return false;
     }
