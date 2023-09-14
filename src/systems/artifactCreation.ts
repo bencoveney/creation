@@ -4,7 +4,7 @@ import { randomChoice } from "../utils/random";
 import { Lookup, getFromLookup } from "../state/history/lookup";
 import { config } from "../config";
 import { updateArtifactCreatedTileActions } from "../state/decision/factories";
-import { Tile } from "../worldgen/world";
+import { Tile } from "../state/world/world";
 
 export function createArtifact(
   creators: Being[],

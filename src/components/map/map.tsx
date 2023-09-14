@@ -8,7 +8,7 @@ import {
 } from "../../state/terrain/registry";
 import { MapTile } from "./mapTile";
 import { useEffect } from "react";
-import { getTile } from "../../worldgen/world";
+import { getTile } from "../../state/world/world";
 import { clamp } from "../../utils/maths";
 
 export function Map({

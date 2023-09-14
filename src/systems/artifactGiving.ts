@@ -1,7 +1,7 @@
 import { getDeitiesByActivity } from "../worldgen/populate";
 import { CurrentGiveArtifactActivity, History } from "../state/history";
 import { getFromLookup } from "../state/history/lookup";
-import { Tile } from "../worldgen/world";
+import { Tile } from "../state/world/world";
 
 export function runArtifactGiving(history: History) {
   const deities = getDeitiesByActivity(history.beings, "giveArtifact");

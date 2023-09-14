@@ -6,7 +6,7 @@ import {
   History,
   Region,
 } from "../state/history";
-import { Tile } from "../worldgen/world";
+import { Tile } from "../state/world/world";
 import { getFromLookupSafe } from "../state/history/lookup";
 import { array2dGet } from "../utils/array2d";
 import {

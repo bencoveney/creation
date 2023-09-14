@@ -1,5 +1,5 @@
 import { round } from "../utils/maths";
-import { Tile } from "../worldgen/world";
+import { Tile } from "../state/world/world";
 
 export function TileValues({ tile }: { tile: Tile }) {
   return (

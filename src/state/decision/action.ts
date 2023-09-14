@@ -1,5 +1,5 @@
 import { Being } from "../history";
-import { Tile } from "../../worldgen/world";
+import { Tile } from "../world/world";
 import { Needs } from "./need";
 
 export type Action = {

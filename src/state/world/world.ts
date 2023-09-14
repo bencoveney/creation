@@ -1,19 +1,16 @@
-import { History, Region } from "../state/history/index";
-import { config } from "../config";
-import { updateInitialTileActions } from "../state/decision/factories";
-import { TerrainAssessment, assessTerrain } from "../state/terrain/assess";
-import {
-  TerrainRegistry,
-  sliceTerrainRegistry,
-} from "../state/terrain/registry";
+import { History, Region } from "../history/index";
+import { config } from "../../config";
+import { updateInitialTileActions } from "../decision/factories";
+import { TerrainAssessment, assessTerrain } from "../terrain/assess";
+import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import {
   Array2d,
   array2dCreate,
   array2dGet,
   array2dIsInBounds,
-} from "../utils/array2d";
-import { NeedsId } from "../state/history/lookup";
-import { createRegionName } from "../state/language";
+} from "../../utils/array2d";
+import { NeedsId } from "../history/lookup";
+import { createRegionName } from "../language";
 
 export type Tile = {
   x: number;
