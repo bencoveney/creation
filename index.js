@@ -23508,62 +23508,6 @@
     }
   });
 
-  // node_modules/@bencoveney/utils/dist/array.js
-  var require_array = __commonJS({
-    "node_modules/@bencoveney/utils/dist/array.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.rangeTo = exports.range = exports.empty = void 0;
-      function empty3(length) {
-        return new Array(length).fill(void 0);
-      }
-      exports.empty = empty3;
-      function range(from, to) {
-        return empty3(to - from).map((_, index) => from + index);
-      }
-      exports.range = range;
-      function rangeTo(to) {
-        return range(0, to);
-      }
-      exports.rangeTo = rangeTo;
-    }
-  });
-
-  // node_modules/@bencoveney/utils/dist/vector.js
-  var require_vector = __commonJS({
-    "node_modules/@bencoveney/utils/dist/vector.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.distanceEuclidean3 = exports.distanceManhattan3 = exports.distanceEuclidean2 = exports.distanceManhattan2 = void 0;
-      function distanceManhattan2(from, to) {
-        const dX = Math.abs(to.x - from.x);
-        const dY = Math.abs(to.y - from.y);
-        return dX + dY;
-      }
-      exports.distanceManhattan2 = distanceManhattan2;
-      function distanceEuclidean22(from, to) {
-        const x = Math.abs(to.x - from.x);
-        const y = Math.abs(to.y - from.y);
-        return Math.sqrt(x * x + y * y);
-      }
-      exports.distanceEuclidean2 = distanceEuclidean22;
-      function distanceManhattan3(from, to) {
-        const dX = Math.abs(to.x - from.x);
-        const dY = Math.abs(to.y - from.y);
-        const dZ = Math.abs(to.z - from.z);
-        return dX + dY + dZ;
-      }
-      exports.distanceManhattan3 = distanceManhattan3;
-      function distanceEuclidean3(from, to) {
-        const x = Math.abs(to.x - from.x);
-        const y = Math.abs(to.y - from.y);
-        const z = Math.abs(to.z - from.z);
-        return Math.sqrt(x * x + y * y + z * z);
-      }
-      exports.distanceEuclidean3 = distanceEuclidean3;
-    }
-  });
-
   // node_modules/react/cjs/react-jsx-runtime.development.js
   var require_react_jsx_runtime_development = __commonJS({
     "node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
@@ -24487,6 +24431,62 @@
     }
   });
 
+  // node_modules/@bencoveney/utils/dist/array.js
+  var require_array = __commonJS({
+    "node_modules/@bencoveney/utils/dist/array.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.rangeTo = exports.range = exports.empty = void 0;
+      function empty3(length) {
+        return new Array(length).fill(void 0);
+      }
+      exports.empty = empty3;
+      function range(from, to) {
+        return empty3(to - from).map((_, index) => from + index);
+      }
+      exports.range = range;
+      function rangeTo(to) {
+        return range(0, to);
+      }
+      exports.rangeTo = rangeTo;
+    }
+  });
+
+  // node_modules/@bencoveney/utils/dist/vector.js
+  var require_vector = __commonJS({
+    "node_modules/@bencoveney/utils/dist/vector.js"(exports) {
+      "use strict";
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.distanceEuclidean3 = exports.distanceManhattan3 = exports.distanceEuclidean2 = exports.distanceManhattan2 = void 0;
+      function distanceManhattan2(from, to) {
+        const dX = Math.abs(to.x - from.x);
+        const dY = Math.abs(to.y - from.y);
+        return dX + dY;
+      }
+      exports.distanceManhattan2 = distanceManhattan2;
+      function distanceEuclidean22(from, to) {
+        const x = Math.abs(to.x - from.x);
+        const y = Math.abs(to.y - from.y);
+        return Math.sqrt(x * x + y * y);
+      }
+      exports.distanceEuclidean2 = distanceEuclidean22;
+      function distanceManhattan3(from, to) {
+        const dX = Math.abs(to.x - from.x);
+        const dY = Math.abs(to.y - from.y);
+        const dZ = Math.abs(to.z - from.z);
+        return dX + dY + dZ;
+      }
+      exports.distanceManhattan3 = distanceManhattan3;
+      function distanceEuclidean3(from, to) {
+        const x = Math.abs(to.x - from.x);
+        const y = Math.abs(to.y - from.y);
+        const z = Math.abs(to.z - from.z);
+        return Math.sqrt(x * x + y * y + z * z);
+      }
+      exports.distanceEuclidean3 = distanceEuclidean3;
+    }
+  });
+
   // src/index.tsx
   var import_client = __toESM(require_client(), 1);
 
@@ -24644,1250 +24644,65 @@
     terrainResolution: 20,
     waterHeight: 0.46,
     waterStop1: 0.25,
-    waterStop2: 0.35
+    waterStop2: 0.35,
+    regionPlaces: [
+      "woods",
+      "halls",
+      "cliffs",
+      "forest",
+      "plains",
+      "tundras",
+      "mountains",
+      "streets"
+    ],
+    regionAdjectives: [
+      "windy",
+      "calm",
+      "frozen",
+      "windswept",
+      "sunny",
+      "tranquil",
+      "undead",
+      "barren"
+    ],
+    settlementNameStarts: [
+      "ply",
+      "exe",
+      "tor",
+      "paign",
+      "ex",
+      "barn",
+      "ton",
+      "tiver",
+      "brix",
+      "bide",
+      "teign",
+      "sid",
+      "dawl",
+      "tavi",
+      "north",
+      "ivy"
+    ],
+    settlementNameEnds: [
+      "mouth",
+      "ter",
+      "quay",
+      "ton",
+      "staple",
+      "ton abbot",
+      "ham",
+      "ford",
+      "ish",
+      "stock",
+      "bridge"
+    ]
   };
-
-  // src/log.ts
-  function createLogger(tick) {
-    const entries = [];
-    const logger = (message, beingsInvolved, regionsInvolved, artifactsInvolved) => {
-      logger.knownSystems.add(logger.currentSystem);
-      entries.push([
-        logger.tick,
-        logger.currentSystem,
-        message,
-        beingsInvolved,
-        regionsInvolved,
-        artifactsInvolved
-      ]);
-    };
-    logger.tick = tick;
-    logger.entries = entries;
-    logger.currentSystem = "init";
-    logger.knownSystems = /* @__PURE__ */ new Set();
-    return logger;
-  }
-
-  // src/utils/array2d.ts
-  var import_array = __toESM(require_array(), 1);
-
-  // src/utils/maths.ts
-  function round(value, decimalPlaces) {
-    const multiplier = Math.pow(10, decimalPlaces);
-    return Math.floor(value * multiplier) / multiplier;
-  }
-  function clamp(min, max, value) {
-    return Math.max(min, Math.min(max, value));
-  }
-  function lerp(x, min, max) {
-    return (1 - x) * min + max * x;
-  }
-  function inverseLerp(x, min, max) {
-    return (x - min) / (max - min);
-  }
-
-  // src/utils/array.ts
-  function getMinAndMax(values) {
-    if (values.length === 0) {
-      throw new Error("What?");
-    }
-    let highest = values[0];
-    let lowest = values[0];
-    for (let i = 1; i < values.length; i++) {
-      highest = Math.max(highest, values[i]);
-      lowest = Math.min(lowest, values[i]);
-    }
-    return { min: lowest, max: highest };
-  }
-  function normalize(values) {
-    const { min, max } = getMinAndMax(values);
-    return values.map((value) => inverseLerp(value, min, max));
-  }
-
-  // src/utils/array2d.ts
-  function isFillFunc(filler) {
-    return typeof filler === "function";
-  }
-  function array2dCreate(xSize, ySize, init) {
-    const size = xSize * ySize;
-    if (init !== void 0) {
-      if (isFillFunc(init)) {
-        return {
-          xSize,
-          ySize,
-          values: (0, import_array.empty)(size).map((_, index) => {
-            const x = index % xSize;
-            const y = Math.floor(index / ySize);
-            return init(x, y);
-          })
-        };
-      } else {
-        return {
-          xSize,
-          ySize,
-          values: (0, import_array.empty)(size).fill(init)
-        };
-      }
-    }
-    return {
-      xSize,
-      ySize,
-      values: (0, import_array.empty)(xSize * ySize)
-    };
-  }
-  function array2dFrom(xSize, ySize, values) {
-    return {
-      xSize,
-      ySize,
-      values
-    };
-  }
-  function array2dGet(arr, x, y) {
-    return arr.values[x + y * arr.xSize];
-  }
-  function array2dGetIndex(arr, x, y) {
-    return x + y * arr.xSize;
-  }
-  function array2dGetCoords(arr, index) {
-    return [index % arr.xSize, Math.floor(index / arr.ySize)];
-  }
-  function array2dIsInBounds(arr, x, y) {
-    return x >= 0 && x < arr.xSize && y >= 0 && y < arr.ySize;
-  }
-  function array2dMap(arr, mapper) {
-    return {
-      xSize: arr.xSize,
-      ySize: arr.ySize,
-      values: arr.values.map(
-        (value, index) => mapper(value, index % arr.xSize, Math.floor(index / arr.ySize), index)
-      )
-    };
-  }
-  function array2dReplace(arr, newValues) {
-    return {
-      xSize: arr.xSize,
-      ySize: arr.ySize,
-      values: newValues
-    };
-  }
-  function array2dFlipY(arr, y) {
-    return arr.ySize - y - 1;
-  }
-  function array2dMerge(arr, merger) {
-    const keys = Object.keys(arr);
-    const anyArr = arr[keys[0]];
-    const length = anyArr.values.length;
-    const values = [];
-    const param = {};
-    for (let index = 0; index < length; index++) {
-      for (let key = 0; key < keys.length; key++) {
-        param[keys[key]] = arr[keys[key]].values[index];
-      }
-      values.push(
-        merger(
-          param,
-          index % anyArr.xSize,
-          Math.floor(index / anyArr.ySize),
-          index
-        )
-      );
-    }
-    return array2dReplace(anyArr, values);
-  }
-  function array2dSum(...arrs) {
-    const anyArr = arrs[0];
-    const length = anyArr.values.length;
-    const values = [];
-    for (let index = 0; index < length; index++) {
-      values.push(0);
-      for (let arr = 0; arr < arrs.length; arr++) {
-        values[index] += arrs[arr].values[index];
-      }
-    }
-    return array2dReplace(anyArr, values);
-  }
-  function array2dProduct(...arrs) {
-    const anyArr = arrs[0];
-    const length = anyArr.values.length;
-    const values = [];
-    for (let index = 0; index < length; index++) {
-      values.push(1);
-      for (let arr = 0; arr < arrs.length; arr++) {
-        values[index] *= arrs[arr].values[index];
-      }
-    }
-    return array2dReplace(anyArr, values);
-  }
-  function array2dScale(arr, by) {
-    const multiplied = [];
-    for (let index = 0; index < arr.values.length; index++) {
-      multiplied.push(arr.values[index] * by);
-    }
-    return array2dReplace(arr, multiplied);
-  }
-  function array2dNormalize(arr) {
-    return array2dReplace(arr, normalize(arr.values));
-  }
-  function array2dSlice(arr, fromX, fromY, xSize, ySize) {
-    const result = array2dCreate(xSize, ySize);
-    for (let xOffset = 0; xOffset < xSize; xOffset++) {
-      for (let yOffset = 0; yOffset < ySize; yOffset++) {
-        const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
-        const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
-        result.values[mappedIndex] = sourceValue;
-      }
-    }
-    return result;
-  }
-  var neighbours4 = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1]
-  ];
-  var neighbours24 = [
-    [-2, -2],
-    [-2, -1],
-    [-2, 0],
-    [-2, 1],
-    [-2, 2],
-    [-1, -2],
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [-1, 2],
-    [0, -2],
-    [0, -1],
-    [0, 1],
-    [0, 2],
-    [1, -2],
-    [1, -1],
-    [1, 0],
-    [1, 1],
-    [1, 2],
-    [2, -2],
-    [2, -1],
-    [2, 0],
-    [2, 1],
-    [2, 2]
-  ];
-  function array2dGetNeighbourIndices(arr, index, neighbourMask, excluding) {
-    const [positionX, positionY] = array2dGetCoords(arr, index);
-    const result = [];
-    for (let neighbour = 0; neighbour < neighbourMask.length; neighbour++) {
-      const [xOffset, yOffset] = neighbourMask[neighbour];
-      const x = positionX + xOffset;
-      const y = positionY + yOffset;
-      if (array2dIsInBounds(arr, x, y)) {
-        const index2 = array2dGetIndex(arr, x, y);
-        if (!excluding?.has(index2)) {
-          result.push(index2);
-        }
-      }
-    }
-    return result;
-  }
-  function array2dFlip(arr) {
-    const result = [];
-    for (let x = arr.xSize - 1; x >= 0; x--) {
-      for (let y = arr.ySize - 1; y >= 0; y--) {
-        result.push(array2dGet(arr, x, y));
-      }
-    }
-    return array2dReplace(arr, result);
-  }
-
-  // src/state/terrain/biome.ts
-  var biomeColorMap = {
-    ["DeepSea" /* DeepSea */]: {
-      r: 23,
-      g: 110,
-      b: 128
-    },
-    ["ShallowSea" /* ShallowSea */]: {
-      r: 50,
-      g: 163,
-      b: 171
-    },
-    ["Beach" /* Beach */]: {
-      r: 235,
-      g: 196,
-      b: 80
-    },
-    ["Grass" /* Grass */]: {
-      r: 18,
-      g: 116,
-      b: 49
-    },
-    ["Desert" /* Desert */]: {
-      r: 255,
-      g: 242,
-      b: 179
-    },
-    ["Tundra" /* Tundra */]: {
-      r: 230,
-      g: 255,
-      b: 230
-    },
-    ["Mountain" /* Mountain */]: {
-      r: 112,
-      g: 117,
-      b: 113
-    },
-    ["Snow" /* Snow */]: {
-      r: 236,
-      g: 240,
-      b: 240
-    },
-    ["Unknown" /* Unknown */]: {
-      r: 255,
-      g: 0,
-      b: 0
-    }
-  };
-  function getBiome(height, temperature, gradient, coast, rockHardness) {
-    if (height < config.waterStop2) {
-      return "DeepSea" /* DeepSea */;
-    }
-    if (height < config.waterHeight) {
-      return "ShallowSea" /* ShallowSea */;
-    }
-    if (coast > 0.6 && gradient < 0.5 && height < 0.5 && rockHardness < 0.5) {
-      return "Beach" /* Beach */;
-    }
-    if (coast > 0.3 && gradient < 0.4 && height < 0.5 && rockHardness < 0.5) {
-      return "Beach" /* Beach */;
-    }
-    if (gradient > 0.7) {
-      return "Mountain" /* Mountain */;
-    }
-    if (height < 0.81) {
-      if (temperature > 0.7) {
-        return "Desert" /* Desert */;
-      }
-      if (temperature < 0.3) {
-        return "Tundra" /* Tundra */;
-      }
-      return "Grass" /* Grass */;
-    }
-    if (height < 0.96) {
-      return "Mountain" /* Mountain */;
-    }
-    if (height <= 1) {
-      return "Snow" /* Snow */;
-    }
-    return "Unknown" /* Unknown */;
-  }
-
-  // src/state/terrain/coasts.ts
-  var import_vector = __toESM(require_vector(), 1);
-  var maxDistance = (0, import_vector.distanceEuclidean2)({ x: 0, y: 0 }, { x: 2, y: 2 });
-  function findCoasts(heights) {
-    const coasts = array2dMap(
-      heights,
-      (height) => height > config.waterHeight ? 0 : 1
-    );
-    array2dMap(coasts, (value, x, y, index) => {
-      if (value === 1) {
-        const neighbours = array2dGetNeighbourIndices(
-          coasts,
-          index,
-          neighbours24
-        );
-        for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
-          const neighbourIndex = neighbours[neighbour];
-          const current = coasts.values[neighbourIndex];
-          const [neighbourX, neighbourY] = array2dGetCoords(
-            coasts,
-            neighbourIndex
-          );
-          const distance = (0, import_vector.distanceEuclidean2)(
-            { x, y },
-            { x: neighbourX, y: neighbourY }
-          );
-          const coastal = inverseLerp(
-            maxDistance - distance * 0.9,
-            0,
-            maxDistance
-          );
-          coasts.values[neighbourIndex] = Math.max(current, coastal);
-        }
-      }
-    });
-    return coasts;
-  }
-
-  // src/state/terrain/color.ts
-  function getNumberColor(value) {
-    if (value < 0) {
-      return {
-        r: 255,
-        g: 0,
-        b: 0
-      };
-    } else if (value > 1) {
-      return {
-        r: 0,
-        g: 255,
-        b: 0
-      };
-    }
-    const shade = lerp(value, 0, 255);
-    return {
-      r: shade,
-      g: shade,
-      b: shade
-    };
-  }
-  function getStringColor(value, colorMap) {
-    return colorMap[value];
-  }
-  function getTerrainColor(height, temperature, biome, sunlight, snow, sand, icebergs, rivers, vegetation) {
-    if (rivers === 1) {
-      return applySunlight(
-        applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
-        sunlight,
-        1 / 4
-      );
-    }
-    switch (biome) {
-      case "DeepSea" /* DeepSea */:
-      case "ShallowSea" /* ShallowSea */:
-        return applySnow(getWaterColor(height, temperature), icebergs, 1);
-      case "Beach" /* Beach */:
-        return applySunlight(
-          applySand(
-            applySnow(getSandColor(height, temperature), snow, 0.8),
-            sand,
-            0.5
-          ),
-          sunlight,
-          1 / 4
-        );
-      case "Desert" /* Desert */:
-      case "Grass" /* Grass */:
-      case "Tundra" /* Tundra */:
-        const color = vegetation === 1 ? getVegetationColor(height, temperature) : getGroundColor(height, temperature);
-        return applySunlight(
-          applySand(
-            applySnow(color, snow, vegetation === 1 ? 0.1 : 0.9),
-            sand,
-            vegetation === 1 ? 0.1 : 0.9
-          ),
-          sunlight,
-          1 / 4
-        );
-      case "Mountain" /* Mountain */:
-        return applySunlight(
-          getCliffsColor(height, temperature),
-          sunlight,
-          1 / 4
-        );
-      case "Snow" /* Snow */:
-        return applySunlight(getSnowColor(height, temperature), sunlight, 1 / 4);
-      case "Unknown" /* Unknown */:
-        return { r: 255, g: 0, b: 0 };
-    }
-  }
-  function applySunlight(color, sunlight, strength) {
-    const shadow = 1 - sunlight;
-    return validateColor({
-      r: color.r + lerp(shadow, 0, -color.r * strength),
-      g: color.g + lerp(shadow, 0, -color.g * strength),
-      b: color.b + lerp(shadow, 0, -color.b * strength)
-    });
-  }
-  function applySnow(color, snow, amount) {
-    const snowAmount = snow * amount;
-    return {
-      r: lerp(snowAmount, color.r, 230),
-      g: lerp(snowAmount, color.g, 230),
-      b: lerp(snowAmount, color.b, 230)
-    };
-  }
-  function applySand(color, snow, amount) {
-    const snowAmount = snow * amount;
-    return {
-      r: lerp(snowAmount, color.r, 235),
-      g: lerp(snowAmount, color.g, 196),
-      b: lerp(snowAmount, color.b, 80)
-    };
-  }
-  function applyTemp(color, temperature) {
-    if (temperature <= 0.5) {
-      const scale = temperature * 2;
-      return clampColor({
-        r: color.r + lerp(scale, 50, 0),
-        g: color.g + lerp(scale, 50, 0),
-        b: color.b + lerp(scale, 100, 0)
-      });
-    } else {
-      const scale = (temperature - 0.5) * 2;
-      return clampColor({
-        ...color,
-        r: color.r + lerp(scale, 0, 150),
-        g: color.g + lerp(scale, 0, 50),
-        b: color.b + lerp(scale, 0, 50)
-      });
-    }
-  }
-  function clampColor(color) {
-    return {
-      r: clamp(0, 255, color.r),
-      g: clamp(0, 255, color.g),
-      b: clamp(0, 255, color.b)
-    };
-  }
-  function validateColor(color) {
-    if (Number.isNaN(color.r) || color.r < 0 || color.r > 255) {
-      throw new Error("Bad color");
-    }
-    if (Number.isNaN(color.g) || color.g < 0 || color.g > 255) {
-      throw new Error("Bad color");
-    }
-    if (Number.isNaN(color.b) || color.b < 0 || color.b > 255) {
-      throw new Error("Bad color");
-    }
-    return color;
-  }
-  function getSandColor(height, temperature) {
-    const scale = inverseLerp(height, config.waterHeight, 0.5);
-    return clampColor(
-      applyTemp(
-        {
-          r: lerp(scale, 235, 148),
-          g: lerp(scale, 196, 119),
-          b: lerp(scale, 80, 3)
-        },
-        temperature
-      )
-    );
-  }
-  function getWaterColor(height, temperature) {
-    if (height < config.waterStop1) {
-      const scale = inverseLerp(height, 0, config.waterStop1);
-      return {
-        r: lerp(scale, 0, 23),
-        g: lerp(scale, 55, 110),
-        b: lerp(scale, 93, 128)
-      };
-    } else if (height >= config.waterStop1 && height < config.waterStop2) {
-      const scale = inverseLerp(height, config.waterStop1, config.waterStop2);
-      return {
-        r: lerp(scale, 23, 50),
-        g: lerp(scale, 110, 163),
-        b: lerp(scale, 128, 171)
-      };
-    } else {
-      const scale = inverseLerp(height, config.waterStop2, config.waterHeight);
-      return {
-        r: lerp(scale, 50, 88),
-        g: lerp(scale, 163, 219),
-        b: lerp(scale, 171, 202)
-      };
-    }
-  }
-  var ground1 = {
-    r: 21,
-    g: 126,
-    b: 32
-  };
-  var ground2 = {
-    r: 18,
-    g: 116,
-    b: 49
-  };
-  var ground3 = {
-    r: 12,
-    g: 92,
-    b: 52
-  };
-  function getGroundColor(height, temperature) {
-    if (height < 0.67) {
-      const scale = inverseLerp(height, 0.5, 0.67);
-      return applyTemp(
-        {
-          r: lerp(scale, ground1.r, ground2.r),
-          g: lerp(scale, ground1.g, ground2.g),
-          b: lerp(scale, ground1.b, ground2.b)
-        },
-        temperature
-      );
-    } else {
-      const scale = inverseLerp(height, 0.67, 0.81);
-      return applyTemp(
-        {
-          r: lerp(scale, ground2.r, ground3.r),
-          g: lerp(scale, ground2.g, ground3.g),
-          b: lerp(scale, ground2.b, ground3.b)
-        },
-        temperature
-      );
-    }
-  }
-  var vegetation1 = {
-    r: 4,
-    g: 61,
-    b: 10
-  };
-  var vegetation2 = {
-    r: 4,
-    g: 48,
-    b: 18
-  };
-  var vegetation3 = {
-    r: 1,
-    g: 71,
-    b: 36
-  };
-  function getVegetationColor(height, temperature) {
-    if (height < 0.67) {
-      const scale = inverseLerp(height, 0.5, 0.67);
-      return applyTemp(
-        {
-          r: lerp(scale, vegetation1.r, vegetation2.r),
-          g: lerp(scale, vegetation1.g, vegetation2.g),
-          b: lerp(scale, vegetation1.b, vegetation2.b)
-        },
-        temperature
-      );
-    } else {
-      const scale = inverseLerp(height, 0.67, 0.81);
-      return applyTemp(
-        {
-          r: lerp(scale, vegetation2.r, vegetation3.r),
-          g: lerp(scale, vegetation2.g, vegetation3.g),
-          b: lerp(scale, vegetation2.b, vegetation3.b)
-        },
-        temperature
-      );
-    }
-  }
-  function getCliffsColor(height, temperature) {
-    const scale = inverseLerp(height, 0.81, 0.96);
-    return {
-      r: lerp(scale, 112, 76),
-      g: lerp(scale, 117, 79),
-      b: lerp(scale, 113, 100)
-    };
-  }
-  function getSnowColor(height, temperature) {
-    const scale = inverseLerp(height, 0.96, 1);
-    return {
-      r: lerp(scale, 236, 223),
-      g: lerp(scale, 240, 245),
-      b: lerp(scale, 240, 245)
-    };
-  }
-
-  // src/state/terrain/features.ts
-  var import_array3 = __toESM(require_array(), 1);
-  function getWaterFeature(area) {
-    if (area < 100) {
-      return "lake";
-    } else if (area < 500) {
-      return "sea";
-    } else {
-      return "ocean";
-    }
-  }
-  function getLandFeature(area) {
-    if (area < 500) {
-      return "island";
-    } else {
-      return "continent";
-    }
-  }
-  var id = 0;
-  function findFeatures(heights) {
-    const tested = /* @__PURE__ */ new Set();
-    const features = (0, import_array3.empty)(heights.values.length).fill("");
-    array2dMap(heights, (value, x, y, index) => {
-      if (tested.has(index)) {
-        return;
-      }
-      tested.add(index);
-      if (value < config.waterHeight) {
-        const area = floodFill(heights, index, 0, config.waterHeight);
-        const name = `${getWaterFeature(area.length)}_${id++}`;
-        for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
-          const index2 = area[areaIndex];
-          tested.add(index2);
-          features[index2] = name;
-        }
-      } else {
-        const area = floodFill(heights, index, config.waterHeight, 2);
-        const name = `${getLandFeature(area.length)}_${id++}`;
-        for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
-          const index2 = area[areaIndex];
-          tested.add(index2);
-          features[index2] = name;
-        }
-      }
-    });
-    let featuresArray = [];
-    for (let index = 0; index < heights.values.values.length; index++) {
-      featuresArray.push(index);
-    }
-    return array2dReplace(heights, features);
-  }
-  function floodFill(arr, index, min, max) {
-    const result = [index];
-    const tested = /* @__PURE__ */ new Set([index]);
-    let stack = array2dGetNeighbourIndices(arr, index, neighbours4);
-    while (stack.length > 0) {
-      const current = stack.pop();
-      const value = arr.values[current];
-      if (value >= min && value < max) {
-        result.push(current);
-        const neighbours = array2dGetNeighbourIndices(
-          arr,
-          current,
-          neighbours4,
-          tested
-        );
-        for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
-          tested.add(neighbours[neighbour]);
-          stack.push(neighbours[neighbour]);
-        }
-      }
-    }
-    return result;
-  }
-  var white = { r: 0, g: 0, b: 0 };
-  var featureColorMap = {
-    // lol
-    "": white
-  };
-
-  // src/state/terrain/normals.ts
-  function findGradient(heights) {
-    return array2dNormalize(
-      array2dMap(heights, (height, x, y) => {
-        const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height : 0;
-        const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height : 0;
-        return Math.sqrt(dx * dx + dy * dy);
-      })
-    );
-  }
-  function findAngle(heights) {
-    return array2dMap(heights, (height, x, y) => {
-      const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height : 0;
-      const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height : 0;
-      return Math.atan2(dy, dx);
-    });
-  }
-
-  // src/state/terrain/perlin.ts
-  function rand_vect() {
-    let theta = Math.random() * 2 * Math.PI;
-    return { x: Math.cos(theta), y: Math.sin(theta) };
-  }
-  function smootherstep(x) {
-    return 6 * x ** 5 - 15 * x ** 4 + 10 * x ** 3;
-  }
-  function interp(x, a, b) {
-    return a + smootherstep(x) * (b - a);
-  }
-  function dotProductGrid(gradients, x, y, vx, vy) {
-    let g_vect;
-    let d_vect = { x: x - vx, y: y - vy };
-    const key = `${vx},${vy}`;
-    if (gradients.has(key)) {
-      g_vect = gradients.get(key);
-    } else {
-      g_vect = rand_vect();
-      gradients.set(key, g_vect);
-    }
-    return d_vect.x * g_vect.x + d_vect.y * g_vect.y;
-  }
-  function createPerlin() {
-    const gradients = /* @__PURE__ */ new Map();
-    return (x, y) => {
-      let xf = Math.floor(x);
-      let yf = Math.floor(y);
-      let tl = dotProductGrid(gradients, x, y, xf, yf);
-      let tr = dotProductGrid(gradients, x, y, xf + 1, yf);
-      let bl = dotProductGrid(gradients, x, y, xf, yf + 1);
-      let br = dotProductGrid(gradients, x, y, xf + 1, yf + 1);
-      let xt = interp(x - xf, tl, tr);
-      let xb = interp(x - xf, bl, br);
-      let v = interp(y - yf, xt, xb);
-      return v;
-    };
-  }
-  function perlin2dArray(xSize, ySize, noiseScale) {
-    const values = getPerlinValues(xSize, noiseScale).map((height) => height / 1);
-    return array2dFrom(xSize, ySize, values);
-  }
-  function getPerlinValues(dimension, noiseScale) {
-    const perlin = createPerlin();
-    const GRID_SIZE = 1 * noiseScale;
-    const RESOLUTION = dimension / noiseScale;
-    let num_pixels = GRID_SIZE / RESOLUTION;
-    const heights = [];
-    for (let x = 0; x < GRID_SIZE; x += num_pixels / GRID_SIZE) {
-      for (let y = 0; y < GRID_SIZE; y += num_pixels / GRID_SIZE) {
-        let v = perlin(x, y);
-        heights.push(v + 1);
-      }
-    }
-    return heights;
-  }
-
-  // src/state/terrain/rivers.ts
-  function runRainfall(heights, angles) {
-    const rainfall = array2dCreate(angles.xSize, angles.ySize, 0);
-    for (let index = 0; index < rainfall.values.length; index++) {
-      createRaindrop(heights, rainfall, angles, index);
-    }
-    return rainfall;
-  }
-  function identifyRivers(rainfall) {
-    return array2dMap(rainfall, (value) => value > 30 ? 1 : 0);
-  }
-  function createRaindrop(heights, rivers, angles, fromIndex) {
-    const visited = /* @__PURE__ */ new Set();
-    let currentIndex = fromIndex;
-    for (let i = 0; i < 100; i++) {
-      if (visited.has(currentIndex)) {
-        return;
-      }
-      visited.add(currentIndex);
-      if (heights.values[currentIndex] < config.waterHeight) {
-        return;
-      }
-      rivers.values[currentIndex] = rivers.values[currentIndex] + 1;
-      const currentPos = array2dGetCoords(rivers, currentIndex);
-      const angle = angles.values[currentIndex];
-      const dx = Math.cos(angle);
-      const dy = Math.sin(angle);
-      Math.sin(angle);
-      const adjustedDx = Math.abs(dx) > Math.abs(dy) ? dx > 0 ? Math.ceil(dx) : Math.floor(dx) : 0;
-      const adjustedDy = Math.abs(dx) > Math.abs(dy) ? 0 : dy > 0 ? Math.ceil(dy) : Math.floor(dy);
-      if (!array2dIsInBounds(
-        rivers,
-        currentPos[0] - adjustedDx,
-        currentPos[1] - adjustedDy
-      )) {
-        return;
-      }
-      const nextIndex = array2dGetIndex(
-        rivers,
-        currentPos[0] - adjustedDx,
-        currentPos[1] - adjustedDy
-      );
-      if (nextIndex < 0 || nextIndex >= rivers.values.length) {
-        return;
-      }
-      currentIndex = nextIndex;
-    }
-  }
-
-  // src/state/terrain/snowSandIcebergs.ts
-  function getSnow(noise, height, temperature) {
-    return array2dMerge(
-      { noise, height, temperature },
-      ({ noise: noise2, height: height2, temperature: temperature2 }) => {
-        if (height2 < config.waterHeight) {
-          return 0;
-        }
-        if (temperature2 < 0.25) {
-          return 1;
-        }
-        if (temperature2 < 0.3) {
-          const scaled = inverseLerp(temperature2, 0.25, 0.3);
-          return scaled < noise2 ? 1 : 0;
-        } else
-          return 0;
-      }
-    );
-  }
-  function getSand(noise, height, temperature) {
-    return array2dMerge(
-      { noise, height, temperature },
-      ({ noise: noise2, height: height2, temperature: temperature2 }) => {
-        if (height2 < config.waterHeight) {
-          return 0;
-        }
-        if (temperature2 > 0.75) {
-          return 1;
-        }
-        if (temperature2 > 0.7) {
-          const scaled = inverseLerp(temperature2, 0.75, 0.7);
-          return scaled < noise2 ? 1 : 0;
-        } else
-          return 0;
-      }
-    );
-  }
-  function getIcebergs(noise, heights, heightP32, temperature) {
-    return array2dMerge(
-      { noise, heights, heightP32, temperature },
-      ({ noise: noise2, heights: heights2, heightP32: heightP322, temperature: temperature2 }) => {
-        if (heights2 > config.waterHeight) {
-          return 0;
-        }
-        let isFrozen = 0;
-        if (temperature2 < 0.25) {
-          isFrozen = 1;
-        }
-        if (temperature2 < 0.3) {
-          const scaled = inverseLerp(temperature2, 0.25, 0.3);
-          isFrozen = scaled < noise2 ? 1 : 0;
-        }
-        if (isFrozen) {
-          const frozenAmount = inverseLerp(temperature2, 0.3, 0);
-          const icebergChance = frozenAmount > heightP322;
-          return icebergChance ? 1 : 0;
-        }
-        return 0;
-      }
-    );
-  }
-
-  // src/state/terrain/vegetation.ts
-  function plantVegetation(temperature, heightP8) {
-    return array2dMerge(
-      { temperature, heightP8 },
-      ({ temperature: temperature2, heightP8: heightP82 }) => {
-        const suitability = 1 - Math.abs(temperature2 - 0.5) * 2;
-        return suitability - 0.35 > heightP82 ? 1 : 0;
-      }
-    );
-  }
-
-  // src/state/terrain/index.ts
-  function createTerrain(width, height, terrainRegistry) {
-    const noise = array2dCreate(width, height, () => Math.random());
-    const heightP2 = array2dNormalize(perlin2dArray(width, height, 2));
-    const heightP4 = array2dNormalize(perlin2dArray(width, height, 4));
-    const heightP8 = array2dNormalize(perlin2dArray(width, height, 8));
-    const heightP16 = array2dNormalize(perlin2dArray(width, height, 16));
-    const heightP32 = array2dNormalize(perlin2dArray(width, height, 32));
-    const heightP64 = array2dNormalize(perlin2dArray(width, height, 64));
-    const rockHardness = array2dFlip(heightP16);
-    const roughness = array2dFlip(heightP4);
-    const heights = array2dNormalize(
-      array2dSum(
-        heightP2,
-        heightP4,
-        array2dScale(heightP8, 1 / 2),
-        array2dScale(heightP16, 1 / 3),
-        array2dProduct(heightP32, roughness, rockHardness, heightP4),
-        array2dScale(
-          array2dProduct(heightP64, roughness, rockHardness, heightP4),
-          4 / 5
-        )
-      )
-    );
-    const temperature = array2dNormalize(perlin2dArray(width, height, 2));
-    const snow = getSnow(noise, heights, temperature);
-    const sand = getSand(noise, heights, temperature);
-    const icebergs = getIcebergs(noise, heights, heightP32, temperature);
-    const gradient = findGradient(heights);
-    const angle = findAngle(heights);
-    const facingLeft = array2dNormalize(
-      array2dMap(angle, (value) => -Math.abs(value))
-    );
-    const sunlight = array2dNormalize(array2dProduct(gradient, facingLeft));
-    const coast = findCoasts(heights);
-    const biome = array2dMerge(
-      { heights, temperature, gradient, coast, rockHardness },
-      ({ heights: heights2, temperature: temperature2, gradient: gradient2, coast: coast2, rockHardness: rockHardness2 }) => getBiome(heights2, temperature2, gradient2, coast2, rockHardness2)
-    );
-    const features = findFeatures(heights);
-    const rainfall = runRainfall(heights, angle);
-    const rivers = identifyRivers(rainfall);
-    const vegetation = plantVegetation(temperature, heightP8);
-    const colors = array2dMerge(
-      {
-        heights,
-        temperature,
-        biome,
-        sunlight,
-        snow,
-        sand,
-        icebergs,
-        rivers,
-        vegetation
-      },
-      ({
-        heights: heights2,
-        temperature: temperature2,
-        biome: biome2,
-        sunlight: sunlight2,
-        snow: snow2,
-        sand: sand2,
-        icebergs: icebergs2,
-        rivers: rivers2,
-        vegetation: vegetation4
-      }) => getTerrainColor(
-        heights2,
-        temperature2,
-        biome2,
-        sunlight2,
-        snow2,
-        sand2,
-        icebergs2,
-        rivers2,
-        vegetation4
-      )
-    );
-    terrainRegistry.push(
-      { name: "noise", kind: "number", values: noise },
-      { name: "heightP2", kind: "number", values: heightP2 },
-      { name: "heightP4", kind: "number", values: heightP4 },
-      { name: "heightP8", kind: "number", values: heightP8 },
-      { name: "heightP16", kind: "number", values: heightP16 },
-      { name: "heightP32", kind: "number", values: heightP32 },
-      { name: "heightP64", kind: "number", values: heightP64 },
-      { name: "rockHardness", kind: "number", values: rockHardness },
-      { name: "roughness", kind: "number", values: roughness },
-      { name: "heights", kind: "number", values: heights },
-      { name: "gradient", kind: "number", values: gradient },
-      { name: "angle", kind: "number", values: array2dNormalize(angle) },
-      { name: "facingLeft", kind: "number", values: facingLeft },
-      { name: "sunlight", kind: "number", values: sunlight },
-      { name: "temperature", kind: "number", values: temperature },
-      { name: "snow", kind: "number", values: snow },
-      { name: "sand", kind: "number", values: sand },
-      { name: "icebergs", kind: "number", values: icebergs },
-      { name: "vegetation", kind: "number", values: vegetation },
-      { name: "coast", kind: "number", values: coast },
-      { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
-      { name: "rainfall", kind: "number", values: array2dNormalize(rainfall) },
-      { name: "rivers", kind: "number", values: rivers },
-      {
-        name: "features",
-        kind: "string",
-        values: features,
-        colorMap: featureColorMap
-      },
-      { name: "colors", kind: "color", values: colors }
-    );
-  }
-
-  // src/utils/lookup.ts
-  function createLookup() {
-    const map = /* @__PURE__ */ new Map();
-    return {
-      map,
-      set: (value) => {
-        let castValue = value;
-        if (!castValue.id) {
-          const id3 = nextId();
-          castValue.id = id3;
-        }
-        map.set(castValue.id, castValue);
-        return castValue;
-      },
-      nextId
-    };
-  }
-  var id2 = 0;
-  function nextId() {
-    return "" + id2++;
-  }
-  function getFromLookup(lookup, key) {
-    const found = getFromLookupSafe(lookup, key);
-    if (found === void 0) {
-      throw new Error(`Failed to get ${key} from lookup`);
-    }
-    return found;
-  }
-  function getFromLookupSafe(lookup, key) {
-    if (lookup && key && lookup.map.has(key)) {
-      return lookup.map.get(key);
-    }
-    return void 0;
-  }
-  function lookupValues(lookup) {
-    return Array.from(lookup.map.values());
-  }
-  function lookupEntries(lookup) {
-    return Array.from(lookup.map.entries());
-  }
-  function lookupFirstValue(lookup) {
-    return lookup.map.values().next().value;
-  }
-
-  // src/worldgen/index.ts
-  function initHistory() {
-    const terrainRegistry = [];
-    createTerrain(
-      config.worldWidth * config.terrainResolution,
-      config.worldHeight * config.terrainResolution,
-      terrainRegistry
-    );
-    return {
-      regions: createLookup(),
-      beings: createLookup(),
-      dialects: createLookup(),
-      artifacts: createLookup(),
-      log: createLogger(0),
-      tick: 0,
-      world: null,
-      terrainRegistry,
-      availableActions: []
-    };
-  }
-
-  // src/state/decision/action.ts
-  function actionBroadcast(hasActions, ...toAdd) {
-    hasActions.availableActions = hasActions.availableActions.concat(toAdd);
-  }
-  function actionRevokeWhere(hasActions, action, location, target, allowClaim) {
-    const prevLength = hasActions.availableActions.length;
-    const filtered = hasActions.availableActions.filter((availableAction) => {
-      const actionMatch = availableAction.action === action;
-      const locationMatch = availableAction.location === location;
-      if (target !== void 0) {
-        const targetMatch = availableAction.target === target;
-        return !(actionMatch && locationMatch && targetMatch);
-      }
-      return !(actionMatch && locationMatch);
-    });
-    if (!allowClaim && prevLength === filtered.length) {
-      throw new Error("Expected to revoke something");
-    }
-    hasActions.availableActions = filtered;
-  }
-
-  // src/state/decision/need.ts
-  function createNeeds() {
-    return {
-      socialise: createNeed(),
-      create: createNeed(),
-      rest: createNeed(),
-      explore: createNeed()
-    };
-  }
-  function createNeed() {
-    return {
-      currentValue: Math.random(),
-      drainRate: Math.random() * 0.1
-    };
-  }
-  function satisfyNeed(hasNeeds, action) {
-    hasNeeds.needs[action.satisfies].currentValue = 0.5 + Math.random() * 0.5;
-  }
-  function updateNeeds(needs) {
-    updateNeed(needs.socialise);
-    updateNeed(needs.create);
-    updateNeed(needs.rest);
-    updateNeed(needs.explore);
-  }
-  function updateNeed(need) {
-    need.currentValue = Math.max(0, need.currentValue - need.drainRate);
-  }
-
-  // src/state/decision/preference.ts
-  function createPreferences() {
-    return {
-      discover: Math.random(),
-      rest: Math.random(),
-      travel: Math.random(),
-      createArtifact: Math.random(),
-      adoptSymbol: Math.random(),
-      conversation: Math.random(),
-      giveArtifact: Math.random()
-    };
-  }
-  function createStrongPreference() {
-    return Math.random() * 0.5 + 0.5;
-  }
-  function createWeakPreference() {
-    return Math.random() * 0.5;
-  }
-
-  // src/state/decision/factories.ts
-  function createDeityPreferences() {
-    return {
-      ...createPreferences(),
-      adoptSymbol: createStrongPreference(),
-      rest: createWeakPreference(),
-      createArtifact: createWeakPreference(),
-      conversation: createWeakPreference(),
-      giveArtifact: createWeakPreference()
-    };
-  }
-  function createDeityNeeds() {
-    return {
-      ...createNeeds()
-    };
-  }
-  function updateInitialTileActions(history3, tile) {
-    actionBroadcast(history3, {
-      action: "discover",
-      satisfies: "explore",
-      location: tile,
-      requires: {
-        location: "different"
-      }
-    });
-    actionBroadcast(history3, {
-      action: "rest",
-      satisfies: "rest",
-      location: tile,
-      requires: {
-        location: "same"
-      }
-    });
-    if (Math.random() > 0.5) {
-      actionBroadcast(history3, {
-        action: "createArtifact",
-        satisfies: "create",
-        location: tile,
-        requires: {
-          location: "same",
-          motif: "present"
-        }
-      });
-    }
-    if (Math.random() > 0.5) {
-      actionBroadcast(history3, {
-        action: "adoptSymbol",
-        satisfies: "create",
-        location: tile,
-        requires: {
-          location: "same",
-          motif: "missing"
-        }
-      });
-    }
-  }
-  function updateDiscoveredTileActions(history3, tile) {
-    actionBroadcast(history3, {
-      action: "travel",
-      satisfies: "explore",
-      location: tile,
-      requires: {
-        location: "different"
-      }
-    });
-    actionRevokeWhere(history3, "discover", tile);
-  }
-  function updateArtifactCreatedTileActions(history3, tile) {
-    actionRevokeWhere(history3, "createArtifact", tile, void 0, true);
-  }
-  function updateBeingEnteredTileActions(history3, tile, being) {
-    actionBroadcast(history3, {
-      action: "conversation",
-      satisfies: "socialise",
-      location: tile,
-      target: being,
-      requires: {
-        location: "same"
-      }
-    });
-  }
-  function updateBeingExitedTileActions(history3, tile, being) {
-    actionRevokeWhere(history3, "conversation", tile, being);
-  }
 
   // src/utils/random.ts
   function randomChoice(items) {
+    if (items.length === 0) {
+      throw new Error("Probably a mistake");
+    }
     return items[randomInt(0, items.length)];
   }
   function randomChoices(items, nChoices) {
@@ -25915,101 +24730,7 @@
     return Math.random() < chanceOfSuccess;
   }
 
-  // src/worldgen/deities.ts
-  var themesByName = /* @__PURE__ */ new Map();
-  function populatethemesByName() {
-    if (themesByName.size > 0) {
-      return;
-    }
-    config.themes.forEach((theme2) => {
-      themesByName.set(theme2.name, theme2);
-    });
-  }
-  var themesByCategory = /* @__PURE__ */ new Map();
-  function populateThemesByCategory() {
-    if (themesByCategory.size > 0) {
-      return;
-    }
-    config.themes.forEach((theme2) => {
-      theme2.categories.forEach((category) => {
-        if (!themesByCategory.has(category)) {
-          themesByCategory.set(category, []);
-        }
-        const themes = themesByCategory.get(category);
-        themes.push(theme2);
-      });
-    });
-  }
-  var themesByTag = /* @__PURE__ */ new Map();
-  function populateThemesByTag() {
-    if (themesByTag.size > 0) {
-      return;
-    }
-    config.themes.forEach((theme2) => {
-      theme2.tags.forEach((tag) => {
-        if (!themesByTag.has(tag)) {
-          themesByTag.set(tag, []);
-        }
-        const themes = themesByTag.get(tag);
-        themes.push(theme2);
-      });
-    });
-  }
-  function createInitialDeities(history3) {
-    const deityThemes = getDeityThemes();
-    const deities = deityThemes.map((deityTheme) => {
-      const deity = createDeity(history3.beings, deityTheme.theme);
-      history3.log(
-        `[[${deity.name}]] woke from their slumber.`,
-        [deity.id],
-        [],
-        []
-      );
-      return deity;
-    });
-    deityThemes.forEach((deityTheme) => {
-      const deity = deities.find((d) => d.theme === deityTheme.theme);
-      if (deityTheme.relationshipKind) {
-        deityTheme.relationshipTo?.forEach((relationshipTo) => {
-          const other = deities.find((d) => d.theme === relationshipTo);
-          deity.relationships[other.id] = {
-            kind: deityTheme.relationshipKind,
-            encounters: 0
-          };
-        });
-      }
-    });
-  }
-  function getDeityThemes() {
-    populatethemesByName();
-    populateThemesByCategory();
-    populateThemesByTag();
-    const selectedCategories = randomChoices(
-      [...themesByCategory.keys()],
-      randomInt(config.themeRange.min, config.themeRange.max)
-    );
-    const groups = selectedCategories.flatMap((category) => {
-      const themes = themesByCategory.get(category);
-      const isRelationship = rollDice(config.deityRelationshipChance);
-      const relationship = isRelationship ? getRelationship(themes.length) : void 0;
-      const themeNames = themes.map((theme2) => theme2.name);
-      return themes.map((theme2) => ({
-        theme: theme2.name,
-        relationshipKind: relationship,
-        relationshipTo: isRelationship ? themeNames.filter((name) => name !== theme2.name) : void 0
-      }));
-    });
-    return groups;
-  }
-  function getRelationship(count) {
-    if (count === 2) {
-      return randomChoice(["sibling", "partner", "lover"]);
-    } else {
-      return randomChoice(["sibling"]);
-    }
-  }
-
-  // src/worldgen/language.ts
+  // src/language/language.ts
   var allPhonemes = {
     singleVowels: [
       "\u026A" /* ɪ */,
@@ -26269,269 +24990,6 @@
     config.preRegisterWords.map((word) => getWord(word, language, 1));
     getWord(language.name, language, 2);
     return language;
-  }
-
-  // src/state/terrain/registry.ts
-  function getTerrainLayer(terrainRegistry, layerName) {
-    const result = terrainRegistry.find((layer) => layer.name === layerName);
-    if (!result) {
-      throw new Error(`Bad layer name ${layerName}`);
-    }
-    return result;
-  }
-  function sliceTerrainRegistry(terrainRegistry, x, y, resolution) {
-    const xTerrain = x * resolution;
-    const yTerrain = y * resolution;
-    const newTerrainRegistry = terrainRegistry.map((entry) => ({
-      ...entry,
-      values: array2dSlice(
-        entry.values,
-        xTerrain,
-        yTerrain,
-        resolution,
-        resolution
-      )
-    }));
-    return newTerrainRegistry;
-  }
-
-  // src/state/terrain/assess.ts
-  function assessTerrain(terrain) {
-    const heights = getTerrainLayer(
-      terrain,
-      "heights"
-    );
-    let waterCount = 0;
-    for (let index = 0; index < heights.values.values.length; index++) {
-      const height = heights.values.values[index];
-      if (height < config.waterHeight) {
-        waterCount++;
-      }
-    }
-    const temperature = getTerrainLayer(
-      terrain,
-      "temperature"
-    );
-    const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
-    const includesFeatures = /* @__PURE__ */ new Set();
-    const features = getTerrainLayer(
-      terrain,
-      "features"
-    );
-    features.values.values.forEach((f) => includesFeatures.add(f));
-    return {
-      percentWater: waterCount / temperature.values.values.length,
-      averageTemp: totalTemperature / temperature.values.values.length,
-      includesFeatures: [...includesFeatures.values()]
-    };
-  }
-
-  // src/worldgen/world.ts
-  function createWorld(history3, width, height) {
-    return array2dCreate(width, height, (x, y) => {
-      const newTerrainRegistry = sliceTerrainRegistry(
-        history3.terrainRegistry,
-        x,
-        y,
-        config.terrainResolution
-      );
-      const tile = history3.regions.set({
-        x,
-        y,
-        location: "",
-        terrainRegistry: newTerrainRegistry,
-        terrainAssessment: assessTerrain(newTerrainRegistry),
-        discovered: false,
-        name: createRegionName()
-      });
-      updateInitialTileActions(history3, tile);
-      return tile;
-    });
-  }
-  function getNeighbouringTiles(world, tile) {
-    return [
-      [-1, 0],
-      [1, 0],
-      [0, -1],
-      [0, 1]
-    ].map(([dx, dy]) => [tile.x + dx, tile.y + dy]).filter(([x, y]) => array2dIsInBounds(world, x, y)).map(([x, y]) => array2dGet(world, x, y));
-  }
-  function pathfind(world, from, to) {
-    const fromInfo = {
-      cameFrom: void 0,
-      cost: 0,
-      priority: heuristic(from, to)
-    };
-    const tilesIKnowAbout = /* @__PURE__ */ new Map();
-    tilesIKnowAbout.set(from, fromInfo);
-    const tilesIShouldCheck = /* @__PURE__ */ new Map();
-    tilesIShouldCheck.set(from, fromInfo);
-    let routeFound = false;
-    let sanityCheck = 0;
-    while (!routeFound && tilesIShouldCheck.size > 0 && sanityCheck++ < world.values.length) {
-      const [next, nextInfo] = getNextPossibleTile(tilesIShouldCheck);
-      tilesIShouldCheck.delete(next);
-      if (next === to) {
-        const route = [];
-        let stop = next;
-        while (stop) {
-          route.unshift(stop);
-          stop = tilesIKnowAbout.get(stop)?.cameFrom;
-        }
-        return route;
-      } else {
-        const neighbours = getNeighbouringTiles(world, next);
-        neighbours.forEach((neighbour) => {
-          const cost = nextInfo.cost + 1;
-          const priority = cost + heuristic(neighbour, to);
-          const known = tilesIKnowAbout.get(neighbour);
-          if (known !== void 0 && cost >= known.cost) {
-            return;
-          }
-          const neighbourInfo = { cost, cameFrom: next, priority };
-          tilesIKnowAbout.set(neighbour, neighbourInfo);
-          tilesIShouldCheck.set(neighbour, neighbourInfo);
-        });
-      }
-    }
-    throw new Error("Couldn't find path");
-  }
-  function getNextPossibleTile(tiles) {
-    const possibilities = [...tiles.entries()];
-    const sorted = possibilities.sort((a, b) => a[1].priority - b[1].priority);
-    return sorted[0];
-  }
-  function heuristic(from, to) {
-    return euclidianDistance(from, to);
-  }
-  function euclidianDistance(from, to) {
-    const deltaX = Math.abs(from.x - to.x);
-    const deltaY = Math.abs(from.y - to.y);
-    return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  }
-  function getTile(world, x, y) {
-    return array2dGet(
-      world,
-      Math.floor(x / config.terrainResolution),
-      Math.floor(y / config.terrainResolution)
-    );
-  }
-
-  // src/worldgen/populate.ts
-  function populateWorld(history3) {
-    history3.dialects.set({
-      language: generateLanguage(history3)
-    });
-    createWorldRegion(history3.regions);
-    createInitialDeities(history3);
-    if (history3.regions.map.size >= 1 && !history3.world) {
-      history3.world = createWorld(history3, config.worldWidth, config.worldHeight);
-    }
-  }
-  function createDeity(beings, theme2) {
-    return beings.set({
-      kind: "deity",
-      name: createDeityName(),
-      theme: theme2,
-      relationships: {},
-      needs: createDeityNeeds(),
-      preferences: createDeityPreferences(),
-      timesChosen: Object.fromEntries(
-        Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
-      ),
-      holding: []
-    });
-  }
-  function getDeities(beings) {
-    return lookupValues(beings).filter((being) => being.kind === "deity");
-  }
-  function getDeitiesByActivity(beings, kind) {
-    return getDeities(beings).filter(
-      (being) => being.currentActivity?.kind === kind
-    );
-  }
-  function createWorldRegion(regions) {
-    return regions.set({
-      name: createWorldName(),
-      discovered: true
-    });
-  }
-  var regionPlaces = [
-    "woods",
-    "halls",
-    "cliffs",
-    "forest",
-    "plains",
-    "tundras",
-    "mountains",
-    "streets"
-  ];
-  var regionAdjectives = [
-    "windy",
-    "calm",
-    "frozen",
-    "windswept",
-    "sunny",
-    "tranquil",
-    "undead",
-    "barren"
-  ];
-  var settlementNameStarts = [
-    "ply",
-    "exe",
-    "tor",
-    "paign",
-    "ex",
-    "barn",
-    "ton",
-    "tiver",
-    "brix",
-    "bide",
-    "teign",
-    "sid",
-    "dawl",
-    "tavi",
-    "north",
-    "ivy"
-  ];
-  var settlementNameEnds = [
-    "mouth",
-    "ter",
-    "quay",
-    "ton",
-    "staple",
-    "ton abbot",
-    "ham",
-    "ford",
-    "ish",
-    "stock",
-    "bridge"
-  ];
-  function describeNoun(nouns, adjectices) {
-    return flipCoin() ? randomChoice(nouns) : `${randomChoice(adjectices)} ${randomChoice(nouns)}`;
-  }
-  var worldNameCount = 0;
-  function createWorldName() {
-    return `world_${worldNameCount++}`;
-  }
-  function createRegionName() {
-    const mode = randomInt(0, 3);
-    switch (mode) {
-      case 0:
-        return `the ${describeNoun(regionPlaces, regionAdjectives)}`;
-      case 1:
-        return `the ${describeNoun(regionPlaces, regionAdjectives)}`;
-      case 2:
-        return `${randomChoice(settlementNameStarts)}${randomChoice(
-          settlementNameEnds
-        )}`;
-      default:
-        return "default";
-    }
-  }
-  var deityNameCount = 0;
-  function createDeityName() {
-    return `deity_${deityNameCount++}`;
   }
 
   // src/hooks/useInput.tsx
@@ -27034,6 +25492,50 @@
     return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_jsx_runtime11.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
   }
 
+  // src/history/lookup.ts
+  function createLookup() {
+    const map = /* @__PURE__ */ new Map();
+    return {
+      map,
+      set: (value) => {
+        let castValue = value;
+        if (!castValue.id) {
+          const id3 = nextId();
+          castValue.id = id3;
+        }
+        map.set(castValue.id, castValue);
+        return castValue;
+      },
+      nextId
+    };
+  }
+  var id = 0;
+  function nextId() {
+    return "" + id++;
+  }
+  function getFromLookup(lookup, key) {
+    const found = getFromLookupSafe(lookup, key);
+    if (found === void 0) {
+      throw new Error(`Failed to get ${key} from lookup`);
+    }
+    return found;
+  }
+  function getFromLookupSafe(lookup, key) {
+    if (lookup && key && lookup.map.has(key)) {
+      return lookup.map.get(key);
+    }
+    return void 0;
+  }
+  function lookupValues(lookup) {
+    return Array.from(lookup.map.values());
+  }
+  function lookupEntries(lookup) {
+    return Array.from(lookup.map.entries());
+  }
+  function lookupFirstValue(lookup) {
+    return lookup.map.values().next().value;
+  }
+
   // src/components/layout/commaSeparate.tsx
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   function CommaSeparate({ children }) {
@@ -27088,9 +25590,24 @@
     ] });
   }
 
+  // src/utils/maths.ts
+  function round(value, decimalPlaces) {
+    const multiplier = Math.pow(10, decimalPlaces);
+    return Math.floor(value * multiplier) / multiplier;
+  }
+  function clamp(min, max, value) {
+    return Math.max(min, Math.min(max, value));
+  }
+  function lerp(x, min, max) {
+    return (1 - x) * min + max * x;
+  }
+  function inverseLerp(x, min, max) {
+    return (x - min) / (max - min);
+  }
+
   // src/components/needs.tsx
   var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  function Needs2({ needs }) {
+  function Needs({ needs }) {
     return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { children: "Needs" }),
       Object.entries(needs).map(([name, value]) => {
@@ -27119,7 +25636,7 @@
 
   // src/components/preferences.tsx
   var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  function Preferences2({ preferences }) {
+  function Preferences({ preferences }) {
     return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { children: "Preferences" }),
       Object.entries(preferences).map(([name, value]) => {
@@ -27224,8 +25741,8 @@
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Names, { name: being.name, history: history3 }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Motif, { motif: being.motif }),
       being.theme && `Deity of ${being.theme}`,
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Needs2, { needs: being.needs }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Preferences2, { preferences: being.preferences }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Needs, { needs: being.needs }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Preferences, { preferences: being.preferences }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
       being.currentActivity && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(CurrentActivity, { currentActivity: being.currentActivity }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Holding, { artifacts: being.holding, inspect }),
@@ -27406,9 +25923,570 @@
 
   // src/components/map/terrain.tsx
   var import_react4 = __toESM(require_react(), 1);
-  var import_color2 = __toESM(require_color(), 1);
+  var import_color = __toESM(require_color(), 1);
+
+  // src/utils/array2d.ts
+  var import_array = __toESM(require_array(), 1);
+
+  // src/utils/array.ts
+  function getMinAndMax(values) {
+    if (values.length === 0) {
+      throw new Error("What?");
+    }
+    let highest = values[0];
+    let lowest = values[0];
+    for (let i = 1; i < values.length; i++) {
+      highest = Math.max(highest, values[i]);
+      lowest = Math.min(lowest, values[i]);
+    }
+    return { min: lowest, max: highest };
+  }
+  function normalize(values) {
+    const { min, max } = getMinAndMax(values);
+    return values.map((value) => inverseLerp(value, min, max));
+  }
+
+  // src/utils/array2d.ts
+  function isFillFunc(filler) {
+    return typeof filler === "function";
+  }
+  function array2dCreate(xSize, ySize, init) {
+    const size = xSize * ySize;
+    if (init !== void 0) {
+      if (isFillFunc(init)) {
+        return {
+          xSize,
+          ySize,
+          values: (0, import_array.empty)(size).map((_, index) => {
+            const x = index % xSize;
+            const y = Math.floor(index / ySize);
+            return init(x, y);
+          })
+        };
+      } else {
+        return {
+          xSize,
+          ySize,
+          values: (0, import_array.empty)(size).fill(init)
+        };
+      }
+    }
+    return {
+      xSize,
+      ySize,
+      values: (0, import_array.empty)(xSize * ySize)
+    };
+  }
+  function array2dFrom(xSize, ySize, values) {
+    return {
+      xSize,
+      ySize,
+      values
+    };
+  }
+  function array2dGet(arr, x, y) {
+    return arr.values[x + y * arr.xSize];
+  }
+  function array2dGetIndex(arr, x, y) {
+    return x + y * arr.xSize;
+  }
+  function array2dGetCoords(arr, index) {
+    return [index % arr.xSize, Math.floor(index / arr.ySize)];
+  }
+  function array2dIsInBounds(arr, x, y) {
+    return x >= 0 && x < arr.xSize && y >= 0 && y < arr.ySize;
+  }
+  function array2dMap(arr, mapper) {
+    return {
+      xSize: arr.xSize,
+      ySize: arr.ySize,
+      values: arr.values.map(
+        (value, index) => mapper(value, index % arr.xSize, Math.floor(index / arr.ySize), index)
+      )
+    };
+  }
+  function array2dReplace(arr, newValues) {
+    return {
+      xSize: arr.xSize,
+      ySize: arr.ySize,
+      values: newValues
+    };
+  }
+  function array2dFlipY(arr, y) {
+    return arr.ySize - y - 1;
+  }
+  function array2dMerge(arr, merger) {
+    const keys = Object.keys(arr);
+    const anyArr = arr[keys[0]];
+    const length = anyArr.values.length;
+    const values = [];
+    const param = {};
+    for (let index = 0; index < length; index++) {
+      for (let key = 0; key < keys.length; key++) {
+        param[keys[key]] = arr[keys[key]].values[index];
+      }
+      values.push(
+        merger(
+          param,
+          index % anyArr.xSize,
+          Math.floor(index / anyArr.ySize),
+          index
+        )
+      );
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dSum(...arrs) {
+    const anyArr = arrs[0];
+    const length = anyArr.values.length;
+    const values = [];
+    for (let index = 0; index < length; index++) {
+      values.push(0);
+      for (let arr = 0; arr < arrs.length; arr++) {
+        values[index] += arrs[arr].values[index];
+      }
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dProduct(...arrs) {
+    const anyArr = arrs[0];
+    const length = anyArr.values.length;
+    const values = [];
+    for (let index = 0; index < length; index++) {
+      values.push(1);
+      for (let arr = 0; arr < arrs.length; arr++) {
+        values[index] *= arrs[arr].values[index];
+      }
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dScale(arr, by) {
+    const multiplied = [];
+    for (let index = 0; index < arr.values.length; index++) {
+      multiplied.push(arr.values[index] * by);
+    }
+    return array2dReplace(arr, multiplied);
+  }
+  function array2dNormalize(arr) {
+    return array2dReplace(arr, normalize(arr.values));
+  }
+  function array2dSlice(arr, fromX, fromY, xSize, ySize) {
+    const result = array2dCreate(xSize, ySize);
+    for (let xOffset = 0; xOffset < xSize; xOffset++) {
+      for (let yOffset = 0; yOffset < ySize; yOffset++) {
+        const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
+        const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
+        result.values[mappedIndex] = sourceValue;
+      }
+    }
+    return result;
+  }
+  var neighbours4 = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  ];
+  var neighbours24 = [
+    [-2, -2],
+    [-2, -1],
+    [-2, 0],
+    [-2, 1],
+    [-2, 2],
+    [-1, -2],
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [-1, 2],
+    [0, -2],
+    [0, -1],
+    [0, 1],
+    [0, 2],
+    [1, -2],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+    [1, 2],
+    [2, -2],
+    [2, -1],
+    [2, 0],
+    [2, 1],
+    [2, 2]
+  ];
+  function array2dGetNeighbourIndices(arr, index, neighbourMask, excluding) {
+    const [positionX, positionY] = array2dGetCoords(arr, index);
+    const result = [];
+    for (let neighbour = 0; neighbour < neighbourMask.length; neighbour++) {
+      const [xOffset, yOffset] = neighbourMask[neighbour];
+      const x = positionX + xOffset;
+      const y = positionY + yOffset;
+      if (array2dIsInBounds(arr, x, y)) {
+        const index2 = array2dGetIndex(arr, x, y);
+        if (!excluding?.has(index2)) {
+          result.push(index2);
+        }
+      }
+    }
+    return result;
+  }
+  function array2dFlip(arr) {
+    const result = [];
+    for (let x = arr.xSize - 1; x >= 0; x--) {
+      for (let y = arr.ySize - 1; y >= 0; y--) {
+        result.push(array2dGet(arr, x, y));
+      }
+    }
+    return array2dReplace(arr, result);
+  }
+
+  // src/terrain/biome.ts
+  var biomeColorMap = {
+    ["DeepSea" /* DeepSea */]: {
+      r: 23,
+      g: 110,
+      b: 128
+    },
+    ["ShallowSea" /* ShallowSea */]: {
+      r: 50,
+      g: 163,
+      b: 171
+    },
+    ["Beach" /* Beach */]: {
+      r: 235,
+      g: 196,
+      b: 80
+    },
+    ["Grass" /* Grass */]: {
+      r: 18,
+      g: 116,
+      b: 49
+    },
+    ["Desert" /* Desert */]: {
+      r: 255,
+      g: 242,
+      b: 179
+    },
+    ["Tundra" /* Tundra */]: {
+      r: 230,
+      g: 255,
+      b: 230
+    },
+    ["Mountain" /* Mountain */]: {
+      r: 112,
+      g: 117,
+      b: 113
+    },
+    ["Snow" /* Snow */]: {
+      r: 236,
+      g: 240,
+      b: 240
+    },
+    ["Unknown" /* Unknown */]: {
+      r: 255,
+      g: 0,
+      b: 0
+    }
+  };
+  function getBiome(height, temperature, gradient, coast, rockHardness) {
+    if (height < config.waterStop2) {
+      return "DeepSea" /* DeepSea */;
+    }
+    if (height < config.waterHeight) {
+      return "ShallowSea" /* ShallowSea */;
+    }
+    if (coast > 0.6 && gradient < 0.5 && height < 0.5 && rockHardness < 0.5) {
+      return "Beach" /* Beach */;
+    }
+    if (coast > 0.3 && gradient < 0.4 && height < 0.5 && rockHardness < 0.5) {
+      return "Beach" /* Beach */;
+    }
+    if (gradient > 0.7) {
+      return "Mountain" /* Mountain */;
+    }
+    if (height < 0.81) {
+      if (temperature > 0.7) {
+        return "Desert" /* Desert */;
+      }
+      if (temperature < 0.3) {
+        return "Tundra" /* Tundra */;
+      }
+      return "Grass" /* Grass */;
+    }
+    if (height < 0.96) {
+      return "Mountain" /* Mountain */;
+    }
+    if (height <= 1) {
+      return "Snow" /* Snow */;
+    }
+    return "Unknown" /* Unknown */;
+  }
+
+  // src/terrain/color.ts
+  function getNumberColor(value) {
+    if (value < 0) {
+      return {
+        r: 255,
+        g: 0,
+        b: 0
+      };
+    } else if (value > 1) {
+      return {
+        r: 0,
+        g: 255,
+        b: 0
+      };
+    }
+    const shade = lerp(value, 0, 255);
+    return {
+      r: shade,
+      g: shade,
+      b: shade
+    };
+  }
+  function getStringColor(value, colorMap) {
+    return colorMap[value];
+  }
+  function getTerrainColor(height, temperature, biome, sunlight, snow, sand, icebergs, rivers, vegetation) {
+    if (rivers === 1) {
+      return applySunlight(
+        applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
+        sunlight,
+        1 / 4
+      );
+    }
+    switch (biome) {
+      case "DeepSea" /* DeepSea */:
+      case "ShallowSea" /* ShallowSea */:
+        return applySnow(getWaterColor(height, temperature), icebergs, 1);
+      case "Beach" /* Beach */:
+        return applySunlight(
+          applySand(
+            applySnow(getSandColor(height, temperature), snow, 0.8),
+            sand,
+            0.5
+          ),
+          sunlight,
+          1 / 4
+        );
+      case "Desert" /* Desert */:
+      case "Grass" /* Grass */:
+      case "Tundra" /* Tundra */:
+        const color = vegetation === 1 ? getVegetationColor(height, temperature) : getGroundColor(height, temperature);
+        return applySunlight(
+          applySand(
+            applySnow(color, snow, vegetation === 1 ? 0.1 : 0.9),
+            sand,
+            vegetation === 1 ? 0.1 : 0.9
+          ),
+          sunlight,
+          1 / 4
+        );
+      case "Mountain" /* Mountain */:
+        return applySunlight(
+          getCliffsColor(height, temperature),
+          sunlight,
+          1 / 4
+        );
+      case "Snow" /* Snow */:
+        return applySunlight(getSnowColor(height, temperature), sunlight, 1 / 4);
+      case "Unknown" /* Unknown */:
+        return { r: 255, g: 0, b: 0 };
+    }
+  }
+  function applySunlight(color, sunlight, strength) {
+    const shadow = 1 - sunlight;
+    return validateColor({
+      r: color.r + lerp(shadow, 0, -color.r * strength),
+      g: color.g + lerp(shadow, 0, -color.g * strength),
+      b: color.b + lerp(shadow, 0, -color.b * strength)
+    });
+  }
+  function applySnow(color, snow, amount) {
+    const snowAmount = snow * amount;
+    return {
+      r: lerp(snowAmount, color.r, 230),
+      g: lerp(snowAmount, color.g, 230),
+      b: lerp(snowAmount, color.b, 230)
+    };
+  }
+  function applySand(color, snow, amount) {
+    const snowAmount = snow * amount;
+    return {
+      r: lerp(snowAmount, color.r, 235),
+      g: lerp(snowAmount, color.g, 196),
+      b: lerp(snowAmount, color.b, 80)
+    };
+  }
+  function applyTemp(color, temperature) {
+    if (temperature <= 0.5) {
+      const scale = temperature * 2;
+      return clampColor({
+        r: color.r + lerp(scale, 50, 0),
+        g: color.g + lerp(scale, 50, 0),
+        b: color.b + lerp(scale, 100, 0)
+      });
+    } else {
+      const scale = (temperature - 0.5) * 2;
+      return clampColor({
+        ...color,
+        r: color.r + lerp(scale, 0, 150),
+        g: color.g + lerp(scale, 0, 50),
+        b: color.b + lerp(scale, 0, 50)
+      });
+    }
+  }
+  function clampColor(color) {
+    return {
+      r: clamp(0, 255, color.r),
+      g: clamp(0, 255, color.g),
+      b: clamp(0, 255, color.b)
+    };
+  }
+  function validateColor(color) {
+    if (Number.isNaN(color.r) || color.r < 0 || color.r > 255) {
+      throw new Error("Bad color");
+    }
+    if (Number.isNaN(color.g) || color.g < 0 || color.g > 255) {
+      throw new Error("Bad color");
+    }
+    if (Number.isNaN(color.b) || color.b < 0 || color.b > 255) {
+      throw new Error("Bad color");
+    }
+    return color;
+  }
+  function getSandColor(height, temperature) {
+    const scale = inverseLerp(height, config.waterHeight, 0.5);
+    return clampColor(
+      applyTemp(
+        {
+          r: lerp(scale, 235, 148),
+          g: lerp(scale, 196, 119),
+          b: lerp(scale, 80, 3)
+        },
+        temperature
+      )
+    );
+  }
+  function getWaterColor(height, temperature) {
+    if (height < config.waterStop1) {
+      const scale = inverseLerp(height, 0, config.waterStop1);
+      return {
+        r: lerp(scale, 0, 23),
+        g: lerp(scale, 55, 110),
+        b: lerp(scale, 93, 128)
+      };
+    } else if (height >= config.waterStop1 && height < config.waterStop2) {
+      const scale = inverseLerp(height, config.waterStop1, config.waterStop2);
+      return {
+        r: lerp(scale, 23, 50),
+        g: lerp(scale, 110, 163),
+        b: lerp(scale, 128, 171)
+      };
+    } else {
+      const scale = inverseLerp(height, config.waterStop2, config.waterHeight);
+      return {
+        r: lerp(scale, 50, 88),
+        g: lerp(scale, 163, 219),
+        b: lerp(scale, 171, 202)
+      };
+    }
+  }
+  var ground1 = {
+    r: 21,
+    g: 126,
+    b: 32
+  };
+  var ground2 = {
+    r: 18,
+    g: 116,
+    b: 49
+  };
+  var ground3 = {
+    r: 12,
+    g: 92,
+    b: 52
+  };
+  function getGroundColor(height, temperature) {
+    if (height < 0.67) {
+      const scale = inverseLerp(height, 0.5, 0.67);
+      return applyTemp(
+        {
+          r: lerp(scale, ground1.r, ground2.r),
+          g: lerp(scale, ground1.g, ground2.g),
+          b: lerp(scale, ground1.b, ground2.b)
+        },
+        temperature
+      );
+    } else {
+      const scale = inverseLerp(height, 0.67, 0.81);
+      return applyTemp(
+        {
+          r: lerp(scale, ground2.r, ground3.r),
+          g: lerp(scale, ground2.g, ground3.g),
+          b: lerp(scale, ground2.b, ground3.b)
+        },
+        temperature
+      );
+    }
+  }
+  var vegetation1 = {
+    r: 4,
+    g: 61,
+    b: 10
+  };
+  var vegetation2 = {
+    r: 4,
+    g: 48,
+    b: 18
+  };
+  var vegetation3 = {
+    r: 1,
+    g: 71,
+    b: 36
+  };
+  function getVegetationColor(height, temperature) {
+    if (height < 0.67) {
+      const scale = inverseLerp(height, 0.5, 0.67);
+      return applyTemp(
+        {
+          r: lerp(scale, vegetation1.r, vegetation2.r),
+          g: lerp(scale, vegetation1.g, vegetation2.g),
+          b: lerp(scale, vegetation1.b, vegetation2.b)
+        },
+        temperature
+      );
+    } else {
+      const scale = inverseLerp(height, 0.67, 0.81);
+      return applyTemp(
+        {
+          r: lerp(scale, vegetation2.r, vegetation3.r),
+          g: lerp(scale, vegetation2.g, vegetation3.g),
+          b: lerp(scale, vegetation2.b, vegetation3.b)
+        },
+        temperature
+      );
+    }
+  }
+  function getCliffsColor(height, temperature) {
+    const scale = inverseLerp(height, 0.81, 0.96);
+    return {
+      r: lerp(scale, 112, 76),
+      g: lerp(scale, 117, 79),
+      b: lerp(scale, 113, 100)
+    };
+  }
+  function getSnowColor(height, temperature) {
+    const scale = inverseLerp(height, 0.96, 1);
+    return {
+      r: lerp(scale, 236, 223),
+      g: lerp(scale, 240, 245),
+      b: lerp(scale, 240, 245)
+    };
+  }
+
+  // src/components/map/terrain.tsx
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
-  var selectedColor = (0, import_color2.toHex)({ r: 0, g: 255, b: 0 });
+  var selectedColor = (0, import_color.toHex)({ r: 0, g: 255, b: 0 });
   var missingColor = { r: 0, g: 255, b: 0 };
   function Terrain({
     layer,
@@ -27447,7 +26525,7 @@
           context.fillStyle = selectedColor;
           context.fillRect(x, flipY, 1, 1);
         } else {
-          context.fillStyle = (0, import_color2.toHex)(color);
+          context.fillStyle = (0, import_color.toHex)(color);
           context.fillRect(x, flipY, 1, 1);
         }
       });
@@ -27483,6 +26561,30 @@
       [setPos]
     );
     return [handleMouseMove, ...pos];
+  }
+
+  // src/terrain/registry.ts
+  function getTerrainLayer(terrainRegistry, layerName) {
+    const result = terrainRegistry.find((layer) => layer.name === layerName);
+    if (!result) {
+      throw new Error(`Bad layer name ${layerName}`);
+    }
+    return result;
+  }
+  function sliceTerrainRegistry(terrainRegistry, x, y, resolution) {
+    const xTerrain = x * resolution;
+    const yTerrain = y * resolution;
+    const newTerrainRegistry = terrainRegistry.map((entry) => ({
+      ...entry,
+      values: array2dSlice(
+        entry.values,
+        xTerrain,
+        yTerrain,
+        resolution,
+        resolution
+      )
+    }));
+    return newTerrainRegistry;
   }
 
   // src/components/map/mapTile.tsx
@@ -27557,6 +26659,267 @@
 
   // src/components/map/map.tsx
   var import_react6 = __toESM(require_react(), 1);
+
+  // src/decision/action.ts
+  function actionBroadcast(hasActions, ...toAdd) {
+    hasActions.availableActions = hasActions.availableActions.concat(toAdd);
+  }
+  function actionRevokeWhere(hasActions, action, location, target, allowClaim) {
+    const prevLength = hasActions.availableActions.length;
+    const filtered = hasActions.availableActions.filter((availableAction) => {
+      const actionMatch = availableAction.action === action;
+      const locationMatch = availableAction.location === location;
+      if (target !== void 0) {
+        const targetMatch = availableAction.target === target;
+        return !(actionMatch && locationMatch && targetMatch);
+      }
+      return !(actionMatch && locationMatch);
+    });
+    if (!allowClaim && prevLength === filtered.length) {
+      throw new Error("Expected to revoke something");
+    }
+    hasActions.availableActions = filtered;
+  }
+
+  // src/decision/need.ts
+  function createNeeds() {
+    return {
+      socialise: createNeed(),
+      create: createNeed(),
+      rest: createNeed(),
+      explore: createNeed()
+    };
+  }
+  function createNeed() {
+    return {
+      currentValue: Math.random(),
+      drainRate: Math.random() * 0.1
+    };
+  }
+  function satisfyNeed(hasNeeds, action) {
+    hasNeeds.needs[action.satisfies].currentValue = 0.5 + Math.random() * 0.5;
+  }
+  function updateNeeds(needs) {
+    updateNeed(needs.socialise);
+    updateNeed(needs.create);
+    updateNeed(needs.rest);
+    updateNeed(needs.explore);
+  }
+  function updateNeed(need) {
+    need.currentValue = Math.max(0, need.currentValue - need.drainRate);
+  }
+
+  // src/decision/preference.ts
+  function createPreferences() {
+    return {
+      discover: Math.random(),
+      rest: Math.random(),
+      travel: Math.random(),
+      createArtifact: Math.random(),
+      adoptSymbol: Math.random(),
+      conversation: Math.random(),
+      giveArtifact: Math.random()
+    };
+  }
+  function createStrongPreference() {
+    return Math.random() * 0.5 + 0.5;
+  }
+  function createWeakPreference() {
+    return Math.random() * 0.5;
+  }
+
+  // src/decision/factories.ts
+  function createDeityPreferences() {
+    return {
+      ...createPreferences(),
+      adoptSymbol: createStrongPreference(),
+      rest: createWeakPreference(),
+      createArtifact: createWeakPreference(),
+      conversation: createWeakPreference(),
+      giveArtifact: createWeakPreference()
+    };
+  }
+  function createDeityNeeds() {
+    return {
+      ...createNeeds()
+    };
+  }
+  function updateInitialTileActions(history3, tile) {
+    actionBroadcast(history3, {
+      action: "discover",
+      satisfies: "explore",
+      location: tile,
+      requires: {
+        location: "different"
+      }
+    });
+    actionBroadcast(history3, {
+      action: "rest",
+      satisfies: "rest",
+      location: tile,
+      requires: {
+        location: "same"
+      }
+    });
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        action: "createArtifact",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "present"
+        }
+      });
+    }
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        action: "adoptSymbol",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "missing"
+        }
+      });
+    }
+  }
+  function updateDiscoveredTileActions(history3, tile) {
+    actionBroadcast(history3, {
+      action: "travel",
+      satisfies: "explore",
+      location: tile,
+      requires: {
+        location: "different"
+      }
+    });
+    actionRevokeWhere(history3, "discover", tile);
+  }
+  function updateArtifactCreatedTileActions(history3, tile) {
+    actionRevokeWhere(history3, "createArtifact", tile, void 0, true);
+  }
+  function updateBeingEnteredTileActions(history3, tile, being) {
+    actionBroadcast(history3, {
+      action: "conversation",
+      satisfies: "socialise",
+      location: tile,
+      target: being,
+      requires: {
+        location: "same"
+      }
+    });
+    actionBroadcast(history3, {
+      action: "giveArtifact",
+      satisfies: "socialise",
+      location: tile,
+      target: being,
+      requires: {
+        location: "same",
+        holdingArtifact: true
+      }
+    });
+  }
+  function updateBeingExitedTileActions(history3, tile, being) {
+    actionRevokeWhere(history3, "conversation", tile, being);
+    actionRevokeWhere(history3, "giveArtifact", tile, being);
+  }
+
+  // src/terrain/assess.ts
+  function assessTerrain(terrain) {
+    const heights = getTerrainLayer(
+      terrain,
+      "heights"
+    );
+    let waterCount = 0;
+    for (let index = 0; index < heights.values.values.length; index++) {
+      const height = heights.values.values[index];
+      if (height < config.waterHeight) {
+        waterCount++;
+      }
+    }
+    const temperature = getTerrainLayer(
+      terrain,
+      "temperature"
+    );
+    const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
+    const includesFeatures = /* @__PURE__ */ new Set();
+    const features = getTerrainLayer(
+      terrain,
+      "features"
+    );
+    features.values.values.forEach((f) => includesFeatures.add(f));
+    return {
+      percentWater: waterCount / temperature.values.values.length,
+      averageTemp: totalTemperature / temperature.values.values.length,
+      includesFeatures: [...includesFeatures.values()]
+    };
+  }
+
+  // src/language/index.ts
+  function describeNoun(nouns, adjectices) {
+    return flipCoin() ? randomChoice(nouns) : `${randomChoice(adjectices)} ${randomChoice(nouns)}`;
+  }
+  var worldNameCount = 0;
+  function createWorldName() {
+    return `world_${worldNameCount++}`;
+  }
+  function createRegionName() {
+    const mode = randomInt(0, 3);
+    switch (mode) {
+      case 0:
+        return `the ${describeNoun(
+          config.regionPlaces,
+          config.regionAdjectives
+        )}`;
+      case 1:
+        return `the ${describeNoun(
+          config.regionPlaces,
+          config.regionAdjectives
+        )}`;
+      case 2:
+        return `${randomChoice(config.settlementNameStarts)}${randomChoice(
+          config.settlementNameEnds
+        )}`;
+      default:
+        return "default";
+    }
+  }
+  var deityNameCount = 0;
+  function createDeityName() {
+    return `deity_${deityNameCount++}`;
+  }
+
+  // src/world/index.ts
+  function createWorld(history3, width, height) {
+    return array2dCreate(width, height, (x, y) => {
+      const newTerrainRegistry = sliceTerrainRegistry(
+        history3.terrainRegistry,
+        x,
+        y,
+        config.terrainResolution
+      );
+      const tile = history3.regions.set({
+        x,
+        y,
+        location: "",
+        terrainRegistry: newTerrainRegistry,
+        terrainAssessment: assessTerrain(newTerrainRegistry),
+        discovered: false,
+        name: createRegionName()
+      });
+      updateInitialTileActions(history3, tile);
+      return tile;
+    });
+  }
+  function getTile(world, x, y) {
+    return array2dGet(
+      world,
+      Math.floor(x / config.terrainResolution),
+      Math.floor(y / config.terrainResolution)
+    );
+  }
+
+  // src/components/map/map.tsx
   var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   function Map2({
     history: history3,
@@ -27651,6 +27014,16 @@
     );
   }
 
+  // src/history/index.ts
+  function getDeities(beings) {
+    return lookupValues(beings).filter((being) => being.kind === "deity");
+  }
+  function getDeitiesByActivity(beings, kind) {
+    return getDeities(beings).filter(
+      (being) => being.currentActivity?.kind === kind
+    );
+  }
+
   // src/components/terrainLayerPicker.tsx
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   function TerrainLayerPicker({
@@ -27664,7 +27037,7 @@
   }
 
   // src/components/terrainValues.tsx
-  var import_color4 = __toESM(require_color(), 1);
+  var import_color3 = __toESM(require_color(), 1);
   var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   function TerrainValues({
     terrainRegistry,
@@ -27683,7 +27056,7 @@
         switch (entry.kind) {
           case "color":
             const color = array2dGet(entry.values, selectionX, selectionY);
-            const hex = (0, import_color4.toHex)(color);
+            const hex = (0, import_color3.toHex)(color);
             return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
               entry.name,
               ": ",
@@ -27744,7 +27117,8 @@
     selectionX,
     selectionY,
     setTerrainLayer,
-    terrainLayer
+    terrainLayer,
+    inspect
   }) {
     if (!history3.world) {
       return null;
@@ -27772,7 +27146,15 @@
         /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(TileValues, { tile: selectedTile }),
         selectedTile && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Region, { region: selectedTile, history: history3 })
       ] }),
-      selectedTile && getDeities(history3.beings).filter((deity) => deity.location === selectedTile.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Being, { being: deity, history: history3, language }) }, index))
+      selectedTile && getDeities(history3.beings).filter((deity) => deity.location === selectedTile.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+        Being,
+        {
+          being: deity,
+          history: history3,
+          language,
+          inspect
+        }
+      ) }, index))
     ] });
   }
 
@@ -27780,7 +27162,8 @@
   var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   function World({
     history: history3,
-    language
+    language,
+    inspect
   }) {
     if (!history3.world) {
       return null;
@@ -27822,7 +27205,8 @@
               selectionX,
               selectionY,
               setTerrainLayer,
-              terrainLayer
+              terrainLayer,
+              inspect
             }
           ) })
         ]
@@ -28041,7 +27425,7 @@
           history: history3,
           language,
           artifact: artifact.id,
-          initialSystems: ["artifactCreation"],
+          initialSystems: ["artifactCreation", "artifactGiving"],
           inspect
         }
       )
@@ -28063,7 +27447,7 @@
         {
           selectedTab: inspected !== null ? `Inspect ${inspected.kind} #${inspected.id}` : void 0,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(World, { history: history3, language }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(World, { history: history3, language, inspect }) }),
             /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Log", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Log, { history: history3, language, inspect }) }),
             /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Regions", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Grid, { title: "Regions", children: lookupValues(history3.regions).map((region) => {
               return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Region, { region, history: history3 }) }, region.id);
@@ -28235,8 +27619,71 @@
   // src/index.tsx
   var import_react10 = __toESM(require_react(), 1);
 
-  // src/state/decision/index.ts
-  var maxDistance2 = euclidianDistance(
+  // src/world/pathfind.ts
+  function getNeighbouringTiles(world, tile) {
+    return [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1]
+    ].map(([dx, dy]) => [tile.x + dx, tile.y + dy]).filter(([x, y]) => array2dIsInBounds(world, x, y)).map(([x, y]) => array2dGet(world, x, y));
+  }
+  function pathfind(world, from, to) {
+    const fromInfo = {
+      cameFrom: void 0,
+      cost: 0,
+      priority: heuristic(from, to)
+    };
+    const tilesIKnowAbout = /* @__PURE__ */ new Map();
+    tilesIKnowAbout.set(from, fromInfo);
+    const tilesIShouldCheck = /* @__PURE__ */ new Map();
+    tilesIShouldCheck.set(from, fromInfo);
+    let routeFound = false;
+    let sanityCheck = 0;
+    while (!routeFound && tilesIShouldCheck.size > 0 && sanityCheck++ < world.values.length) {
+      const [next, nextInfo] = getNextPossibleTile(tilesIShouldCheck);
+      tilesIShouldCheck.delete(next);
+      if (next === to) {
+        const route = [];
+        let stop = next;
+        while (stop) {
+          route.unshift(stop);
+          stop = tilesIKnowAbout.get(stop)?.cameFrom;
+        }
+        return route;
+      } else {
+        const neighbours = getNeighbouringTiles(world, next);
+        neighbours.forEach((neighbour) => {
+          const cost = nextInfo.cost + 1;
+          const priority = cost + heuristic(neighbour, to);
+          const known = tilesIKnowAbout.get(neighbour);
+          if (known !== void 0 && cost >= known.cost) {
+            return;
+          }
+          const neighbourInfo = { cost, cameFrom: next, priority };
+          tilesIKnowAbout.set(neighbour, neighbourInfo);
+          tilesIShouldCheck.set(neighbour, neighbourInfo);
+        });
+      }
+    }
+    throw new Error("Couldn't find path");
+  }
+  function getNextPossibleTile(tiles) {
+    const possibilities = [...tiles.entries()];
+    const sorted = possibilities.sort((a, b) => a[1].priority - b[1].priority);
+    return sorted[0];
+  }
+  function heuristic(from, to) {
+    return euclidianDistance(from, to);
+  }
+  function euclidianDistance(from, to) {
+    const deltaX = Math.abs(from.x - to.x);
+    const deltaY = Math.abs(from.y - to.y);
+    return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  }
+
+  // src/decision/index.ts
+  var maxDistance = euclidianDistance(
     { x: 0, y: 0 },
     { x: config.worldWidth, y: config.worldHeight }
   );
@@ -28271,6 +27718,11 @@
         default:
           break;
       }
+      if (action.requires.holdingArtifact) {
+        if (being.holding.length === 0) {
+          return false;
+        }
+      }
       if (action.target && action.target.id === being.id) {
         return false;
       }
@@ -28281,12 +27733,12 @@
       const bNeed = 1 - needs[b.satisfies].currentValue;
       const aDistance = inverseLerp(
         euclidianDistance(from, a.location),
-        maxDistance2,
+        maxDistance,
         0
       );
       const bDistance = inverseLerp(
         euclidianDistance(from, b.location),
-        maxDistance2,
+        maxDistance,
         0
       );
       return bNeed * preferences[b.action] * bDistance - aNeed * preferences[a.action] * aDistance;
@@ -28328,6 +27780,21 @@
         } else if (action.action === "createArtifact") {
           deity.currentActivity = {
             kind: "createArtifact"
+          };
+        } else if (action.action === "giveArtifact") {
+          if (!action.target) {
+            console.error("what");
+            return;
+          }
+          const artifact = randomChoice(deity.holding);
+          if (!artifact) {
+            console.error("what");
+            return;
+          }
+          deity.currentActivity = {
+            kind: "giveArtifact",
+            target: action.target.id,
+            artifact
           };
         } else if (action.action === "adoptSymbol") {
           deity.currentActivity = {
@@ -28438,16 +27905,626 @@
     getDeities(history3.beings).forEach((deity) => updateNeeds(deity.needs));
   }
 
+  // src/systems/artifactGiving.ts
+  function runArtifactGiving(history3) {
+    const deities = getDeitiesByActivity(history3.beings, "giveArtifact");
+    deities.forEach((deity) => {
+      const activity = deity.currentActivity;
+      const artifact = getFromLookup(history3.artifacts, activity.artifact);
+      const tile = getFromLookup(history3.regions, deity.location);
+      const target = getFromLookup(history3.beings, activity.target);
+      history3.log(
+        `[[${deity.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
+        [deity.id, target.id],
+        [tile.id],
+        [artifact.id]
+      );
+      deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
+      target.holding.push(artifact.id);
+      deity.currentActivity = void 0;
+    });
+  }
+
+  // src/log.ts
+  function createLogger(tick) {
+    const entries = [];
+    const logger = (message, beingsInvolved, regionsInvolved, artifactsInvolved) => {
+      logger.knownSystems.add(logger.currentSystem);
+      entries.push([
+        logger.tick,
+        logger.currentSystem,
+        message,
+        beingsInvolved,
+        regionsInvolved,
+        artifactsInvolved
+      ]);
+    };
+    logger.tick = tick;
+    logger.entries = entries;
+    logger.currentSystem = "init";
+    logger.knownSystems = /* @__PURE__ */ new Set();
+    return logger;
+  }
+
+  // src/terrain/coasts.ts
+  var import_vector = __toESM(require_vector(), 1);
+  var maxDistance2 = (0, import_vector.distanceEuclidean2)({ x: 0, y: 0 }, { x: 2, y: 2 });
+  function findCoasts(heights) {
+    const coasts = array2dMap(
+      heights,
+      (height) => height > config.waterHeight ? 0 : 1
+    );
+    array2dMap(coasts, (value, x, y, index) => {
+      if (value === 1) {
+        const neighbours = array2dGetNeighbourIndices(
+          coasts,
+          index,
+          neighbours24
+        );
+        for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
+          const neighbourIndex = neighbours[neighbour];
+          const current = coasts.values[neighbourIndex];
+          const [neighbourX, neighbourY] = array2dGetCoords(
+            coasts,
+            neighbourIndex
+          );
+          const distance = (0, import_vector.distanceEuclidean2)(
+            { x, y },
+            { x: neighbourX, y: neighbourY }
+          );
+          const coastal = inverseLerp(
+            maxDistance2 - distance * 0.9,
+            0,
+            maxDistance2
+          );
+          coasts.values[neighbourIndex] = Math.max(current, coastal);
+        }
+      }
+    });
+    return coasts;
+  }
+
+  // src/terrain/features.ts
+  var import_array3 = __toESM(require_array(), 1);
+  function getWaterFeature(area) {
+    if (area < 100) {
+      return "lake";
+    } else if (area < 500) {
+      return "sea";
+    } else {
+      return "ocean";
+    }
+  }
+  function getLandFeature(area) {
+    if (area < 500) {
+      return "island";
+    } else {
+      return "continent";
+    }
+  }
+  var id2 = 0;
+  function findFeatures(heights) {
+    const tested = /* @__PURE__ */ new Set();
+    const features = (0, import_array3.empty)(heights.values.length).fill("");
+    array2dMap(heights, (value, x, y, index) => {
+      if (tested.has(index)) {
+        return;
+      }
+      tested.add(index);
+      if (value < config.waterHeight) {
+        const area = floodFill(heights, index, 0, config.waterHeight);
+        const name = `${getWaterFeature(area.length)}_${id2++}`;
+        for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
+          const index2 = area[areaIndex];
+          tested.add(index2);
+          features[index2] = name;
+        }
+      } else {
+        const area = floodFill(heights, index, config.waterHeight, 2);
+        const name = `${getLandFeature(area.length)}_${id2++}`;
+        for (let areaIndex = 0; areaIndex < area.length; areaIndex++) {
+          const index2 = area[areaIndex];
+          tested.add(index2);
+          features[index2] = name;
+        }
+      }
+    });
+    let featuresArray = [];
+    for (let index = 0; index < heights.values.values.length; index++) {
+      featuresArray.push(index);
+    }
+    return array2dReplace(heights, features);
+  }
+  function floodFill(arr, index, min, max) {
+    const result = [index];
+    const tested = /* @__PURE__ */ new Set([index]);
+    let stack = array2dGetNeighbourIndices(arr, index, neighbours4);
+    while (stack.length > 0) {
+      const current = stack.pop();
+      const value = arr.values[current];
+      if (value >= min && value < max) {
+        result.push(current);
+        const neighbours = array2dGetNeighbourIndices(
+          arr,
+          current,
+          neighbours4,
+          tested
+        );
+        for (let neighbour = 0; neighbour < neighbours.length; neighbour++) {
+          tested.add(neighbours[neighbour]);
+          stack.push(neighbours[neighbour]);
+        }
+      }
+    }
+    return result;
+  }
+  var white = { r: 0, g: 0, b: 0 };
+  var featureColorMap = {
+    // TODO: Should have a way to give each one a different color
+    "": white
+  };
+
+  // src/terrain/normals.ts
+  function findGradient(heights) {
+    return array2dNormalize(
+      array2dMap(heights, (height, x, y) => {
+        const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height : 0;
+        const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height : 0;
+        return Math.sqrt(dx * dx + dy * dy);
+      })
+    );
+  }
+  function findAngle(heights) {
+    return array2dMap(heights, (height, x, y) => {
+      const dx = array2dIsInBounds(heights, x + 1, y) ? array2dGet(heights, x + 1, y) - height : 0;
+      const dy = array2dIsInBounds(heights, x, y + 1) ? array2dGet(heights, x, y + 1) - height : 0;
+      return Math.atan2(dy, dx);
+    });
+  }
+
+  // src/terrain/perlin.ts
+  function rand_vect() {
+    let theta = Math.random() * 2 * Math.PI;
+    return { x: Math.cos(theta), y: Math.sin(theta) };
+  }
+  function smootherstep(x) {
+    return 6 * x ** 5 - 15 * x ** 4 + 10 * x ** 3;
+  }
+  function interp(x, a, b) {
+    return a + smootherstep(x) * (b - a);
+  }
+  function dotProductGrid(gradients, x, y, vx, vy) {
+    let g_vect;
+    let d_vect = { x: x - vx, y: y - vy };
+    const key = `${vx},${vy}`;
+    if (gradients.has(key)) {
+      g_vect = gradients.get(key);
+    } else {
+      g_vect = rand_vect();
+      gradients.set(key, g_vect);
+    }
+    return d_vect.x * g_vect.x + d_vect.y * g_vect.y;
+  }
+  function createPerlin() {
+    const gradients = /* @__PURE__ */ new Map();
+    return (x, y) => {
+      let xf = Math.floor(x);
+      let yf = Math.floor(y);
+      let tl = dotProductGrid(gradients, x, y, xf, yf);
+      let tr = dotProductGrid(gradients, x, y, xf + 1, yf);
+      let bl = dotProductGrid(gradients, x, y, xf, yf + 1);
+      let br = dotProductGrid(gradients, x, y, xf + 1, yf + 1);
+      let xt = interp(x - xf, tl, tr);
+      let xb = interp(x - xf, bl, br);
+      let v = interp(y - yf, xt, xb);
+      return v;
+    };
+  }
+  function perlin2dArray(xSize, ySize, noiseScale) {
+    const values = getPerlinValues(xSize, noiseScale).map((height) => height / 1);
+    return array2dFrom(xSize, ySize, values);
+  }
+  function getPerlinValues(dimension, noiseScale) {
+    const perlin = createPerlin();
+    const GRID_SIZE = 1 * noiseScale;
+    const RESOLUTION = dimension / noiseScale;
+    let num_pixels = GRID_SIZE / RESOLUTION;
+    const heights = [];
+    for (let x = 0; x < GRID_SIZE; x += num_pixels / GRID_SIZE) {
+      for (let y = 0; y < GRID_SIZE; y += num_pixels / GRID_SIZE) {
+        let v = perlin(x, y);
+        heights.push(v + 1);
+      }
+    }
+    return heights;
+  }
+
+  // src/terrain/rivers.ts
+  function runRainfall(heights, angles) {
+    const rainfall = array2dCreate(angles.xSize, angles.ySize, 0);
+    for (let index = 0; index < rainfall.values.length; index++) {
+      createRaindrop(heights, rainfall, angles, index);
+    }
+    return rainfall;
+  }
+  function identifyRivers(rainfall) {
+    return array2dMap(rainfall, (value) => value > 30 ? 1 : 0);
+  }
+  function createRaindrop(heights, rivers, angles, fromIndex) {
+    const visited = /* @__PURE__ */ new Set();
+    let currentIndex = fromIndex;
+    for (let i = 0; i < 100; i++) {
+      if (visited.has(currentIndex)) {
+        return;
+      }
+      visited.add(currentIndex);
+      if (heights.values[currentIndex] < config.waterHeight) {
+        return;
+      }
+      rivers.values[currentIndex] = rivers.values[currentIndex] + 1;
+      const currentPos = array2dGetCoords(rivers, currentIndex);
+      const angle = angles.values[currentIndex];
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
+      Math.sin(angle);
+      const adjustedDx = Math.abs(dx) > Math.abs(dy) ? dx > 0 ? Math.ceil(dx) : Math.floor(dx) : 0;
+      const adjustedDy = Math.abs(dx) > Math.abs(dy) ? 0 : dy > 0 ? Math.ceil(dy) : Math.floor(dy);
+      if (!array2dIsInBounds(
+        rivers,
+        currentPos[0] - adjustedDx,
+        currentPos[1] - adjustedDy
+      )) {
+        return;
+      }
+      const nextIndex = array2dGetIndex(
+        rivers,
+        currentPos[0] - adjustedDx,
+        currentPos[1] - adjustedDy
+      );
+      if (nextIndex < 0 || nextIndex >= rivers.values.length) {
+        return;
+      }
+      currentIndex = nextIndex;
+    }
+  }
+
+  // src/terrain/snowSandIcebergs.ts
+  function getSnow(noise, height, temperature) {
+    return array2dMerge(
+      { noise, height, temperature },
+      ({ noise: noise2, height: height2, temperature: temperature2 }) => {
+        if (height2 < config.waterHeight) {
+          return 0;
+        }
+        if (temperature2 < 0.25) {
+          return 1;
+        }
+        if (temperature2 < 0.3) {
+          const scaled = inverseLerp(temperature2, 0.25, 0.3);
+          return scaled < noise2 ? 1 : 0;
+        } else
+          return 0;
+      }
+    );
+  }
+  function getSand(noise, height, temperature) {
+    return array2dMerge(
+      { noise, height, temperature },
+      ({ noise: noise2, height: height2, temperature: temperature2 }) => {
+        if (height2 < config.waterHeight) {
+          return 0;
+        }
+        if (temperature2 > 0.75) {
+          return 1;
+        }
+        if (temperature2 > 0.7) {
+          const scaled = inverseLerp(temperature2, 0.75, 0.7);
+          return scaled < noise2 ? 1 : 0;
+        } else
+          return 0;
+      }
+    );
+  }
+  function getIcebergs(noise, heights, heightP32, temperature) {
+    return array2dMerge(
+      { noise, heights, heightP32, temperature },
+      ({ noise: noise2, heights: heights2, heightP32: heightP322, temperature: temperature2 }) => {
+        if (heights2 > config.waterHeight) {
+          return 0;
+        }
+        let isFrozen = 0;
+        if (temperature2 < 0.25) {
+          isFrozen = 1;
+        }
+        if (temperature2 < 0.3) {
+          const scaled = inverseLerp(temperature2, 0.25, 0.3);
+          isFrozen = scaled < noise2 ? 1 : 0;
+        }
+        if (isFrozen) {
+          const frozenAmount = inverseLerp(temperature2, 0.3, 0);
+          const icebergChance = frozenAmount > heightP322;
+          return icebergChance ? 1 : 0;
+        }
+        return 0;
+      }
+    );
+  }
+
+  // src/terrain/vegetation.ts
+  function plantVegetation(temperature, heightP8, noise) {
+    return array2dMerge(
+      { temperature, heightP8, noise },
+      ({ temperature: temperature2, heightP8: heightP82, noise: noise2 }) => {
+        const suitability = 1 - Math.abs(temperature2 * noise2 - 0.5);
+        return suitability - 0.35 > heightP82 ? 1 : 0;
+      }
+    );
+  }
+
+  // src/terrain/index.ts
+  function createTerrain(width, height, terrainRegistry) {
+    const noise = array2dCreate(width, height, () => Math.random());
+    const heightP2 = array2dNormalize(perlin2dArray(width, height, 2));
+    const heightP4 = array2dNormalize(perlin2dArray(width, height, 4));
+    const heightP8 = array2dNormalize(perlin2dArray(width, height, 8));
+    const heightP16 = array2dNormalize(perlin2dArray(width, height, 16));
+    const heightP32 = array2dNormalize(perlin2dArray(width, height, 32));
+    const heightP64 = array2dNormalize(perlin2dArray(width, height, 64));
+    const rockHardness = array2dFlip(heightP16);
+    const roughness = array2dFlip(heightP4);
+    const heights = array2dNormalize(
+      array2dSum(
+        heightP2,
+        heightP4,
+        array2dScale(heightP8, 1 / 2),
+        array2dScale(heightP16, 1 / 3),
+        array2dProduct(heightP32, roughness, rockHardness, heightP4),
+        array2dScale(
+          array2dProduct(heightP64, roughness, rockHardness, heightP4),
+          4 / 5
+        )
+      )
+    );
+    const temperature = array2dNormalize(perlin2dArray(width, height, 2));
+    const snow = getSnow(noise, heights, temperature);
+    const sand = getSand(noise, heights, temperature);
+    const icebergs = getIcebergs(noise, heights, heightP32, temperature);
+    const gradient = findGradient(heights);
+    const angle = findAngle(heights);
+    const facingLeft = array2dNormalize(
+      array2dMap(angle, (value) => -Math.abs(value))
+    );
+    const sunlight = array2dNormalize(array2dProduct(gradient, facingLeft));
+    const coast = findCoasts(heights);
+    const biome = array2dMerge(
+      { heights, temperature, gradient, coast, rockHardness },
+      ({ heights: heights2, temperature: temperature2, gradient: gradient2, coast: coast2, rockHardness: rockHardness2 }) => getBiome(heights2, temperature2, gradient2, coast2, rockHardness2)
+    );
+    const features = findFeatures(heights);
+    const rainfall = runRainfall(heights, angle);
+    const rivers = identifyRivers(rainfall);
+    const vegetation = plantVegetation(temperature, heightP8, noise);
+    const colors = array2dMerge(
+      {
+        heights,
+        temperature,
+        biome,
+        sunlight,
+        snow,
+        sand,
+        icebergs,
+        rivers,
+        vegetation
+      },
+      ({
+        heights: heights2,
+        temperature: temperature2,
+        biome: biome2,
+        sunlight: sunlight2,
+        snow: snow2,
+        sand: sand2,
+        icebergs: icebergs2,
+        rivers: rivers2,
+        vegetation: vegetation4
+      }) => getTerrainColor(
+        heights2,
+        temperature2,
+        biome2,
+        sunlight2,
+        snow2,
+        sand2,
+        icebergs2,
+        rivers2,
+        vegetation4
+      )
+    );
+    terrainRegistry.push(
+      { name: "noise", kind: "number", values: noise },
+      { name: "heightP2", kind: "number", values: heightP2 },
+      { name: "heightP4", kind: "number", values: heightP4 },
+      { name: "heightP8", kind: "number", values: heightP8 },
+      { name: "heightP16", kind: "number", values: heightP16 },
+      { name: "heightP32", kind: "number", values: heightP32 },
+      { name: "heightP64", kind: "number", values: heightP64 },
+      { name: "rockHardness", kind: "number", values: rockHardness },
+      { name: "roughness", kind: "number", values: roughness },
+      { name: "heights", kind: "number", values: heights },
+      { name: "gradient", kind: "number", values: gradient },
+      { name: "angle", kind: "number", values: array2dNormalize(angle) },
+      { name: "facingLeft", kind: "number", values: facingLeft },
+      { name: "sunlight", kind: "number", values: sunlight },
+      { name: "temperature", kind: "number", values: temperature },
+      { name: "snow", kind: "number", values: snow },
+      { name: "sand", kind: "number", values: sand },
+      { name: "icebergs", kind: "number", values: icebergs },
+      { name: "vegetation", kind: "number", values: vegetation },
+      { name: "coast", kind: "number", values: coast },
+      { name: "biome", kind: "string", values: biome, colorMap: biomeColorMap },
+      { name: "rainfall", kind: "number", values: array2dNormalize(rainfall) },
+      { name: "rivers", kind: "number", values: rivers },
+      {
+        name: "features",
+        kind: "string",
+        values: features,
+        colorMap: featureColorMap
+      },
+      { name: "colors", kind: "color", values: colors }
+    );
+  }
+
+  // src/history/factories.ts
+  function initialiseHistory() {
+    const newHistory = initHistory();
+    populateWorld(newHistory);
+    return newHistory;
+  }
+  function initHistory() {
+    const terrainRegistry = [];
+    createTerrain(
+      config.worldWidth * config.terrainResolution,
+      config.worldHeight * config.terrainResolution,
+      terrainRegistry
+    );
+    return {
+      regions: createLookup(),
+      beings: createLookup(),
+      dialects: createLookup(),
+      artifacts: createLookup(),
+      log: createLogger(0),
+      tick: 0,
+      world: null,
+      terrainRegistry,
+      availableActions: []
+    };
+  }
+  function populateWorld(history3) {
+    history3.dialects.set({
+      language: generateLanguage(history3)
+    });
+    createWorldRegion(history3.regions);
+    createInitialDeities(history3);
+    if (history3.regions.map.size >= 1 && !history3.world) {
+      history3.world = createWorld(history3, config.worldWidth, config.worldHeight);
+    }
+  }
+  function createWorldRegion(regions) {
+    return regions.set({
+      name: createWorldName(),
+      discovered: true
+    });
+  }
+  var themesByName = /* @__PURE__ */ new Map();
+  function populatethemesByName() {
+    if (themesByName.size > 0) {
+      return;
+    }
+    config.themes.forEach((theme2) => {
+      themesByName.set(theme2.name, theme2);
+    });
+  }
+  var themesByCategory = /* @__PURE__ */ new Map();
+  function populateThemesByCategory() {
+    if (themesByCategory.size > 0) {
+      return;
+    }
+    config.themes.forEach((theme2) => {
+      theme2.categories.forEach((category) => {
+        if (!themesByCategory.has(category)) {
+          themesByCategory.set(category, []);
+        }
+        const themes = themesByCategory.get(category);
+        themes.push(theme2);
+      });
+    });
+  }
+  var themesByTag = /* @__PURE__ */ new Map();
+  function populateThemesByTag() {
+    if (themesByTag.size > 0) {
+      return;
+    }
+    config.themes.forEach((theme2) => {
+      theme2.tags.forEach((tag) => {
+        if (!themesByTag.has(tag)) {
+          themesByTag.set(tag, []);
+        }
+        const themes = themesByTag.get(tag);
+        themes.push(theme2);
+      });
+    });
+  }
+  function createInitialDeities(history3) {
+    const deityThemes = getDeityThemes();
+    const deities = deityThemes.map((deityTheme) => {
+      const deity = createDeity(history3.beings, deityTheme.theme);
+      history3.log(
+        `[[${deity.name}]] woke from their slumber.`,
+        [deity.id],
+        [],
+        []
+      );
+      return deity;
+    });
+    deityThemes.forEach((deityTheme) => {
+      const deity = deities.find((d) => d.theme === deityTheme.theme);
+      if (deityTheme.relationshipKind) {
+        deityTheme.relationshipTo?.forEach((relationshipTo) => {
+          const other = deities.find((d) => d.theme === relationshipTo);
+          deity.relationships[other.id] = {
+            kind: deityTheme.relationshipKind,
+            encounters: 0
+          };
+        });
+      }
+    });
+  }
+  function getDeityThemes() {
+    populatethemesByName();
+    populateThemesByCategory();
+    populateThemesByTag();
+    const selectedCategories = randomChoices(
+      [...themesByCategory.keys()],
+      randomInt(config.themeRange.min, config.themeRange.max)
+    );
+    const groups = selectedCategories.flatMap((category) => {
+      const themes = themesByCategory.get(category);
+      const isRelationship = rollDice(config.deityRelationshipChance);
+      const relationship = isRelationship ? getRelationship(themes.length) : void 0;
+      const themeNames = themes.map((theme2) => theme2.name);
+      return themes.map((theme2) => ({
+        theme: theme2.name,
+        relationshipKind: relationship,
+        relationshipTo: isRelationship ? themeNames.filter((name) => name !== theme2.name) : void 0
+      }));
+    });
+    return groups;
+  }
+  function getRelationship(count) {
+    if (count === 2) {
+      return randomChoice(["sibling", "partner", "lover"]);
+    } else {
+      return randomChoice(["sibling"]);
+    }
+  }
+  function createDeity(beings, theme2) {
+    return beings.set({
+      kind: "deity",
+      name: createDeityName(),
+      theme: theme2,
+      relationships: {},
+      needs: createDeityNeeds(),
+      preferences: createDeityPreferences(),
+      timesChosen: Object.fromEntries(
+        Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
+      ),
+      holding: []
+    });
+  }
+
   // src/index.tsx
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
   if (!root) {
     throw new Error("Could not find #root in document");
-  }
-  function initialiseHistory() {
-    const newHistory = initHistory();
-    populateWorld(newHistory);
-    return newHistory;
   }
   var history2 = initialiseHistory();
   function Wrapper() {
@@ -28464,6 +28541,8 @@
         runConversation(history2);
         history2.log.currentSystem = "artifactCreation";
         runArtifactCreation(history2);
+        history2.log.currentSystem = "artifactGiving";
+        runArtifactGiving(history2);
         history2.log.currentSystem = "symbolAdoption";
         runSymbolAdoption(history2);
         history2.log.currentSystem = "movement";
