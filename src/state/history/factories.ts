@@ -1,4 +1,4 @@
-import { Being, History } from "../history";
+import { Artifact, Being, CurrentActivity, Dialect, History, Region } from ".";
 import { config } from "../../config";
 import {
   randomChoice,
@@ -11,8 +11,57 @@ import {
   createDeityPreferences,
 } from "../decision/factories";
 import { Preferences } from "../decision/preference";
-import { createDeityName } from "../language";
-import { Lookup } from "./lookup";
+import { createDeityName, createWorldName } from "../language";
+import { generateLanguage } from "../language/language";
+import { createWorld } from "../world";
+import { Lookup, createLookup, lookupValues } from "./lookup";
+import { createLogger } from "../../log";
+import { createTerrain } from "../terrain";
+import { TerrainRegistry } from "../terrain/registry";
+
+export function initialiseHistory() {
+  const newHistory = initHistory();
+  populateWorld(newHistory);
+  return newHistory;
+}
+
+export function initHistory(): History {
+  const terrainRegistry: TerrainRegistry = [];
+  createTerrain(
+    config.worldWidth * config.terrainResolution,
+    config.worldHeight * config.terrainResolution,
+    terrainRegistry
+  );
+  return {
+    regions: createLookup<Region>(),
+    beings: createLookup<Being>(),
+    dialects: createLookup<Dialect>(),
+    artifacts: createLookup<Artifact>(),
+    log: createLogger(0),
+    tick: 0,
+    world: null,
+    terrainRegistry,
+    availableActions: [],
+  };
+}
+
+export function populateWorld(history: History): void {
+  history.dialects.set({
+    language: generateLanguage(history),
+  });
+  createWorldRegion(history.regions);
+  createInitialDeities(history);
+  if (history.regions.map.size >= 1 && !history.world) {
+    history.world = createWorld(history, config.worldWidth, config.worldHeight);
+  }
+}
+
+export function createWorldRegion(regions: Lookup<Region>): Region {
+  return regions.set({
+    name: createWorldName(),
+    discovered: true,
+  });
+}
 
 export type Theme = {
   name: string;

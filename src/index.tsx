@@ -1,6 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { initHistory } from "./worldgen";
-import { populateWorld } from "./worldgen/populate";
+import { initialiseHistory } from "./state/history/factories";
 import { Page } from "./components/page";
 import { runMovement } from "./systems/movement";
 import { runArtifactCreation } from "./systems/artifactCreation";
@@ -18,12 +17,6 @@ import { runArtifactGiving } from "./systems/artifactGiving";
 const root = document.getElementById("root");
 if (!root) {
   throw new Error("Could not find #root in document");
-}
-
-function initialiseHistory() {
-  const newHistory = initHistory();
-  populateWorld(newHistory);
-  return newHistory;
 }
 
 const history = initialiseHistory();

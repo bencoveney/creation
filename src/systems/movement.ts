@@ -1,10 +1,10 @@
-import { getDeitiesByActivity } from "../worldgen/populate";
 import {
   Being,
   Coordinate,
   CurrentMovementActivity,
   History,
   Region,
+  getDeitiesByActivity,
 } from "../state/history";
 import { Tile } from "../state/world";
 import { getFromLookupSafe } from "../state/history/lookup";

@@ -1,5 +1,9 @@
-import { getDeitiesByActivity } from "../worldgen/populate";
-import { Artifact, Being, History } from "../state/history";
+import {
+  Artifact,
+  Being,
+  History,
+  getDeitiesByActivity,
+} from "../state/history";
 import { randomChoice } from "../utils/random";
 import { Lookup, getFromLookup } from "../state/history/lookup";
 import { config } from "../config";

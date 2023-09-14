@@ -1,7 +1,6 @@
-import { History } from "../state/history";
+import { History, getDeities } from "../state/history";
 import { Language } from "../state/language/language";
 import { Region } from "./region";
-import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
 import { Grid, GridItem } from "./layout/grid";
 import { TerrainLayerPicker } from "./terrainLayerPicker";

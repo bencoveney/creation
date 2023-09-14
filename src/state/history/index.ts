@@ -3,7 +3,7 @@ import { HasAvailableActions } from "../../state/decision/action";
 import { HasNeeds } from "../../state/decision/need";
 import { Preferences } from "../../state/decision/preference";
 import { TerrainRegistry } from "../../state/terrain/registry";
-import { Lookup } from "./lookup";
+import { Lookup, lookupValues } from "./lookup";
 import { Language } from "../language/language";
 import { Tile, World } from "../world";
 
@@ -97,3 +97,16 @@ export type History = HasAvailableActions & {
   world: null | World;
   terrainRegistry: TerrainRegistry;
 };
+
+export function getDeities(beings: Lookup<Being>): Being[] {
+  return lookupValues(beings).filter((being) => being.kind === "deity");
+}
+
+export function getDeitiesByActivity(
+  beings: Lookup<Being>,
+  kind: CurrentActivity["kind"]
+): Being[] {
+  return getDeities(beings).filter(
+    (being) => being.currentActivity?.kind === kind
+  );
+}

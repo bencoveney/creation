@@ -3,8 +3,7 @@ import { satisfyNeed } from "../state/decision/need";
 import { array2dGet } from "../utils/array2d";
 import { getFromLookupSafe } from "../state/history/lookup";
 import { randomChoice } from "../utils/random";
-import { Being, Coordinate, History } from "../state/history";
-import { getDeities } from "../worldgen/populate";
+import { Being, Coordinate, History, getDeities } from "../state/history";
 import { Tile } from "../state/world";
 import { pathfind } from "../state/world/pathfind";
 

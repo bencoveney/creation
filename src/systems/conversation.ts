@@ -1,6 +1,9 @@
 import { getFromLookup } from "../state/history/lookup";
-import { CurrentConversationActivity, History } from "../state/history";
-import { getDeitiesByActivity } from "../worldgen/populate";
+import {
+  CurrentConversationActivity,
+  History,
+  getDeitiesByActivity,
+} from "../state/history";
 
 export function runConversation(history: History) {
   const deities = getDeitiesByActivity(history.beings, "conversation");

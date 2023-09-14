@@ -1,6 +1,6 @@
 import { History } from "../state/history";
 import { randomChoice } from "../utils/random";
-import { getDeitiesByActivity } from "../worldgen/populate";
+import { getDeitiesByActivity } from "../state/history";
 import { config } from "../config";
 
 export function runSymbolAdoption(history: History) {

@@ -1,5 +1,8 @@
-import { getDeitiesByActivity } from "../worldgen/populate";
-import { CurrentGiveArtifactActivity, History } from "../state/history";
+import {
+  CurrentGiveArtifactActivity,
+  History,
+  getDeitiesByActivity,
+} from "../state/history";
 import { getFromLookup } from "../state/history/lookup";
 import { Tile } from "../state/world";
 
