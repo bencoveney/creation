@@ -1,4 +1,4 @@
-import { History } from "../../worldgen";
+import { History } from "../../state/history";
 import { Language } from "../../worldgen/language";
 import { Terrain } from "./terrain";
 import { useHoverPosition } from "../../hooks/useHover";

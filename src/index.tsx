@@ -9,7 +9,7 @@ import { createPlaybackControls } from "./playback";
 import { useEffect, useMemo, useState } from "react";
 import { runDecision } from "./systems/decision";
 import { getQueryBool } from "./utils/queryParams";
-import { lookupFirstValue } from "./utils/lookup";
+import { lookupFirstValue } from "./state/history/lookup";
 import { config } from "./config";
 import { runConversation } from "./systems/conversation";
 import { runNeeds } from "./systems/needs";

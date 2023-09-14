@@ -1,7 +1,7 @@
-import { getDeities, getDeitiesByActivity } from "../worldgen/populate";
-import { Artifact, Being, History } from "../worldgen";
+import { getDeitiesByActivity } from "../worldgen/populate";
+import { Artifact, Being, History } from "../state/history";
 import { randomChoice } from "../utils/random";
-import { Lookup, getFromLookup } from "../utils/lookup";
+import { Lookup, getFromLookup } from "../state/history/lookup";
 import { config } from "../config";
 import { updateArtifactCreatedTileActions } from "../state/decision/factories";
 import { Tile } from "../worldgen/world";

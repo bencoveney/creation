@@ -1,4 +1,4 @@
-import { History, Region } from ".";
+import { History, Region } from "../state/history/index";
 import { config } from "../config";
 import { updateInitialTileActions } from "../state/decision/factories";
 import { TerrainAssessment, assessTerrain } from "../state/terrain/assess";
@@ -12,7 +12,7 @@ import {
   array2dGet,
   array2dIsInBounds,
 } from "../utils/array2d";
-import { NeedsId } from "../utils/lookup";
+import { NeedsId } from "../state/history/lookup";
 import { createRegionName } from "./populate";
 
 export type Tile = {

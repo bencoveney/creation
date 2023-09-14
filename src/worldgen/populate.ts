@@ -1,11 +1,11 @@
-import { Being, Region, History, CurrentActivity } from ".";
+import { Being, Region, History, CurrentActivity } from "../state/history";
 import { config } from "../config";
 import {
   createDeityNeeds,
   createDeityPreferences,
 } from "../state/decision/factories";
 import { Preferences } from "../state/decision/preference";
-import { Lookup, lookupValues } from "../utils/lookup";
+import { Lookup, lookupValues } from "../state/history/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
 import { generateLanguage } from "./language";

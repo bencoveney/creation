@@ -1,4 +1,4 @@
-import { Being, History } from "../../worldgen";
+import { Being, History } from "../history";
 import { Tile } from "../../worldgen/world";
 import { actionBroadcast, actionRevokeWhere } from "./action";
 import { Needs, createNeeds } from "./need";

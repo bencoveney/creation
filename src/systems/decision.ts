@@ -1,9 +1,9 @@
 import { getHighestPriorityAction } from "../state/decision";
 import { satisfyNeed } from "../state/decision/need";
 import { array2dGet } from "../utils/array2d";
-import { getFromLookupSafe } from "../utils/lookup";
+import { getFromLookupSafe } from "../state/history/lookup";
 import { randomChoice } from "../utils/random";
-import { Being, Coordinate, History } from "../worldgen";
+import { Being, Coordinate, History } from "../state/history";
 import { getDeities } from "../worldgen/populate";
 import { Tile, pathfind } from "../worldgen/world";
 

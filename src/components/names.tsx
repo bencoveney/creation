@@ -1,5 +1,5 @@
-import { lookupEntries } from "../utils/lookup";
-import { History } from "../worldgen";
+import { lookupEntries } from "../state/history/lookup";
+import { History } from "../state/history";
 import { getWord, getWords, spellWord, spellWords } from "../worldgen/language";
 import { CommaSeparate } from "./layout/commaSeparate";
 import { Name } from "./name";

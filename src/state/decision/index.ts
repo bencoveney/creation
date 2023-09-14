@@ -1,6 +1,6 @@
 import { config } from "../../config";
 import { inverseLerp } from "../../utils/maths";
-import { Being } from "../../worldgen";
+import { Being } from "../history";
 import { euclidianDistance, Tile } from "../../worldgen/world";
 import { Action } from "./action";
 

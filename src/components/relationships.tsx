@@ -1,5 +1,5 @@
-import { getFromLookup } from "../utils/lookup";
-import { History, Relationships } from "../worldgen";
+import { getFromLookup } from "../state/history/lookup";
+import { History, Relationships } from "../state/history";
 import { Language, getWord, spellWord } from "../worldgen/language";
 import { Name } from "./name";
 import { InspectProps } from "../hooks/useInspect";

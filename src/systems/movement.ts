@@ -5,9 +5,9 @@ import {
   CurrentMovementActivity,
   History,
   Region,
-} from "../worldgen";
+} from "../state/history";
 import { Tile } from "../worldgen/world";
-import { getFromLookupSafe } from "../utils/lookup";
+import { getFromLookupSafe } from "../state/history/lookup";
 import { array2dGet } from "../utils/array2d";
 import {
   updateBeingEnteredTileActions,

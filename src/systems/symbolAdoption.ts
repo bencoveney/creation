@@ -1,4 +1,4 @@
-import { History } from "../worldgen";
+import { History } from "../state/history";
 import { randomChoice } from "../utils/random";
 import { getDeitiesByActivity } from "../worldgen/populate";
 import { config } from "../config";

@@ -1,4 +1,4 @@
-import { History } from ".";
+import { History } from "../state/history";
 import { config } from "../config";
 import {
   randomChoice,

@@ -1,5 +1,5 @@
 import { config } from "../config";
-import { Being } from "../worldgen";
+import { Being } from "../state/history";
 
 export function Motif({ motif }: { motif: Being["motif"] | undefined }) {
   return (

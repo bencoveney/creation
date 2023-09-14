@@ -1,18 +1,16 @@
-import { History } from "../worldgen";
+import { History } from "../state/history";
 import { Language } from "../worldgen/language";
-import { getFromLookupSafe } from "../utils/lookup";
-import { config } from "../config";
 import { Region } from "./region";
 import { getDeities } from "../worldgen/populate";
 import { Being } from "./being";
 import { Grid, GridItem } from "./layout/grid";
-import { array2dGet } from "../utils/array2d";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
 import { TileValues } from "./tileValues";
 import { getTerrainLayer } from "../state/terrain/registry";
 import { Terrain } from "./map/terrain";
 import { getTile } from "../worldgen/world";
+import { InspectProps } from "../hooks/useInspect";
 
 export function WorldSelection({
   history,
@@ -21,6 +19,7 @@ export function WorldSelection({
   selectionY,
   setTerrainLayer,
   terrainLayer,
+  inspect,
 }: {
   history: History;
   language: Language;
@@ -28,7 +27,7 @@ export function WorldSelection({
   selectionY: number;
   setTerrainLayer: (name: string) => void;
   terrainLayer: string;
-}) {
+} & InspectProps) {
   if (!history.world) {
     return null;
   }
@@ -63,7 +62,12 @@ export function WorldSelection({
           .filter((deity) => deity.location === selectedTile.id)
           .map((deity, index) => (
             <GridItem key={index}>
-              <Being being={deity} history={history} language={language} />
+              <Being
+                being={deity}
+                history={history}
+                language={language}
+                inspect={inspect}
+              />
             </GridItem>
           ))}
     </Grid>

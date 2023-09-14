@@ -1,4 +1,4 @@
-import { CurrentActivity } from "../worldgen";
+import { CurrentActivity } from "../state/history";
 
 export function CurrentActivity({
   currentActivity,

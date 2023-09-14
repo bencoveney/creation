@@ -1,4 +1,4 @@
-import { Being } from "../../worldgen";
+import { Being } from "../history";
 import { Tile } from "../../worldgen/world";
 import { Needs } from "./need";
 

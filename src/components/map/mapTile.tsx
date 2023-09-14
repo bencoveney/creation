@@ -1,6 +1,6 @@
-import { History } from "../../worldgen";
+import { History } from "../../state/history";
 import { Language, getWords, spellWords } from "../../worldgen/language";
-import { lookupValues } from "../../utils/lookup";
+import { lookupValues } from "../../state/history/lookup";
 import { Tile } from "../../worldgen/world";
 import { Name } from "./../name";
 import { Tooltip } from "./../layout/tooltip";

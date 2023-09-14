@@ -1,5 +1,5 @@
 import { updateNeeds } from "../state/decision/need";
-import { History } from "../worldgen";
+import { History } from "../state/history";
 import { getDeities } from "../worldgen/populate";
 
 export function runNeeds(history: History): void {

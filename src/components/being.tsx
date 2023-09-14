@@ -1,4 +1,4 @@
-import { History, Being } from "../worldgen";
+import { History, Being } from "../state/history";
 import { Language, getWord, spellWord } from "../worldgen/language";
 import { Id } from "./layout/id";
 import { Motif } from "./motif";

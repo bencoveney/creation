@@ -1,4 +1,4 @@
-import { History, Region } from "../worldgen";
+import { History, Region } from "../state/history";
 import { Id } from "./layout/id";
 import { Names } from "./names";
 

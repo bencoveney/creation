@@ -1,4 +1,4 @@
-import { History } from "../worldgen";
+import { History } from "../state/history";
 import { Language, getWords, spellWords } from "../worldgen/language";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";

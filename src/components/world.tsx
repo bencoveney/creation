@@ -1,16 +1,18 @@
-import { History } from "../worldgen";
+import { History } from "../state/history";
 import { Language } from "../worldgen/language";
 import { useCallback, useState } from "react";
 import { Map } from "./map/map";
 import { WorldSelection } from "./worldSelection";
+import { InspectProps } from "../hooks/useInspect";
 
 export function World({
   history,
   language,
+  inspect,
 }: {
   history: History;
   language: Language;
-}) {
+} & InspectProps) {
   if (!history.world) {
     return null;
   }
@@ -54,6 +56,7 @@ export function World({
           selectionY={selectionY}
           setTerrainLayer={setTerrainLayer}
           terrainLayer={terrainLayer}
+          inspect={inspect}
         />
       </div>
     </div>

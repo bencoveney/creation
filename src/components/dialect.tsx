@@ -1,4 +1,4 @@
-import { History, Dialect } from "../worldgen";
+import { History, Dialect } from "../state/history";
 import { spellPhoneme, spellWord } from "../worldgen/language";
 import { Id } from "./layout/id";
 import { Names } from "./names";

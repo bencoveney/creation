@@ -1,4 +1,4 @@
-import { History, Artifact } from "../worldgen";
+import { History, Artifact } from "../state/history";
 import { Id } from "./layout/id";
 import { Names } from "./names";
 

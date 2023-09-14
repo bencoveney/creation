@@ -1,5 +1,5 @@
-import { getFromLookup } from "../utils/lookup";
-import { CurrentConversationActivity, History } from "../worldgen";
+import { getFromLookup } from "../state/history/lookup";
+import { CurrentConversationActivity, History } from "../state/history";
 import { getDeitiesByActivity } from "../worldgen/populate";
 
 export function runConversation(history: History) {
