@@ -9,7 +9,7 @@ import { TerrainValues } from "./terrainValues";
 import { TileValues } from "./tileValues";
 import { getTerrainLayer } from "../state/terrain/registry";
 import { Terrain } from "./map/terrain";
-import { getTile } from "../state/world/world";
+import { getTile } from "../state/world";
 import { InspectProps } from "../hooks/useInspect";
 
 export function WorldSelection({

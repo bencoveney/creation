@@ -1,7 +1,7 @@
 import { History } from "../../state/history";
 import { Language, getWords, spellWords } from "../../state/language/language";
 import { lookupValues } from "../../state/history/lookup";
-import { Tile } from "../../state/world/world";
+import { Tile } from "../../state/world";
 import { Name } from "./../name";
 import { Tooltip } from "./../layout/tooltip";
 import { Motif } from "./../motif";

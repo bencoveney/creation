@@ -5,7 +5,7 @@ import { Preferences } from "../../state/decision/preference";
 import { TerrainRegistry } from "../../state/terrain/registry";
 import { Lookup } from "./lookup";
 import { Language } from "../language/language";
-import { Tile, World } from "../world/world";
+import { Tile, World } from "../world";
 
 export type Region = {
   id: string;

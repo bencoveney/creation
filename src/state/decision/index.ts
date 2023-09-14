@@ -1,7 +1,7 @@
 import { config } from "../../config";
 import { inverseLerp } from "../../utils/maths";
 import { Being } from "../history";
-import { euclidianDistance, Tile } from "../world/world";
+import { euclidianDistance, Tile } from "../world";
 import { Action } from "./action";
 
 const maxDistance = euclidianDistance(
