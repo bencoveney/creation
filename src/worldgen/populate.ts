@@ -8,7 +8,7 @@ import { Preferences } from "../state/decision/preference";
 import { Lookup, lookupValues } from "../state/history/lookup";
 import { flipCoin, randomChoice, randomInt } from "../utils/random";
 import { createInitialDeities } from "./deities";
-import { generateLanguage } from "./language";
+import { generateLanguage } from "../state/language/language";
 import { createWorld } from "./world";
 
 export function populateWorld(history: History): void {

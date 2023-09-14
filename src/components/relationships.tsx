@@ -1,6 +1,6 @@
 import { getFromLookup } from "../state/history/lookup";
 import { History, Relationships } from "../state/history";
-import { Language, getWord, spellWord } from "../worldgen/language";
+import { Language, getWord, spellWord } from "../state/language/language";
 import { Name } from "./name";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";

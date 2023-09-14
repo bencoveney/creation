@@ -1,5 +1,5 @@
 import { History } from "../state/history";
-import { Language, getWords, spellWords } from "../worldgen/language";
+import { Language, getWords, spellWords } from "../state/language/language";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";
 import { Fragment, useState } from "react";

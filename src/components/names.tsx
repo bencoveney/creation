@@ -1,6 +1,11 @@
 import { lookupEntries } from "../state/history/lookup";
 import { History } from "../state/history";
-import { getWord, getWords, spellWord, spellWords } from "../worldgen/language";
+import {
+  getWord,
+  getWords,
+  spellWord,
+  spellWords,
+} from "../state/language/language";
 import { CommaSeparate } from "./layout/commaSeparate";
 import { Name } from "./name";
 

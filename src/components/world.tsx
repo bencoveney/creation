@@ -1,5 +1,5 @@
 import { History } from "../state/history";
-import { Language } from "../worldgen/language";
+import { Language } from "../state/language/language";
 import { useCallback, useState } from "react";
 import { Map } from "./map/map";
 import { WorldSelection } from "./worldSelection";

@@ -4,7 +4,7 @@ import { HasNeeds } from "../../state/decision/need";
 import { Preferences } from "../../state/decision/preference";
 import { TerrainRegistry } from "../../state/terrain/registry";
 import { Lookup } from "./lookup";
-import { Language } from "../../worldgen/language";
+import { Language } from "../language/language";
 import { Tile, World } from "../../worldgen/world";
 
 export type Region = {

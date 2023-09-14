@@ -1,5 +1,5 @@
 import { History } from "../state/history";
-import { Language } from "../worldgen/language";
+import { Language } from "../state/language/language";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";

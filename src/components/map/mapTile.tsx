@@ -1,5 +1,5 @@
 import { History } from "../../state/history";
-import { Language, getWords, spellWords } from "../../worldgen/language";
+import { Language, getWords, spellWords } from "../../state/language/language";
 import { lookupValues } from "../../state/history/lookup";
 import { Tile } from "../../worldgen/world";
 import { Name } from "./../name";

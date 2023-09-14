@@ -1,5 +1,5 @@
 import { History, Dialect } from "../state/history";
-import { spellPhoneme, spellWord } from "../worldgen/language";
+import { spellPhoneme, spellWord } from "../state/language/language";
 import { Id } from "./layout/id";
 import { Names } from "./names";
 import { Tags, TagsItem } from "./layout/tags";

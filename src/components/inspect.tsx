@@ -1,7 +1,7 @@
 import { InspectProps, Inspected } from "../hooks/useInspect";
 import { getFromLookup } from "../state/history/lookup";
 import { Artifact, Being, History, Region } from "../state/history";
-import { Language } from "../worldgen/language";
+import { Language } from "../state/language/language";
 import { Being as BeingComponent } from "./being";
 import { VerticalSplit } from "./layout/verticalSplit";
 import { Log } from "./log";
