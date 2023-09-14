@@ -18,3 +18,4 @@ Procedural world/history generation
 - Display decision frequency
 - artifacts can be given stored, stolen - started giveArtifact
 - activities take time
+- actvities will be simpler to manage if they live on being + tile as well as world.

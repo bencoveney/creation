@@ -97,6 +97,6 @@ function floodFill(
 const black: Color = { r: 0, g: 0, b: 0 };
 const white: Color = { r: 0, g: 0, b: 0 };
 export const featureColorMap: TerrainColorMap = {
-  // lol
+  // TODO: Should have a way to give each one a different color
   "": white,
 };
