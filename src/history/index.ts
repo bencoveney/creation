@@ -1,5 +1,9 @@
 import { Logger } from "../log";
-import { HasAvailableActions } from "../decision/action";
+import {
+  BeingAction,
+  HasAvailableActions,
+  TileAction,
+} from "../decision/action";
 import { HasNeeds } from "../decision/need";
 import { Preferences } from "../decision/preference";
 import { TerrainRegistry } from "../terrain/registry";
@@ -60,19 +64,20 @@ export type Relationships = {
   };
 };
 
-export type Being = HasNeeds & {
-  id: string;
-  kind: "deity";
-  name: string;
-  theme?: string;
-  location?: string; // Region ID.
-  motif?: Motif;
-  currentActivity?: CurrentActivity;
-  holding: string[];
-  relationships: Relationships;
-  preferences: Preferences;
-  timesChosen: Preferences;
-};
+export type Being = HasAvailableActions<BeingAction> &
+  HasNeeds & {
+    id: string;
+    kind: "deity";
+    name: string;
+    theme?: string;
+    location?: string; // Region ID.
+    motif?: Motif;
+    currentActivity?: CurrentActivity;
+    holding: string[];
+    relationships: Relationships;
+    preferences: Preferences;
+    timesChosen: Preferences;
+  };
 
 export type Dialect = {
   id: string;
@@ -87,7 +92,7 @@ export type Artifact = {
   inPosessionOf: string;
 };
 
-export type History = HasAvailableActions & {
+export type History = HasAvailableActions<TileAction> & {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
   dialects: Lookup<Dialect>;

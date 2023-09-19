@@ -1,3 +1,4 @@
+import { updateBeingHoldingActions } from "../decision/factories";
 import {
   CurrentGiveArtifactActivity,
   History,
@@ -23,5 +24,7 @@ export function runArtifactGiving(history: History) {
     deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
     target.holding.push(artifact.id);
     deity.currentActivity = undefined;
+    updateBeingHoldingActions(deity);
+    updateBeingHoldingActions(target);
   });
 }

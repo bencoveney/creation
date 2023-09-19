@@ -21,7 +21,6 @@ export function Being({
   history: History;
   language: Language;
 } & InspectProps) {
-  const languageName = spellWord(getWord(language.name, language));
   return (
     <>
       <Id value={being.id} /> {being.name}:

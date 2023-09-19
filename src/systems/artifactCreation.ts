@@ -2,7 +2,10 @@ import { Artifact, Being, History, getDeitiesByActivity } from "../history";
 import { randomChoice } from "../utils/random";
 import { Lookup, getFromLookup } from "../history/lookup";
 import { config } from "../config";
-import { updateArtifactCreatedTileActions } from "../decision/factories";
+import {
+  updateArtifactCreatedTileActions,
+  updateBeingHoldingActions,
+} from "../decision/factories";
 import { Tile } from "../world";
 
 export function createArtifact(
@@ -36,5 +39,6 @@ export function runArtifactCreation(history: History) {
     deity.holding.push(artifact.id);
     deity.currentActivity = undefined;
     updateArtifactCreatedTileActions(history, tile);
+    updateBeingHoldingActions(deity);
   });
 }

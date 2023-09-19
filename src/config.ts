@@ -145,6 +145,7 @@ export const config = {
     { name: "bar", unicode: "❙" },
   ],
   deityRelationshipChance: 0.75,
+  deityHoldingLimit: 3,
   movementChance: 0.2,
   worldWidth: 10,
   worldHeight: 10,

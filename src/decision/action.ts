@@ -2,48 +2,60 @@ import { Being } from "../history";
 import { Tile } from "../world";
 import { Needs } from "./need";
 
-export type Action = {
+export type BeingAction = {
+  kind: "being";
+  action: "giveArtifact";
+  satisfies: keyof Needs;
+  target: Being;
+  requires: {
+    holding?: boolean;
+    owner?: "different" | "same";
+  };
+};
+
+export type TileAction = {
+  kind: "tile";
   action:
     | "travel"
     | "discover"
     | "rest"
     | "createArtifact"
     | "adoptSymbol"
-    | "conversation"
-    | "giveArtifact";
+    | "conversation";
   satisfies: keyof Needs;
   location: Tile;
   target?: Being;
   requires: {
     location?: "different" | "same";
     motif?: "present" | "missing";
-    holdingArtifact?: boolean;
   };
 };
 
-export type HasAvailableActions = {
-  availableActions: Action[];
+export type Action = BeingAction | TileAction;
+
+export type HasAvailableActions<T extends Action = Action> = {
+  availableActions: T[];
 };
 
-export function actionBroadcast(
-  hasActions: HasAvailableActions,
-  ...toAdd: Action[]
+export function actionBroadcast<T extends Action = Action>(
+  hasActions: HasAvailableActions<T>,
+  ...toAdd: T[]
 ): void {
   hasActions.availableActions = hasActions.availableActions.concat(toAdd);
 }
 
-export function actionRevoke(
-  hasActions: HasAvailableActions,
-  ...toRemove: Action[]
+export function actionRevoke<T extends Action = Action>(
+  hasActions: HasAvailableActions<T>,
+  ...toRemove: T[]
 ): void {
   hasActions.availableActions = hasActions.availableActions.filter((action) =>
     toRemove.includes(action)
   );
 }
 
-export function actionRevokeWhere(
-  hasActions: HasAvailableActions,
-  action: Action["action"],
+export function actionTileRevokeWhere(
+  hasActions: HasAvailableActions<TileAction>,
+  action: TileAction["action"],
   location: Tile,
   target?: Being,
   allowClaim?: boolean
@@ -62,4 +74,13 @@ export function actionRevokeWhere(
     throw new Error("Expected to revoke something");
   }
   hasActions.availableActions = filtered;
+}
+
+export function actionBeingRevokeWhere(
+  hasActions: HasAvailableActions<BeingAction>,
+  action: BeingAction["action"]
+): void {
+  hasActions.availableActions = hasActions.availableActions.filter(
+    (availableAction) => availableAction.action !== action
+  );
 }

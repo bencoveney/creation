@@ -9,6 +9,7 @@ import {
 import {
   createDeityNeeds,
   createDeityPreferences,
+  updateBeingHoldingActions,
 } from "../decision/factories";
 import { Preferences } from "../decision/preference";
 import { createDeityName, createWorldName } from "../language";
@@ -179,7 +180,7 @@ function getRelationship(count: number): string {
 }
 
 function createDeity(beings: Lookup<Being>, theme: string): Being {
-  return beings.set({
+  const deity = beings.set({
     kind: "deity",
     name: createDeityName(),
     theme,
@@ -190,7 +191,10 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
       Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
     ) as Preferences,
     holding: [],
+    availableActions: [],
   });
+  updateBeingHoldingActions(deity);
+  return deity;
 }
 
 // Other stuff to maybe incorporate.

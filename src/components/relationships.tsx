@@ -17,7 +17,7 @@ export function Relationships({
   language: Language;
 } & InspectProps) {
   if (Object.entries(relationships).length === 0) {
-    return;
+    return null;
   }
   const languageName = spellWord(getWord(language.name, language));
   return (

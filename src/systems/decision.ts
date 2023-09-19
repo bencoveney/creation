@@ -1,11 +1,12 @@
-import { getHighestPriorityAction } from "../decision";
+import { getAvailableActions, getHighestPriorityAction } from "../decision";
 import { satisfyNeed } from "../decision/need";
 import { array2dGet } from "../utils/array2d";
-import { getFromLookupSafe } from "../history/lookup";
+import { getFromLookupSafe, lookupValues } from "../history/lookup";
 import { randomChoice } from "../utils/random";
 import { Being, Coordinate, History, getDeities } from "../history";
 import { Tile } from "../world";
 import { pathfind } from "../world/pathfind";
+import { BeingAction, TileAction } from "../decision/action";
 
 // Something along these lines.
 //
@@ -22,104 +23,38 @@ export function runDecision(history: History) {
     return;
   }
 
-  const deities = getDeities(history.beings);
-  const availableActions = history.availableActions;
-  const availableDeities = deities.filter((deity) => !deity.currentActivity);
-  availableDeities.forEach((deity) => {
+  const beings = lookupValues(history.beings);
+  const availableBeings = beings.filter((being) => !being.currentActivity);
+  availableBeings.forEach((being) => {
     const currentLocation = history.world!.values.find(
-      (tile) => tile.id === deity.location
+      (tile) => tile.id === being.location
     );
     if (currentLocation) {
+      const availableActions = getAvailableActions(history, currentLocation);
       const action = getHighestPriorityAction(
         availableActions,
-        deity,
+        being,
         currentLocation
       );
 
-      satisfyNeed(deity, action);
-      deity.timesChosen[action.action]++;
+      satisfyNeed(being, action);
+      being.timesChosen[action.action]++;
 
-      const targetRegionName = !action.location.discovered
-        ? "an unknown land"
-        : `[[${action.location.name}]]`;
-
-      const locationIds: string[] = [currentLocation.id];
-      const beingIds: string[] = [deity.id];
-
-      if (action.action === "discover" || action.action === "travel") {
-        deity.currentActivity = {
-          kind: "movement",
-          moveToLocation: action.location,
-          path: getPathToTargetLocation(deity, action.location, history),
-        };
-        locationIds.push(action.location.id);
-      } else if (action.action === "createArtifact") {
-        deity.currentActivity = {
-          kind: "createArtifact",
-        };
-      } else if (action.action === "giveArtifact") {
-        if (!action.target) {
-          console.error("what");
+      switch (action.kind) {
+        case "tile":
+          doTileAction(history, being, currentLocation, action);
           return;
-        }
-        const artifact = randomChoice(deity.holding);
-        if (!artifact) {
-          console.error("what");
+        case "being":
+          doBeingAction(history, being, currentLocation, action);
           return;
-        }
-        deity.currentActivity = {
-          kind: "giveArtifact",
-          target: action.target.id,
-          artifact: artifact,
-        };
-      } else if (action.action === "adoptSymbol") {
-        deity.currentActivity = {
-          kind: "adoptSymbol",
-        };
-      } else if (action.action === "conversation") {
-        if (!action.target) {
-          console.error("what");
-          return;
-        }
-        deity.currentActivity = {
-          kind: "conversation",
-          target: action.target.id,
-        };
-        beingIds.push(action.target.id);
       }
-
-      history.log(
-        `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`,
-        beingIds,
-        locationIds,
-        []
-      );
     } else {
-      const targetLocation = getDeityTargetLocation(deity, history);
-      if (!targetLocation) {
-        return;
-      }
-
-      const targetRegionName = !targetLocation.discovered
-        ? "an unknown land"
-        : `[[${targetLocation.name}]]`;
-      history.log(
-        `[[${deity.name}]] set out for ${targetRegionName} in ${targetRegionName}`,
-        [deity.id],
-        [targetLocation.id],
-        []
-      );
-
-      deity.currentActivity = {
-        kind: "movement",
-        moveToLocation: targetLocation,
-        path: getPathToTargetLocation(deity, targetLocation, history),
-      };
+      doEntryAction(history, being);
     }
   });
 }
 
-function getDeityTargetLocation(
+function pickRandomTargetTile(
   deity: Being,
   history: History
 ): Tile | undefined {
@@ -159,4 +94,112 @@ function getPathToTargetLocation(
     console.error("weird");
   }
   return path;
+}
+
+function doTileAction(
+  history: History,
+  being: Being,
+  currentLocation: Tile,
+  action: TileAction
+) {
+  const locationIds: string[] = [currentLocation.id];
+  const beingIds: string[] = [being.id];
+
+  if (action.action === "discover" || action.action === "travel") {
+    being.currentActivity = {
+      kind: "movement",
+      moveToLocation: action.location,
+      path: getPathToTargetLocation(being, action.location, history),
+    };
+    locationIds.push(action.location.id);
+  } else if (action.action === "createArtifact") {
+    being.currentActivity = {
+      kind: "createArtifact",
+    };
+  } else if (action.action === "adoptSymbol") {
+    being.currentActivity = {
+      kind: "adoptSymbol",
+    };
+  } else if (action.action === "conversation") {
+    if (!action.target) {
+      console.error("what");
+      return;
+    }
+    being.currentActivity = {
+      kind: "conversation",
+      target: action.target.id,
+    };
+    beingIds.push(action.target.id);
+  }
+
+  history.log(
+    `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+      currentLocation
+    )}`,
+    beingIds,
+    locationIds,
+    []
+  );
+}
+
+function doBeingAction(
+  history: History,
+  being: Being,
+  currentLocation: Tile,
+  action: BeingAction
+) {
+  const targetRegionName = !currentLocation.discovered
+    ? "an unknown land"
+    : `[[${currentLocation.name}]]`;
+
+  const locationIds: string[] = [currentLocation.id];
+  const beingIds: string[] = [being.id];
+
+  if (action.action === "giveArtifact") {
+    if (!action.target) {
+      console.error("what");
+      return;
+    }
+    const artifact = randomChoice(being.holding);
+    if (!artifact) {
+      console.error("what");
+      return;
+    }
+    being.currentActivity = {
+      kind: "giveArtifact",
+      target: action.target.id,
+      artifact: artifact,
+    };
+  }
+
+  history.log(
+    `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+      currentLocation
+    )}`,
+    beingIds,
+    locationIds,
+    []
+  );
+}
+
+function doEntryAction(history: History, being: Being) {
+  const targetLocation = pickRandomTargetTile(being, history);
+  if (!targetLocation) {
+    return;
+  }
+  history.log(
+    `[[${being.name}]] set out for ${getRegionName(targetLocation)}`,
+    [being.id],
+    [targetLocation.id],
+    []
+  );
+  being.currentActivity = {
+    kind: "movement",
+    moveToLocation: targetLocation,
+    path: getPathToTargetLocation(being, targetLocation, history),
+  };
+}
+
+function getRegionName(tile: Tile) {
+  return !tile.discovered ? "an unknown land" : `[[${tile.name}]]`;
 }

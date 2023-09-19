@@ -1,6 +1,11 @@
+import { config } from "../config";
 import { Being, History } from "../history";
 import { Tile } from "../world";
-import { actionBroadcast, actionRevokeWhere } from "./action";
+import {
+  actionBeingRevokeWhere,
+  actionBroadcast,
+  actionTileRevokeWhere,
+} from "./action";
 import { Needs, createNeeds } from "./need";
 import {
   Preferences,
@@ -30,6 +35,7 @@ export function createDeityNeeds(): Needs {
 
 export function updateInitialTileActions(history: History, tile: Tile): void {
   actionBroadcast(history, {
+    kind: "tile",
     action: "discover",
     satisfies: "explore",
     location: tile,
@@ -38,6 +44,7 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
     },
   });
   actionBroadcast(history, {
+    kind: "tile",
     action: "rest",
     satisfies: "rest",
     location: tile,
@@ -47,6 +54,7 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
   });
   if (Math.random() > 0.5) {
     actionBroadcast(history, {
+      kind: "tile",
       action: "createArtifact",
       satisfies: "create",
       location: tile,
@@ -58,6 +66,7 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
   }
   if (Math.random() > 0.5) {
     actionBroadcast(history, {
+      kind: "tile",
       action: "adoptSymbol",
       satisfies: "create",
       location: tile,
@@ -74,6 +83,7 @@ export function updateDiscoveredTileActions(
   tile: Tile
 ): void {
   actionBroadcast(history, {
+    kind: "tile",
     action: "travel",
     satisfies: "explore",
     location: tile,
@@ -81,7 +91,7 @@ export function updateDiscoveredTileActions(
       location: "different",
     },
   });
-  actionRevokeWhere(history, "discover", tile);
+  actionTileRevokeWhere(history, "discover", tile);
 }
 
 export function updateArtifactCreatedTileActions(
@@ -90,7 +100,7 @@ export function updateArtifactCreatedTileActions(
 ): void {
   // Allow claim is jank. If 2 beings try to create an artifact in the same place
   // at the same time then they will both try to "claim" and revoke that action.
-  actionRevokeWhere(history, "createArtifact", tile, undefined, true);
+  actionTileRevokeWhere(history, "createArtifact", tile, undefined, true);
 }
 
 export function updateBeingEnteredTileActions(
@@ -99,22 +109,13 @@ export function updateBeingEnteredTileActions(
   being: Being
 ): void {
   actionBroadcast(history, {
+    kind: "tile",
     action: "conversation",
     satisfies: "socialise",
     location: tile,
     target: being,
     requires: {
       location: "same",
-    },
-  });
-  actionBroadcast(history, {
-    action: "giveArtifact",
-    satisfies: "socialise",
-    location: tile,
-    target: being,
-    requires: {
-      location: "same",
-      holdingArtifact: true,
     },
   });
 }
@@ -124,6 +125,23 @@ export function updateBeingExitedTileActions(
   tile: Tile,
   being: Being
 ): void {
-  actionRevokeWhere(history, "conversation", tile, being);
-  actionRevokeWhere(history, "giveArtifact", tile, being);
+  actionTileRevokeWhere(history, "conversation", tile, being);
+}
+
+export function updateBeingHoldingActions(being: Being): void {
+  // Revoke, and add back if missing.
+  // Maybe add some upsert helpers in the future.
+  actionBeingRevokeWhere(being, "giveArtifact");
+  if (being.holding.length < config.deityHoldingLimit) {
+    actionBroadcast(being, {
+      kind: "being",
+      action: "giveArtifact",
+      satisfies: "socialise",
+      target: being,
+      requires: {
+        holding: true,
+        owner: "different",
+      },
+    });
+  }
 }
