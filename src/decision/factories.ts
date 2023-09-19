@@ -43,15 +43,6 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
       location: "different",
     },
   });
-  actionBroadcast(history, {
-    kind: "tile",
-    action: "rest",
-    satisfies: "rest",
-    location: tile,
-    requires: {
-      location: "same",
-    },
-  });
   if (Math.random() > 0.5) {
     actionBroadcast(history, {
       kind: "tile",
@@ -114,6 +105,19 @@ export function updateBeingExitedTileActions(
   being: Being
 ): void {
   actionTileRevokeWhere(history, "conversation", tile, being);
+}
+
+export function initialBeingActions(being: Being): void {
+  actionBroadcast(being, {
+    kind: "being",
+    action: "rest",
+    satisfies: "rest",
+    target: being,
+    requires: {
+      owner: "same",
+    },
+  });
+  updateBeingActions(being);
 }
 
 export function updateBeingActions(being: Being): void {
