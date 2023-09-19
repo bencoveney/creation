@@ -24638,6 +24638,7 @@
       { name: "bar", unicode: "\u2759" }
     ],
     deityRelationshipChance: 0.75,
+    deityHoldingLimit: 3,
     movementChance: 0.2,
     worldWidth: 10,
     worldHeight: 10,
@@ -25540,7 +25541,7 @@
   var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
   function CommaSeparate({ children }) {
     if (!Array.isArray(children)) {
-      return children;
+      throw new Error("What");
     }
     return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_jsx_runtime12.Fragment, { children: children.map((child, i) => [i > 0 && ", ", child]) });
   }
@@ -25669,7 +25670,7 @@
   function TimesChosen({ timesChosen }) {
     return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h3", { children: "Times Chosen" }),
-      Object.entries(timesChosen).map(([name, value]) => {
+      Object.entries(timesChosen).filter(([_, value]) => value > 0).map(([name, value]) => {
         return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
           name,
           ": ",
@@ -25688,7 +25689,7 @@
     inspect
   }) {
     if (Object.entries(relationships).length === 0) {
-      return;
+      return null;
     }
     const languageName = spellWord(getWord(language.name, language));
     return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
@@ -25732,7 +25733,6 @@
     language,
     inspect
   }) {
-    const languageName = spellWord(getWord(language.name, language));
     return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Id, { value: being.id }),
       " ",
@@ -26664,7 +26664,7 @@
   function actionBroadcast(hasActions, ...toAdd) {
     hasActions.availableActions = hasActions.availableActions.concat(toAdd);
   }
-  function actionRevokeWhere(hasActions, action, location, target, allowClaim) {
+  function actionTileRevokeWhere(hasActions, action, location, target, allowClaim) {
     const prevLength = hasActions.availableActions.length;
     const filtered = hasActions.availableActions.filter((availableAction) => {
       const actionMatch = availableAction.action === action;
@@ -26679,6 +26679,11 @@
       throw new Error("Expected to revoke something");
     }
     hasActions.availableActions = filtered;
+  }
+  function actionBeingRevokeWhere(hasActions, action) {
+    hasActions.availableActions = hasActions.availableActions.filter(
+      (availableAction) => availableAction.action !== action
+    );
   }
 
   // src/decision/need.ts
@@ -26746,6 +26751,7 @@
   }
   function updateInitialTileActions(history3, tile) {
     actionBroadcast(history3, {
+      kind: "tile",
       action: "discover",
       satisfies: "explore",
       location: tile,
@@ -26753,16 +26759,9 @@
         location: "different"
       }
     });
-    actionBroadcast(history3, {
-      action: "rest",
-      satisfies: "rest",
-      location: tile,
-      requires: {
-        location: "same"
-      }
-    });
     if (Math.random() > 0.5) {
       actionBroadcast(history3, {
+        kind: "tile",
         action: "createArtifact",
         satisfies: "create",
         location: tile,
@@ -26772,20 +26771,10 @@
         }
       });
     }
-    if (Math.random() > 0.5) {
-      actionBroadcast(history3, {
-        action: "adoptSymbol",
-        satisfies: "create",
-        location: tile,
-        requires: {
-          location: "same",
-          motif: "missing"
-        }
-      });
-    }
   }
   function updateDiscoveredTileActions(history3, tile) {
     actionBroadcast(history3, {
+      kind: "tile",
       action: "travel",
       satisfies: "explore",
       location: tile,
@@ -26793,13 +26782,14 @@
         location: "different"
       }
     });
-    actionRevokeWhere(history3, "discover", tile);
+    actionTileRevokeWhere(history3, "discover", tile);
   }
   function updateArtifactCreatedTileActions(history3, tile) {
-    actionRevokeWhere(history3, "createArtifact", tile, void 0, true);
+    actionTileRevokeWhere(history3, "createArtifact", tile, void 0, true);
   }
   function updateBeingEnteredTileActions(history3, tile, being) {
     actionBroadcast(history3, {
+      kind: "tile",
       action: "conversation",
       satisfies: "socialise",
       location: tile,
@@ -26808,20 +26798,48 @@
         location: "same"
       }
     });
-    actionBroadcast(history3, {
-      action: "giveArtifact",
-      satisfies: "socialise",
-      location: tile,
-      target: being,
-      requires: {
-        location: "same",
-        holdingArtifact: true
-      }
-    });
   }
   function updateBeingExitedTileActions(history3, tile, being) {
-    actionRevokeWhere(history3, "conversation", tile, being);
-    actionRevokeWhere(history3, "giveArtifact", tile, being);
+    actionTileRevokeWhere(history3, "conversation", tile, being);
+  }
+  function initialBeingActions(being) {
+    actionBroadcast(being, {
+      kind: "being",
+      action: "rest",
+      satisfies: "rest",
+      target: being,
+      requires: {
+        owner: "same"
+      }
+    });
+    updateBeingActions(being);
+  }
+  function updateBeingActions(being) {
+    actionBeingRevokeWhere(being, "giveArtifact");
+    if (being.holding.length < config.deityHoldingLimit) {
+      actionBroadcast(being, {
+        kind: "being",
+        action: "giveArtifact",
+        satisfies: "socialise",
+        target: being,
+        requires: {
+          holding: true,
+          owner: "different"
+        }
+      });
+    }
+    actionBeingRevokeWhere(being, "adoptSymbol");
+    if (!being.motif) {
+      actionBroadcast(being, {
+        kind: "being",
+        action: "adoptSymbol",
+        satisfies: "create",
+        target: being,
+        requires: {
+          owner: "same"
+        }
+      });
+    }
   }
 
   // src/terrain/assess.ts
@@ -27574,6 +27592,7 @@
       deity.holding.push(artifact.id);
       deity.currentActivity = void 0;
       updateArtifactCreatedTileActions(history3, tile);
+      updateBeingActions(deity);
     });
   }
 
@@ -27592,6 +27611,7 @@
         []
       );
       deity.currentActivity = void 0;
+      updateBeingActions(deity);
     });
   }
 
@@ -27687,63 +27707,81 @@
     { x: 0, y: 0 },
     { x: config.worldWidth, y: config.worldHeight }
   );
+  function getAvailableActions(history3, tile) {
+    const beingsAtLocation = getDeities(history3.beings).filter(
+      (being) => being.location === tile.id
+    );
+    return history3.availableActions.concat(
+      beingsAtLocation.map((being) => being.availableActions).flat()
+    );
+  }
   function getHighestPriorityAction(actions, being, from) {
     const { needs, preferences } = being;
-    const filteredActions = actions.filter((action) => {
-      switch (action.requires.location) {
-        case "different":
-          if (action.location === from) {
-            return false;
-          }
-          break;
-        case "same":
-          if (action.location !== from) {
-            return false;
-          }
-          break;
-        default:
-          break;
-      }
-      switch (action.requires.motif) {
-        case "missing":
-          if (being.motif) {
-            return false;
-          }
-          break;
-        case "present":
-          if (!being.motif) {
-            return false;
-          }
-          break;
-        default:
-          break;
-      }
-      if (action.requires.holdingArtifact) {
-        if (being.holding.length === 0) {
-          return false;
-        }
-      }
-      if (action.target && action.target.id === being.id) {
-        return false;
-      }
-      return true;
-    });
+    const filteredActions = actions.filter(
+      (action) => action.kind === "tile" ? filterTileAction(action, from, being) : filterBeingAction(action, being)
+    );
     const prioritisedActions = filteredActions.sort((a, b) => {
       const aNeed = 1 - needs[a.satisfies].currentValue;
       const bNeed = 1 - needs[b.satisfies].currentValue;
-      const aDistance = inverseLerp(
-        euclidianDistance(from, a.location),
-        maxDistance,
-        0
-      );
-      const bDistance = inverseLerp(
-        euclidianDistance(from, b.location),
-        maxDistance,
-        0
-      );
+      const aDistance = a.kind === "tile" ? inverseLerp(euclidianDistance(from, a.location), maxDistance, 0) : 1;
+      const bDistance = b.kind === "tile" ? inverseLerp(euclidianDistance(from, b.location), maxDistance, 0) : 1;
       return bNeed * preferences[b.action] * bDistance - aNeed * preferences[a.action] * aDistance;
     });
     return prioritisedActions[0];
+  }
+  function filterTileAction(action, from, being) {
+    switch (action.requires.location) {
+      case "different":
+        if (action.location === from) {
+          return false;
+        }
+        break;
+      case "same":
+        if (action.location !== from) {
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    switch (action.requires.motif) {
+      case "missing":
+        if (being.motif) {
+          return false;
+        }
+        break;
+      case "present":
+        if (!being.motif) {
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    if (action.target && action.target.id === being.id) {
+      return false;
+    }
+    return true;
+  }
+  function filterBeingAction(action, being) {
+    switch (action.requires.owner) {
+      case "different":
+        if (action.target === being) {
+          return false;
+        }
+        break;
+      case "same":
+        if (action.target !== being) {
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    if (action.requires.holding && being.holding.length === 0) {
+      return false;
+    }
+    return true;
   }
 
   // src/systems/decision.ts
@@ -27752,92 +27790,35 @@
     if (!worldIsReady) {
       return;
     }
-    const deities = getDeities(history3.beings);
-    const availableActions = history3.availableActions;
-    const availableDeities = deities.filter((deity) => !deity.currentActivity);
-    availableDeities.forEach((deity) => {
+    const beings = lookupValues(history3.beings);
+    const availableBeings = beings.filter((being) => !being.currentActivity);
+    availableBeings.forEach((being) => {
       const currentLocation = history3.world.values.find(
-        (tile) => tile.id === deity.location
+        (tile) => tile.id === being.location
       );
       if (currentLocation) {
+        const availableActions = getAvailableActions(history3, currentLocation);
         const action = getHighestPriorityAction(
           availableActions,
-          deity,
+          being,
           currentLocation
         );
-        satisfyNeed(deity, action);
-        deity.timesChosen[action.action]++;
-        const targetRegionName = !action.location.discovered ? "an unknown land" : `[[${action.location.name}]]`;
-        const locationIds = [currentLocation.id];
-        const beingIds = [deity.id];
-        if (action.action === "discover" || action.action === "travel") {
-          deity.currentActivity = {
-            kind: "movement",
-            moveToLocation: action.location,
-            path: getPathToTargetLocation(deity, action.location, history3)
-          };
-          locationIds.push(action.location.id);
-        } else if (action.action === "createArtifact") {
-          deity.currentActivity = {
-            kind: "createArtifact"
-          };
-        } else if (action.action === "giveArtifact") {
-          if (!action.target) {
-            console.error("what");
+        satisfyNeed(being, action);
+        being.timesChosen[action.action]++;
+        switch (action.kind) {
+          case "tile":
+            doTileAction(history3, being, currentLocation, action);
             return;
-          }
-          const artifact = randomChoice(deity.holding);
-          if (!artifact) {
-            console.error("what");
+          case "being":
+            doBeingAction(history3, being, currentLocation, action);
             return;
-          }
-          deity.currentActivity = {
-            kind: "giveArtifact",
-            target: action.target.id,
-            artifact
-          };
-        } else if (action.action === "adoptSymbol") {
-          deity.currentActivity = {
-            kind: "adoptSymbol"
-          };
-        } else if (action.action === "conversation") {
-          if (!action.target) {
-            console.error("what");
-            return;
-          }
-          deity.currentActivity = {
-            kind: "conversation",
-            target: action.target.id
-          };
-          beingIds.push(action.target.id);
         }
-        history3.log(
-          `[[${deity.name}]] chose action ${action.action} in ${targetRegionName}`,
-          beingIds,
-          locationIds,
-          []
-        );
       } else {
-        const targetLocation = getDeityTargetLocation(deity, history3);
-        if (!targetLocation) {
-          return;
-        }
-        const targetRegionName = !targetLocation.discovered ? "an unknown land" : `[[${targetLocation.name}]]`;
-        history3.log(
-          `[[${deity.name}]] set out for ${targetRegionName} in ${targetRegionName}`,
-          [deity.id],
-          [targetLocation.id],
-          []
-        );
-        deity.currentActivity = {
-          kind: "movement",
-          moveToLocation: targetLocation,
-          path: getPathToTargetLocation(deity, targetLocation, history3)
-        };
+        doEntryAction(history3, being);
       }
     });
   }
-  function getDeityTargetLocation(deity, history3) {
+  function pickRandomTargetTile(deity, history3) {
     const possibleTiles = history3.world.values.filter(
       (tile) => tile.id != deity.location
     );
@@ -27869,6 +27850,92 @@
       console.error("weird");
     }
     return path;
+  }
+  function doTileAction(history3, being, currentLocation, action) {
+    const locationIds = [currentLocation.id];
+    const beingIds = [being.id];
+    if (action.action === "discover" || action.action === "travel") {
+      being.currentActivity = {
+        kind: "movement",
+        moveToLocation: action.location,
+        path: getPathToTargetLocation(being, action.location, history3)
+      };
+      locationIds.push(action.location.id);
+    } else if (action.action === "createArtifact") {
+      being.currentActivity = {
+        kind: "createArtifact"
+      };
+    } else if (action.action === "conversation") {
+      if (!action.target) {
+        console.error("what");
+        return;
+      }
+      being.currentActivity = {
+        kind: "conversation",
+        target: action.target.id
+      };
+      beingIds.push(action.target.id);
+    }
+    history3.log(
+      `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+        currentLocation
+      )}`,
+      beingIds,
+      locationIds,
+      []
+    );
+  }
+  function doBeingAction(history3, being, currentLocation, action) {
+    const locationIds = [currentLocation.id];
+    const beingIds = [being.id];
+    if (action.action === "giveArtifact") {
+      if (!action.target) {
+        console.error("what");
+        return;
+      }
+      const artifact = randomChoice(being.holding);
+      if (!artifact) {
+        console.error("what");
+        return;
+      }
+      being.currentActivity = {
+        kind: "giveArtifact",
+        target: action.target.id,
+        artifact
+      };
+    } else if (action.action === "adoptSymbol") {
+      being.currentActivity = {
+        kind: "adoptSymbol"
+      };
+    }
+    history3.log(
+      `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+        currentLocation
+      )}`,
+      beingIds,
+      locationIds,
+      []
+    );
+  }
+  function doEntryAction(history3, being) {
+    const targetLocation = pickRandomTargetTile(being, history3);
+    if (!targetLocation) {
+      return;
+    }
+    history3.log(
+      `[[${being.name}]] set out for ${getRegionName(targetLocation)}`,
+      [being.id],
+      [targetLocation.id],
+      []
+    );
+    being.currentActivity = {
+      kind: "movement",
+      moveToLocation: targetLocation,
+      path: getPathToTargetLocation(being, targetLocation, history3)
+    };
+  }
+  function getRegionName(tile) {
+    return !tile.discovered ? "an unknown land" : `[[${tile.name}]]`;
   }
 
   // src/systems/conversation.ts
@@ -27922,6 +27989,8 @@
       deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
       target.holding.push(artifact.id);
       deity.currentActivity = void 0;
+      updateBeingActions(deity);
+      updateBeingActions(target);
     });
   }
 
@@ -28506,7 +28575,7 @@
     }
   }
   function createDeity(beings, theme2) {
-    return beings.set({
+    const deity = beings.set({
       kind: "deity",
       name: createDeityName(),
       theme: theme2,
@@ -28516,8 +28585,11 @@
       timesChosen: Object.fromEntries(
         Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
       ),
-      holding: []
+      holding: [],
+      availableActions: []
     });
+    initialBeingActions(deity);
+    return deity;
   }
 
   // src/index.tsx
