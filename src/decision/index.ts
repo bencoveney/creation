@@ -116,8 +116,5 @@ export function filterBeingAction(action: BeingAction, being: Being) {
   //   default:
   //     break;
   // }
-  if (action.target && action.target.id === being.id) {
-    return false;
-  }
   return true;
 }

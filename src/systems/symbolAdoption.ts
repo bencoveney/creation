@@ -1,6 +1,7 @@
 import { randomChoice } from "../utils/random";
 import { config } from "../config";
 import { getDeitiesByActivity, History } from "../history";
+import { updateBeingActions } from "../decision/factories";
 
 export function runSymbolAdoption(history: History) {
   const deities = getDeitiesByActivity(history.beings, "adoptSymbol");
@@ -16,5 +17,6 @@ export function runSymbolAdoption(history: History) {
       []
     );
     deity.currentActivity = undefined;
+    updateBeingActions(deity);
   });
 }

@@ -4,7 +4,7 @@ import { Lookup, getFromLookup } from "../history/lookup";
 import { config } from "../config";
 import {
   updateArtifactCreatedTileActions,
-  updateBeingHoldingActions,
+  updateBeingActions,
 } from "../decision/factories";
 import { Tile } from "../world";
 
@@ -39,6 +39,6 @@ export function runArtifactCreation(history: History) {
     deity.holding.push(artifact.id);
     deity.currentActivity = undefined;
     updateArtifactCreatedTileActions(history, tile);
-    updateBeingHoldingActions(deity);
+    updateBeingActions(deity);
   });
 }

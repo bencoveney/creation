@@ -9,7 +9,7 @@ import {
 import {
   createDeityNeeds,
   createDeityPreferences,
-  updateBeingHoldingActions,
+  updateBeingActions,
 } from "../decision/factories";
 import { Preferences } from "../decision/preference";
 import { createDeityName, createWorldName } from "../language";
@@ -193,7 +193,7 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
     holding: [],
     availableActions: [],
   });
-  updateBeingHoldingActions(deity);
+  updateBeingActions(deity);
   return deity;
 }
 

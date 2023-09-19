@@ -64,18 +64,6 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
       },
     });
   }
-  if (Math.random() > 0.5) {
-    actionBroadcast(history, {
-      kind: "tile",
-      action: "adoptSymbol",
-      satisfies: "create",
-      location: tile,
-      requires: {
-        location: "same",
-        motif: "missing",
-      },
-    });
-  }
 }
 
 export function updateDiscoveredTileActions(
@@ -128,7 +116,7 @@ export function updateBeingExitedTileActions(
   actionTileRevokeWhere(history, "conversation", tile, being);
 }
 
-export function updateBeingHoldingActions(being: Being): void {
+export function updateBeingActions(being: Being): void {
   // Revoke, and add back if missing.
   // Maybe add some upsert helpers in the future.
   actionBeingRevokeWhere(being, "giveArtifact");
@@ -141,6 +129,18 @@ export function updateBeingHoldingActions(being: Being): void {
       requires: {
         holding: true,
         owner: "different",
+      },
+    });
+  }
+  actionBeingRevokeWhere(being, "adoptSymbol");
+  if (!being.motif) {
+    actionBroadcast(being, {
+      kind: "being",
+      action: "adoptSymbol",
+      satisfies: "create",
+      target: being,
+      requires: {
+        owner: "same",
       },
     });
   }

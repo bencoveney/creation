@@ -116,10 +116,6 @@ function doTileAction(
     being.currentActivity = {
       kind: "createArtifact",
     };
-  } else if (action.action === "adoptSymbol") {
-    being.currentActivity = {
-      kind: "adoptSymbol",
-    };
   } else if (action.action === "conversation") {
     if (!action.target) {
       console.error("what");
@@ -148,10 +144,6 @@ function doBeingAction(
   currentLocation: Tile,
   action: BeingAction
 ) {
-  const targetRegionName = !currentLocation.discovered
-    ? "an unknown land"
-    : `[[${currentLocation.name}]]`;
-
   const locationIds: string[] = [currentLocation.id];
   const beingIds: string[] = [being.id];
 
@@ -169,6 +161,10 @@ function doBeingAction(
       kind: "giveArtifact",
       target: action.target.id,
       artifact: artifact,
+    };
+  } else if (action.action === "adoptSymbol") {
+    being.currentActivity = {
+      kind: "adoptSymbol",
     };
   }
 
