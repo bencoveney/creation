@@ -8,14 +8,9 @@ Procedural world/history generation
 - Maybe island/continent creation should consider sand to be water
 - Gods can create demigods
 - Gods can create species
-- Merge tiles and locations
 - Build heightmap with interesting mountain ranges by factoring in:
   - Height squared
   - Ridged noise
   - Roughness map
-- Display deity needs
-- Display deity logs
-- Display decision frequency
-- artifacts can be given stored, stolen - started giveArtifact
+- artifacts can be given stored, stolen
 - activities take time
-- actvities will be simpler to manage if they live on being + tile as well as world.
