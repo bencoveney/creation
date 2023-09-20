@@ -35,6 +35,7 @@ export type CurrentMovementActivity = {
 };
 export type CurrentCreateArtifactActivity = {
   kind: "createArtifact";
+  timeLeft?: number;
 };
 
 export type CurrentGiveArtifactActivity = {
@@ -112,6 +113,15 @@ export function getDeitiesByActivity(
   kind: CurrentActivity["kind"]
 ): Being[] {
   return getDeities(beings).filter(
+    (being) => being.currentActivity?.kind === kind
+  );
+}
+
+export function getBeingsByActivity(
+  beings: Lookup<Being>,
+  kind: CurrentActivity["kind"]
+): Being[] {
+  return lookupValues(beings).filter(
     (being) => being.currentActivity?.kind === kind
   );
 }

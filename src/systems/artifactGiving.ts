@@ -24,6 +24,7 @@ export function runArtifactGiving(history: History) {
     deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
     target.holding.push(artifact.id);
     deity.currentActivity = undefined;
+    artifact.inPosessionOf = target.id;
     updateBeingActions(deity);
     updateBeingActions(target);
   });

@@ -1,4 +1,10 @@
-import { Artifact, Being, History, getDeitiesByActivity } from "../history";
+import {
+  Artifact,
+  Being,
+  CurrentCreateArtifactActivity,
+  History,
+  getBeingsByActivity,
+} from "../history";
 import { randomChoice } from "../utils/random";
 import { Lookup, getFromLookup } from "../history/lookup";
 import { config } from "../config";
@@ -26,19 +32,34 @@ function createArtifactName(): string {
 }
 
 export function runArtifactCreation(history: History) {
-  const deities = getDeitiesByActivity(history.beings, "createArtifact");
-  deities.forEach((deity) => {
-    const artifact = createArtifact([deity], history.artifacts);
-    const tile = getFromLookup(history.regions, deity.location!) as Tile;
-    history.log(
-      `[[${deity.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
-      [deity.id],
-      [tile.id],
-      [artifact.id]
-    );
-    deity.holding.push(artifact.id);
-    deity.currentActivity = undefined;
-    updateArtifactCreatedTileActions(history, tile);
-    updateBeingActions(deity);
+  const beings = getBeingsByActivity(history.beings, "createArtifact");
+  beings.forEach((being) => {
+    const activity = being.currentActivity as CurrentCreateArtifactActivity;
+    const tile = getFromLookup(history.regions, being.location!) as Tile;
+    if (activity.timeLeft === undefined) {
+      history.log(
+        `[[${being.name}]] started forging an artifact in [[${tile.name}]]`,
+        [being.id],
+        [tile.id],
+        []
+      );
+      activity.timeLeft = Math.round(Math.random() * 10);
+      updateArtifactCreatedTileActions(history, tile);
+    } else {
+      activity.timeLeft--;
+      if (activity.timeLeft >= 0) {
+        return;
+      }
+      const artifact = createArtifact([being], history.artifacts);
+      history.log(
+        `[[${being.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
+        [being.id],
+        [tile.id],
+        [artifact.id]
+      );
+      being.holding.push(artifact.id);
+      being.currentActivity = undefined;
+      updateBeingActions(being);
+    }
   });
 }
