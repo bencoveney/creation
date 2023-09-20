@@ -166,6 +166,10 @@ function doBeingAction(
       target: action.target.id,
     };
     beingIds.push(action.target.id);
+  } else if (action.action === "rest") {
+    being.currentActivity = {
+      kind: "rest",
+    };
   }
 
   history.log(

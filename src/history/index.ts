@@ -37,7 +37,10 @@ export type CurrentCreateArtifactActivity = {
   kind: "createArtifact";
   timeLeft?: number;
 };
-
+export type CurrentRestActivity = {
+  kind: "rest";
+  timeLeft?: number;
+};
 export type CurrentGiveArtifactActivity = {
   kind: "giveArtifact";
   target: Being["id"];
@@ -56,7 +59,8 @@ export type CurrentActivity =
   | CurrentCreateArtifactActivity
   | CurrentGiveArtifactActivity
   | CurrentAdoptSymbolActivity
-  | CurrentConversationActivity;
+  | CurrentConversationActivity
+  | CurrentRestActivity;
 
 export type Relationships = {
   [being: string]: {

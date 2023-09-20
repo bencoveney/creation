@@ -13,6 +13,7 @@ import { runNeeds } from "./systems/needs";
 import { runArtifactGiving } from "./systems/artifactGiving";
 import { initialiseHistory } from "./history/factories";
 import { lookupFirstValue } from "./history/lookup";
+import { runRest } from "./systems/rest";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -45,6 +46,8 @@ function Wrapper() {
         runArtifactGiving(history);
         history.log.currentSystem = "symbolAdoption";
         runSymbolAdoption(history);
+        history.log.currentSystem = "rest";
+        runRest(history);
         history.log.currentSystem = "movement";
         runMovement(history);
         forceRerender({});
