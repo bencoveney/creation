@@ -82,31 +82,6 @@ export function updateArtifactCreatedTileActions(
   actionTileRevokeWhere(history, "createArtifact", tile, undefined, true);
 }
 
-export function updateBeingEnteredTileActions(
-  history: History,
-  tile: Tile,
-  being: Being
-): void {
-  actionBroadcast(history, {
-    kind: "tile",
-    action: "conversation",
-    satisfies: "socialise",
-    location: tile,
-    target: being,
-    requires: {
-      location: "same",
-    },
-  });
-}
-
-export function updateBeingExitedTileActions(
-  history: History,
-  tile: Tile,
-  being: Being
-): void {
-  actionTileRevokeWhere(history, "conversation", tile, being);
-}
-
 export function initialBeingActions(being: Being): void {
   actionBroadcast(being, {
     kind: "being",
@@ -145,6 +120,18 @@ export function updateBeingActions(being: Being): void {
       target: being,
       requires: {
         owner: "same",
+      },
+    });
+  }
+  actionBeingRevokeWhere(being, "conversation");
+  if (being.location) {
+    actionBroadcast(being, {
+      kind: "being",
+      action: "conversation",
+      satisfies: "socialise",
+      target: being,
+      requires: {
+        owner: "different",
       },
     });
   }

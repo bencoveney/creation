@@ -10,8 +10,7 @@ import { Tile } from "../world";
 import { getFromLookupSafe } from "../history/lookup";
 import { array2dGet } from "../utils/array2d";
 import {
-  updateBeingEnteredTileActions,
-  updateBeingExitedTileActions,
+  updateBeingActions,
   updateDiscoveredTileActions,
 } from "../decision/factories";
 
@@ -20,9 +19,6 @@ export function runMovement(history: History) {
   deities.forEach((deity) => {
     // TODO: if/else can be restructured
     const previous = getFromLookupSafe(history.regions, deity.location) as Tile;
-    if (previous) {
-      updateBeingExitedTileActions(history, previous, deity);
-    }
     const path = (deity.currentActivity as CurrentMovementActivity).path;
     if (path.length === 0) {
       throw new Error("what");
@@ -31,7 +27,6 @@ export function runMovement(history: History) {
     const target = array2dGet(history.world!, next.x, next.y);
     moveToLocation(deity, target, history, previous);
     deity.location = target.id;
-    updateBeingEnteredTileActions(history, target, deity);
     if (path.length === 0) {
       history.log(
         `[[${deity.name}]] completed their journey`,
@@ -87,4 +82,5 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
     []
   );
   deity.location = targetTile.id;
+  updateBeingActions(deity);
 }

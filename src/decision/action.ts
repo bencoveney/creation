@@ -4,7 +4,7 @@ import { Needs } from "./need";
 
 export type BeingAction = {
   kind: "being";
-  action: "giveArtifact" | "adoptSymbol" | "rest";
+  action: "giveArtifact" | "adoptSymbol" | "rest" | "conversation";
   satisfies: keyof Needs;
   target: Being;
   requires: {
@@ -15,7 +15,7 @@ export type BeingAction = {
 
 export type TileAction = {
   kind: "tile";
-  action: "travel" | "discover" | "createArtifact" | "conversation";
+  action: "travel" | "discover" | "createArtifact";
   satisfies: keyof Needs;
   location: Tile;
   target?: Being;

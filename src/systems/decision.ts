@@ -116,16 +116,6 @@ function doTileAction(
     being.currentActivity = {
       kind: "createArtifact",
     };
-  } else if (action.action === "conversation") {
-    if (!action.target) {
-      console.error("what");
-      return;
-    }
-    being.currentActivity = {
-      kind: "conversation",
-      target: action.target.id,
-    };
-    beingIds.push(action.target.id);
   }
 
   history.log(
@@ -166,6 +156,16 @@ function doBeingAction(
     being.currentActivity = {
       kind: "adoptSymbol",
     };
+  } else if (action.action === "conversation") {
+    if (!action.target) {
+      console.error("what");
+      return;
+    }
+    being.currentActivity = {
+      kind: "conversation",
+      target: action.target.id,
+    };
+    beingIds.push(action.target.id);
   }
 
   history.log(
