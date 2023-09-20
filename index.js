@@ -26787,21 +26787,6 @@
   function updateArtifactCreatedTileActions(history3, tile) {
     actionTileRevokeWhere(history3, "createArtifact", tile, void 0, true);
   }
-  function updateBeingEnteredTileActions(history3, tile, being) {
-    actionBroadcast(history3, {
-      kind: "tile",
-      action: "conversation",
-      satisfies: "socialise",
-      location: tile,
-      target: being,
-      requires: {
-        location: "same"
-      }
-    });
-  }
-  function updateBeingExitedTileActions(history3, tile, being) {
-    actionTileRevokeWhere(history3, "conversation", tile, being);
-  }
   function initialBeingActions(being) {
     actionBroadcast(being, {
       kind: "being",
@@ -26837,6 +26822,18 @@
         target: being,
         requires: {
           owner: "same"
+        }
+      });
+    }
+    actionBeingRevokeWhere(being, "conversation");
+    if (being.location) {
+      actionBroadcast(being, {
+        kind: "being",
+        action: "conversation",
+        satisfies: "socialise",
+        target: being,
+        requires: {
+          owner: "different"
         }
       });
     }
@@ -27038,6 +27035,11 @@
   }
   function getDeitiesByActivity(beings, kind) {
     return getDeities(beings).filter(
+      (being) => being.currentActivity?.kind === kind
+    );
+  }
+  function getBeingsByActivity(beings, kind) {
+    return lookupValues(beings).filter(
       (being) => being.currentActivity?.kind === kind
     );
   }
@@ -27507,9 +27509,6 @@
     const deities = getDeitiesByActivity(history3.beings, "movement");
     deities.forEach((deity) => {
       const previous = getFromLookupSafe(history3.regions, deity.location);
-      if (previous) {
-        updateBeingExitedTileActions(history3, previous, deity);
-      }
       const path = deity.currentActivity.path;
       if (path.length === 0) {
         throw new Error("what");
@@ -27518,7 +27517,6 @@
       const target = array2dGet(history3.world, next.x, next.y);
       moveToLocation(deity, target, history3, previous);
       deity.location = target.id;
-      updateBeingEnteredTileActions(history3, target, deity);
       if (path.length === 0) {
         history3.log(
           `[[${deity.name}]] completed their journey`,
@@ -27563,6 +27561,7 @@
       []
     );
     deity.location = targetTile.id;
+    updateBeingActions(deity);
   }
 
   // src/systems/artifactCreation.ts
@@ -27579,20 +27578,35 @@
     return `artifact_${artifactNameCount++}`;
   }
   function runArtifactCreation(history3) {
-    const deities = getDeitiesByActivity(history3.beings, "createArtifact");
-    deities.forEach((deity) => {
-      const artifact = createArtifact([deity], history3.artifacts);
-      const tile = getFromLookup(history3.regions, deity.location);
-      history3.log(
-        `[[${deity.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
-        [deity.id],
-        [tile.id],
-        [artifact.id]
-      );
-      deity.holding.push(artifact.id);
-      deity.currentActivity = void 0;
-      updateArtifactCreatedTileActions(history3, tile);
-      updateBeingActions(deity);
+    const beings = getBeingsByActivity(history3.beings, "createArtifact");
+    beings.forEach((being) => {
+      const activity = being.currentActivity;
+      const tile = getFromLookup(history3.regions, being.location);
+      if (activity.timeLeft === void 0) {
+        history3.log(
+          `[[${being.name}]] started forging an artifact in [[${tile.name}]]`,
+          [being.id],
+          [tile.id],
+          []
+        );
+        activity.timeLeft = Math.round(Math.random() * 10);
+        updateArtifactCreatedTileActions(history3, tile);
+      } else {
+        activity.timeLeft--;
+        if (activity.timeLeft >= 0) {
+          return;
+        }
+        const artifact = createArtifact([being], history3.artifacts);
+        history3.log(
+          `[[${being.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
+          [being.id],
+          [tile.id],
+          [artifact.id]
+        );
+        being.holding.push(artifact.id);
+        being.currentActivity = void 0;
+        updateBeingActions(being);
+      }
     });
   }
 
@@ -27865,16 +27879,6 @@
       being.currentActivity = {
         kind: "createArtifact"
       };
-    } else if (action.action === "conversation") {
-      if (!action.target) {
-        console.error("what");
-        return;
-      }
-      being.currentActivity = {
-        kind: "conversation",
-        target: action.target.id
-      };
-      beingIds.push(action.target.id);
     }
     history3.log(
       `[[${being.name}]] chose action ${action.action} in ${getRegionName(
@@ -27906,6 +27910,20 @@
     } else if (action.action === "adoptSymbol") {
       being.currentActivity = {
         kind: "adoptSymbol"
+      };
+    } else if (action.action === "conversation") {
+      if (!action.target) {
+        console.error("what");
+        return;
+      }
+      being.currentActivity = {
+        kind: "conversation",
+        target: action.target.id
+      };
+      beingIds.push(action.target.id);
+    } else if (action.action === "rest") {
+      being.currentActivity = {
+        kind: "rest"
       };
     }
     history3.log(
@@ -27989,6 +28007,7 @@
       deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
       target.holding.push(artifact.id);
       deity.currentActivity = void 0;
+      artifact.inPosessionOf = target.id;
       updateBeingActions(deity);
       updateBeingActions(target);
     });
@@ -28592,6 +28611,36 @@
     return deity;
   }
 
+  // src/systems/rest.ts
+  function runRest(history3) {
+    const beings = getBeingsByActivity(history3.beings, "rest");
+    beings.forEach((being) => {
+      const activity = being.currentActivity;
+      const tile = getFromLookup(history3.regions, being.location);
+      if (activity.timeLeft === void 0) {
+        history3.log(
+          `[[${being.name}]] rested in [[${tile.name}]]`,
+          [being.id],
+          [tile.id],
+          []
+        );
+        activity.timeLeft = Math.round(Math.random() * 10);
+      } else {
+        activity.timeLeft--;
+        if (activity.timeLeft >= 0) {
+          return;
+        }
+        history3.log(
+          `[[${being.name}]] finished resting in [[${tile.name}]]`,
+          [being.id],
+          [tile.id],
+          []
+        );
+        being.currentActivity = void 0;
+      }
+    });
+  }
+
   // src/index.tsx
   var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
@@ -28617,6 +28666,8 @@
         runArtifactGiving(history2);
         history2.log.currentSystem = "symbolAdoption";
         runSymbolAdoption(history2);
+        history2.log.currentSystem = "rest";
+        runRest(history2);
         history2.log.currentSystem = "movement";
         runMovement(history2);
         forceRerender({});
