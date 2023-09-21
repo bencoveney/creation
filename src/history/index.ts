@@ -48,6 +48,7 @@ export type CurrentGiveArtifactActivity = {
 };
 export type CurrentAdoptSymbolActivity = {
   kind: "adoptSymbol";
+  timeLeft?: number;
 };
 export type CurrentConversationActivity = {
   kind: "conversation";
