@@ -25740,7 +25740,7 @@
       ":",
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Names, { name: being.name, history: history3 }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Motif, { motif: being.motif }),
-      being.theme && `Deity of ${being.theme}`,
+      being.theme && `Represents ${being.theme}`,
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Needs, { needs: being.needs }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Preferences, { preferences: being.preferences }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
@@ -27029,21 +27029,6 @@
     );
   }
 
-  // src/history/index.ts
-  function getDeities(beings) {
-    return lookupValues(beings).filter((being) => being.kind === "deity");
-  }
-  function getDeitiesByActivity(beings, kind) {
-    return getDeities(beings).filter(
-      (being) => being.currentActivity?.kind === kind
-    );
-  }
-  function getBeingsByActivity(beings, kind) {
-    return lookupValues(beings).filter(
-      (being) => being.currentActivity?.kind === kind
-    );
-  }
-
   // src/components/terrainLayerPicker.tsx
   var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   function TerrainLayerPicker({
@@ -27166,10 +27151,10 @@
         /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(TileValues, { tile: selectedTile }),
         selectedTile && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Region, { region: selectedTile, history: history3 })
       ] }),
-      selectedTile && getDeities(history3.beings).filter((deity) => deity.location === selectedTile.id).map((deity, index) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+      selectedTile && lookupValues(history3.beings).filter((being) => being.location === selectedTile.id).map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
         Being,
         {
-          being: deity,
+          being,
           history: history3,
           language,
           inspect
@@ -27504,50 +27489,57 @@
     ] });
   }
 
+  // src/history/index.ts
+  function getBeingsByActivity(beings, kind) {
+    return lookupValues(beings).filter(
+      (being) => being.currentActivity?.kind === kind
+    );
+  }
+
   // src/systems/movement.ts
   function runMovement(history3) {
-    const deities = getDeitiesByActivity(history3.beings, "movement");
-    deities.forEach((deity) => {
-      const previous = getFromLookupSafe(history3.regions, deity.location);
-      const path = deity.currentActivity.path;
+    const beings = getBeingsByActivity(history3.beings, "movement");
+    beings.forEach((being) => {
+      const previous = getFromLookupSafe(history3.regions, being.location);
+      const path = being.currentActivity.path;
       if (path.length === 0) {
         throw new Error("what");
       }
       const next = path.pop();
       const target = array2dGet(history3.world, next.x, next.y);
-      moveToLocation(deity, target, history3, previous);
-      deity.location = target.id;
+      moveToLocation(being, target, history3, previous);
+      being.location = target.id;
       if (path.length === 0) {
         history3.log(
-          `[[${deity.name}]] completed their journey`,
-          [deity.id],
+          `[[${being.name}]] completed their journey`,
+          [being.id],
           [target.id],
           []
         );
-        deity.currentActivity = void 0;
+        being.currentActivity = void 0;
       }
     });
   }
-  function moveToLocation(deity, targetTile, history3, previous) {
-    discoverLocation(deity, targetTile, history3);
-    deity.location = targetTile.id;
+  function moveToLocation(being, targetTile, history3, previous) {
+    discoverLocation(being, targetTile, history3);
+    being.location = targetTile.id;
     if (previous) {
       history3.log(
-        `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
-        [deity.id],
+        `[[${being.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
+        [being.id],
         [targetTile.id],
         []
       );
     } else {
       history3.log(
-        `[[${deity.name}]] entered the world in [[${targetTile.name}]]`,
-        [deity.id],
+        `[[${being.name}]] entered the world in [[${targetTile.name}]]`,
+        [being.id],
         [targetTile.id],
         []
       );
     }
   }
-  function discoverLocation(deity, targetTile, history3) {
+  function discoverLocation(being, targetTile, history3) {
     if (targetTile.discovered) {
       return;
     }
@@ -27555,13 +27547,13 @@
     updateDiscoveredTileActions(history3, targetTile);
     const regionNameParts = targetTile.name.split(" ").map((part) => `[[${part}]]`).join(" ");
     history3.log(
-      `[[${deity.name}]] discovered the region of ${regionNameParts}`,
-      [deity.id],
+      `[[${being.name}]] discovered the region of ${regionNameParts}`,
+      [being.id],
       [targetTile.id],
       []
     );
-    deity.location = targetTile.id;
-    updateBeingActions(deity);
+    being.location = targetTile.id;
+    updateBeingActions(being);
   }
 
   // src/systems/artifactCreation.ts
@@ -27612,20 +27604,20 @@
 
   // src/systems/symbolAdoption.ts
   function runSymbolAdoption(history3) {
-    const deities = getDeitiesByActivity(history3.beings, "adoptSymbol");
-    deities.forEach((deity) => {
-      deity.motif = {
+    const beings = getBeingsByActivity(history3.beings, "adoptSymbol");
+    beings.forEach((being) => {
+      being.motif = {
         kind: "symbol",
         value: randomChoice(config.motifs).name
       };
       history3.log(
-        `[[${deity.name}]] adopted the ${deity.motif?.value} as their symbol`,
-        [deity.id],
-        deity.location ? [deity.location] : [],
+        `[[${being.name}]] adopted the ${being.motif?.value} as their symbol`,
+        [being.id],
+        being.location ? [being.location] : [],
         []
       );
-      deity.currentActivity = void 0;
-      updateBeingActions(deity);
+      being.currentActivity = void 0;
+      updateBeingActions(being);
     });
   }
 
@@ -27722,7 +27714,7 @@
     { x: config.worldWidth, y: config.worldHeight }
   );
   function getAvailableActions(history3, tile) {
-    const beingsAtLocation = getDeities(history3.beings).filter(
+    const beingsAtLocation = lookupValues(history3.beings).filter(
       (being) => being.location === tile.id
     );
     return history3.availableActions.concat(
@@ -27832,9 +27824,9 @@
       }
     });
   }
-  function pickRandomTargetTile(deity, history3) {
+  function pickRandomTargetTile(being, history3) {
     const possibleTiles = history3.world.values.filter(
-      (tile) => tile.id != deity.location
+      (tile) => tile.id != being.location
     );
     if (possibleTiles.length === 0) {
       console.log("Nowhere can be moved to");
@@ -27847,13 +27839,13 @@
       return randomChoice(possibleTiles);
     }
   }
-  function getPathToTargetLocation(deity, targetLocation, history3) {
+  function getPathToTargetLocation(being, targetLocation, history3) {
     const world = history3.world;
     if (!world) {
       console.error("weird");
       return [];
     }
-    const location = getFromLookupSafe(history3.regions, deity.location);
+    const location = getFromLookupSafe(history3.regions, being.location);
     if (!location || !location.tile) {
       return [targetLocation];
     }
@@ -27958,26 +27950,26 @@
 
   // src/systems/conversation.ts
   function runConversation(history3) {
-    const deities = getDeitiesByActivity(history3.beings, "conversation");
-    deities.forEach((deity) => {
-      const activity = deity.currentActivity;
+    const beings = getBeingsByActivity(history3.beings, "conversation");
+    beings.forEach((being) => {
+      const activity = being.currentActivity;
       const target = getFromLookup(history3.beings, activity.target);
-      const location = getFromLookup(history3.regions, deity.location);
-      deity.currentActivity = void 0;
-      if (target.location !== deity.location) {
+      const location = getFromLookup(history3.regions, being.location);
+      being.currentActivity = void 0;
+      if (target.location !== being.location) {
         console.warn("conversationFailed");
         return;
       }
       history3.log(
-        `[[${deity.name}]] talked to [[${target.name}]]`,
-        [deity.id, target.id],
+        `[[${being.name}]] talked to [[${target.name}]]`,
+        [being.id, target.id],
         [location.id],
         []
       );
-      if (deity.relationships[target.id]) {
-        deity.relationships[target.id].encounters++;
+      if (being.relationships[target.id]) {
+        being.relationships[target.id].encounters++;
       } else {
-        deity.relationships[target.id] = {
+        being.relationships[target.id] = {
           kind: "met",
           encounters: 1
         };
@@ -27987,28 +27979,28 @@
 
   // src/systems/needs.ts
   function runNeeds(history3) {
-    getDeities(history3.beings).forEach((deity) => updateNeeds(deity.needs));
+    lookupValues(history3.beings).forEach((being) => updateNeeds(being.needs));
   }
 
   // src/systems/artifactGiving.ts
   function runArtifactGiving(history3) {
-    const deities = getDeitiesByActivity(history3.beings, "giveArtifact");
-    deities.forEach((deity) => {
-      const activity = deity.currentActivity;
+    const beings = getBeingsByActivity(history3.beings, "giveArtifact");
+    beings.forEach((being) => {
+      const activity = being.currentActivity;
       const artifact = getFromLookup(history3.artifacts, activity.artifact);
-      const tile = getFromLookup(history3.regions, deity.location);
+      const tile = getFromLookup(history3.regions, being.location);
       const target = getFromLookup(history3.beings, activity.target);
       history3.log(
-        `[[${deity.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
-        [deity.id, target.id],
+        `[[${being.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
+        [being.id, target.id],
         [tile.id],
         [artifact.id]
       );
-      deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
+      being.holding.splice(being.holding.indexOf(artifact.id), 1);
       target.holding.push(artifact.id);
-      deity.currentActivity = void 0;
+      being.currentActivity = void 0;
       artifact.inPosessionOf = target.id;
-      updateBeingActions(deity);
+      updateBeingActions(being);
       updateBeingActions(target);
     });
   }
