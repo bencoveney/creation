@@ -1,6 +1,7 @@
 import { updateNeeds } from "../decision/need";
-import { History, getDeities } from "../history";
+import { History } from "../history";
+import { lookupValues } from "../history/lookup";
 
 export function runNeeds(history: History): void {
-  getDeities(history.beings).forEach((deity) => updateNeeds(deity.needs));
+  lookupValues(history.beings).forEach((being) => updateNeeds(being.needs));
 }

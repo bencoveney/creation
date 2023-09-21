@@ -3,19 +3,10 @@ import { satisfyNeed } from "../decision/need";
 import { array2dGet } from "../utils/array2d";
 import { getFromLookupSafe, lookupValues } from "../history/lookup";
 import { randomChoice } from "../utils/random";
-import { Being, Coordinate, History, getDeities } from "../history";
+import { Being, Coordinate, History } from "../history";
 import { Tile } from "../world";
 import { pathfind } from "../world/pathfind";
 import { BeingAction, TileAction } from "../decision/action";
-
-// Something along these lines.
-//
-// For each deity in the world:
-//   If they are in a location with another deity.
-//     If they meet the % chance to do a group activity.
-//       Do a group activity
-//
-// Maybe need a list of goals + pointer to active goal
 
 export function runDecision(history: History) {
   const worldIsReady = !!history.world;
@@ -55,11 +46,11 @@ export function runDecision(history: History) {
 }
 
 function pickRandomTargetTile(
-  deity: Being,
+  being: Being,
   history: History
 ): Tile | undefined {
   const possibleTiles: Tile[] = history.world!.values.filter(
-    (tile) => tile.id != deity.location
+    (tile) => tile.id != being.location
   );
   if (possibleTiles.length === 0) {
     console.log("Nowhere can be moved to");
@@ -74,7 +65,7 @@ function pickRandomTargetTile(
 }
 
 function getPathToTargetLocation(
-  deity: Being,
+  being: Being,
   targetLocation: Coordinate,
   history: History
 ): Coordinate[] {
@@ -83,7 +74,7 @@ function getPathToTargetLocation(
     console.error("weird");
     return [];
   }
-  const location = getFromLookupSafe(history.regions, deity.location);
+  const location = getFromLookupSafe(history.regions, being.location);
   if (!location || !location.tile) {
     return [targetLocation];
   }

@@ -108,19 +108,6 @@ export type History = HasAvailableActions<TileAction> & {
   terrainRegistry: TerrainRegistry;
 };
 
-export function getDeities(beings: Lookup<Being>): Being[] {
-  return lookupValues(beings).filter((being) => being.kind === "deity");
-}
-
-export function getDeitiesByActivity(
-  beings: Lookup<Being>,
-  kind: CurrentActivity["kind"]
-): Being[] {
-  return getDeities(beings).filter(
-    (being) => being.currentActivity?.kind === kind
-  );
-}
-
 export function getBeingsByActivity(
   beings: Lookup<Being>,
   kind: CurrentActivity["kind"]

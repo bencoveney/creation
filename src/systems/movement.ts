@@ -4,7 +4,7 @@ import {
   CurrentMovementActivity,
   History,
   Region,
-  getDeitiesByActivity,
+  getBeingsByActivity,
 } from "../history";
 import { Tile } from "../world";
 import { getFromLookupSafe } from "../history/lookup";
@@ -15,57 +15,57 @@ import {
 } from "../decision/factories";
 
 export function runMovement(history: History) {
-  const deities = getDeitiesByActivity(history.beings, "movement");
-  deities.forEach((deity) => {
+  const beings = getBeingsByActivity(history.beings, "movement");
+  beings.forEach((being) => {
     // TODO: if/else can be restructured
-    const previous = getFromLookupSafe(history.regions, deity.location) as Tile;
-    const path = (deity.currentActivity as CurrentMovementActivity).path;
+    const previous = getFromLookupSafe(history.regions, being.location) as Tile;
+    const path = (being.currentActivity as CurrentMovementActivity).path;
     if (path.length === 0) {
       throw new Error("what");
     }
     const next = path.pop() as Coordinate;
     const target = array2dGet(history.world!, next.x, next.y);
-    moveToLocation(deity, target, history, previous);
-    deity.location = target.id;
+    moveToLocation(being, target, history, previous);
+    being.location = target.id;
     if (path.length === 0) {
       history.log(
-        `[[${deity.name}]] completed their journey`,
-        [deity.id],
+        `[[${being.name}]] completed their journey`,
+        [being.id],
         [target.id],
         []
       );
-      deity.currentActivity = undefined;
+      being.currentActivity = undefined;
     }
   });
 }
 
 function moveToLocation(
-  deity: Being,
+  being: Being,
   targetTile: Tile,
   history: History,
   previous?: Region
 ) {
-  discoverLocation(deity, targetTile, history);
-  deity.location = targetTile.id;
+  discoverLocation(being, targetTile, history);
+  being.location = targetTile.id;
   if (previous) {
     history.log(
-      `[[${deity.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
-      [deity.id],
+      `[[${being.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
+      [being.id],
       [targetTile.id],
       []
     );
   } else {
     history.log(
-      `[[${deity.name}]] entered the world in [[${targetTile.name}]]`,
-      [deity.id],
+      `[[${being.name}]] entered the world in [[${targetTile.name}]]`,
+      [being.id],
       [targetTile.id],
       []
     );
   }
 }
 
-// Triggered whenever a deity enters a tile
-function discoverLocation(deity: Being, targetTile: Tile, history: History) {
+// Triggered whenever a being enters a tile
+function discoverLocation(being: Being, targetTile: Tile, history: History) {
   if (targetTile.discovered) {
     return;
   }
@@ -76,11 +76,11 @@ function discoverLocation(deity: Being, targetTile: Tile, history: History) {
     .map((part) => `[[${part}]]`)
     .join(" ");
   history.log(
-    `[[${deity.name}]] discovered the region of ${regionNameParts}`,
-    [deity.id],
+    `[[${being.name}]] discovered the region of ${regionNameParts}`,
+    [being.id],
     [targetTile.id],
     []
   );
-  deity.location = targetTile.id;
-  updateBeingActions(deity);
+  being.location = targetTile.id;
+  updateBeingActions(being);
 }

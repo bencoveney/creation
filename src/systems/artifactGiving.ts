@@ -2,30 +2,29 @@ import { updateBeingActions } from "../decision/factories";
 import {
   CurrentGiveArtifactActivity,
   History,
-  getDeitiesByActivity,
+  getBeingsByActivity,
 } from "../history";
 import { getFromLookup } from "../history/lookup";
 import { Tile } from "../world";
 
 export function runArtifactGiving(history: History) {
-  const deities = getDeitiesByActivity(history.beings, "giveArtifact");
-  deities.forEach((deity) => {
-    const activity = deity.currentActivity as CurrentGiveArtifactActivity;
+  const beings = getBeingsByActivity(history.beings, "giveArtifact");
+  beings.forEach((being) => {
+    const activity = being.currentActivity as CurrentGiveArtifactActivity;
     const artifact = getFromLookup(history.artifacts, activity.artifact);
-    const tile = getFromLookup(history.regions, deity.location!) as Tile;
+    const tile = getFromLookup(history.regions, being.location!) as Tile;
     const target = getFromLookup(history.beings, activity.target);
     history.log(
-      `[[${deity.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
-      [deity.id, target.id],
+      `[[${being.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
+      [being.id, target.id],
       [tile.id],
       [artifact.id]
     );
-    // deity.holding.push(artifact.id);
-    deity.holding.splice(deity.holding.indexOf(artifact.id), 1);
+    being.holding.splice(being.holding.indexOf(artifact.id), 1);
     target.holding.push(artifact.id);
-    deity.currentActivity = undefined;
+    being.currentActivity = undefined;
     artifact.inPosessionOf = target.id;
-    updateBeingActions(deity);
+    updateBeingActions(being);
     updateBeingActions(target);
   });
 }

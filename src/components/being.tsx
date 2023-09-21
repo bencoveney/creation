@@ -26,7 +26,7 @@ export function Being({
       <Id value={being.id} /> {being.name}:
       <Names name={being.name} history={history} />
       <Motif motif={being.motif} />
-      {being.theme && `Deity of ${being.theme}`}
+      {being.theme && `Represents ${being.theme}`}
       <Needs needs={being.needs} />
       <Preferences preferences={being.preferences} />
       <TimesChosen timesChosen={being.timesChosen} />

@@ -14,3 +14,4 @@ Procedural world/history generation
   - Roughness map
 - artifacts can be given stored, stolen
 - activities take time
+- activities can be done as a group (joined? interrupted?)

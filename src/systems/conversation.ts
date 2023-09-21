@@ -2,30 +2,30 @@ import { getFromLookup } from "../history/lookup";
 import {
   CurrentConversationActivity,
   History,
-  getDeitiesByActivity,
+  getBeingsByActivity,
 } from "../history";
 
 export function runConversation(history: History) {
-  const deities = getDeitiesByActivity(history.beings, "conversation");
-  deities.forEach((deity) => {
-    const activity = deity.currentActivity as CurrentConversationActivity;
+  const beings = getBeingsByActivity(history.beings, "conversation");
+  beings.forEach((being) => {
+    const activity = being.currentActivity as CurrentConversationActivity;
     const target = getFromLookup(history.beings, activity.target);
-    const location = getFromLookup(history.regions, deity.location!);
-    deity.currentActivity = undefined;
-    if (target.location !== deity.location) {
+    const location = getFromLookup(history.regions, being.location!);
+    being.currentActivity = undefined;
+    if (target.location !== being.location) {
       console.warn("conversationFailed");
       return;
     }
     history.log(
-      `[[${deity.name}]] talked to [[${target.name}]]`,
-      [deity.id, target.id],
+      `[[${being.name}]] talked to [[${target.name}]]`,
+      [being.id, target.id],
       [location.id],
       []
     );
-    if (deity.relationships[target.id]) {
-      deity.relationships[target.id].encounters++;
+    if (being.relationships[target.id]) {
+      being.relationships[target.id].encounters++;
     } else {
-      deity.relationships[target.id] = {
+      being.relationships[target.id] = {
         kind: "met",
         encounters: 1,
       };

@@ -1,4 +1,4 @@
-import { History, getDeities } from "../history";
+import { History } from "../history";
 import { Language } from "../language/language";
 import { Region } from "./region";
 import { Being } from "./being";
@@ -10,6 +10,7 @@ import { getTerrainLayer } from "../terrain/registry";
 import { Terrain } from "./map/terrain";
 import { getTile } from "../world";
 import { InspectProps } from "../hooks/useInspect";
+import { lookupValues } from "../history/lookup";
 
 export function WorldSelection({
   history,
@@ -57,12 +58,12 @@ export function WorldSelection({
         {selectedTile && <Region region={selectedTile} history={history} />}
       </GridItem>
       {selectedTile &&
-        getDeities(history.beings)
-          .filter((deity) => deity.location === selectedTile.id)
-          .map((deity, index) => (
+        lookupValues(history.beings)
+          .filter((being) => being.location === selectedTile.id)
+          .map((being, index) => (
             <GridItem key={index}>
               <Being
-                being={deity}
+                being={being}
                 history={history}
                 language={language}
                 inspect={inspect}
