@@ -2434,7 +2434,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment18 = 7;
+          var Fragment21 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3590,7 +3590,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment18:
+              case Fragment21:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -13261,7 +13261,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment18) {
+              if (current2 === null || current2.tag !== Fragment21) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -13664,7 +13664,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment18) {
+                    if (child.tag === Fragment21) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -17839,7 +17839,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment18:
+              case Fragment21:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18112,7 +18112,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment18:
+              case Fragment21:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -22371,7 +22371,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment18, elements, key, mode);
+            var fiber = createFiber(Fragment21, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -24376,11 +24376,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx39 = jsxWithValidationDynamic;
-          var jsxs30 = jsxWithValidationStatic;
+          var jsx42 = jsxWithValidationDynamic;
+          var jsxs33 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx39;
-          exports.jsxs = jsxs30;
+          exports.jsx = jsx42;
+          exports.jsxs = jsxs33;
         })();
       }
     }
@@ -25487,10 +25487,44 @@
     ] });
   }
 
-  // src/components/motif.tsx
+  // src/components/layout/grid.tsx
   var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  function Motif({ motif }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_jsx_runtime11.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
+  function Grid({
+    children,
+    minWidth = 175,
+    columns,
+    title
+  }) {
+    if (Array.isArray(children) && children.length === 0) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+      "div",
+      {
+        style: {
+          display: "grid",
+          gridTemplateColumns: columns ? `1fr `.repeat(columns) : `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
+          gridGap: 10,
+          margin: 10
+        },
+        children: [
+          title && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { style: { gridColumn: "1/-1", margin: 0 }, children: title }),
+          children
+        ]
+      }
+    );
+  }
+  function GridItem({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      "div",
+      {
+        style: {
+          backgroundColor: "#ddd",
+          padding: 10
+        },
+        children
+      }
+    );
   }
 
   // src/history/lookup.ts
@@ -25591,254 +25625,16 @@
     ] });
   }
 
-  // src/utils/maths.ts
-  function round(value, decimalPlaces) {
-    const multiplier = Math.pow(10, decimalPlaces);
-    return Math.floor(value * multiplier) / multiplier;
-  }
-  function clamp(min, max, value) {
-    return Math.max(min, Math.min(max, value));
-  }
-  function lerp(x, min, max) {
-    return (1 - x) * min + max * x;
-  }
-  function inverseLerp(x, min, max) {
-    return (x - min) / (max - min);
-  }
-
-  // src/components/needs.tsx
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  function Needs({ needs }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { children: "Needs" }),
-      Object.entries(needs).map(([name, value]) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-          name,
-          ": ",
-          round(value.currentValue, 3),
-          " (-",
-          round(value.drainRate, 3),
-          ")"
-        ] }, name);
-      })
-    ] });
-  }
-
-  // src/components/currentActivity.tsx
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  function CurrentActivity({
-    currentActivity
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
-      "Current Activity: ",
-      currentActivity.kind
-    ] });
-  }
-
-  // src/components/preferences.tsx
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  function Preferences({ preferences }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h3", { children: "Preferences" }),
-      Object.entries(preferences).map(([name, value]) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
-          name,
-          ": ",
-          round(value, 3)
-        ] }, name);
-      })
-    ] });
-  }
-
-  // src/components/holding.tsx
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-  function Holding({
-    artifacts,
-    inspect
-  }) {
-    if (artifacts.length === 0) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h3", { children: "Holding" }),
-      artifacts.map((id3) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(InspectLink, { id: id3, kind: "artifact", inspect }, id3))
-    ] });
-  }
-
-  // src/components/timesChosen.tsx
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
-  function TimesChosen({ timesChosen }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h3", { children: "Times Chosen" }),
-      Object.entries(timesChosen).filter(([_, value]) => value > 0).map(([name, value]) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { children: [
-          name,
-          ": ",
-          round(value, 3)
-        ] }, name);
-      })
-    ] });
-  }
-
-  // src/components/relationships.tsx
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-  function Relationships({
-    relationships,
-    history: history3,
-    language,
-    inspect
-  }) {
-    if (Object.entries(relationships).length === 0) {
-      return null;
-    }
-    const languageName = spellWord(getWord(language.name, language));
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("h3", { children: "Relationships" }),
-      Object.entries(relationships).map(([otherBeing, relationship]) => {
-        const otherBeingName = spellWord(
-          getWord(getFromLookup(history3.beings, otherBeing).name, language)
-        );
-        return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
-          "div",
-          {
-            style: { textAlign: "center", marginBottom: spacer.medium },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
-                  Name,
-                  {
-                    languageName,
-                    word: otherBeingName
-                  },
-                  otherBeingName
-                ),
-                " ",
-                "- ",
-                `${relationship.kind} ${relationship.encounters}`
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(InspectLink, { id: otherBeing, inspect, kind: "being" })
-            ]
-          },
-          otherBeing
-        );
-      })
-    ] });
-  }
-
-  // src/components/being.tsx
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
-  function Being({
-    being,
-    history: history3,
-    language,
-    inspect
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Id, { value: being.id }),
-      " ",
-      being.name,
-      ":",
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Names, { name: being.name, history: history3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Motif, { motif: being.motif }),
-      being.theme && `Represents ${being.theme}`,
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Needs, { needs: being.needs }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Preferences, { preferences: being.preferences }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
-      being.currentActivity && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(CurrentActivity, { currentActivity: being.currentActivity }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Holding, { artifacts: being.holding, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
-        Relationships,
-        {
-          relationships: being.relationships,
-          history: history3,
-          language,
-          inspect
-        }
-      )
-    ] });
-  }
-
-  // src/components/layout/grid.tsx
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-  function Grid({
-    children,
-    minWidth = 175,
-    columns,
-    title
-  }) {
-    if (Array.isArray(children) && children.length === 0) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
-      "div",
-      {
-        style: {
-          display: "grid",
-          gridTemplateColumns: columns ? `1fr `.repeat(columns) : `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
-          gridGap: 10,
-          margin: 10
-        },
-        children: [
-          title && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h2", { style: { gridColumn: "1/-1", margin: 0 }, children: title }),
-          children
-        ]
-      }
-    );
-  }
-  function GridItem({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-      "div",
-      {
-        style: {
-          backgroundColor: "#ddd",
-          padding: 10
-        },
-        children
-      }
-    );
-  }
-
-  // src/components/artifact.tsx
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-  function Artifact({
-    artifact,
-    history: history3
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(import_jsx_runtime24.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Id, { value: artifact.id }),
-      " ",
-      artifact.name,
-      ":",
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Names, { name: artifact.name, history: history3 }),
-      artifact.object
-    ] });
-  }
-
-  // src/components/region.tsx
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
-  function Region({
-    region,
-    history: history3
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Id, { value: region.id }),
-      " ",
-      region.name,
-      ":",
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Names, { name: region.name, history: history3 })
-    ] });
-  }
-
   // src/components/layout/tags.tsx
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   function Tags({ children }) {
     if (Array.isArray(children) && children.length === 0) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("ul", { style: { margin: 0, padding: 0 }, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("ul", { style: { margin: 0, padding: 0 }, children });
   }
   function TagsItem({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       "li",
       {
         style: {
@@ -25853,34 +25649,34 @@
   }
 
   // src/components/dialect.tsx
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
   function Dialect({
     dialect,
     history: history3
   }) {
     const { id: id3, language } = dialect;
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Id, { value: id3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Names, { name: language.name, history: history3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("ul", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("li", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Id, { value: id3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Names, { name: language.name, history: history3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("ul", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("li", { children: [
           "Structure:",
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Tooltip, { label: "Onset", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Tooltip, { label: "Onset", children: [
             "[",
             language.syllableStructure.minOnset,
             "-",
             language.syllableStructure.maxOnset,
             "]"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Tooltip, { label: "Nucleus", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Tooltip, { label: "Nucleus", children: [
             "[",
             language.syllableStructure.minNucleus,
             "-",
             language.syllableStructure.maxNucleus,
             "]"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Tooltip, { label: "Coda", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Tooltip, { label: "Coda", children: [
             "[",
             language.syllableStructure.minCoda,
             "-",
@@ -25888,33 +25684,33 @@
             "]"
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("li", { children: [
           "Single Vowels:",
           " ",
           language.phonemes.singleVowels.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("li", { children: [
           "Dipthongs:",
           " ",
           language.phonemes.dipthongs.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("li", { children: [
           "Unvoiced Constonants:",
           " ",
           language.phonemes.unvoicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("li", { children: [
           "Voiced Constonants:",
           " ",
           language.phonemes.voicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Tags, { children: Object.entries(language.words).map(([word, voicing]) => /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(TagsItem, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Tags, { children: Object.entries(language.words).map(([word, voicing]) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(TagsItem, { children: [
         word,
         ": ",
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("i", { children: spellWord(voicing) })
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("i", { children: spellWord(voicing) })
       ] }, word)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("ul", { style: { margin: 0, padding: 0 } })
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("ul", { style: { margin: 0, padding: 0 } })
     ] });
   }
 
@@ -25927,6 +25723,21 @@
 
   // src/utils/array2d.ts
   var import_array = __toESM(require_array(), 1);
+
+  // src/utils/maths.ts
+  function round(value, decimalPlaces) {
+    const multiplier = Math.pow(10, decimalPlaces);
+    return Math.floor(value * multiplier) / multiplier;
+  }
+  function clamp(min, max, value) {
+    return Math.max(min, Math.min(max, value));
+  }
+  function lerp(x, min, max) {
+    return (1 - x) * min + max * x;
+  }
+  function inverseLerp(x, min, max) {
+    return (x - min) / (max - min);
+  }
 
   // src/utils/array.ts
   function getMinAndMax(values) {
@@ -26485,7 +26296,7 @@
   }
 
   // src/components/map/terrain.tsx
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   var selectedColor = (0, import_color.toHex)({ r: 0, g: 255, b: 0 });
   var missingColor = { r: 0, g: 255, b: 0 };
   function Terrain({
@@ -26530,7 +26341,7 @@
         }
       });
     }, [canvasRef.current, hoverX, hoverY, layer]);
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       "canvas",
       {
         ref: canvasRef,
@@ -26587,8 +26398,14 @@
     return newTerrainRegistry;
   }
 
+  // src/components/motif.tsx
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  function Motif({ motif }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_jsx_runtime19.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
+  }
+
   // src/components/map/mapTile.tsx
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   function MapTile({
     tile,
     history: history3,
@@ -26601,7 +26418,7 @@
     const beings = lookupValues(history3.beings).filter(
       (being) => being.location === tile.id
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
       "div",
       {
         style: {
@@ -26612,22 +26429,22 @@
           lineHeight: 2
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
             Name,
             {
               languageName,
               word: spellWords(getWords(tile.name, language))
             }
           ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("br", {}),
-          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("br", {}),
+          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
             Tooltip,
             {
               label: spellWords(getWords(being.name, language)),
-              children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Motif, { motif: being.motif })
+              children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Motif, { motif: being.motif })
             },
             index
-          )) }) : /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          )) }) : /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
             "span",
             {
               style: {
@@ -26641,7 +26458,7 @@
     );
   }
   function BlackLabel({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
       "span",
       {
         style: {
@@ -26935,7 +26752,7 @@
   }
 
   // src/components/map/map.tsx
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   function Map2({
     history: history3,
     language,
@@ -26975,7 +26792,7 @@
       }
     }, [setSelection, pixelX, flipPixelY]);
     const layer = getTerrainLayer(terrainRegistry, terrainLayer);
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
       "div",
       {
         style: {
@@ -26993,7 +26810,7 @@
         },
         onMouseMove: handler,
         children: [
-          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
             "div",
             {
               style: {
@@ -27007,10 +26824,10 @@
                 padding: "10px",
                 boxSizing: "border-box"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(MapTile, { tile: selectedTile, history: history3, language })
+              children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(MapTile, { tile: selectedTile, history: history3, language })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
             "div",
             {
               style: {
@@ -27021,7 +26838,7 @@
                 aspectRatio: 1,
                 zIndex: 0
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
+              children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
             }
           )
         ]
@@ -27029,28 +26846,42 @@
     );
   }
 
+  // src/components/region.tsx
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+  function Region({
+    region,
+    history: history3,
+    inspect
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(InspectLink, { kind: "region", id: region.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { children: region.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Names, { name: region.name, history: history3 })
+    ] });
+  }
+
   // src/components/terrainLayerPicker.tsx
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   function TerrainLayerPicker({
     terrainRegistry,
     setTerrainLayer
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_jsx_runtime31.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("div", { children: "Terrain layer" }),
-      terrainRegistry.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("button", { onClick: () => setTerrainLayer(entry.name), children: entry.name }, entry.name))
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { children: "Terrain layer" }),
+      terrainRegistry.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("button", { onClick: () => setTerrainLayer(entry.name), children: entry.name }, entry.name))
     ] });
   }
 
   // src/components/terrainValues.tsx
   var import_color3 = __toESM(require_color(), 1);
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   function TerrainValues({
     terrainRegistry,
     selectionX,
     selectionY
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(import_jsx_runtime24.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
         "Terrain Position: (",
         selectionX,
         ", ",
@@ -27062,19 +26893,19 @@
           case "color":
             const color = array2dGet(entry.values, selectionX, selectionY);
             const hex = (0, import_color3.toHex)(color);
-            return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
               entry.name,
               ": ",
-              /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { style: { backgroundColor: hex }, children: hex })
+              /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { style: { backgroundColor: hex }, children: hex })
             ] }, entry.name);
           case "number":
-            return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
               entry.name,
               ": ",
               round(array2dGet(entry.values, selectionX, selectionY), 3)
             ] }, entry.name);
           case "string":
-            return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { children: [
               entry.name,
               ": ",
               array2dGet(entry.values, selectionX, selectionY)
@@ -27085,17 +26916,17 @@
   }
 
   // src/components/tileValues.tsx
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   function TileValues({ tile }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
         "Tile Position: (",
         tile.x,
         ", ",
         tile.y,
         ")"
       ] }),
-      Object.entries(tile.terrainAssessment).map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+      Object.entries(tile.terrainAssessment).map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
         key,
         ": ",
         stringify(value)
@@ -27114,8 +26945,24 @@
     }
   }
 
+  // src/components/beingSummary.tsx
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  function BeingSummary({
+    being,
+    history: history3,
+    inspect
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { children: being.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Names, { name: being.name, history: history3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Motif, { motif: being.motif }),
+      being.theme && `Represents ${being.theme}`
+    ] });
+  }
+
   // src/components/worldSelection.tsx
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   function WorldSelection({
     history: history3,
     language,
@@ -27130,15 +26977,15 @@
     }
     const selectedTile = getTile(history3.world, selectionX, selectionY);
     const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(Grid, { columns: 1, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Grid, { columns: 1, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         TerrainLayerPicker,
         {
           terrainRegistry: history3.terrainRegistry,
           setTerrainLayer
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         TerrainValues,
         {
           terrainRegistry: history3.terrainRegistry,
@@ -27146,25 +26993,15 @@
           selectionY
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Terrain, { layer, hoverX: null, hoverY: null }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(GridItem, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(TileValues, { tile: selectedTile }),
-        selectedTile && /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Region, { region: selectedTile, history: history3 })
-      ] }),
-      selectedTile && lookupValues(history3.beings).filter((being) => being.location === selectedTile.id).map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
-        Being,
-        {
-          being,
-          history: history3,
-          language,
-          inspect
-        }
-      ) }, index))
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Terrain, { layer, hoverX: null, hoverY: null }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(TileValues, { tile: selectedTile }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Region, { region: selectedTile, history: history3, inspect }) }),
+      selectedTile && lookupValues(history3.beings).filter((being) => being.location === selectedTile.id).map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(BeingSummary, { being, history: history3, inspect }) }, index))
     ] });
   }
 
   // src/components/world.tsx
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   function World({
     history: history3,
     language,
@@ -27184,7 +27021,7 @@
       },
       [selection]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
       "div",
       {
         style: {
@@ -27193,7 +27030,7 @@
           alignItems: "flex-start"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
             Map2,
             {
               history: history3,
@@ -27202,7 +27039,7 @@
               setSelection: setSelectionComparer
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
             WorldSelection,
             {
               history: history3,
@@ -27220,14 +27057,14 @@
   }
 
   // src/components/layout/tab.tsx
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   function Tab({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(import_jsx_runtime36.Fragment, { children });
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(import_jsx_runtime29.Fragment, { children });
   }
 
   // src/components/layout/tabs.tsx
   var import_react8 = __toESM(require_react(), 1);
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   function Tabs({
     children,
     selectedTab
@@ -27245,8 +27082,8 @@
         setSelected(selectedTab);
       }
     }, [selectedTab]);
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(FixedTop, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Toolbar, { children: labels.map((label) => /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(FixedTop, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Toolbar, { children: labels.map((label) => /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(
         Button,
         {
           selected: selected === label,
@@ -27271,6 +27108,156 @@
       [setInspecting]
     );
     return [inspecting, inspect];
+  }
+
+  // src/components/needs.tsx
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+  function Needs2({ needs }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_jsx_runtime31.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("h3", { children: "Needs" }),
+      Object.entries(needs).map(([name, value]) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
+          name,
+          ": ",
+          round(value.currentValue, 3),
+          " (-",
+          round(value.drainRate, 3),
+          ")"
+        ] }, name);
+      })
+    ] });
+  }
+
+  // src/components/currentActivity.tsx
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  function CurrentActivity({
+    currentActivity
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+      "Current Activity: ",
+      currentActivity.kind
+    ] });
+  }
+
+  // src/components/preferences.tsx
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+  function Preferences2({ preferences }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h3", { children: "Preferences" }),
+      Object.entries(preferences).map(([name, value]) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+          name,
+          ": ",
+          round(value, 3)
+        ] }, name);
+      })
+    ] });
+  }
+
+  // src/components/holding.tsx
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+  function Holding({
+    artifacts,
+    inspect
+  }) {
+    if (artifacts.length === 0) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("h3", { children: "Holding" }),
+      artifacts.map((id3) => /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(InspectLink, { id: id3, kind: "artifact", inspect }, id3))
+    ] });
+  }
+
+  // src/components/timesChosen.tsx
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+  function TimesChosen({ timesChosen }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h3", { children: "Times Chosen" }),
+      Object.entries(timesChosen).filter(([_, value]) => value > 0).map(([name, value]) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { children: [
+          name,
+          ": ",
+          round(value, 3)
+        ] }, name);
+      })
+    ] });
+  }
+
+  // src/components/relationships.tsx
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+  function Relationships({
+    relationships,
+    history: history3,
+    language,
+    inspect
+  }) {
+    if (Object.entries(relationships).length === 0) {
+      return null;
+    }
+    const languageName = spellWord(getWord(language.name, language));
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h3", { children: "Relationships" }),
+      Object.entries(relationships).map(([otherBeing, relationship]) => {
+        const otherBeingName = spellWord(
+          getWord(getFromLookup(history3.beings, otherBeing).name, language)
+        );
+        return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+          "div",
+          {
+            style: { textAlign: "center", marginBottom: spacer.medium },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+                  Name,
+                  {
+                    languageName,
+                    word: otherBeingName
+                  },
+                  otherBeingName
+                ),
+                " ",
+                "- ",
+                `${relationship.kind} ${relationship.encounters}`
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(InspectLink, { id: otherBeing, inspect, kind: "being" })
+            ]
+          },
+          otherBeing
+        );
+      })
+    ] });
+  }
+
+  // src/components/being.tsx
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+  function Being({
+    being,
+    history: history3,
+    language,
+    inspect
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { children: being.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Names, { name: being.name, history: history3 }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Motif, { motif: being.motif }),
+      being.theme && `Represents ${being.theme}`,
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Needs2, { needs: being.needs }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Preferences2, { preferences: being.preferences }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
+      being.currentActivity && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(CurrentActivity, { currentActivity: being.currentActivity }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Holding, { artifacts: being.holding, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
+        Relationships,
+        {
+          relationships: being.relationships,
+          history: history3,
+          language,
+          inspect
+        }
+      )
+    ] });
   }
 
   // src/components/layout/verticalSplit.tsx
@@ -27322,8 +27309,23 @@
     );
   }
 
-  // src/components/inspect.tsx
+  // src/components/artifact.tsx
   var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+  function Artifact({
+    artifact,
+    history: history3,
+    inspect
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { children: artifact.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Names, { name: artifact.name, history: history3 }),
+      artifact.object
+    ] });
+  }
+
+  // src/components/inspect.tsx
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   function Inspect({
     history: history3,
     language,
@@ -27333,7 +27335,7 @@
     switch (inspected.kind) {
       case "being":
         const being = getFromLookup(history3.beings, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           InspectBeing,
           {
             history: history3,
@@ -27344,7 +27346,7 @@
         );
       case "region":
         const region = getFromLookup(history3.regions, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           InspectRegion,
           {
             history: history3,
@@ -27355,7 +27357,7 @@
         );
       case "artifact":
         const artifact = getFromLookup(history3.artifacts, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
           InspectArtifact,
           {
             history: history3,
@@ -27374,8 +27376,8 @@
     being,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(VerticalSplit, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(VerticalSplit, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         Being,
         {
           history: history3,
@@ -27384,7 +27386,7 @@
           inspect
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         Log,
         {
           history: history3,
@@ -27402,9 +27404,9 @@
     region,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(VerticalSplit, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Region, { history: history3, region }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(VerticalSplit, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Region, { history: history3, region, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         Log,
         {
           history: history3,
@@ -27422,9 +27424,16 @@
     artifact,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(VerticalSplit, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Artifact, { history: history3, artifact }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(VerticalSplit, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+        Artifact,
+        {
+          history: history3,
+          artifact,
+          inspect
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
         Log,
         {
           history: history3,
@@ -27437,44 +27446,86 @@
     ] });
   }
 
+  // src/components/artifactSummary.tsx
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+  function ArtifactSummary({
+    artifact,
+    history: history3,
+    inspect
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", { children: artifact.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Names, { name: artifact.name, history: history3 }),
+      artifact.object
+    ] });
+  }
+
+  // src/components/regionSummary.tsx
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+  function RegionSummary({
+    region,
+    history: history3,
+    inspect
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InspectLink, { kind: "region", id: region.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { children: region.name }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Names, { name: region.name, history: history3 })
+    ] });
+  }
+
   // src/components/page.tsx
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
   function Page({
     history: history3,
     language,
     playbackControls
   }) {
     const [inspected, inspect] = useInspect();
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(FixedTop, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Toolbar, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Playback, { ...playbackControls }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(FixedTop, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Toolbar, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Playback, { ...playbackControls }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(
         Tabs,
         {
           selectedTab: inspected !== null ? `Inspect ${inspected.kind} #${inspected.id}` : void 0,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(World, { history: history3, language, inspect }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Log", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Log, { history: history3, language, inspect }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Regions", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Grid, { title: "Regions", children: lookupValues(history3.regions).map((region) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Region, { region, history: history3 }) }, region.id);
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(World, { history: history3, language, inspect }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "Log", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Log, { history: history3, language, inspect }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "Regions", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Grid, { title: "Regions", children: lookupValues(history3.regions).map((region) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+                RegionSummary,
+                {
+                  region,
+                  history: history3,
+                  inspect
+                }
+              ) }, region.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Beings", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Grid, { title: "Beings", children: lookupValues(history3.beings).map((being) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
-                Being,
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "Beings", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Grid, { title: "Beings", children: lookupValues(history3.beings).map((being) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+                BeingSummary,
                 {
                   being,
                   history: history3,
-                  language,
                   inspect
                 }
               ) }, being.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Artifacts", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Grid, { title: "Artifacts", children: lookupValues(history3.artifacts).map((artifact) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Artifact, { artifact, history: history3 }) }, artifact.id);
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "Artifacts", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Grid, { title: "Artifacts", children: lookupValues(history3.artifacts).map((artifact) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
+                ArtifactSummary,
+                {
+                  artifact,
+                  history: history3,
+                  inspect
+                }
+              ) }, artifact.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: "Dialects", children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history3.dialects).map((dialect) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Dialect, { dialect, history: history3 }) }, dialect.id);
+            /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "Dialects", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history3.dialects).map((dialect) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Dialect, { dialect, history: history3 }) }, dialect.id);
             }) }) }),
-            inspected && /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Tab, { label: `Inspect ${inspected.kind} #${inspected.id}`, children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(
+            inspected && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: `Inspect ${inspected.kind} #${inspected.id}`, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
               Inspect,
               {
                 history: history3,
@@ -27606,18 +27657,33 @@
   function runSymbolAdoption(history3) {
     const beings = getBeingsByActivity(history3.beings, "adoptSymbol");
     beings.forEach((being) => {
-      being.motif = {
-        kind: "symbol",
-        value: randomChoice(config.motifs).name
-      };
-      history3.log(
-        `[[${being.name}]] adopted the ${being.motif?.value} as their symbol`,
-        [being.id],
-        being.location ? [being.location] : [],
-        []
-      );
-      being.currentActivity = void 0;
-      updateBeingActions(being);
+      const activity = being.currentActivity;
+      if (activity.timeLeft === void 0) {
+        history3.log(
+          `[[${being.name}]] started adopting a symbol`,
+          [being.id],
+          being.location ? [being.location] : [],
+          []
+        );
+        activity.timeLeft = Math.round(Math.random() * 10);
+      } else {
+        activity.timeLeft--;
+        if (activity.timeLeft >= 0) {
+          return;
+        }
+        being.motif = {
+          kind: "symbol",
+          value: randomChoice(config.motifs).name
+        };
+        history3.log(
+          `[[${being.name}]] adopted the ${being.motif?.value} as their symbol`,
+          [being.id],
+          being.location ? [being.location] : [],
+          []
+        );
+        being.currentActivity = void 0;
+        updateBeingActions(being);
+      }
     });
   }
 
@@ -28634,7 +28700,7 @@
   }
 
   // src/index.tsx
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
   if (!root) {
     throw new Error("Could not find #root in document");
@@ -28673,7 +28739,7 @@
         console.log(history2);
       }
     }, [playbackControls]);
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(
       Page,
       {
         history: history2,
@@ -28682,7 +28748,7 @@
       }
     );
   }
-  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Wrapper, {}));
+  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Wrapper, {}));
 })();
 /*! Bundled license information:
 
