@@ -3,10 +3,7 @@ import { Language } from "../language/language";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
-import { Being } from "./being";
 import { Grid, GridItem } from "./layout/grid";
-import { Artifact } from "./artifact";
-import { Region } from "./region";
 import { Dialect } from "./dialect";
 import { lookupValues } from "../history/lookup";
 import { World } from "./world";
@@ -16,6 +13,9 @@ import { FixedTop } from "./layout/fixedTop";
 import { Toolbar } from "./layout/toolbar";
 import { useInspect } from "../hooks/useInspect";
 import { Inspect } from "./inspect";
+import { BeingSummary } from "./beingSummary";
+import { ArtifactSummary } from "./artifactSummary";
+import { RegionSummary } from "./regionSummary";
 
 export function Page({
   history,
@@ -50,7 +50,11 @@ export function Page({
             {lookupValues(history.regions).map((region) => {
               return (
                 <GridItem key={region.id}>
-                  <Region region={region} history={history} />
+                  <RegionSummary
+                    region={region}
+                    history={history}
+                    inspect={inspect}
+                  />
                 </GridItem>
               );
             })}
@@ -61,10 +65,9 @@ export function Page({
             {lookupValues(history.beings).map((being) => {
               return (
                 <GridItem key={being.id}>
-                  <Being
+                  <BeingSummary
                     being={being}
                     history={history}
-                    language={language}
                     inspect={inspect}
                   />
                 </GridItem>
@@ -77,7 +80,11 @@ export function Page({
             {lookupValues(history.artifacts).map((artifact) => {
               return (
                 <GridItem key={artifact.id}>
-                  <Artifact artifact={artifact} history={history} />
+                  <ArtifactSummary
+                    artifact={artifact}
+                    history={history}
+                    inspect={inspect}
+                  />
                 </GridItem>
               );
             })}

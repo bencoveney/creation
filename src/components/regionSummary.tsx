@@ -3,7 +3,7 @@ import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
 import { Names } from "./names";
 
-export function Region({
+export function RegionSummary({
   region,
   history,
   inspect,

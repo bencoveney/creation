@@ -11,6 +11,7 @@ import { Terrain } from "./map/terrain";
 import { getTile } from "../world";
 import { InspectProps } from "../hooks/useInspect";
 import { lookupValues } from "../history/lookup";
+import { BeingSummary } from "./beingSummary";
 
 export function WorldSelection({
   history,
@@ -55,19 +56,16 @@ export function WorldSelection({
       </GridItem>
       <GridItem>
         <TileValues tile={selectedTile} />
-        {selectedTile && <Region region={selectedTile} history={history} />}
+      </GridItem>
+      <GridItem>
+        <Region region={selectedTile} history={history} inspect={inspect} />
       </GridItem>
       {selectedTile &&
         lookupValues(history.beings)
           .filter((being) => being.location === selectedTile.id)
           .map((being, index) => (
             <GridItem key={index}>
-              <Being
-                being={being}
-                history={history}
-                language={language}
-                inspect={inspect}
-              />
+              <BeingSummary being={being} history={history} inspect={inspect} />
             </GridItem>
           ))}
     </Grid>

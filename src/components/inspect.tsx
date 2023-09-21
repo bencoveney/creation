@@ -95,7 +95,7 @@ function InspectRegion({
 } & InspectProps) {
   return (
     <VerticalSplit>
-      <RegionComponent history={history} region={region} />
+      <RegionComponent history={history} region={region} inspect={inspect} />
       <Log
         history={history}
         language={language}
@@ -119,7 +119,11 @@ function InspectArtifact({
 } & InspectProps) {
   return (
     <VerticalSplit>
-      <ArtifactComponent history={history} artifact={artifact} />
+      <ArtifactComponent
+        history={history}
+        artifact={artifact}
+        inspect={inspect}
+      />
       <Log
         history={history}
         language={language}
