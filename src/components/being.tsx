@@ -3,7 +3,7 @@ import { Language } from "../language/language";
 import { Motif } from "./motif";
 import { Names } from "./names";
 import { Needs } from "./needs";
-import { CurrentActivity } from "./currentActivity";
+import { Activities } from "./activities";
 import { Preferences } from "./preferences";
 import { Holding } from "./holding";
 import { InspectProps } from "../hooks/useInspect";
@@ -31,9 +31,7 @@ export function Being({
       <Needs needs={being.needs} />
       <Preferences preferences={being.preferences} />
       <TimesChosen timesChosen={being.timesChosen} />
-      {being.currentActivity && (
-        <CurrentActivity currentActivity={being.currentActivity} />
-      )}
+      <Activities hasActivities={being} />
       <Holding artifacts={being.holding} inspect={inspect} />
       <Relationships
         relationships={being.relationships}

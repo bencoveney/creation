@@ -17,23 +17,34 @@ function conversation(
 ) {
   const target = getFromLookup(history.beings, activity.target);
   const location = getFromLookup(history.regions, being.location!);
-  completeActivity(being);
-  if (target.location !== being.location) {
-    console.warn("conversationFailed");
-    return;
-  }
-  history.log(
-    `[[${being.name}]] talked to [[${target.name}]]`,
-    [being.id, target.id],
-    [location.id],
-    []
-  );
-  if (being.relationships[target.id]) {
-    being.relationships[target.id].encounters++;
+  if (activity.timeLeft === undefined) {
+    history.log(
+      `[[${being.name}]] started talking to [[${target.name}]]`,
+      [being.id, target.id],
+      [location.id],
+      []
+    );
+    activity.timeLeft = Math.round(Math.random() * 10);
   } else {
-    being.relationships[target.id] = {
-      kind: "met",
-      encounters: 1,
-    };
+    activity.timeLeft--;
+    if (activity.timeLeft >= 0) {
+      return;
+    }
+    history.log(
+      `[[${being.name}]] finished talking to [[${target.name}]]`,
+      [being.id, target.id],
+      [location.id],
+      []
+    );
+    completeActivity(being);
+    completeActivity(target);
+    if (being.relationships[target.id]) {
+      being.relationships[target.id].encounters++;
+    } else {
+      being.relationships[target.id] = {
+        kind: "met",
+        encounters: 1,
+      };
+    }
   }
 }

@@ -6,7 +6,11 @@ import { Being, Coordinate, History } from "../history";
 import { Tile } from "../world";
 import { pathfind } from "../world/pathfind";
 import { BeingAction, TileAction } from "../decision/action";
-import { hasNoActivity, setCurrentActivity } from "../decision/activity";
+import {
+  ConversationActivity,
+  hasActivity,
+  setCurrentActivity,
+} from "../decision/activity";
 
 export function runDecision(history: History) {
   const worldIsReady = !!history.world;
@@ -15,33 +19,36 @@ export function runDecision(history: History) {
   }
 
   const beings = lookupValues(history.beings);
-  const availableBeings = beings.filter(hasNoActivity);
-  availableBeings.forEach((being) => {
+  for (let beingIndex = 0; beingIndex < beings.length; beingIndex++) {
+    const being = beings[beingIndex];
+    if (hasActivity(being)) {
+      continue;
+    }
     const currentLocation = history.world!.values.find(
       (tile) => tile.id === being.location
     );
-    if (currentLocation) {
-      const availableActions = getAvailableActions(history, currentLocation);
-      const action = getHighestPriorityAction(
-        availableActions,
-        being,
-        currentLocation
-      );
-
-      being.timesChosen[action.action]++;
-
-      switch (action.kind) {
-        case "tile":
-          doTileAction(history, being, currentLocation, action);
-          return;
-        case "being":
-          doBeingAction(history, being, currentLocation, action);
-          return;
-      }
-    } else {
+    if (!currentLocation) {
       doEntryAction(history, being);
+      continue;
     }
-  });
+    const availableActions = getAvailableActions(history, currentLocation);
+    const action = getHighestPriorityAction(
+      availableActions,
+      being,
+      currentLocation
+    );
+
+    being.timesChosen[action.action]++;
+
+    switch (action.kind) {
+      case "tile":
+        doTileAction(history, being, currentLocation, action);
+        break;
+      case "being":
+        doBeingAction(history, being, currentLocation, action);
+        break;
+    }
+  }
 }
 
 function pickRandomTargetTile(
@@ -159,10 +166,18 @@ function doBeingAction(
       console.error("what");
       return;
     }
-    setCurrentActivity(being, {
+    const conversation: ConversationActivity = {
       kind: "conversation",
       target: action.target.id,
-      interruptable: true,
+      interruptable: false,
+      satisfies: action.satisfies,
+    };
+    setCurrentActivity(being, conversation);
+    setCurrentActivity(action.target, {
+      kind: "joined",
+      target: being.id,
+      activity: conversation,
+      interruptable: false,
       satisfies: action.satisfies,
     });
     beingIds.push(action.target.id);

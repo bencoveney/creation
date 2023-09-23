@@ -9,10 +9,14 @@ export type BaseActivity = {
   satisfies: keyof Needs;
 };
 
+/*
+  Probably shouldn't be interruptable if:
+  - It changes the beings location.
+  - It involves another being.
+*/
 export type Interruptable = {
   interruptable: true;
 };
-
 export type NotInterruptable = {
   interruptable: false;
 };
@@ -51,9 +55,15 @@ export type AdoptSymbolActivity = {
 export type ConversationActivity = {
   kind: "conversation";
   target: Being["id"];
-  // timeLeft?: number; // TODO
 } & BaseActivity &
-  Interruptable;
+  NotInterruptable &
+  TakesTime;
+export type JoinedActivity = {
+  kind: "joined";
+  target: Being["id"];
+  activity: Activity;
+} & BaseActivity &
+  NotInterruptable;
 
 export type Activity =
   | MovementActivity
@@ -61,7 +71,8 @@ export type Activity =
   | GiveArtifactActivity
   | AdoptSymbolActivity
   | ConversationActivity
-  | RestActivity;
+  | RestActivity
+  | JoinedActivity;
 
 export type HasActivities = {
   activities: Activity[];
@@ -85,8 +96,8 @@ export function canBeInterruped(hasActivities: HasActivities) {
   return !currentActivity || currentActivity.interruptable;
 }
 
-export function hasNoActivity(hasActivities: HasActivities) {
-  return hasActivities.activities.length === 0;
+export function hasActivity(hasActivities: HasActivities) {
+  return hasActivities.activities.length > 0;
 }
 
 export function completeActivity(being: HasActivities & HasNeeds) {
