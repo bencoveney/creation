@@ -23,12 +23,15 @@ export function artifactFactory(
   creators: Being[],
   artifacts: Lookup<Artifact>
 ): Artifact {
-  return artifacts.set({
+  const holder = randomChoice(creators);
+  const artifact = artifacts.set({
     name: artifactNameFactory(),
     object: randomChoice(config.artifactItems),
     creators: creators.map((creator) => creator.id),
-    inPosessionOf: randomChoice(creators.map((creator) => creator.id)),
+    inPosessionOf: holder.id,
   });
+  holder.holding.push(artifact.id);
+  return artifact;
 }
 
 let artifactNameCount = 0;
@@ -55,7 +58,6 @@ function createArtifact(
     if (activity.timeLeft >= 0) {
       return;
     }
-    const artifact = artifactFactory([being], history.artifacts);
     const otherBeings = lookupValues(history.beings).filter((other) => {
       const otherActivity = getCurrentActivity(other);
       if (
@@ -67,7 +69,7 @@ function createArtifact(
       return false;
     });
     const allBeings = [being, ...otherBeings.map((other) => other)];
-    randomChoice(allBeings).holding.push(artifact.id);
+    const artifact = artifactFactory(allBeings, history.artifacts);
     const beingIds: string[] = [];
     const beingNames: string[] = [];
     allBeings.forEach((participant) => {

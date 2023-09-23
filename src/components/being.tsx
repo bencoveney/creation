@@ -5,11 +5,11 @@ import { Names } from "./names";
 import { Needs } from "./needs";
 import { Activities } from "./activities";
 import { Preferences } from "./preferences";
-import { Holding } from "./holding";
 import { InspectProps } from "../hooks/useInspect";
 import { TimesChosen } from "./timesChosen";
 import { Relationships } from "./relationships";
 import { InspectLink } from "./inspectLink";
+import { InspectLinks } from "./inspectLinks";
 
 export function Being({
   being,
@@ -32,7 +32,8 @@ export function Being({
       <Preferences preferences={being.preferences} />
       <TimesChosen timesChosen={being.timesChosen} />
       <Activities hasActivities={being} />
-      <Holding artifacts={being.holding} inspect={inspect} />
+      <h3>Holding</h3>
+      <InspectLinks ids={being.holding} kind="artifact" inspect={inspect} />
       <Relationships
         relationships={being.relationships}
         history={history}

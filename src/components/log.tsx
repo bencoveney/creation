@@ -8,8 +8,8 @@ import { Button } from "./layout/button";
 import { Toolbar } from "./layout/toolbar";
 import { Table } from "./layout/table";
 import { InspectProps } from "../hooks/useInspect";
-import { InspectLink } from "./inspectLink";
 import { spacer } from "./layout/theme";
+import { InspectLinks } from "./inspectLinks";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -106,57 +106,17 @@ export function Log({
                   <div style={{ textAlign: "right" }}>{tick}</div>
                   <div>{system}</div>
                   <div>{log}</div>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridAutoFlow: "column",
-                      gridAutoColumns: "min-content",
-                      gridGap: spacer.small,
-                    }}
-                  >
-                    {deities.map((id) => (
-                      <InspectLink
-                        key={id}
-                        kind="being"
-                        id={id}
-                        inspect={inspect}
-                      />
-                    ))}
-                  </div>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridAutoFlow: "column",
-                      gridAutoColumns: "min-content",
-                      gridGap: spacer.small,
-                    }}
-                  >
-                    {locations.map((id) => (
-                      <InspectLink
-                        key={id}
-                        kind="region"
-                        id={id}
-                        inspect={inspect}
-                      />
-                    ))}
-                  </div>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridAutoFlow: "column",
-                      gridAutoColumns: "min-content",
-                      gridGap: spacer.small,
-                    }}
-                  >
-                    {artifacts.map((id) => (
-                      <InspectLink
-                        key={id}
-                        kind="artifact"
-                        id={id}
-                        inspect={inspect}
-                      />
-                    ))}
-                  </div>
+                  <InspectLinks kind="being" ids={deities} inspect={inspect} />
+                  <InspectLinks
+                    kind="region"
+                    ids={locations}
+                    inspect={inspect}
+                  />
+                  <InspectLinks
+                    kind="artifact"
+                    ids={artifacts}
+                    inspect={inspect}
+                  />
                 </Fragment>
               );
             }
