@@ -9,6 +9,7 @@ import { BeingAction, TileAction } from "../decision/action";
 import {
   ConversationActivity,
   GiveArtifactActivity,
+  getCurrentActivity,
   hasActivity,
   setCurrentActivity,
 } from "../decision/activity";
@@ -113,15 +114,32 @@ function doTileAction(
     });
     locationIds.push(action.location.id);
   } else if (action.action === "createArtifact") {
-    setCurrentActivity(being, {
-      kind: "createArtifact",
-      interruptable: true,
-      satisfies: action.satisfies,
-    });
+    const alreadyStarted = lookupValues(history.beings).find(
+      (being) =>
+        being.location === currentLocation.id &&
+        getCurrentActivity(being)?.kind === "createArtifact"
+    );
+    if (alreadyStarted) {
+      setCurrentActivity(being, {
+        kind: "joined",
+        target: alreadyStarted.id,
+        activity: getCurrentActivity(alreadyStarted)!,
+        interruptable: false,
+        satisfies: action.satisfies,
+      });
+    } else {
+      setCurrentActivity(being, {
+        kind: "createArtifact",
+        interruptable: true,
+        satisfies: action.satisfies,
+      });
+    }
   }
 
+  const verb =
+    getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
   history.log(
-    `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+    `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
       currentLocation
     )}`,
     beingIds,
@@ -201,8 +219,10 @@ function doBeingAction(
     });
   }
 
+  const verb =
+    getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
   history.log(
-    `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+    `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
       currentLocation
     )}`,
     beingIds,

@@ -1,6 +1,6 @@
 import { Artifact, Being, History } from "../history";
 import { randomChoice } from "../utils/random";
-import { Lookup, getFromLookup } from "../history/lookup";
+import { Lookup, getFromLookup, lookupValues } from "../history/lookup";
 import { config } from "../config";
 import {
   updateArtifactCreatedTileActions,
@@ -11,7 +11,9 @@ import {
   CreateArtifactActivity,
   completeActivity,
   forEachBeingByActivity,
+  getCurrentActivity,
 } from "../decision/activity";
+import { commaSeparate } from "../utils/string";
 
 export function runArtifactCreation(history: History) {
   forEachBeingByActivity(history, "createArtifact", createArtifact);
@@ -48,21 +50,40 @@ function createArtifact(
       []
     );
     activity.timeLeft = Math.round(Math.random() * 10);
-    updateArtifactCreatedTileActions(history, tile);
   } else {
     activity.timeLeft--;
     if (activity.timeLeft >= 0) {
       return;
     }
     const artifact = artifactFactory([being], history.artifacts);
+    const otherBeings = lookupValues(history.beings).filter((other) => {
+      const otherActivity = getCurrentActivity(other);
+      if (
+        otherActivity?.kind === "joined" &&
+        otherActivity.activity === activity
+      ) {
+        return true;
+      }
+      return false;
+    });
+    const allBeings = [being, ...otherBeings.map((other) => other)];
+    randomChoice(allBeings).holding.push(artifact.id);
+    const beingIds: string[] = [];
+    const beingNames: string[] = [];
+    allBeings.forEach((participant) => {
+      completeActivity(participant);
+      updateBeingActions(participant);
+      beingNames.push(`[[${participant.name}]]`);
+      beingIds.push(participant.id);
+    });
     history.log(
-      `[[${being.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
-      [being.id],
+      `${commaSeparate(beingNames)} created the ${artifact.object} [[${
+        artifact.name
+      }]] in [[${tile.name}]]`,
+      beingIds,
       [tile.id],
       [artifact.id]
     );
-    being.holding.push(artifact.id);
-    completeActivity(being);
-    updateBeingActions(being);
+    updateArtifactCreatedTileActions(history, tile);
   }
 }

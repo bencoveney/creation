@@ -13,4 +13,3 @@ Procedural world/history generation
   - Ridged noise
   - Roughness map
 - artifacts can be given stored, stolen
-- activities can be joined
