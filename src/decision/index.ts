@@ -5,6 +5,7 @@ import { Tile } from "../world";
 import { euclidianDistance } from "../world/pathfind";
 import { Action, BeingAction, TileAction } from "./action";
 import { lookupValues } from "../history/lookup";
+import { canBeInterruped } from "./activity";
 
 const maxDistance = euclidianDistance(
   { x: 0, y: 0 } as any,
@@ -15,8 +16,11 @@ export function getAvailableActions(history: History, tile: Tile) {
   const beingsAtLocation = lookupValues(history.beings).filter(
     (being) => being.location === tile.id
   );
+  const availableBeingsAtLocation = beingsAtLocation.filter((being) =>
+    canBeInterruped(being)
+  );
   return (history.availableActions as Action[]).concat(
-    beingsAtLocation.map((being) => being.availableActions).flat()
+    availableBeingsAtLocation.map((being) => being.availableActions).flat()
   );
 }
 

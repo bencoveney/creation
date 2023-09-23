@@ -1,5 +1,3 @@
-import { Action } from "./action";
-
 export type Need = {
   currentValue: number;
   drainRate: number;
@@ -32,8 +30,8 @@ export function createNeed(): Need {
   };
 }
 
-export function satisfyNeed(hasNeeds: HasNeeds, action: Action) {
-  hasNeeds.needs[action.satisfies].currentValue = 0.5 + Math.random() * 0.5;
+export function satisfyNeed(hasNeeds: HasNeeds, satisfies: keyof Needs) {
+  hasNeeds.needs[satisfies].currentValue = 0.5 + Math.random() * 0.5;
 }
 
 export function updateNeeds(needs: Needs) {

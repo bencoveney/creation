@@ -10,6 +10,7 @@ import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, lookupValues } from "./lookup";
 import { Language } from "../language/language";
 import { Tile, World } from "../world";
+import { Activity, HasActivities } from "../decision/activity";
 
 export type Region = {
   id: string;
@@ -28,41 +29,6 @@ export type Coordinate = {
   y: number;
 };
 
-export type CurrentMovementActivity = {
-  kind: "movement";
-  moveToLocation: Coordinate;
-  path: Coordinate[];
-};
-export type CurrentCreateArtifactActivity = {
-  kind: "createArtifact";
-  timeLeft?: number;
-};
-export type CurrentRestActivity = {
-  kind: "rest";
-  timeLeft?: number;
-};
-export type CurrentGiveArtifactActivity = {
-  kind: "giveArtifact";
-  target: Being["id"];
-  artifact: Artifact["id"];
-};
-export type CurrentAdoptSymbolActivity = {
-  kind: "adoptSymbol";
-  timeLeft?: number;
-};
-export type CurrentConversationActivity = {
-  kind: "conversation";
-  target: Being["id"];
-};
-
-export type CurrentActivity =
-  | CurrentMovementActivity
-  | CurrentCreateArtifactActivity
-  | CurrentGiveArtifactActivity
-  | CurrentAdoptSymbolActivity
-  | CurrentConversationActivity
-  | CurrentRestActivity;
-
 export type Relationships = {
   [being: string]: {
     kind: string;
@@ -71,14 +37,14 @@ export type Relationships = {
 };
 
 export type Being = HasAvailableActions<BeingAction> &
-  HasNeeds & {
+  HasNeeds &
+  HasActivities & {
     id: string;
     kind: "deity";
     name: string;
     theme?: string;
     location?: string; // Region ID.
     motif?: Motif;
-    currentActivity?: CurrentActivity;
     holding: string[];
     relationships: Relationships;
     preferences: Preferences;
@@ -111,9 +77,9 @@ export type History = HasAvailableActions<TileAction> & {
 
 export function getBeingsByActivity(
   beings: Lookup<Being>,
-  kind: CurrentActivity["kind"]
+  kind: Activity["kind"]
 ): Being[] {
   return lookupValues(beings).filter(
-    (being) => being.currentActivity?.kind === kind
+    (being) => being.activities.length > 0 && being.activities[0]!.kind === kind
   );
 }

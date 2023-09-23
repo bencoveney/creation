@@ -192,6 +192,7 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
     ) as Preferences,
     holding: [],
     availableActions: [],
+    activities: [],
   });
   initialBeingActions(deity);
   return deity;

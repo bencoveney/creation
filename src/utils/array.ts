@@ -49,3 +49,10 @@ export function normalize(values: number[]): number[] {
   const { min, max } = getMinAndMax(values);
   return values.map((value) => inverseLerp(value, min, max));
 }
+
+export function last<T>(values: T[]): T | undefined {
+  if (values.length === 0) {
+    return undefined;
+  }
+  return values[values.length - 1];
+}

@@ -1,5 +1,4 @@
 import { getAvailableActions, getHighestPriorityAction } from "../decision";
-import { satisfyNeed } from "../decision/need";
 import { array2dGet } from "../utils/array2d";
 import { getFromLookupSafe, lookupValues } from "../history/lookup";
 import { randomChoice } from "../utils/random";
@@ -7,6 +6,7 @@ import { Being, Coordinate, History } from "../history";
 import { Tile } from "../world";
 import { pathfind } from "../world/pathfind";
 import { BeingAction, TileAction } from "../decision/action";
+import { hasNoActivity, setCurrentActivity } from "../decision/activity";
 
 export function runDecision(history: History) {
   const worldIsReady = !!history.world;
@@ -15,7 +15,7 @@ export function runDecision(history: History) {
   }
 
   const beings = lookupValues(history.beings);
-  const availableBeings = beings.filter((being) => !being.currentActivity);
+  const availableBeings = beings.filter(hasNoActivity);
   availableBeings.forEach((being) => {
     const currentLocation = history.world!.values.find(
       (tile) => tile.id === being.location
@@ -28,7 +28,6 @@ export function runDecision(history: History) {
         currentLocation
       );
 
-      satisfyNeed(being, action);
       being.timesChosen[action.action]++;
 
       switch (action.kind) {
@@ -97,16 +96,20 @@ function doTileAction(
   const beingIds: string[] = [being.id];
 
   if (action.action === "discover" || action.action === "travel") {
-    being.currentActivity = {
+    setCurrentActivity(being, {
       kind: "movement",
       moveToLocation: action.location,
       path: getPathToTargetLocation(being, action.location, history),
-    };
+      interruptable: false,
+      satisfies: action.satisfies,
+    });
     locationIds.push(action.location.id);
   } else if (action.action === "createArtifact") {
-    being.currentActivity = {
+    setCurrentActivity(being, {
       kind: "createArtifact",
-    };
+      interruptable: true,
+      satisfies: action.satisfies,
+    });
   }
 
   history.log(
@@ -138,29 +141,37 @@ function doBeingAction(
       console.error("what");
       return;
     }
-    being.currentActivity = {
+    setCurrentActivity(being, {
       kind: "giveArtifact",
       target: action.target.id,
       artifact: artifact,
-    };
+      interruptable: false,
+      satisfies: action.satisfies,
+    });
   } else if (action.action === "adoptSymbol") {
-    being.currentActivity = {
+    setCurrentActivity(being, {
       kind: "adoptSymbol",
-    };
+      interruptable: true,
+      satisfies: action.satisfies,
+    });
   } else if (action.action === "conversation") {
     if (!action.target) {
       console.error("what");
       return;
     }
-    being.currentActivity = {
+    setCurrentActivity(being, {
       kind: "conversation",
       target: action.target.id,
-    };
+      interruptable: true,
+      satisfies: action.satisfies,
+    });
     beingIds.push(action.target.id);
   } else if (action.action === "rest") {
-    being.currentActivity = {
+    setCurrentActivity(being, {
       kind: "rest",
-    };
+      interruptable: true,
+      satisfies: action.satisfies,
+    });
   }
 
   history.log(
@@ -184,11 +195,13 @@ function doEntryAction(history: History, being: Being) {
     [targetLocation.id],
     []
   );
-  being.currentActivity = {
+  setCurrentActivity(being, {
     kind: "movement",
     moveToLocation: targetLocation,
     path: getPathToTargetLocation(being, targetLocation, history),
-  };
+    interruptable: false,
+    satisfies: "explore",
+  });
 }
 
 function getRegionName(tile: Tile) {
