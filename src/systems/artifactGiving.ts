@@ -6,7 +6,6 @@ import {
 import { updateBeingActions } from "../decision/factories";
 import { Being, History } from "../history";
 import { getFromLookup } from "../history/lookup";
-import { Tile } from "../world";
 
 export function runArtifactGiving(history: History) {
   forEachBeingByActivity(history, "giveArtifact", giveArtifact);
@@ -18,18 +17,33 @@ function giveArtifact(
   activity: GiveArtifactActivity
 ) {
   const artifact = getFromLookup(history.artifacts, activity.artifact);
-  const tile = getFromLookup(history.regions, being.location!) as Tile;
   const target = getFromLookup(history.beings, activity.target);
-  history.log(
-    `[[${being.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
-    [being.id, target.id],
-    [tile.id],
-    [artifact.id]
-  );
-  being.holding.splice(being.holding.indexOf(artifact.id), 1);
-  target.holding.push(artifact.id);
-  completeActivity(being);
-  artifact.inPosessionOf = target.id;
-  updateBeingActions(being);
-  updateBeingActions(target);
+  const tile = getFromLookup(history.regions, being.location!);
+  if (activity.timeLeft === undefined) {
+    history.log(
+      `[[${being.name}]] started gifing an artifact to [[${target.name}]]`,
+      [being.id, target.id],
+      [tile.id],
+      [artifact.id]
+    );
+    activity.timeLeft = Math.round(Math.random() * 10);
+  } else {
+    activity.timeLeft--;
+    if (activity.timeLeft >= 0) {
+      return;
+    }
+    history.log(
+      `[[${being.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
+      [being.id, target.id],
+      [tile.id],
+      [artifact.id]
+    );
+    being.holding.splice(being.holding.indexOf(artifact.id), 1);
+    target.holding.push(artifact.id);
+    artifact.inPosessionOf = target.id;
+    completeActivity(being);
+    updateBeingActions(being);
+    completeActivity(target);
+    updateBeingActions(target);
+  }
 }

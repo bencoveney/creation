@@ -46,7 +46,8 @@ export type GiveArtifactActivity = {
   target: Being["id"];
   artifact: Artifact["id"];
 } & BaseActivity &
-  NotInterruptable;
+  NotInterruptable &
+  TakesTime;
 export type AdoptSymbolActivity = {
   kind: "adoptSymbol";
 } & BaseActivity &

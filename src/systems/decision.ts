@@ -8,6 +8,7 @@ import { pathfind } from "../world/pathfind";
 import { BeingAction, TileAction } from "../decision/action";
 import {
   ConversationActivity,
+  GiveArtifactActivity,
   hasActivity,
   setCurrentActivity,
 } from "../decision/activity";
@@ -137,6 +138,7 @@ function doBeingAction(
 ) {
   const locationIds: string[] = [currentLocation.id];
   const beingIds: string[] = [being.id];
+  const artifactIds: string[] = [];
 
   if (action.action === "giveArtifact") {
     if (!action.target) {
@@ -148,13 +150,23 @@ function doBeingAction(
       console.error("what");
       return;
     }
-    setCurrentActivity(being, {
+    const giveArtifact: GiveArtifactActivity = {
       kind: "giveArtifact",
       target: action.target.id,
       artifact: artifact,
       interruptable: false,
       satisfies: action.satisfies,
+    };
+    setCurrentActivity(being, giveArtifact);
+    setCurrentActivity(action.target, {
+      kind: "joined",
+      target: being.id,
+      activity: giveArtifact,
+      interruptable: false,
+      satisfies: action.satisfies,
     });
+    beingIds.push(action.target.id);
+    artifactIds.push(artifact);
   } else if (action.action === "adoptSymbol") {
     setCurrentActivity(being, {
       kind: "adoptSymbol",

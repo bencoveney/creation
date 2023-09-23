@@ -13,12 +13,4 @@ Procedural world/history generation
   - Ridged noise
   - Roughness map
 - artifacts can be given stored, stolen
-- activities take time
-- activities can be done as a group (joined? interrupted?)
-
-interruptions:
-
-- What to do when something is interrupted?
-- Need to mark target as "interrupted" or "being engaged in something"?
-- Needs have already been satisfied. Maybe do that later.
-- Maybe don't let group activities be interrupted?
+- activities can be joined
