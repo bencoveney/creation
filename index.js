@@ -27638,6 +27638,14 @@
     updateBeingActions(being);
   }
 
+  // src/utils/string.ts
+  function commaSeparate(values) {
+    if (values.length === 1) {
+      return values[0];
+    }
+    return `${values.slice(0, values.length - 1).join(", ")} and ${values[values.length - 1]}`;
+  }
+
   // src/systems/artifactCreation.ts
   function runArtifactCreation(history3) {
     forEachBeingByActivity(history3, "createArtifact", createArtifact);
@@ -27664,22 +27672,36 @@
         []
       );
       activity.timeLeft = Math.round(Math.random() * 10);
-      updateArtifactCreatedTileActions(history3, tile);
     } else {
       activity.timeLeft--;
       if (activity.timeLeft >= 0) {
         return;
       }
       const artifact = artifactFactory([being], history3.artifacts);
+      const otherBeings = lookupValues(history3.beings).filter((other) => {
+        const otherActivity = getCurrentActivity(other);
+        if (otherActivity?.kind === "joined" && otherActivity.activity === activity) {
+          return true;
+        }
+        return false;
+      });
+      const allBeings = [being, ...otherBeings.map((other) => other)];
+      randomChoice(allBeings).holding.push(artifact.id);
+      const beingIds = [];
+      const beingNames = [];
+      allBeings.forEach((participant) => {
+        completeActivity(participant);
+        updateBeingActions(participant);
+        beingNames.push(`[[${participant.name}]]`);
+        beingIds.push(participant.id);
+      });
       history3.log(
-        `[[${being.name}]] created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
-        [being.id],
+        `${commaSeparate(beingNames)} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
+        beingIds,
         [tile.id],
         [artifact.id]
       );
-      being.holding.push(artifact.id);
-      completeActivity(being);
-      updateBeingActions(being);
+      updateArtifactCreatedTileActions(history3, tile);
     }
   }
 
@@ -27970,14 +27992,28 @@
       });
       locationIds.push(action.location.id);
     } else if (action.action === "createArtifact") {
-      setCurrentActivity(being, {
-        kind: "createArtifact",
-        interruptable: true,
-        satisfies: action.satisfies
-      });
+      const alreadyStarted = lookupValues(history3.beings).find(
+        (being2) => being2.location === currentLocation.id && getCurrentActivity(being2)?.kind === "createArtifact"
+      );
+      if (alreadyStarted) {
+        setCurrentActivity(being, {
+          kind: "joined",
+          target: alreadyStarted.id,
+          activity: getCurrentActivity(alreadyStarted),
+          interruptable: false,
+          satisfies: action.satisfies
+        });
+      } else {
+        setCurrentActivity(being, {
+          kind: "createArtifact",
+          interruptable: true,
+          satisfies: action.satisfies
+        });
+      }
     }
+    const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
-      `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+      `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
         currentLocation
       )}`,
       beingIds,
@@ -28049,8 +28085,9 @@
         satisfies: action.satisfies
       });
     }
+    const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
-      `[[${being.name}]] chose action ${action.action} in ${getRegionName(
+      `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
         currentLocation
       )}`,
       beingIds,
