@@ -8,7 +8,7 @@ import { HasNeeds } from "../decision/need";
 import { Preferences } from "../decision/preference";
 import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, lookupValues } from "./lookup";
-import { Language } from "../language/language";
+import { Language } from "../language/index";
 import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
 

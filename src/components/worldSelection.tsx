@@ -1,7 +1,6 @@
 import { History } from "../history";
-import { Language } from "../language/language";
+import { Language } from "../language";
 import { Region } from "./region";
-import { Being } from "./being";
 import { Grid, GridItem } from "./layout/grid";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
 import { TerrainValues } from "./terrainValues";
@@ -15,7 +14,6 @@ import { BeingSummary } from "./beingSummary";
 
 export function WorldSelection({
   history,
-  language,
   selectionX,
   selectionY,
   setTerrainLayer,
@@ -23,7 +21,6 @@ export function WorldSelection({
   inspect,
 }: {
   history: History;
-  language: Language;
   selectionX: number;
   selectionY: number;
   setTerrainLayer: (name: string) => void;

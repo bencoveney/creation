@@ -1,45 +1,37 @@
 import { config } from "../config";
-import { flipCoin, randomChoice, randomInt } from "../utils/random";
+import { flipCoin } from "../utils/random";
+import { VoicedWord, getWord } from "./word";
+import { Phonemes, allPhonemes } from "./phoneme";
+import { SyllableStructure, generateSyllableStructure } from "./syllable";
+import { History } from "../history";
 
-export function describeNoun(nouns: string[], adjectices: string[]) {
-  return flipCoin()
-    ? randomChoice(nouns)
-    : `${randomChoice(adjectices)} ${randomChoice(nouns)}`;
-}
+export type Language = {
+  name: string;
+  phonemes: Phonemes;
+  syllableStructure: SyllableStructure;
+  words: {
+    [key: string]: VoicedWord;
+  };
+};
 
-let worldNameCount = 0;
-export function createWorldName(): string {
-  return `world_${worldNameCount++}`;
-}
+export function generateLanguage(history: History): Language {
+  const phonemes: Phonemes = {
+    singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
+    dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
+    unvoicedConstants: allPhonemes.unvoicedConstants.filter(() => flipCoin()),
+    voicedConstants: allPhonemes.voicedConstants.filter(() => flipCoin()),
+  };
+  const syllableStructure = generateSyllableStructure();
+  const language: Language = {
+    name: "language",
+    phonemes,
+    syllableStructure,
+    words: {},
+  };
 
-export function createRegionName(): string {
-  const mode = randomInt(0, 3);
-  switch (mode) {
-    case 0:
-      return `the ${describeNoun(
-        config.regionPlaces,
-        config.regionAdjectives
-      )}`;
-    case 1:
-      return `the ${describeNoun(
-        config.regionPlaces,
-        config.regionAdjectives
-      )}`;
-    // return `the ${describeNoun(
-    //   regionPlaces,
-    //   regionAdjectives
-    // )} of ${randomChoice(regionVibes)}`;
-    case 2:
-      // Syllables
-      return `${randomChoice(config.settlementNameStarts)}${randomChoice(
-        config.settlementNameEnds
-      )}`;
-    default:
-      return "default";
-  }
-}
+  // Preload a few words:
+  config.preRegisterWords.map((word) => getWord(word, language, 1));
+  getWord(language.name, language, 2);
 
-let deityNameCount = 0;
-export function createDeityName(): string {
-  return `deity_${deityNameCount++}`;
+  return language as Language;
 }

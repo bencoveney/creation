@@ -1,5 +1,7 @@
 import { History } from "../../history";
-import { Language, getWords, spellWords } from "../../language/language";
+import { Language } from "../../language";
+import { getWords } from "../../language/word";
+import { spellWords } from "../../language/spelling";
 import { lookupValues } from "../../history/lookup";
 import { Tile } from "../../world";
 import { Name } from "./../name";

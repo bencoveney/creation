@@ -1,5 +1,5 @@
 import { History, Being } from "../history";
-import { Language } from "../language/language";
+import { Language } from "../language";
 import { Motif } from "./motif";
 import { Names } from "./names";
 import { Needs } from "./needs";

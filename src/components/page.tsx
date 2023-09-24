@@ -1,5 +1,5 @@
 import { History } from "../history";
-import { Language } from "../language/language";
+import { Language } from "../language";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";

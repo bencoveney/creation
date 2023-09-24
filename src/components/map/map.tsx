@@ -1,5 +1,5 @@
 import { History } from "../../history";
-import { Language } from "../../language/language";
+import { Language } from "../../language";
 import { Terrain } from "./terrain";
 import { useHoverPosition } from "../../hooks/useHover";
 import {

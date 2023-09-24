@@ -1,5 +1,7 @@
 import { History } from "../history";
-import { Language, getWords, spellWords } from "../language/language";
+import { Language } from "../language";
+import { getWords } from "../language/word";
+import { spellWords } from "../language/spelling";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";
 import { Fragment, useState } from "react";

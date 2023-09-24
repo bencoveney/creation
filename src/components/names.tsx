@@ -1,6 +1,7 @@
 import { lookupEntries } from "../history/lookup";
 import { History } from "../history";
-import { getWord, getWords, spellWord, spellWords } from "../language/language";
+import { getWord, getWords } from "../language/word";
+import { spellWord, spellWords } from "../language/spelling";
 import { CommaSeparate } from "./layout/commaSeparate";
 import { Name } from "./name";
 

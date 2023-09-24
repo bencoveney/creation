@@ -1,5 +1,5 @@
 import { History } from "../history";
-import { Language } from "../language/language";
+import { Language } from "../language";
 import { useCallback, useState } from "react";
 import { Map } from "./map/map";
 import { WorldSelection } from "./worldSelection";
@@ -51,7 +51,6 @@ export function World({
       <div style={{ flexGrow: 1 }}>
         <WorldSelection
           history={history}
-          language={language}
           selectionX={selectionX}
           selectionY={selectionY}
           setTerrainLayer={setTerrainLayer}

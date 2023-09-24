@@ -12,8 +12,8 @@ import {
   initialBeingActions,
 } from "../decision/factories";
 import { Preferences } from "../decision/preference";
-import { createDeityName, createWorldName } from "../language";
-import { generateLanguage } from "../language/language";
+import { createDeityName, createWorldName } from "../language/factories";
+import { generateLanguage } from "../language";
 import { createWorld } from "../world";
 import { Lookup, createLookup } from "./lookup";
 import { createLogger } from "../log";
