@@ -15,7 +15,7 @@ export type BeingAction = {
 
 export type TileAction = {
   kind: "tile";
-  action: "travel" | "discover" | "createArtifact";
+  action: "travel" | "discover" | "createArtifact" | "conversation";
   satisfies: keyof Needs;
   location: Tile;
   target?: Being;

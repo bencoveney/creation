@@ -1,10 +1,17 @@
-import { getFromLookup } from "../history/lookup";
+import { getFromLookup, lookupValues } from "../history/lookup";
 import { Being, History } from "../history";
 import {
   ConversationActivity,
   completeActivity,
   forEachBeingByActivity,
+  getCurrentActivity,
 } from "../decision/activity";
+import {
+  updateConversationFinishedTileActions,
+  updateConversationStartedTileActions,
+} from "../decision/factories";
+import { Tile } from "../world";
+import { commaSeparate } from "../utils/string";
 
 export function runConversation(history: History) {
   forEachBeingByActivity(history, "conversation", conversation);
@@ -16,28 +23,50 @@ function conversation(
   activity: ConversationActivity
 ) {
   const target = getFromLookup(history.beings, activity.target);
-  const location = getFromLookup(history.regions, being.location!);
+  const location = getFromLookup(history.regions, being.location!) as Tile;
+  const otherBeings = lookupValues(history.beings).filter((other) => {
+    const otherActivity = getCurrentActivity(other);
+    if (
+      otherActivity?.kind === "joined" &&
+      otherActivity.activity === activity
+    ) {
+      return true;
+    }
+    return false;
+  });
+  const allBeings = [being, ...otherBeings.map((other) => other)];
+  const beingIds: string[] = allBeings.map((participant) => participant.id);
+  const beingNames: string[] = allBeings.map(
+    (participant) => `[[${participant.name}]]`
+  );
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started talking to [[${target.name}]]`,
-      [being.id, target.id],
+      `${commaSeparate(beingNames)} started a conversation in [[${
+        location.name
+      }]]`,
+      beingIds,
       [location.id],
       []
     );
     activity.timeLeft = Math.round(Math.random() * 10);
+    updateConversationStartedTileActions(history, location, being);
   } else {
     activity.timeLeft--;
     if (activity.timeLeft >= 0) {
       return;
     }
+    allBeings.forEach((participant) => {
+      completeActivity(participant);
+    });
     history.log(
-      `[[${being.name}]] finished talking to [[${target.name}]]`,
-      [being.id, target.id],
+      `${commaSeparate(beingNames)} finished their conversation in [[${
+        location.name
+      }]]`,
+      beingIds,
       [location.id],
       []
     );
-    completeActivity(being);
-    completeActivity(target);
+    updateConversationFinishedTileActions(history, location);
     if (being.relationships[target.id]) {
       being.relationships[target.id].encounters++;
     } else {

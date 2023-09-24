@@ -135,6 +135,24 @@ function doTileAction(
       });
     }
   }
+  if (action.action === "conversation") {
+    const alreadyStarted = lookupValues(history.beings).find(
+      (being) =>
+        being.location === currentLocation.id &&
+        getCurrentActivity(being)?.kind === "conversation"
+    );
+    if (alreadyStarted) {
+      setCurrentActivity(being, {
+        kind: "joined",
+        target: alreadyStarted.id,
+        activity: getCurrentActivity(alreadyStarted)!,
+        interruptable: false,
+        satisfies: action.satisfies,
+      });
+    } else {
+      throw new Error("What");
+    }
+  }
 
   const verb =
     getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
