@@ -18,7 +18,11 @@ import { createWorld } from "../world";
 import { Lookup, createLookup } from "./lookup";
 import { createLogger } from "../log";
 import { createTerrain } from "../terrain";
-import { TerrainRegistry } from "../terrain/registry";
+import {
+  TerrainRegistry,
+  TerrainRegistryStringEntry,
+  getTerrainLayer,
+} from "../terrain/registry";
 
 export function initialiseHistory() {
   const newHistory = initHistory();
@@ -55,6 +59,7 @@ export function populateWorld(history: History): void {
   if (history.regions.map.size >= 1 && !history.world) {
     history.world = createWorld(history, config.worldWidth, config.worldHeight);
   }
+  createFeatureRegions(history.regions, history.terrainRegistry);
 }
 
 export function createWorldRegion(regions: Lookup<Region>): Region {
@@ -62,6 +67,28 @@ export function createWorldRegion(regions: Lookup<Region>): Region {
     name: createWorldName(),
     discovered: true,
   });
+}
+
+function createFeatureRegions(
+  regions: Lookup<Region>,
+  terrainRegistry: TerrainRegistry
+): void {
+  const features = getTerrainLayer(
+    terrainRegistry,
+    "features"
+  ) as TerrainRegistryStringEntry;
+  const found = new Set<string>();
+  for (let i = 0; i < features.values.values.length; i++) {
+    found.add(features.values.values[i]);
+  }
+  const foundFeatures = Array.from(found.values());
+  for (let i = 0; i < foundFeatures.length; i++) {
+    const foundFeature = foundFeatures[i];
+    regions.set({
+      discovered: true,
+      name: foundFeature,
+    });
+  }
 }
 
 export type Theme = {
