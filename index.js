@@ -24492,7 +24492,7 @@
 
   // src/config.ts
   var config = {
-    runTicks: 75,
+    runTicks: 100,
     preRegisterWords: ["the", "of"],
     artifactItems: [
       "sword",
@@ -24619,6 +24619,22 @@
         categories: ["weather"],
         tags: ["sky", "daylight"]
       }
+    ],
+    deityArchitecture: [
+      "monument",
+      "temple",
+      "shrine",
+      "statue",
+      "monastery",
+      "cathedral",
+      "altar",
+      "church",
+      "gardens",
+      "palace",
+      "cemetary",
+      "sanctuary",
+      "halls",
+      "forum"
     ],
     themeRange: {
       min: 3,
@@ -26522,6 +26538,7 @@
       rest: Math.random(),
       travel: Math.random(),
       createArtifact: Math.random(),
+      createArchitecture: Math.random(),
       adoptSymbol: Math.random(),
       conversation: Math.random(),
       giveArtifact: Math.random()
@@ -26541,6 +26558,7 @@
       adoptSymbol: createStrongPreference(),
       rest: createWeakPreference(),
       createArtifact: createWeakPreference(),
+      createArchitecture: createWeakPreference(),
       conversation: createWeakPreference(),
       giveArtifact: createWeakPreference()
     };
@@ -26572,6 +26590,18 @@
         }
       });
     }
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        kind: "tile",
+        action: "createArchitecture",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "present"
+        }
+      });
+    }
   }
   function updateDiscoveredTileActions(history3, tile) {
     actionBroadcast(history3, {
@@ -26587,6 +26617,9 @@
   }
   function updateArtifactCreatedTileActions(history3, tile) {
     actionTileRevokeWhere(history3, "createArtifact", tile, void 0, true);
+  }
+  function updateArchitectureCreatedTileActions(history3, tile) {
+    actionTileRevokeWhere(history3, "createArchitecture", tile, void 0, true);
   }
   function updateConversationStartedTileActions(history3, tile, being) {
     actionBroadcast(history3, {
@@ -27995,8 +28028,26 @@
           satisfies: action.satisfies
         });
       }
-    }
-    if (action.action === "conversation") {
+    } else if (action.action === "createArchitecture") {
+      const alreadyStarted = lookupValues(history3.beings).find(
+        (being2) => being2.location === currentLocation.id && getCurrentActivity(being2)?.kind === "createArchitecture"
+      );
+      if (alreadyStarted) {
+        setCurrentActivity(being, {
+          kind: "joined",
+          target: alreadyStarted.id,
+          activity: getCurrentActivity(alreadyStarted),
+          interruptable: false,
+          satisfies: action.satisfies
+        });
+      } else {
+        setCurrentActivity(being, {
+          kind: "createArchitecture",
+          interruptable: true,
+          satisfies: action.satisfies
+        });
+      }
+    } else if (action.action === "conversation") {
       const alreadyStarted = lookupValues(history3.beings).find(
         (being2) => being2.location === currentLocation.id && getCurrentActivity(being2)?.kind === "conversation"
       );
@@ -28696,12 +28747,31 @@
     if (history3.regions.map.size >= 1 && !history3.world) {
       history3.world = createWorld(history3, config.worldWidth, config.worldHeight);
     }
+    createFeatureRegions(history3.regions, history3.terrainRegistry);
   }
   function createWorldRegion(regions) {
     return regions.set({
       name: createWorldName(),
       discovered: true
     });
+  }
+  function createFeatureRegions(regions, terrainRegistry) {
+    const features = getTerrainLayer(
+      terrainRegistry,
+      "features"
+    );
+    const found = /* @__PURE__ */ new Set();
+    for (let i = 0; i < features.values.values.length; i++) {
+      found.add(features.values.values[i]);
+    }
+    const foundFeatures = Array.from(found.values());
+    for (let i = 0; i < foundFeatures.length; i++) {
+      const foundFeature = foundFeatures[i];
+      regions.set({
+        discovered: true,
+        name: foundFeature
+      });
+    }
   }
   var themesByName = /* @__PURE__ */ new Map();
   function populatethemesByName() {
@@ -28843,6 +28913,65 @@
     }
   }
 
+  // src/systems/architectureCreation.ts
+  function runArchitectureCreation(history3) {
+    forEachBeingByActivity(history3, "createArchitecture", createArchitecture);
+  }
+  function architectureFactory(regions, parent) {
+    const kind = randomChoice(config.deityArchitecture);
+    const architecture = regions.set({
+      name: architectureNameFactory(kind),
+      discovered: true,
+      parent
+    });
+    return architecture;
+  }
+  var architectureNameCount = 0;
+  function architectureNameFactory(kind) {
+    return `architecture_${kind}_${architectureNameCount++}`;
+  }
+  function createArchitecture(history3, being, activity) {
+    const tile = getFromLookup(history3.regions, being.location);
+    if (activity.timeLeft === void 0) {
+      history3.log(
+        `[[${being.name}]] started creating architecture in [[${tile.name}]]`,
+        [being.id],
+        [tile.id],
+        []
+      );
+      activity.timeLeft = Math.round(Math.random() * 10);
+    } else {
+      activity.timeLeft--;
+      if (activity.timeLeft >= 0) {
+        return;
+      }
+      const otherBeings = lookupValues(history3.beings).filter((other) => {
+        const otherActivity = getCurrentActivity(other);
+        if (otherActivity?.kind === "joined" && otherActivity.activity === activity) {
+          return true;
+        }
+        return false;
+      });
+      const allBeings = [being, ...otherBeings.map((other) => other)];
+      const architecture = architectureFactory(history3.regions, tile);
+      const beingIds = [];
+      const beingNames = [];
+      allBeings.forEach((participant) => {
+        completeActivity(participant);
+        updateBeingActions(participant);
+        beingNames.push(`[[${participant.name}]]`);
+        beingIds.push(participant.id);
+      });
+      history3.log(
+        `${commaSeparate(beingNames)} created [[${architecture.name}]] in [[${tile.name}]]`,
+        beingIds,
+        [tile.id, architecture.id],
+        []
+      );
+      updateArchitectureCreatedTileActions(history3, tile);
+    }
+  }
+
   // src/index.tsx
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
@@ -28864,6 +28993,8 @@
         runConversation(history2);
         history2.log.currentSystem = "artifactCreation";
         runArtifactCreation(history2);
+        history2.log.currentSystem = "architectureCreation";
+        runArchitectureCreation(history2);
         history2.log.currentSystem = "artifactGiving";
         runArtifactGiving(history2);
         history2.log.currentSystem = "symbolAdoption";
