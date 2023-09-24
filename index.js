@@ -26588,6 +26588,21 @@
   function updateArtifactCreatedTileActions(history3, tile) {
     actionTileRevokeWhere(history3, "createArtifact", tile, void 0, true);
   }
+  function updateConversationStartedTileActions(history3, tile, being) {
+    actionBroadcast(history3, {
+      kind: "tile",
+      action: "conversation",
+      location: tile,
+      satisfies: "socialise",
+      target: being,
+      requires: {
+        location: "same"
+      }
+    });
+  }
+  function updateConversationFinishedTileActions(history3, tile) {
+    actionTileRevokeWhere(history3, "conversation", tile);
+  }
   function initialBeingActions(being) {
     actionBroadcast(being, {
       kind: "being",
@@ -27981,6 +27996,22 @@
         });
       }
     }
+    if (action.action === "conversation") {
+      const alreadyStarted = lookupValues(history3.beings).find(
+        (being2) => being2.location === currentLocation.id && getCurrentActivity(being2)?.kind === "conversation"
+      );
+      if (alreadyStarted) {
+        setCurrentActivity(being, {
+          kind: "joined",
+          target: alreadyStarted.id,
+          activity: getCurrentActivity(alreadyStarted),
+          interruptable: false,
+          satisfies: action.satisfies
+        });
+      } else {
+        throw new Error("What");
+      }
+    }
     const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
       `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
@@ -28095,27 +28126,42 @@
   function conversation(history3, being, activity) {
     const target = getFromLookup(history3.beings, activity.target);
     const location = getFromLookup(history3.regions, being.location);
+    const otherBeings = lookupValues(history3.beings).filter((other) => {
+      const otherActivity = getCurrentActivity(other);
+      if (otherActivity?.kind === "joined" && otherActivity.activity === activity) {
+        return true;
+      }
+      return false;
+    });
+    const allBeings = [being, ...otherBeings.map((other) => other)];
+    const beingIds = allBeings.map((participant) => participant.id);
+    const beingNames = allBeings.map(
+      (participant) => `[[${participant.name}]]`
+    );
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.name}]] started talking to [[${target.name}]]`,
-        [being.id, target.id],
+        `${commaSeparate(beingNames)} started a conversation in [[${location.name}]]`,
+        beingIds,
         [location.id],
         []
       );
       activity.timeLeft = Math.round(Math.random() * 10);
+      updateConversationStartedTileActions(history3, location, being);
     } else {
       activity.timeLeft--;
       if (activity.timeLeft >= 0) {
         return;
       }
+      allBeings.forEach((participant) => {
+        completeActivity(participant);
+      });
       history3.log(
-        `[[${being.name}]] finished talking to [[${target.name}]]`,
-        [being.id, target.id],
+        `${commaSeparate(beingNames)} finished their conversation in [[${location.name}]]`,
+        beingIds,
         [location.id],
         []
       );
-      completeActivity(being);
-      completeActivity(target);
+      updateConversationFinishedTileActions(history3, location);
       if (being.relationships[target.id]) {
         being.relationships[target.id].encounters++;
       } else {
