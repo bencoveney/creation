@@ -1,5 +1,5 @@
 export const config = {
-  runTicks: 75,
+  runTicks: 100,
   preRegisterWords: ["the", "of"],
   artifactItems: [
     "sword",
@@ -126,6 +126,22 @@ export const config = {
       categories: ["weather"],
       tags: ["sky", "daylight"],
     },
+  ],
+  deityArchitecture: [
+    "monument",
+    "temple",
+    "shrine",
+    "statue",
+    "monastery",
+    "cathedral",
+    "altar",
+    "church",
+    "gardens",
+    "palace",
+    "cemetary",
+    "sanctuary",
+    "halls",
+    "forum",
   ],
   themeRange: {
     min: 3,

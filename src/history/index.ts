@@ -17,6 +17,7 @@ export type Region = {
   name: string;
   tile?: Tile;
   discovered: Boolean;
+  parent?: Region;
 };
 
 export type Motif = {

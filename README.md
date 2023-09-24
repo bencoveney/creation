@@ -6,6 +6,7 @@ Procedural world/history generation
 
 - World restart doesn't work because things are stateful (systems, randomSelection etc) and its just all around - jank to be honest
 - Maybe island/continent creation should consider sand to be water
+- Mountain identification using prominence
 - Gods can create demigods
 - Gods can create species
 - Build heightmap with interesting mountain ranges by factoring in:

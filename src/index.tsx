@@ -14,6 +14,7 @@ import { runArtifactGiving } from "./systems/artifactGiving";
 import { initialiseHistory } from "./history/factories";
 import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
+import { runArchitectureCreation } from "./systems/architectureCreation";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -42,6 +43,8 @@ function Wrapper() {
         runConversation(history);
         history.log.currentSystem = "artifactCreation";
         runArtifactCreation(history);
+        history.log.currentSystem = "architectureCreation";
+        runArchitectureCreation(history);
         history.log.currentSystem = "artifactGiving";
         runArtifactGiving(history);
         history.log.currentSystem = "symbolAdoption";

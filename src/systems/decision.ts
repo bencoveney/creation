@@ -134,8 +134,28 @@ function doTileAction(
         satisfies: action.satisfies,
       });
     }
-  }
-  if (action.action === "conversation") {
+  } else if (action.action === "createArchitecture") {
+    const alreadyStarted = lookupValues(history.beings).find(
+      (being) =>
+        being.location === currentLocation.id &&
+        getCurrentActivity(being)?.kind === "createArchitecture"
+    );
+    if (alreadyStarted) {
+      setCurrentActivity(being, {
+        kind: "joined",
+        target: alreadyStarted.id,
+        activity: getCurrentActivity(alreadyStarted)!,
+        interruptable: false,
+        satisfies: action.satisfies,
+      });
+    } else {
+      setCurrentActivity(being, {
+        kind: "createArchitecture",
+        interruptable: true,
+        satisfies: action.satisfies,
+      });
+    }
+  } else if (action.action === "conversation") {
     const alreadyStarted = lookupValues(history.beings).find(
       (being) =>
         being.location === currentLocation.id &&

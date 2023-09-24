@@ -36,6 +36,11 @@ export type CreateArtifactActivity = {
 } & BaseActivity &
   Interruptable &
   TakesTime;
+export type CreateArchitectureActivity = {
+  kind: "createArchitecture";
+} & BaseActivity &
+  Interruptable &
+  TakesTime;
 export type RestActivity = {
   kind: "rest";
 } & BaseActivity &
@@ -69,6 +74,7 @@ export type JoinedActivity = {
 export type Activity =
   | MovementActivity
   | CreateArtifactActivity
+  | CreateArchitectureActivity
   | GiveArtifactActivity
   | AdoptSymbolActivity
   | ConversationActivity

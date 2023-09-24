@@ -22,6 +22,7 @@ export function createDeityPreferences(): Preferences {
 
     rest: createWeakPreference(),
     createArtifact: createWeakPreference(),
+    createArchitecture: createWeakPreference(),
     conversation: createWeakPreference(),
     giveArtifact: createWeakPreference(),
   };
@@ -55,6 +56,18 @@ export function updateInitialTileActions(history: History, tile: Tile): void {
       },
     });
   }
+  if (Math.random() > 0.5) {
+    actionBroadcast(history, {
+      kind: "tile",
+      action: "createArchitecture",
+      satisfies: "create",
+      location: tile,
+      requires: {
+        location: "same",
+        motif: "present",
+      },
+    });
+  }
 }
 
 export function updateDiscoveredTileActions(
@@ -80,6 +93,15 @@ export function updateArtifactCreatedTileActions(
   // Allow claim is jank. If 2 beings try to create an artifact in the same place
   // at the same time then they will both try to "claim" and revoke that action.
   actionTileRevokeWhere(history, "createArtifact", tile, undefined, true);
+}
+
+export function updateArchitectureCreatedTileActions(
+  history: History,
+  tile: Tile
+): void {
+  // Allow claim is jank. If 2 beings try to create an artifact in the same place
+  // at the same time then they will both try to "claim" and revoke that action.
+  actionTileRevokeWhere(history, "createArchitecture", tile, undefined, true);
 }
 
 export function updateConversationStartedTileActions(
