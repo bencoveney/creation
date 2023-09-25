@@ -9,3 +9,5 @@ http://introgamedev.com/resource_aiwisdom.html
 https://www.reddit.com/r/gamedev/comments/29jtbg/creating_more_interesting_npc_villages_by/ciloubr/
 https://www.youtube.com/watch?v=p3Jbp2cZg3Q
 https://en.wikipedia.org/wiki/Utility_system
+
+Sense, think, act
