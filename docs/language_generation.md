@@ -4,6 +4,13 @@ https://en.wikipedia.org/wiki/Constructed_language
 https://en.wikipedia.org/wiki/Combining_character
 https://conlang.org/resources/
 
+## IPA
+
+https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
+https://en.wikipedia.org/wiki/Help:IPA/English
+https://en.wikipedia.org/wiki/English_orthography#Sound-to-spelling_correspondences
+https://en.wikipedia.org/wiki/English_orthography#Spelling-to-sound_correspondences
+
 ## Audio creation
 
 https://cuttlesoft.com/blog/2018/09/13/pronouncing-things-with-amazons-polly/
