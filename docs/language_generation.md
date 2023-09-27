@@ -25,7 +25,7 @@ https://github.com/espeak-ng/espeak-ng/issues/1701
 https://www.youtube.com/watch?v=sFWc0sBO62c&t=165s
 IPA:
 
-- constonants
+- consonants
 - vowels
 - diacritics (modifiers)
   probably less is more
@@ -39,7 +39,7 @@ pick n vowels e/g a, i, o
 typically languages have min 1 back, 1 front and 1 unrounded
 throw in some dipthongs
 
-pick some constonants
+pick some consonants
 try to remove entire features (voiced/unvoiced, places of articulation, manners of articulation)
 symmetry between place + manner of articulation
 1 or 2 uncommon sounds can make lang distinctive
@@ -51,9 +51,9 @@ syllables composed of:
 onset: 0 - n costonants
 nucleus: 1 - n vowels
 coda: 0 - n costonants
-pick some constonants/vowels that can only appear at specific places
-some constonants never appear near each other
-some constonant types never appear together in clusters (onset/coda)
+pick some consonants/vowels that can only appear at specific places
+some consonants never appear near each other
+some consonant types never appear together in clusters (onset/coda)
 Can make rules to make things easier to pronounce
 
 https://www.youtube.com/watch?v=TocHnrdaNG8

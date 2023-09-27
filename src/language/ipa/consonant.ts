@@ -99,7 +99,7 @@ export enum Voicing {
   "Voiceless",
 }
 
-export type Constonant = {
+export type Consonant = {
   place: ArticulationPlace;
   manner: ArticulationManner;
   voicing: Voicing;
@@ -109,7 +109,7 @@ export type Constonant = {
   // ipaUnicode: string;
 };
 
-export const constonants: Constonant[] = [
+export const consonants: Consonant[] = [
   {
     // https://en.wikipedia.org/wiki/Voiceless_bilabial_nasal
     name: "Voiceless bilabial nasal",

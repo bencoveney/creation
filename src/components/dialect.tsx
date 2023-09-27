@@ -46,13 +46,13 @@ export function Dialect({
             .join(", ")}
         </li>
         <li>
-          Unvoiced Constonants:{" "}
+          Unvoiced Consonants:{" "}
           {language.phonemes.unvoicedConstants
             .map((phoneme) => spellPhoneme(phoneme))
             .join(", ")}
         </li>
         <li>
-          Voiced Constonants:{" "}
+          Voiced Consonants:{" "}
           {language.phonemes.voicedConstants
             .map((phoneme) => spellPhoneme(phoneme))
             .join(", ")}

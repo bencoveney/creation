@@ -1,4 +1,4 @@
-import { constonants } from "./constonant";
+import { consonants } from "./consonant";
 import { vowels } from "./vowels";
 import {
   englishConsonants,
@@ -7,7 +7,7 @@ import {
 } from "./fromEnglish";
 
 export function validate() {
-  console.log("constonants", findValues(constonants, englishConsonants));
+  console.log("consonants", findValues(consonants, englishConsonants));
   console.log("vowels", findValues(vowels, englishVowels));
   console.log("diphthongs", findValues(vowels, englishDiphthongs));
 }

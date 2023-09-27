@@ -12,9 +12,9 @@ export type SyllableStructure = {
 };
 
 export function generateSyllableStructure(): SyllableStructure {
-  const minConstonants = 3;
+  const minConsonants = 3;
   const onset = randomInt(0, 3);
-  const coda = minConstonants - onset;
+  const coda = minConsonants - onset;
   return {
     minOnset: 0,
     maxOnset: onset,
