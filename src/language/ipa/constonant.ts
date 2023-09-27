@@ -1,6 +1,6 @@
-// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
+// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet#Consonants
 
-enum ArticulationPlace {
+export enum ArticulationPlace {
   // Articulated with both lips.
   // https://en.wikipedia.org/wiki/Bilabial_consonant
   "Bilabial",
@@ -39,7 +39,7 @@ enum ArticulationPlace {
   "Glottal",
 }
 
-enum ArticulationManner {
+export enum ArticulationManner {
   // An occlusive consonant produced with a lowered velum, allowing air to escape freely through the nose.
   // https://en.wikipedia.org/wiki/Nasal_consonant
   "Nasal",
@@ -87,7 +87,7 @@ export const sonorant: ArticulationManner[] = [
   ArticulationManner.Trill,
 ];
 
-enum Voicing {
+export enum Voicing {
   "Voiced",
   "Voiceless",
 }
@@ -102,7 +102,7 @@ export type Constonant = {
   // ipaUnicode: string;
 };
 
-const constonants: Constonant[] = [
+export const constonants: Constonant[] = [
   {
     // https://en.wikipedia.org/wiki/Voiceless_bilabial_nasal
     name: "Voiceless bilabial nasal",
