@@ -1,4 +1,11 @@
-// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet#Consonants
+/*
+  https://en.wikipedia.org/wiki/International_Phonetic_Alphabet#Consonants
+
+  Missing:
+  - Non-pulmonic
+  - Affricates
+  - Co-articulated
+*/
 
 export enum ArticulationPlace {
   // Articulated with both lips.

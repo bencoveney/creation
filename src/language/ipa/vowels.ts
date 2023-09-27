@@ -1,4 +1,12 @@
-// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet#Vowels
+/*
+  https://en.wikipedia.org/wiki/International_Phonetic_Alphabet#Vowels
+
+  Missing:
+  - "ɪ̈" - "U+026A U+0308"
+  - "ʊ̈" - "U+028A U+0308"
+  - "ʊ" - "U+028A"
+  - Diphthongs
+*/
 
 export enum Backness {
   "Front",
@@ -31,8 +39,12 @@ export type Vowel = {
   ipaCharacter: string;
   name: string;
   // ipaNumber: number;
-  // ipaUnicode: string;
+  ipaUnicode: string;
 };
+
+/*
+  Lacking:
+*/
 
 export const vowels: Vowel[] = [
   {
@@ -42,6 +54,7 @@ export const vowels: Vowel[] = [
     height: Height.Close,
     backness: Backness.Front,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0069",
   },
   {
     // https://en.wikipedia.org/wiki/Close_front_rounded_vowel
@@ -50,6 +63,7 @@ export const vowels: Vowel[] = [
     height: Height.Close,
     backness: Backness.Front,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0079",
   },
   {
     // https://en.wikipedia.org/wiki/Close_central_unrounded_vowel
@@ -58,6 +72,7 @@ export const vowels: Vowel[] = [
     height: Height.Close,
     backness: Backness.Central,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0268",
   },
   {
     // https://en.wikipedia.org/wiki/Close_central_rounded_vowel
@@ -66,6 +81,7 @@ export const vowels: Vowel[] = [
     height: Height.Close,
     backness: Backness.Central,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0289",
   },
   {
     // https://en.wikipedia.org/wiki/Close_back_unrounded_vowel
@@ -74,6 +90,7 @@ export const vowels: Vowel[] = [
     height: Height.Close,
     backness: Backness.Back,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+026F",
   },
   {
     // https://en.wikipedia.org/wiki/Close_back_rounded_vowel
@@ -82,6 +99,7 @@ export const vowels: Vowel[] = [
     height: Height.Close,
     backness: Backness.Back,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0075",
   },
   {
     // https://en.wikipedia.org/wiki/Near-close_near-front_unrounded_vowel
@@ -90,6 +108,7 @@ export const vowels: Vowel[] = [
     height: Height["Near-close"],
     backness: Backness["Near-front"],
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+026A",
   },
   {
     // https://en.wikipedia.org/wiki/Near-close_near-front_rounded_vowel
@@ -98,6 +117,7 @@ export const vowels: Vowel[] = [
     height: Height["Near-close"],
     backness: Backness["Near-front"],
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+028F",
   },
   {
     // https://en.wikipedia.org/wiki/Near-close_near-back_rounded_vowel
@@ -106,6 +126,7 @@ export const vowels: Vowel[] = [
     height: Height["Near-close"],
     backness: Backness["Near-back"],
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+028A",
   },
   {
     // https://en.wikipedia.org/wiki/Close-mid_front_unrounded_vowel
@@ -114,6 +135,7 @@ export const vowels: Vowel[] = [
     height: Height["Close-mid"],
     backness: Backness.Front,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0065",
   },
   {
     // https://en.wikipedia.org/wiki/Close-mid_front_rounded_vowel
@@ -122,6 +144,7 @@ export const vowels: Vowel[] = [
     height: Height["Close-mid"],
     backness: Backness.Front,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+00F8",
   },
   {
     // https://en.wikipedia.org/wiki/Close-mid_central_unrounded_vowel
@@ -130,6 +153,7 @@ export const vowels: Vowel[] = [
     height: Height["Close-mid"],
     backness: Backness.Central,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0258",
   },
   {
     // https://en.wikipedia.org/wiki/Close-mid_central_rounded_vowel
@@ -138,6 +162,7 @@ export const vowels: Vowel[] = [
     height: Height["Close-mid"],
     backness: Backness.Central,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0275",
   },
   {
     // https://en.wikipedia.org/wiki/Close-mid_back_unrounded_vowel
@@ -146,6 +171,7 @@ export const vowels: Vowel[] = [
     height: Height["Close-mid"],
     backness: Backness.Back,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0264",
   },
   {
     // https://en.wikipedia.org/wiki/Close-mid_back_rounded_vowel
@@ -154,6 +180,7 @@ export const vowels: Vowel[] = [
     height: Height["Close-mid"],
     backness: Backness.Back,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+006F",
   },
   {
     // https://en.wikipedia.org/wiki/Mid_front_unrounded_vowel
@@ -162,6 +189,7 @@ export const vowels: Vowel[] = [
     height: Height.Mid,
     backness: Backness.Front,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0065 U+031E",
   },
   {
     // https://en.wikipedia.org/wiki/Mid_front_rounded_vowel
@@ -170,6 +198,7 @@ export const vowels: Vowel[] = [
     height: Height.Mid,
     backness: Backness.Front,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+00F8 U+031E",
   },
   {
     // https://en.wikipedia.org/wiki/Mid_central_vowel
@@ -178,6 +207,7 @@ export const vowels: Vowel[] = [
     height: Height.Mid,
     backness: Backness.Central,
     roundedness: Roundedness.None,
+    ipaUnicode: "U+0259",
   },
   {
     // https://en.wikipedia.org/wiki/Mid_back_unrounded_vowel
@@ -186,6 +216,7 @@ export const vowels: Vowel[] = [
     height: Height.Mid,
     backness: Backness.Back,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0264 U+031E",
   },
   {
     // https://en.wikipedia.org/wiki/Mid_back_rounded_vowel
@@ -194,6 +225,7 @@ export const vowels: Vowel[] = [
     height: Height.Mid,
     backness: Backness.Back,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+006F U+031E",
   },
   {
     // https://en.wikipedia.org/wiki/Open-mid_front_unrounded_vowel
@@ -202,6 +234,7 @@ export const vowels: Vowel[] = [
     height: Height["Open-mid"],
     backness: Backness.Front,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+025B",
   },
   {
     // https://en.wikipedia.org/wiki/Open-mid_front_rounded_vowel
@@ -210,6 +243,7 @@ export const vowels: Vowel[] = [
     height: Height["Open-mid"],
     backness: Backness.Front,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0153",
   },
   {
     // https://en.wikipedia.org/wiki/Open-mid_central_unrounded_vowel
@@ -218,6 +252,7 @@ export const vowels: Vowel[] = [
     height: Height["Open-mid"],
     backness: Backness.Central,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+025C",
   },
   {
     // https://en.wikipedia.org/wiki/Open-mid_central_rounded_vowel
@@ -226,6 +261,7 @@ export const vowels: Vowel[] = [
     height: Height["Open-mid"],
     backness: Backness.Central,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+025E",
   },
   {
     // https://en.wikipedia.org/wiki/Open-mid_back_unrounded_vowel
@@ -234,6 +270,7 @@ export const vowels: Vowel[] = [
     height: Height["Open-mid"],
     backness: Backness.Back,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+028C",
   },
   {
     // https://en.wikipedia.org/wiki/Open-mid_back_rounded_vowel
@@ -242,6 +279,7 @@ export const vowels: Vowel[] = [
     height: Height["Open-mid"],
     backness: Backness.Back,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0254",
   },
   {
     // https://en.wikipedia.org/wiki/Near-open_front_unrounded_vowel
@@ -250,6 +288,7 @@ export const vowels: Vowel[] = [
     height: Height["Near-open"],
     backness: Backness.Front,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+00E6",
   },
   {
     // https://en.wikipedia.org/wiki/Near-open_central_vowel
@@ -258,6 +297,7 @@ export const vowels: Vowel[] = [
     height: Height["Near-open"],
     backness: Backness.Central,
     roundedness: Roundedness.None,
+    ipaUnicode: "U+0250",
   },
   {
     // https://en.wikipedia.org/wiki/Open_front_unrounded_vowel
@@ -266,6 +306,7 @@ export const vowels: Vowel[] = [
     height: Height.Open,
     backness: Backness.Front,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0061",
   },
   {
     // https://en.wikipedia.org/wiki/Open_front_rounded_vowel
@@ -274,6 +315,7 @@ export const vowels: Vowel[] = [
     height: Height.Open,
     backness: Backness.Front,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0276",
   },
   {
     // https://en.wikipedia.org/wiki/Open_central_unrounded_vowel
@@ -282,6 +324,7 @@ export const vowels: Vowel[] = [
     height: Height.Open,
     backness: Backness.Central,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0061 U+0308",
   },
   {
     // https://en.wikipedia.org/wiki/Open_back_unrounded_vowel
@@ -290,6 +333,7 @@ export const vowels: Vowel[] = [
     height: Height.Open,
     backness: Backness.Back,
     roundedness: Roundedness.Unrounded,
+    ipaUnicode: "U+0251",
   },
   {
     // https://en.wikipedia.org/wiki/Open_back_rounded_vowel
@@ -298,5 +342,6 @@ export const vowels: Vowel[] = [
     height: Height.Open,
     backness: Backness.Back,
     roundedness: Roundedness.Rounded,
+    ipaUnicode: "U+0252",
   },
 ];

@@ -10,9 +10,11 @@ https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
 https://en.wikipedia.org/wiki/Help:IPA/English
 https://en.wikipedia.org/wiki/English_orthography#Sound-to-spelling_correspondences
 https://en.wikipedia.org/wiki/English_orthography#Spelling-to-sound_correspondences
+https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 
 ## Audio creation
 
+http://ipa-reader.xyz/
 https://cuttlesoft.com/blog/2018/09/13/pronouncing-things-with-amazons-polly/
 https://github.com/WICG/speech-api/issues/37
 https://github.com/espeak-ng/espeak-ng

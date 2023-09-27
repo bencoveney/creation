@@ -15,6 +15,7 @@ import { initialiseHistory } from "./history/factories";
 import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
+import { validate } from "./language/ipa";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -76,3 +77,5 @@ function Wrapper() {
 }
 
 createRoot(root).render(<Wrapper />);
+
+validate();
