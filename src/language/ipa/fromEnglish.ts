@@ -4,6 +4,8 @@
   https://en.wikipedia.org/wiki/English_language_in_England
 */
 
+import { SyllableStructure } from "./phonotactics";
+
 export const englishConsonants = [
   "m",
   "n",
@@ -49,3 +51,11 @@ export const englishVowels = [
 ];
 
 export const englishDiphthongs = ["eɪ", "aɪ", "ɔɪ", "aʊ", "əʊ", "ɪə", "ʊə"];
+
+export const englishSyllableStructure = {
+  onset: 3,
+  rhyme: {
+    nucleus: 1,
+    coda: 5,
+  },
+} as SyllableStructure;

@@ -3,13 +3,19 @@ import { vowels } from "./vowels";
 import {
   englishConsonants,
   englishDiphthongs,
+  englishSyllableStructure,
   englishVowels,
 } from "./fromEnglish";
+import { stringifySyllableStructure } from "./phonotactics";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
   console.log("vowels", findValues(vowels, englishVowels));
   console.log("diphthongs", findValues(vowels, englishDiphthongs));
+  console.log(
+    "syllableStructure",
+    stringifySyllableStructure(englishSyllableStructure)
+  );
 }
 
 function findValues(

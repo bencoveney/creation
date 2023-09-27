@@ -12,6 +12,11 @@ https://en.wikipedia.org/wiki/English_orthography#Sound-to-spelling_corresponden
 https://en.wikipedia.org/wiki/English_orthography#Spelling-to-sound_correspondences
 https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 
+## Phonotactics
+
+https://en.wikipedia.org/wiki/Phonotactics
+https://en.wikipedia.org/wiki/English_phonology#Phonotactics
+
 ## Audio creation
 
 http://ipa-reader.xyz/
