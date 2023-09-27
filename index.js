@@ -30195,12 +30195,35 @@
     "\u0251\u02D0"
   ];
   var englishDiphthongs = ["e\u026A", "a\u026A", "\u0254\u026A", "a\u028A", "\u0259\u028A", "\u026A\u0259", "\u028A\u0259"];
+  var englishSyllableStructure = {
+    onset: 3,
+    rhyme: {
+      nucleus: 1,
+      coda: 5
+    }
+  };
+
+  // src/language/ipa/phonotactics.ts
+  function describeSyllableStructure(syllableStructure) {
+    return [
+      ...new Array(syllableStructure.onset).fill(0 /* Consonant */),
+      ...new Array(syllableStructure.rhyme.nucleus).fill(1 /* Vowel */),
+      ...new Array(syllableStructure.rhyme.coda).fill(0 /* Consonant */)
+    ];
+  }
+  function stringifySyllableStructure(syllableStructure) {
+    return describeSyllableStructure(syllableStructure).map((part) => part === 0 /* Consonant */ ? "C" : "V").join("");
+  }
 
   // src/language/ipa/index.ts
   function validate() {
     console.log("consonants", findValues(consonants, englishConsonants));
     console.log("vowels", findValues(vowels, englishVowels));
     console.log("diphthongs", findValues(vowels, englishDiphthongs));
+    console.log(
+      "syllableStructure",
+      stringifySyllableStructure(englishSyllableStructure)
+    );
   }
   function findValues(set, find) {
     const found = [];
