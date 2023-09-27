@@ -24490,264 +24490,7 @@
   // src/index.tsx
   var import_client = __toESM(require_client(), 1);
 
-  // src/config.ts
-  var config = {
-    runTicks: 100,
-    preRegisterWords: ["the", "of"],
-    artifactItems: [
-      "sword",
-      "shield",
-      "dagger",
-      "spear",
-      "cup",
-      "bowl",
-      "knife",
-      "bracelet",
-      "necklace",
-      "chain",
-      "rope",
-      "gown",
-      "robe",
-      "club",
-      "scepter",
-      "vial",
-      "hood",
-      "veil",
-      "necklace",
-      "eyeglass",
-      "map",
-      "drum",
-      "horn",
-      "bell"
-    ],
-    themes: [
-      {
-        name: "sun",
-        categories: ["celestial"],
-        tags: ["daylight"]
-      },
-      {
-        name: "moon",
-        categories: ["celestial"],
-        tags: ["nightlight"]
-      },
-      {
-        name: "stars",
-        categories: ["celestial"],
-        tags: ["nightlight"]
-      },
-      {
-        name: "create",
-        categories: ["stages_of_creations"],
-        tags: ["beginning"]
-      },
-      {
-        name: "preserve",
-        categories: ["stages_of_creations"],
-        tags: ["middle"]
-      },
-      {
-        name: "destroy",
-        categories: ["stages_of_creations"],
-        tags: ["end"]
-      },
-      {
-        name: "earth",
-        categories: ["elements"],
-        tags: ["land"]
-      },
-      { name: "air", categories: ["elements"], tags: ["sky", "gas"] },
-      { name: "water", categories: ["elements"], tags: ["liquid"] },
-      {
-        name: "fire",
-        categories: ["elements"],
-        tags: ["forge", "temperature"]
-      },
-      {
-        name: "ice",
-        categories: ["elements"],
-        tags: ["temperature", "cold"]
-      },
-      { name: "metal", categories: ["elements"], tags: [] },
-      { name: "destiny", categories: ["fate"], tags: [] },
-      { name: "chance", categories: ["fate"], tags: [] },
-      { name: "desire", categories: ["fate"], tags: [] },
-      {
-        name: "life",
-        categories: ["stages_of_life"],
-        tags: ["beginning"]
-      },
-      { name: "death", categories: ["stages_of_life"], tags: ["end"] },
-      { name: "war", categories: ["diplomacy"], tags: [] },
-      { name: "peace", categories: ["diplomacy"], tags: [] },
-      { name: "mercy", categories: ["judgement"], tags: [] },
-      {
-        name: "revenge",
-        categories: ["judgement"],
-        tags: []
-      },
-      { name: "law", categories: ["judgement"], tags: [] },
-      { name: "forgive", categories: ["judgement"], tags: [] },
-      { name: "grief", categories: ["emotions"], tags: [] },
-      { name: "joy", categories: ["emotions"], tags: [] },
-      { name: "dream", categories: ["mental_states"], tags: [] },
-      { name: "madness", categories: ["mental_states"], tags: [] },
-      { name: "thought", categories: ["mental_states"], tags: [] },
-      { name: "lucid", categories: ["mental_states"], tags: [] },
-      { name: "heal", categories: ["medical"], tags: ["beginning"] },
-      { name: "wound", categories: ["medical"], tags: ["end"] },
-      {
-        name: "animals",
-        categories: ["living_beings"],
-        tags: ["land"]
-      },
-      { name: "fish", categories: ["living_beings"], tags: ["liquid"] },
-      { name: "bird", categories: ["living_beings"], tags: ["sky"] },
-      { name: "plant", categories: ["living_beings"], tags: ["land"] },
-      { name: "cloud", categories: ["weather"], tags: ["sky"] },
-      { name: "wind", categories: ["weather"], tags: ["sky", "gas"] },
-      {
-        name: "rain",
-        categories: ["weather"],
-        tags: ["sky", "liquid"]
-      },
-      { name: "thunder", categories: ["weather"], tags: ["sky"] },
-      { name: "lightning", categories: ["weather"], tags: ["sky"] },
-      { name: "snow", categories: ["weather"], tags: ["sky", "cold"] },
-      {
-        name: "sunshine",
-        categories: ["weather"],
-        tags: ["sky", "daylight"]
-      }
-    ],
-    deityArchitecture: [
-      "monument",
-      "temple",
-      "shrine",
-      "statue",
-      "monastery",
-      "cathedral",
-      "altar",
-      "church",
-      "gardens",
-      "palace",
-      "cemetary",
-      "sanctuary",
-      "halls",
-      "forum"
-    ],
-    themeRange: {
-      min: 3,
-      max: 5
-    },
-    motifs: [
-      { name: "cross", unicode: "\u271A" },
-      { name: "triangle", unicode: "\u25B2" },
-      { name: "circle", unicode: "\u25CF" },
-      { name: "square", unicode: "\u25FC" },
-      { name: "star", unicode: "\u26E6" },
-      { name: "ring", unicode: "\u233E" },
-      { name: "arrowhead", unicode: "\u27A4" },
-      { name: "diamond", unicode: "\u2666" },
-      { name: "cresent", unicode: "\u25E0" },
-      { name: "semicircle", unicode: "\u25D6" },
-      { name: "bar", unicode: "\u2759" }
-    ],
-    deityRelationshipChance: 0.75,
-    deityHoldingLimit: 3,
-    movementChance: 0.2,
-    worldWidth: 10,
-    worldHeight: 10,
-    terrainResolution: 20,
-    waterHeight: 0.46,
-    waterStop1: 0.25,
-    waterStop2: 0.35,
-    regionPlaces: [
-      "woods",
-      "halls",
-      "cliffs",
-      "forest",
-      "plains",
-      "tundras",
-      "mountains",
-      "streets"
-    ],
-    regionAdjectives: [
-      "windy",
-      "calm",
-      "frozen",
-      "windswept",
-      "sunny",
-      "tranquil",
-      "undead",
-      "barren"
-    ],
-    settlementNameStarts: [
-      "ply",
-      "exe",
-      "tor",
-      "paign",
-      "ex",
-      "barn",
-      "ton",
-      "tiver",
-      "brix",
-      "bide",
-      "teign",
-      "sid",
-      "dawl",
-      "tavi",
-      "north",
-      "ivy"
-    ],
-    settlementNameEnds: [
-      "mouth",
-      "ter",
-      "quay",
-      "ton",
-      "staple",
-      "ton abbot",
-      "ham",
-      "ford",
-      "ish",
-      "stock",
-      "bridge"
-    ]
-  };
-
-  // src/utils/random.ts
-  function randomChoice(items) {
-    if (items.length === 0) {
-      throw new Error("Probably a mistake");
-    }
-    return items[randomInt(0, items.length)];
-  }
-  function randomChoices(items, nChoices) {
-    if (nChoices >= items.length) {
-      throw new Error("Probably a mistake");
-    }
-    const result = [randomChoice(items)];
-    if (nChoices > 0) {
-      result.push(
-        ...randomChoices(
-          items.filter((next) => next !== result[0]),
-          nChoices - 1
-        )
-      );
-    }
-    return result;
-  }
-  function randomInt(minIncl = 0, maxExcl = 1) {
-    return Math.floor(Math.random() * (maxExcl - minIncl) + minIncl);
-  }
-  function flipCoin() {
-    return rollDice(0.5);
-  }
-  function rollDice(chanceOfSuccess) {
-    return Math.random() < chanceOfSuccess;
-  }
-
-  // src/language/language.ts
+  // src/language/phoneme.ts
   var allPhonemes = {
     singleVowels: [
       "\u026A" /* ɪ */,
@@ -24802,6 +24545,8 @@
       "j" /* j */
     ]
   };
+
+  // src/language/spelling.ts
   function spellWords(words) {
     return words.map((word) => spellWord(word)).join(" ");
   }
@@ -24902,10 +24647,44 @@
         return "";
     }
   }
+
+  // src/utils/random.ts
+  function randomChoice(items) {
+    if (items.length === 0) {
+      throw new Error("Probably a mistake");
+    }
+    return items[randomInt(0, items.length)];
+  }
+  function randomChoices(items, nChoices) {
+    if (nChoices >= items.length) {
+      throw new Error("Probably a mistake");
+    }
+    const result = [randomChoice(items)];
+    if (nChoices > 0) {
+      result.push(
+        ...randomChoices(
+          items.filter((next) => next !== result[0]),
+          nChoices - 1
+        )
+      );
+    }
+    return result;
+  }
+  function randomInt(minIncl = 0, maxExcl = 1) {
+    return Math.floor(Math.random() * (maxExcl - minIncl) + minIncl);
+  }
+  function flipCoin() {
+    return rollDice(0.5);
+  }
+  function rollDice(chanceOfSuccess) {
+    return Math.random() < chanceOfSuccess;
+  }
+
+  // src/language/syllable.ts
   function generateSyllableStructure() {
-    const minConstonants = 3;
+    const minConsonants = 3;
     const onset = randomInt(0, 3);
-    const coda = minConstonants - onset;
+    const coda = minConsonants - onset;
     return {
       minOnset: 0,
       maxOnset: onset,
@@ -24946,6 +24725,8 @@
     }
     return result;
   }
+
+  // src/language/word.ts
   function generateUnusedWord(language, minSyllables) {
     let attempt = 1;
     while (true) {
@@ -24989,24 +24770,6 @@
   }
   function getWords(words, language) {
     return words.split(" ").map((word) => getWord(word, language));
-  }
-  function generateLanguage(history3) {
-    const phonemes = {
-      singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
-      dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
-      unvoicedConstants: allPhonemes.unvoicedConstants.filter(() => flipCoin()),
-      voicedConstants: allPhonemes.voicedConstants.filter(() => flipCoin())
-    };
-    const syllableStructure = generateSyllableStructure();
-    const language = {
-      name: "language",
-      phonemes,
-      syllableStructure,
-      words: {}
-    };
-    config.preRegisterWords.map((word) => getWord(word, language, 1));
-    getWord(language.name, language, 2);
-    return language;
   }
 
   // src/hooks/useInput.tsx
@@ -25689,12 +25452,12 @@
           language.phonemes.dipthongs.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Unvoiced Constonants:",
+          "Unvoiced Consonants:",
           " ",
           language.phonemes.unvoicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Voiced Constonants:",
+          "Voiced Consonants:",
           " ",
           language.phonemes.voicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
         ] })
@@ -25949,6 +25712,231 @@
     }
     return array2dReplace(arr, result);
   }
+
+  // src/config.ts
+  var config = {
+    runTicks: 100,
+    preRegisterWords: ["the", "of"],
+    artifactItems: [
+      "sword",
+      "shield",
+      "dagger",
+      "spear",
+      "cup",
+      "bowl",
+      "knife",
+      "bracelet",
+      "necklace",
+      "chain",
+      "rope",
+      "gown",
+      "robe",
+      "club",
+      "scepter",
+      "vial",
+      "hood",
+      "veil",
+      "necklace",
+      "eyeglass",
+      "map",
+      "drum",
+      "horn",
+      "bell"
+    ],
+    themes: [
+      {
+        name: "sun",
+        categories: ["celestial"],
+        tags: ["daylight"]
+      },
+      {
+        name: "moon",
+        categories: ["celestial"],
+        tags: ["nightlight"]
+      },
+      {
+        name: "stars",
+        categories: ["celestial"],
+        tags: ["nightlight"]
+      },
+      {
+        name: "create",
+        categories: ["stages_of_creations"],
+        tags: ["beginning"]
+      },
+      {
+        name: "preserve",
+        categories: ["stages_of_creations"],
+        tags: ["middle"]
+      },
+      {
+        name: "destroy",
+        categories: ["stages_of_creations"],
+        tags: ["end"]
+      },
+      {
+        name: "earth",
+        categories: ["elements"],
+        tags: ["land"]
+      },
+      { name: "air", categories: ["elements"], tags: ["sky", "gas"] },
+      { name: "water", categories: ["elements"], tags: ["liquid"] },
+      {
+        name: "fire",
+        categories: ["elements"],
+        tags: ["forge", "temperature"]
+      },
+      {
+        name: "ice",
+        categories: ["elements"],
+        tags: ["temperature", "cold"]
+      },
+      { name: "metal", categories: ["elements"], tags: [] },
+      { name: "destiny", categories: ["fate"], tags: [] },
+      { name: "chance", categories: ["fate"], tags: [] },
+      { name: "desire", categories: ["fate"], tags: [] },
+      {
+        name: "life",
+        categories: ["stages_of_life"],
+        tags: ["beginning"]
+      },
+      { name: "death", categories: ["stages_of_life"], tags: ["end"] },
+      { name: "war", categories: ["diplomacy"], tags: [] },
+      { name: "peace", categories: ["diplomacy"], tags: [] },
+      { name: "mercy", categories: ["judgement"], tags: [] },
+      {
+        name: "revenge",
+        categories: ["judgement"],
+        tags: []
+      },
+      { name: "law", categories: ["judgement"], tags: [] },
+      { name: "forgive", categories: ["judgement"], tags: [] },
+      { name: "grief", categories: ["emotions"], tags: [] },
+      { name: "joy", categories: ["emotions"], tags: [] },
+      { name: "dream", categories: ["mental_states"], tags: [] },
+      { name: "madness", categories: ["mental_states"], tags: [] },
+      { name: "thought", categories: ["mental_states"], tags: [] },
+      { name: "lucid", categories: ["mental_states"], tags: [] },
+      { name: "heal", categories: ["medical"], tags: ["beginning"] },
+      { name: "wound", categories: ["medical"], tags: ["end"] },
+      {
+        name: "animals",
+        categories: ["living_beings"],
+        tags: ["land"]
+      },
+      { name: "fish", categories: ["living_beings"], tags: ["liquid"] },
+      { name: "bird", categories: ["living_beings"], tags: ["sky"] },
+      { name: "plant", categories: ["living_beings"], tags: ["land"] },
+      { name: "cloud", categories: ["weather"], tags: ["sky"] },
+      { name: "wind", categories: ["weather"], tags: ["sky", "gas"] },
+      {
+        name: "rain",
+        categories: ["weather"],
+        tags: ["sky", "liquid"]
+      },
+      { name: "thunder", categories: ["weather"], tags: ["sky"] },
+      { name: "lightning", categories: ["weather"], tags: ["sky"] },
+      { name: "snow", categories: ["weather"], tags: ["sky", "cold"] },
+      {
+        name: "sunshine",
+        categories: ["weather"],
+        tags: ["sky", "daylight"]
+      }
+    ],
+    deityArchitecture: [
+      "monument",
+      "temple",
+      "shrine",
+      "statue",
+      "monastery",
+      "cathedral",
+      "altar",
+      "church",
+      "gardens",
+      "palace",
+      "cemetary",
+      "sanctuary",
+      "halls",
+      "forum"
+    ],
+    themeRange: {
+      min: 3,
+      max: 5
+    },
+    motifs: [
+      { name: "cross", unicode: "\u271A" },
+      { name: "triangle", unicode: "\u25B2" },
+      { name: "circle", unicode: "\u25CF" },
+      { name: "square", unicode: "\u25FC" },
+      { name: "star", unicode: "\u26E6" },
+      { name: "ring", unicode: "\u233E" },
+      { name: "arrowhead", unicode: "\u27A4" },
+      { name: "diamond", unicode: "\u2666" },
+      { name: "cresent", unicode: "\u25E0" },
+      { name: "semicircle", unicode: "\u25D6" },
+      { name: "bar", unicode: "\u2759" }
+    ],
+    deityRelationshipChance: 0.75,
+    deityHoldingLimit: 3,
+    movementChance: 0.2,
+    worldWidth: 10,
+    worldHeight: 10,
+    terrainResolution: 20,
+    waterHeight: 0.46,
+    waterStop1: 0.25,
+    waterStop2: 0.35,
+    regionPlaces: [
+      "woods",
+      "halls",
+      "cliffs",
+      "forest",
+      "plains",
+      "tundras",
+      "mountains",
+      "streets"
+    ],
+    regionAdjectives: [
+      "windy",
+      "calm",
+      "frozen",
+      "windswept",
+      "sunny",
+      "tranquil",
+      "undead",
+      "barren"
+    ],
+    settlementNameStarts: [
+      "ply",
+      "exe",
+      "tor",
+      "paign",
+      "ex",
+      "barn",
+      "ton",
+      "tiver",
+      "brix",
+      "bide",
+      "teign",
+      "sid",
+      "dawl",
+      "tavi",
+      "north",
+      "ivy"
+    ],
+    settlementNameEnds: [
+      "mouth",
+      "ter",
+      "quay",
+      "ton",
+      "staple",
+      "ton abbot",
+      "ham",
+      "ford",
+      "ish",
+      "stock",
+      "bridge"
+    ]
+  };
 
   // src/terrain/biome.ts
   var biomeColorMap = {
@@ -26719,7 +26707,7 @@
     };
   }
 
-  // src/language/index.ts
+  // src/language/factories.ts
   function describeNoun(nouns, adjectices) {
     return flipCoin() ? randomChoice(nouns) : `${randomChoice(adjectices)} ${randomChoice(nouns)}`;
   }
@@ -26997,7 +26985,6 @@
   var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   function WorldSelection({
     history: history3,
-    language,
     selectionX,
     selectionY,
     setTerrainLayer,
@@ -27075,7 +27062,6 @@
             WorldSelection,
             {
               history: history3,
-              language,
               selectionX,
               selectionY,
               setTerrainLayer,
@@ -28266,6 +28252,26 @@
     }
   }
 
+  // src/language/index.ts
+  function generateLanguage(history3) {
+    const phonemes = {
+      singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
+      dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
+      unvoicedConstants: allPhonemes.unvoicedConstants.filter(() => flipCoin()),
+      voicedConstants: allPhonemes.voicedConstants.filter(() => flipCoin())
+    };
+    const syllableStructure = generateSyllableStructure();
+    const language = {
+      name: "language",
+      phonemes,
+      syllableStructure,
+      words: {}
+    };
+    config.preRegisterWords.map((word) => getWord(word, language, 1));
+    getWord(language.name, language, 2);
+    return language;
+  }
+
   // src/log.ts
   function createLogger(tick) {
     const entries = [];
@@ -28972,6 +28978,1260 @@
     }
   }
 
+  // src/language/ipa/consonant.ts
+  var consonants = [
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_bilabial_nasal
+      name: "Voiceless bilabial nasal",
+      ipaCharacter: "m\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 0 /* Bilabial */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_bilabial_nasal
+      name: "Voiced bilabial nasal",
+      ipaCharacter: "m",
+      voicing: 0 /* Voiced */,
+      place: 0 /* Bilabial */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labiodental_nasal
+      name: "Voiced labiodental nasal",
+      ipaCharacter: "\u0271",
+      voicing: 0 /* Voiced */,
+      place: 1 /* Labiodental */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_linguolabial_nasal
+      name: "Voiced linguolabial nasal",
+      ipaCharacter: "n\u033C",
+      voicing: 0 /* Voiced */,
+      place: 2 /* Linguolabial */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_nasal
+      name: "Voiceless alveolar nasal",
+      ipaCharacter: "n\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_nasal
+      name: "Voiced alveolar nasal",
+      ipaCharacter: "n",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_nasal
+      name: "Voiceless retroflex nasal",
+      ipaCharacter: "\u0273\u030A",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_nasal
+      name: "Voiced retroflex nasal",
+      ipaCharacter: "\u0273",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_palatal_nasal
+      name: "Voiceless palatal nasal",
+      ipaCharacter: "\u0272\u030A",
+      voicing: 1 /* Voiceless */,
+      place: 7 /* Palatal */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_nasal
+      name: "Voiced palatal nasal",
+      ipaCharacter: "\u0272",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_velar_nasal
+      name: "Voiceless velar nasal",
+      ipaCharacter: "\u014B\u030A",
+      voicing: 1 /* Voiceless */,
+      place: 8 /* Velar */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_nasal
+      name: "Voiced velar nasal",
+      ipaCharacter: "\u014B",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_uvular_nasal
+      name: "Voiceless uvular nasal",
+      ipaCharacter: "\u0274\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 9 /* Uvular */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_uvular_nasal
+      name: "Voiced uvular nasal",
+      ipaCharacter: "\u0274",
+      voicing: 0 /* Voiced */,
+      place: 9 /* Uvular */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_bilabial_plosive
+      name: "Voiceless bilabial plosive",
+      ipaCharacter: "p",
+      voicing: 1 /* Voiceless */,
+      place: 0 /* Bilabial */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_bilabial_plosive
+      name: "Voiced bilabial plosive",
+      ipaCharacter: "b",
+      voicing: 0 /* Voiced */,
+      place: 0 /* Bilabial */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_labiodental_plosive
+      name: "Voiceless labiodental plosive",
+      ipaCharacter: "p\u032A",
+      voicing: 1 /* Voiceless */,
+      place: 1 /* Labiodental */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labiodental_plosive
+      name: "Voiced labiodental plosive",
+      ipaCharacter: "b\u032A",
+      voicing: 0 /* Voiced */,
+      place: 1 /* Labiodental */,
+      manner: 0 /* Nasal */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_linguolabial_plosive
+      name: "Voiceless linguolabial plosive",
+      ipaCharacter: "t\u033C",
+      voicing: 1 /* Voiceless */,
+      place: 2 /* Linguolabial */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_linguolabial_plosive
+      name: "Voiced linguolabial plosive",
+      ipaCharacter: "d\u033C",
+      voicing: 0 /* Voiced */,
+      place: 2 /* Linguolabial */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_plosive
+      name: "Voiceless alveolar plosive",
+      ipaCharacter: "t",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_plosive
+      name: "Voiced alveolar plosive",
+      ipaCharacter: "d",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_plosive
+      name: "Voiceless retroflex plosive",
+      ipaCharacter: "\u0288",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_plosive
+      name: "Voiced retroflex plosive",
+      ipaCharacter: "\u0256",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_palatal_plosive
+      name: "Voiceless palatal plosive",
+      ipaCharacter: "c",
+      voicing: 1 /* Voiceless */,
+      place: 7 /* Palatal */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_plosive
+      name: "Voiced palatal plosive",
+      ipaCharacter: "\u025F",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_velar_plosive
+      name: "Voiceless velar plosive",
+      ipaCharacter: "k",
+      voicing: 1 /* Voiceless */,
+      place: 8 /* Velar */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_plosive
+      name: "Voiced velar plosive",
+      ipaCharacter: "\u0261",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_uvular_plosive
+      name: "Voiceless uvular plosive",
+      ipaCharacter: "q",
+      voicing: 1 /* Voiceless */,
+      place: 9 /* Uvular */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_uvular_plosive
+      name: "Voiced uvular plosive",
+      ipaCharacter: "\u0262",
+      voicing: 0 /* Voiced */,
+      place: 9 /* Uvular */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Epiglottal_plosive
+      name: "Epiglottal plosive",
+      ipaCharacter: "\u02A1",
+      voicing: 1 /* Voiceless */,
+      // Iffy
+      place: 10 /* Pharyngeal/epiglottal */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Glottal_stop
+      name: "Glottal stop",
+      ipaCharacter: "\u0294",
+      voicing: 1 /* Voiceless */,
+      place: 11 /* Glottal */,
+      manner: 1 /* Plosive */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_fricative
+      name: "Voiceless alveolar fricative",
+      ipaCharacter: "s",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_fricative
+      name: "Voiced alveolar fricative",
+      ipaCharacter: "z",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_postalveolar_fricative
+      name: "Voiceless postalveolar fricative",
+      ipaCharacter: "\u0283",
+      voicing: 1 /* Voiceless */,
+      place: 5 /* Postalveolar */,
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_postalveolar_fricative
+      name: "Voiced postalveolar fricative",
+      ipaCharacter: "\u0292",
+      voicing: 0 /* Voiced */,
+      place: 5 /* Postalveolar */,
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_fricative
+      name: "Voiceless retroflex fricative",
+      ipaCharacter: "\u0282",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_fricative
+      name: "Voiced retroflex fricative",
+      ipaCharacter: "\u0290",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolo-palatal_fricative
+      name: " Voiceless alveolo-palatal fricative",
+      ipaCharacter: "\u0255",
+      voicing: 1 /* Voiceless */,
+      place: 7 /* Palatal */,
+      // alveolo-palatal
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolo-palatal_fricative
+      name: "Voiced alveolo-palatal fricative",
+      ipaCharacter: "\u0291",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      // alveolo-palatal
+      manner: 2 /* Sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_bilabial_fricative
+      name: "Voiceless bilabial fricative",
+      ipaCharacter: "\u0278",
+      voicing: 1 /* Voiceless */,
+      place: 0 /* Bilabial */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_bilabial_fricative
+      name: "Voiced bilabial fricative",
+      ipaCharacter: "\u03B2",
+      voicing: 0 /* Voiced */,
+      place: 0 /* Bilabial */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_labiodental_fricative
+      name: "Voiceless labiodental fricative",
+      ipaCharacter: "f",
+      voicing: 1 /* Voiceless */,
+      place: 1 /* Labiodental */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labiodental_fricative
+      name: "Voiced labiodental fricative",
+      ipaCharacter: "v",
+      voicing: 0 /* Voiced */,
+      place: 1 /* Labiodental */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_linguolabial_fricative
+      name: "Voiceless linguolabial fricative",
+      ipaCharacter: "\u03B8\u033C",
+      voicing: 1 /* Voiceless */,
+      place: 2 /* Linguolabial */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_linguolabial_fricative
+      name: "Voiced linguolabial fricative",
+      ipaCharacter: "\xF0\u033C",
+      voicing: 0 /* Voiced */,
+      place: 2 /* Linguolabial */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_dental_fricative
+      name: "Voiceless dental fricative",
+      ipaCharacter: "\u03B8",
+      voicing: 1 /* Voiceless */,
+      place: 3 /* Dental */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_dental_fricative
+      name: "Voiced dental fricative",
+      ipaCharacter: "\xF0",
+      voicing: 0 /* Voiced */,
+      place: 3 /* Dental */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_non-sibilant_fricative
+      name: "Voiceless alveolar non-sibilant fricative",
+      ipaCharacter: "\u03B8\u0320",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_non-sibilant_fricative
+      name: "Voiced alveolar non-sibilant fricative",
+      ipaCharacter: "\xF0\u0320",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_postalveolar_non-sibilant_fricative
+      name: "Voiceless postalveolar non-sibilant fricative ",
+      ipaCharacter: "\u0279\u0320\u030A\u02D4",
+      voicing: 1 /* Voiceless */,
+      place: 5 /* Postalveolar */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_postalveolar_non-sibilant_fricative
+      name: "Voiced postalveolar non-sibilant fricative ",
+      ipaCharacter: "\u0279\u0320\u02D4",
+      voicing: 0 /* Voiced */,
+      place: 5 /* Postalveolar */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_non-sibilant_fricative
+      name: "Voiceless retroflex non-sibilant fricative ",
+      ipaCharacter: "\u027B\u030A\u02D4",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_non-sibilant_fricative
+      name: "Voiced retroflex non-sibilant fricative ",
+      ipaCharacter: "\u027B\u02D4",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_palatal_fricative
+      name: "Voiceless palatal fricative",
+      ipaCharacter: "\xE7",
+      voicing: 1 /* Voiceless */,
+      place: 7 /* Palatal */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_fricative
+      name: "Voiced palatal fricative",
+      ipaCharacter: "\u029D",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_velar_fricative
+      name: "Voiceless velar fricative",
+      ipaCharacter: "x",
+      voicing: 1 /* Voiceless */,
+      place: 8 /* Velar */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_fricative
+      name: "Voiced velar fricative",
+      ipaCharacter: "\u0263",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_uvular_fricative
+      name: "Voiceless uvular fricative",
+      ipaCharacter: "\u03C7",
+      voicing: 1 /* Voiceless */,
+      place: 9 /* Uvular */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_uvular_fricative
+      name: "Voiced uvular fricative",
+      ipaCharacter: "\u0281",
+      voicing: 0 /* Voiced */,
+      place: 9 /* Uvular */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_pharyngeal_fricative
+      name: "Voiceless pharyngeal fricative",
+      ipaCharacter: "\u0127",
+      voicing: 1 /* Voiceless */,
+      place: 10 /* Pharyngeal/epiglottal */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_pharyngeal_fricative
+      name: "Voiced pharyngeal fricative",
+      ipaCharacter: "\u0295",
+      voicing: 0 /* Voiced */,
+      place: 10 /* Pharyngeal/epiglottal */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_glottal_fricative
+      name: "Voiceless glottal fricative",
+      ipaCharacter: "h",
+      voicing: 1 /* Voiceless */,
+      place: 11 /* Glottal */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_glottal_fricative
+      name: "Voiced glottal fricative",
+      ipaCharacter: "\u0266",
+      voicing: 0 /* Voiced */,
+      place: 11 /* Glottal */,
+      manner: 3 /* Non-sibilant fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labiodental_approximant
+      name: "Voiced labiodental approximant",
+      ipaCharacter: "\u028B",
+      voicing: 0 /* Voiced */,
+      place: 1 /* Labiodental */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_approximant
+      name: "Voiced alveolar approximant",
+      ipaCharacter: "\u0279",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_approximant
+      name: "Voiced retroflex approximant",
+      ipaCharacter: "\u027B",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_approximant
+      name: "Voiced palatal approximant",
+      ipaCharacter: "j",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_approximant
+      name: "Voiced velar approximant",
+      ipaCharacter: "\u0270",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Creaky-voiced_glottal_approximant
+      name: "Creaky-voiced glottal approximant",
+      ipaCharacter: "\u0294\u031E",
+      voicing: 0 /* Voiced */,
+      place: 11 /* Glottal */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_bilabial_flap
+      name: "Voiced bilabial flap",
+      ipaCharacter: "\u2C71\u031F",
+      voicing: 0 /* Voiced */,
+      place: 0 /* Bilabial */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labiodental_flap
+      name: "Voiced labiodental flap",
+      ipaCharacter: "\u2C71",
+      voicing: 0 /* Voiced */,
+      place: 1 /* Labiodental */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_linguolabial_tap
+      name: "Voiced linguolabial tap",
+      ipaCharacter: "\u027E\u033C",
+      voicing: 0 /* Voiced */,
+      place: 2 /* Linguolabial */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_tap
+      name: "Voiceless alveolar tap",
+      ipaCharacter: "\u027E\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_dental_and_alveolar_taps_and_flaps
+      name: "Voiced dental and alveolar taps and flaps",
+      ipaCharacter: "\u027E",
+      voicing: 0 /* Voiced */,
+      place: 3 /* Dental */,
+      // dental and alveolar
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_flap
+      name: "Voiceless retroflex flap",
+      ipaCharacter: "\u027D\u030A",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_flap
+      name: "Voiced retroflex flap",
+      ipaCharacter: "\u027D",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_uvular_tap_and_flap
+      name: "Voiced uvular tap and flap",
+      ipaCharacter: "\u0262\u0306",
+      voicing: 0 /* Voiced */,
+      place: 9 /* Uvular */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_epiglottal_tap
+      name: "Voiced epiglottal tap",
+      ipaCharacter: "\u02A1\u0306",
+      voicing: 0 /* Voiced */,
+      place: 10 /* Pharyngeal/epiglottal */,
+      manner: 5 /* Tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_bilabial_trill
+      name: "Voiceless bilabial trill",
+      ipaCharacter: "\u0299\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 0 /* Bilabial */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_bilabial_trill
+      name: "Voiced bilabial trill",
+      ipaCharacter: "\u0299",
+      voicing: 0 /* Voiced */,
+      place: 0 /* Bilabial */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_trill
+      name: "Voiceless alveolar trill",
+      ipaCharacter: "r\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_trill
+      name: "Voiced alveolar trill",
+      ipaCharacter: "r",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_trill
+      name: "Voiceless retroflex trill ",
+      ipaCharacter: "\u027D\u030Ar\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_trill
+      name: "Voiced retroflex trill ",
+      ipaCharacter: "\u027Dr",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_uvular_trill
+      name: "Voiceless uvular trill",
+      ipaCharacter: "\u0280\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 9 /* Uvular */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_uvular_trill
+      name: "Voiced uvular trill",
+      ipaCharacter: "\u0280",
+      voicing: 0 /* Voiced */,
+      place: 9 /* Uvular */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_epiglottal_trill
+      name: "Voiceless epiglottal trill",
+      ipaCharacter: "\u029C",
+      voicing: 1 /* Voiceless */,
+      place: 10 /* Pharyngeal/epiglottal */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_epiglottal_trill
+      name: "Voiced epiglottal trill",
+      ipaCharacter: "\u02A2",
+      voicing: 0 /* Voiced */,
+      place: 10 /* Pharyngeal/epiglottal */,
+      manner: 6 /* Trill */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_lateral_fricative
+      name: "Voiceless alveolar lateral fricative",
+      ipaCharacter: "\u026C",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_lateral_fricative
+      name: "Voiced alveolar lateral fricative",
+      ipaCharacter: "\u026E",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_lateral_fricative
+      name: "Voiceless retroflex lateral fricative",
+      ipaCharacter: "\uA78E",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_lateral_fricative
+      name: "Voiced retroflex lateral fricative",
+      ipaCharacter: "\u{1DF05}",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_palatal_lateral_fricative
+      name: "Voiceless palatal lateral fricative",
+      ipaCharacter: "\u{1DF06}",
+      voicing: 1 /* Voiceless */,
+      place: 7 /* Palatal */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_lateral_fricative
+      name: "Voiced palatal lateral fricative",
+      ipaCharacter: "\u028E\u031D",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_velar_lateral_fricative
+      name: "Voiceless velar lateral fricative",
+      ipaCharacter: "\u{1DF04}",
+      voicing: 1 /* Voiceless */,
+      place: 8 /* Velar */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_lateral_fricative
+      name: "Voiced velar lateral fricative",
+      ipaCharacter: "\u029F\u031D",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 7 /* Lateral fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_lateral_approximant
+      name: "Voiced alveolar lateral approximant",
+      ipaCharacter: "l",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 8 /* Lateral approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_lateral_approximant
+      name: "Voiced retroflex lateral approximant",
+      ipaCharacter: "\u026D",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 8 /* Lateral approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_lateral_approximant
+      name: "Voiced palatal lateral approximant",
+      ipaCharacter: "\u028E",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 8 /* Lateral approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_lateral_approximant
+      name: "Voiced velar lateral approximant",
+      ipaCharacter: "\u029F",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 8 /* Lateral approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_uvular_lateral_approximant
+      name: "Voiced uvular lateral approximant",
+      ipaCharacter: "\u029F\u0320",
+      voicing: 0 /* Voiced */,
+      place: 9 /* Uvular */,
+      manner: 8 /* Lateral approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_alveolar_lateral_flap
+      name: "Voiceless alveolar lateral flap",
+      ipaCharacter: "\u027A\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 4 /* Alveolar */,
+      manner: 9 /* Lateral tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_alveolar_lateral_flap
+      name: "Voiced alveolar lateral flap",
+      ipaCharacter: "\u027A",
+      voicing: 0 /* Voiced */,
+      place: 4 /* Alveolar */,
+      manner: 9 /* Lateral tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_retroflex_lateral_flap
+      name: "Voiceless retroflex lateral flap",
+      ipaCharacter: "\u{1DF08}\u0325",
+      voicing: 1 /* Voiceless */,
+      place: 6 /* Retroflex */,
+      manner: 9 /* Lateral tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_retroflex_lateral_flap
+      name: "Voiced retroflex lateral flap",
+      ipaCharacter: "\u{1DF08}",
+      voicing: 0 /* Voiced */,
+      place: 6 /* Retroflex */,
+      manner: 9 /* Lateral tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_palatal_lateral_flap
+      name: "Voiced palatal lateral flap",
+      ipaCharacter: "\u028E\u0306",
+      voicing: 0 /* Voiced */,
+      place: 7 /* Palatal */,
+      manner: 9 /* Lateral tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_velar_lateral_tap
+      name: "Voiced velar lateral tap",
+      ipaCharacter: "\u029F\u0306",
+      voicing: 0 /* Voiced */,
+      place: 8 /* Velar */,
+      manner: 9 /* Lateral tap/flap */
+    }
+  ];
+
+  // src/language/ipa/vowels.ts
+  var vowels = [
+    {
+      // https://en.wikipedia.org/wiki/Close_front_unrounded_vowel
+      name: "Close front unrounded vowel",
+      ipaCharacter: "i",
+      height: 0 /* Close */,
+      backness: 0 /* Front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0069"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close_front_rounded_vowel
+      name: "Close front rounded vowel",
+      ipaCharacter: "y",
+      height: 0 /* Close */,
+      backness: 0 /* Front */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0079"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close_central_unrounded_vowel
+      name: "Close central unrounded vowel",
+      ipaCharacter: "\u0268",
+      height: 0 /* Close */,
+      backness: 2 /* Central */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0268"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close_central_rounded_vowel
+      name: "Close central rounded vowel",
+      ipaCharacter: "\u0289",
+      height: 0 /* Close */,
+      backness: 2 /* Central */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0289"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close_back_unrounded_vowel
+      name: "Close back unrounded vowel",
+      ipaCharacter: "\u026F",
+      height: 0 /* Close */,
+      backness: 4 /* Back */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+026F"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close_back_rounded_vowel
+      name: "Close back rounded vowel",
+      ipaCharacter: "u",
+      height: 0 /* Close */,
+      backness: 4 /* Back */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0075"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Near-close_near-front_unrounded_vowel
+      name: "Near-close near-front unrounded vowel",
+      ipaCharacter: "\u026A",
+      height: 1 /* Near-close */,
+      backness: 1 /* Near-front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+026A"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Near-close_near-front_rounded_vowel
+      name: "Near-close near-front rounded vowel",
+      ipaCharacter: "\u028F",
+      height: 1 /* Near-close */,
+      backness: 1 /* Near-front */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+028F"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Near-close_near-back_rounded_vowel
+      name: "Near-close near-back rounded vowel",
+      ipaCharacter: "\u028A",
+      height: 1 /* Near-close */,
+      backness: 3 /* Near-back */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+028A"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close-mid_front_unrounded_vowel
+      name: "Close-mid front unrounded vowel",
+      ipaCharacter: "e",
+      height: 2 /* Close-mid */,
+      backness: 0 /* Front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0065"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close-mid_front_rounded_vowel
+      name: "Close-mid front rounded vowel",
+      ipaCharacter: "\xF8",
+      height: 2 /* Close-mid */,
+      backness: 0 /* Front */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+00F8"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close-mid_central_unrounded_vowel
+      name: "Close-mid central unrounded vowel",
+      ipaCharacter: "\u0258",
+      height: 2 /* Close-mid */,
+      backness: 2 /* Central */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0258"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close-mid_central_rounded_vowel
+      name: "Close-mid central rounded vowel",
+      ipaCharacter: "\u0275",
+      height: 2 /* Close-mid */,
+      backness: 2 /* Central */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0275"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close-mid_back_unrounded_vowel
+      name: "Close-mid back unrounded vowel",
+      ipaCharacter: "\u0264",
+      height: 2 /* Close-mid */,
+      backness: 4 /* Back */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0264"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Close-mid_back_rounded_vowel
+      name: "Close-mid back rounded vowel",
+      ipaCharacter: "o",
+      height: 2 /* Close-mid */,
+      backness: 4 /* Back */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+006F"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Mid_front_unrounded_vowel
+      name: "Mid front unrounded vowel",
+      ipaCharacter: "e\u031E",
+      height: 3 /* Mid */,
+      backness: 0 /* Front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0065 U+031E"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Mid_front_rounded_vowel
+      name: "Mid front rounded vowel",
+      ipaCharacter: "\xF8\u031E",
+      height: 3 /* Mid */,
+      backness: 0 /* Front */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+00F8 U+031E"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Mid_central_vowel
+      name: "Mid central vowel",
+      ipaCharacter: "\u0259",
+      height: 3 /* Mid */,
+      backness: 2 /* Central */,
+      roundedness: 2 /* None */,
+      ipaUnicode: "U+0259"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Mid_back_unrounded_vowel
+      name: "Mid back unrounded vowel",
+      ipaCharacter: "\u0264\u031E",
+      height: 3 /* Mid */,
+      backness: 4 /* Back */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0264 U+031E"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Mid_back_rounded_vowel
+      name: "Mid back rounded vowel",
+      ipaCharacter: "o\u031E",
+      height: 3 /* Mid */,
+      backness: 4 /* Back */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+006F U+031E"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open-mid_front_unrounded_vowel
+      name: "Open-mid front unrounded vowel",
+      ipaCharacter: "\u025B",
+      height: 4 /* Open-mid */,
+      backness: 0 /* Front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+025B"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open-mid_front_rounded_vowel
+      name: "Open-mid front rounded vowel",
+      ipaCharacter: "\u0153",
+      height: 4 /* Open-mid */,
+      backness: 0 /* Front */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0153"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open-mid_central_unrounded_vowel
+      name: "Open-mid central unrounded vowel",
+      ipaCharacter: "\u025C",
+      height: 4 /* Open-mid */,
+      backness: 2 /* Central */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+025C"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open-mid_central_rounded_vowel
+      name: "Open-mid central rounded vowel",
+      ipaCharacter: "\u025E",
+      height: 4 /* Open-mid */,
+      backness: 2 /* Central */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+025E"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open-mid_back_unrounded_vowel
+      name: "Open-mid back unrounded vowel",
+      ipaCharacter: "\u028C",
+      height: 4 /* Open-mid */,
+      backness: 4 /* Back */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+028C"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open-mid_back_rounded_vowel
+      name: "Open-mid back rounded vowel",
+      ipaCharacter: "\u0254",
+      height: 4 /* Open-mid */,
+      backness: 4 /* Back */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0254"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Near-open_front_unrounded_vowel
+      name: "Near-open front unrounded vowel",
+      ipaCharacter: "\xE6",
+      height: 5 /* Near-open */,
+      backness: 0 /* Front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+00E6"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Near-open_central_vowel
+      name: "Near-open central vowel",
+      ipaCharacter: "\u0250",
+      height: 5 /* Near-open */,
+      backness: 2 /* Central */,
+      roundedness: 2 /* None */,
+      ipaUnicode: "U+0250"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open_front_unrounded_vowel
+      name: "Open front unrounded vowel",
+      ipaCharacter: "a",
+      height: 6 /* Open */,
+      backness: 0 /* Front */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0061"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open_front_rounded_vowel
+      name: "Open front rounded vowel",
+      ipaCharacter: "\u0276",
+      height: 6 /* Open */,
+      backness: 0 /* Front */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0276"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open_central_unrounded_vowel
+      name: "Open central unrounded vowel",
+      ipaCharacter: "\xE4",
+      height: 6 /* Open */,
+      backness: 2 /* Central */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0061 U+0308"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open_back_unrounded_vowel
+      name: "Open back unrounded vowel",
+      ipaCharacter: "\u0251",
+      height: 6 /* Open */,
+      backness: 4 /* Back */,
+      roundedness: 1 /* Unrounded */,
+      ipaUnicode: "U+0251"
+    },
+    {
+      // https://en.wikipedia.org/wiki/Open_back_rounded_vowel
+      name: "Open back rounded vowel",
+      ipaCharacter: "\u0252",
+      height: 6 /* Open */,
+      backness: 4 /* Back */,
+      roundedness: 0 /* Rounded */,
+      ipaUnicode: "U+0252"
+    }
+  ];
+
+  // src/language/ipa/fromEnglish.ts
+  var englishConsonants = [
+    "m",
+    "n",
+    "\u014B",
+    "p",
+    "t",
+    "t\u0283",
+    "k",
+    "b",
+    "d",
+    "d\u0292",
+    "\u0261",
+    "f",
+    "\u03B8",
+    "s",
+    "\u0283",
+    "x",
+    "h",
+    "v",
+    "\xF0",
+    "z",
+    "\u0292",
+    "l",
+    "r",
+    "j",
+    "w"
+  ];
+  var englishVowels = [
+    "\u026A",
+    "i\u02D0",
+    "\u028A",
+    "u\u02D0",
+    "\u0254\u02D0",
+    "e",
+    "\u025B\u02D0",
+    "\u0259",
+    "\u025C\u02D0",
+    "\u0252",
+    "\xE6",
+    "\u028C",
+    "\u0251\u02D0"
+  ];
+  var englishDiphthongs = ["e\u026A", "a\u026A", "\u0254\u026A", "a\u028A", "\u0259\u028A", "\u026A\u0259", "\u028A\u0259"];
+
+  // src/language/ipa/index.ts
+  function validate() {
+    console.log("consonants", findValues(consonants, englishConsonants));
+    console.log("vowels", findValues(vowels, englishVowels));
+    console.log("diphthongs", findValues(vowels, englishDiphthongs));
+  }
+  function findValues(set, find) {
+    const found = [];
+    const missing = [];
+    for (let index = 0; index < find.length; index++) {
+      const toFind = stripDiacritics(find[index]);
+      if (toFind.length > 1) {
+        const parts = toFind.split("");
+        const match = parts.every(
+          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
+        );
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      } else {
+        const match = set.find((potential) => potential.ipaCharacter === toFind);
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      }
+    }
+    return { found, missing };
+  }
+  function stripDiacritics(value) {
+    return value.replaceAll("\u02D0", "");
+  }
+
   // src/index.tsx
   var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
@@ -29024,6 +30284,7 @@
     );
   }
   (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Wrapper, {}));
+  validate();
 })();
 /*! Bundled license information:
 
