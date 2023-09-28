@@ -30195,6 +30195,208 @@
     "\u0251\u02D0"
   ];
   var englishDiphthongs = ["e\u026A", "a\u026A", "\u0254\u026A", "a\u028A", "\u0259\u028A", "\u026A\u0259", "\u028A\u0259"];
+  var englishOnset = [
+    // Stop plus approximant other than /j/:
+    "pl",
+    "bl",
+    "kl",
+    "\u0261l",
+    "pr",
+    "br",
+    "tr",
+    "dr",
+    "kr",
+    "\u0261r",
+    "tw",
+    "dw",
+    "\u0261w",
+    "kw",
+    "pw",
+    // Voiceless fricative or /v/ plus approximant other than /j/:[b]
+    "fl",
+    "sl",
+    "\u03B8l",
+    "\u0283l",
+    "fr",
+    "\u03B8r",
+    "\u0283r",
+    "hw",
+    "sw",
+    "\u03B8w",
+    "vw",
+    // Consonant other than /r/ or /w/ plus /j/ (before /uː/ or its modified/reduced forms):[e]
+    "pj",
+    "bj",
+    "tj",
+    "dj",
+    "kj",
+    "\u0261j",
+    "mj",
+    "nj",
+    "fj",
+    "vj",
+    "\u03B8j",
+    "sj",
+    "zj",
+    "hj",
+    "lj",
+    // /s/ plus voiceless stop:[f]
+    "sp",
+    "st",
+    "sk",
+    // /s/ plus nasal other than /ŋ/:[f]
+    "sm",
+    "sn",
+    // /s/ plus voiceless non-sibilant fricative:[c]
+    "sf",
+    "s\u03B8",
+    // /s/ plus voiceless stop plus approximant:[f]
+    "spl",
+    "skl",
+    "spr",
+    "str",
+    "skr",
+    "skw",
+    "spj",
+    "stj",
+    "skj",
+    // /s/ plus nasal plus approximant:
+    "smj",
+    // /s/ plus voiceless non-sibilant fricative plus approximant:[c]
+    "sfr"
+  ];
+  var englishNucleus = [...englishVowels, ...englishDiphthongs];
+  var englishCoda = [
+    // The single consonant phonemes except /h/, /w/, /j/ and, in non-rhotic varieties, /r/
+    ...englishConsonants,
+    // Lateral approximant plus stop or affricate:
+    "lp",
+    "lb",
+    "lt",
+    "ld",
+    "lt\u0283",
+    "ld\u0292",
+    "lk",
+    // In rhotic varieties, /r/ plus stop or affricate:
+    "rp",
+    "rb",
+    "rt",
+    "rd",
+    "rt\u0283",
+    "rd\u0292",
+    "rk",
+    "r\u0261",
+    // Lateral approximant + fricative:
+    "lf",
+    "lv",
+    "l\u03B8",
+    "ls",
+    "lz",
+    "l\u0283",
+    "l\xF0",
+    // In rhotic varieties, /r/ + fricative:
+    "rf",
+    "rv",
+    "r\u03B8",
+    "r\xF0",
+    "rs",
+    "rz",
+    "r\u0283",
+    // Lateral approximant + nasal:
+    "lm",
+    "ln",
+    // In rhotic varieties, "r" + nasal or lateral:
+    "rm",
+    "rn",
+    "rl",
+    // Nasal + homorganic stop or affricate:
+    "mp",
+    "nt",
+    "nd",
+    "nt\u0283",
+    "nd\u0292",
+    "\u014Bk",
+    // Nasal + fricativ
+    "mf",
+    "mz",
+    "m\u03B8",
+    "nf",
+    "n\u03B8",
+    "ns",
+    "nz",
+    "\u014B\u03B8",
+    "\u014B\xF0",
+    // Voiceless fricative plus voiceless stop:
+    "ft",
+    "sp",
+    "st",
+    "sk",
+    "\u0283t",
+    "\u03B8t",
+    // Voiced fricative plus voiced stop
+    "zd",
+    "\xF0d",
+    // Two or three voiceless fricatives:
+    "f\u03B8",
+    "f\u03B8s",
+    // Two voiceless stops:
+    "pt",
+    "kt",
+    // Two voiceless stops + fricative:
+    "pts",
+    "kts",
+    // Stop plus fricative:
+    "p\u03B8",
+    "ps",
+    "t\u03B8",
+    "ts",
+    "d\u03B8",
+    "dz",
+    "ks",
+    // Lateral approximant + two or three consonants:
+    "lmd",
+    "lpt",
+    "lps",
+    "lf\u03B8",
+    "lv\xF0",
+    "lvf\u03B8",
+    "lts",
+    "lst",
+    "lkt",
+    "lks",
+    // In rhotic varieties, "r/ + two consonants:
+    "rmd",
+    "rm\u03B8",
+    "rpt",
+    "rps",
+    "rnd",
+    "rts",
+    "rst",
+    "rld",
+    "rkt",
+    // Nasal + homorganic stop + stop or fricative:
+    "mpt",
+    "mps",
+    "nts",
+    "nt\u03B8",
+    "nd\xF0",
+    "\u014Bkt",
+    "\u014Bks",
+    "\u014Bk\u03B8",
+    // Nasal + homorganic stop + two fricatives:
+    "nd\xF0z",
+    // Nasal + non-homorganic stop:
+    "mt",
+    "md",
+    "\u014Bd",
+    // Three obstruents:
+    "ks\u03B8",
+    "kst",
+    // Four obstruents:
+    "ks\u03B8s",
+    "ks\u03B8t",
+    "ksts"
+  ];
   var englishSyllableStructure = {
     onset: 3,
     rhyme: {
@@ -30214,15 +30416,46 @@
   function stringifySyllableStructure(syllableStructure) {
     return describeSyllableStructure(syllableStructure).map((part) => part === 0 /* Consonant */ ? "C" : "V").join("");
   }
+  function syllableStructureSize(syllableStructure) {
+    return syllableStructure.onset + syllableStructure.rhyme.nucleus + syllableStructure.rhyme.coda;
+  }
+  function getPossibleSyllableStructures(maximums) {
+    const result = [];
+    for (let nucleus = 1; nucleus <= maximums.rhyme.nucleus; nucleus++) {
+      for (let onset = 0; onset <= maximums.onset; onset++) {
+        for (let coda = 0; coda <= maximums.rhyme.coda; coda++) {
+          result.push({
+            onset,
+            rhyme: {
+              nucleus,
+              coda
+            }
+          });
+        }
+      }
+    }
+    return result.sort(
+      (a, b) => syllableStructureSize(a) - syllableStructureSize(b)
+    );
+  }
 
   // src/language/ipa/index.ts
   function validate() {
     console.log("consonants", findValues(consonants, englishConsonants));
     console.log("vowels", findValues(vowels, englishVowels));
     console.log("diphthongs", findValues(vowels, englishDiphthongs));
+    console.log("onset", findValues(consonants, englishOnset));
+    console.log("nucleus", findValues(vowels, englishNucleus));
+    console.log("coda", findValues(consonants, englishCoda));
     console.log(
       "syllableStructure",
       stringifySyllableStructure(englishSyllableStructure)
+    );
+    console.log(
+      "possibleSyllables",
+      getPossibleSyllableStructures(englishSyllableStructure).map(
+        (syllableStructure) => stringifySyllableStructure(syllableStructure)
+      )
     );
   }
   function findValues(set, find) {
