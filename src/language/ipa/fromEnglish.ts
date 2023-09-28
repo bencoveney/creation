@@ -52,7 +52,7 @@ export const englishVowels = [
 
 export const englishDiphthongs = ["eɪ", "aɪ", "ɔɪ", "aʊ", "əʊ", "ɪə", "ʊə"];
 
-export const englishOnsets = [
+export const englishOnset = [
   // Stop plus approximant other than /j/:
   "pl",
   "bl",
@@ -121,6 +121,140 @@ export const englishOnsets = [
   "smj",
   // /s/ plus voiceless non-sibilant fricative plus approximant:[c]
   "sfr",
+];
+
+export const englishNucleus = [...englishVowels, ...englishDiphthongs];
+
+export const englishCoda = [
+  // The single consonant phonemes except /h/, /w/, /j/ and, in non-rhotic varieties, /r/
+  ...englishConsonants,
+  // Lateral approximant plus stop or affricate:
+  "lp",
+  "lb",
+  "lt",
+  "ld",
+  "ltʃ",
+  "ldʒ",
+  "lk",
+  // In rhotic varieties, /r/ plus stop or affricate:
+  "rp",
+  "rb",
+  "rt",
+  "rd",
+  "rtʃ",
+  "rdʒ",
+  "rk",
+  "rɡ",
+  // Lateral approximant + fricative:
+  "lf",
+  "lv",
+  "lθ",
+  "ls",
+  "lz",
+  "lʃ",
+  "lð",
+  // In rhotic varieties, /r/ + fricative:
+  "rf",
+  "rv",
+  "rθ",
+  "rð",
+  "rs",
+  "rz",
+  "rʃ",
+  // Lateral approximant + nasal:
+  "lm",
+  "ln",
+  // In rhotic varieties, "r" + nasal or lateral:
+  "rm",
+  "rn",
+  "rl",
+  // Nasal + homorganic stop or affricate:
+  "mp",
+  "nt",
+  "nd",
+  "ntʃ",
+  "ndʒ",
+  "ŋk",
+  // Nasal + fricativ
+  "mf",
+  "mz",
+  "mθ",
+  "nf",
+  "nθ",
+  "ns",
+  "nz",
+  "ŋθ",
+  "ŋð",
+  // Voiceless fricative plus voiceless stop:
+  "ft",
+  "sp",
+  "st",
+  "sk",
+  "ʃt",
+  "θt",
+  // Voiced fricative plus voiced stop
+  "zd",
+  "ðd",
+  // Two or three voiceless fricatives:
+  "fθ",
+  "fθs",
+  // Two voiceless stops:
+  "pt",
+  "kt",
+  // Two voiceless stops + fricative:
+  "pts",
+  "kts",
+  // Stop plus fricative:
+  "pθ",
+  "ps",
+  "tθ",
+  "ts",
+  "dθ",
+  "dz",
+  "ks",
+  // Lateral approximant + two or three consonants:
+  "lmd",
+  "lpt",
+  "lps",
+  "lfθ",
+  "lvð",
+  "lvfθ",
+  "lts",
+  "lst",
+  "lkt",
+  "lks",
+  // In rhotic varieties, "r/ + two consonants:
+  "rmd",
+  "rmθ",
+  "rpt",
+  "rps",
+  "rnd",
+  "rts",
+  "rst",
+  "rld",
+  "rkt",
+  // Nasal + homorganic stop + stop or fricative:
+  "mpt",
+  "mps",
+  "nts",
+  "ntθ",
+  "ndð",
+  "ŋkt",
+  "ŋks",
+  "ŋkθ",
+  // Nasal + homorganic stop + two fricatives:
+  "ndðz",
+  // Nasal + non-homorganic stop:
+  "mt",
+  "md",
+  "ŋd",
+  // Three obstruents:
+  "ksθ",
+  "kst",
+  // Four obstruents:
+  "ksθs",
+  "ksθt",
+  "ksts",
 ];
 
 export const englishSyllableStructure = {
