@@ -30439,25 +30439,7 @@
     );
   }
 
-  // src/language/ipa/index.ts
-  function validate() {
-    console.log("consonants", findValues(consonants, englishConsonants));
-    console.log("vowels", findValues(vowels, englishVowels));
-    console.log("diphthongs", findValues(vowels, englishDiphthongs));
-    console.log("onset", findValues(consonants, englishOnset));
-    console.log("nucleus", findValues(vowels, englishNucleus));
-    console.log("coda", findValues(consonants, englishCoda));
-    console.log(
-      "syllableStructure",
-      stringifySyllableStructure(englishSyllableStructure)
-    );
-    console.log(
-      "possibleSyllables",
-      getPossibleSyllableStructures(englishSyllableStructure).map(
-        (syllableStructure) => stringifySyllableStructure(syllableStructure)
-      )
-    );
-  }
+  // src/language/ipa/utils.ts
   function findValues(set, find) {
     const found = [];
     const missing = [];
@@ -30486,6 +30468,26 @@
   }
   function stripDiacritics(value) {
     return value.replaceAll("\u02D0", "");
+  }
+
+  // src/language/ipa/index.ts
+  function validate() {
+    console.log("consonants", findValues(consonants, englishConsonants));
+    console.log("vowels", findValues(vowels, englishVowels));
+    console.log("diphthongs", findValues(vowels, englishDiphthongs));
+    console.log("onset", findValues(consonants, englishOnset));
+    console.log("nucleus", findValues(vowels, englishNucleus));
+    console.log("coda", findValues(consonants, englishCoda));
+    console.log(
+      "syllableStructure",
+      stringifySyllableStructure(englishSyllableStructure)
+    );
+    console.log(
+      "possibleSyllables",
+      getPossibleSyllableStructures(englishSyllableStructure).map(
+        (syllableStructure) => stringifySyllableStructure(syllableStructure)
+      )
+    );
   }
 
   // src/index.tsx
