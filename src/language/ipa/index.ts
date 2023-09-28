@@ -3,18 +3,29 @@ import { vowels } from "./vowels";
 import {
   englishConsonants,
   englishDiphthongs,
+  englishOnsets,
   englishSyllableStructure,
   englishVowels,
 } from "./fromEnglish";
-import { stringifySyllableStructure } from "./phonotactics";
+import {
+  getPossibleSyllableStructures,
+  stringifySyllableStructure,
+} from "./phonotactics";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
   console.log("vowels", findValues(vowels, englishVowels));
   console.log("diphthongs", findValues(vowels, englishDiphthongs));
+  console.log("onsets", findValues(consonants, englishOnsets));
   console.log(
     "syllableStructure",
     stringifySyllableStructure(englishSyllableStructure)
+  );
+  console.log(
+    "possibleSyllables",
+    getPossibleSyllableStructures(englishSyllableStructure).map(
+      (syllableStructure) => stringifySyllableStructure(syllableStructure)
+    )
   );
 }
 
