@@ -1,5 +1,5 @@
 export function findValues(
-  set: { ipaCharacter: string }[],
+  set: HasIpaCharacter[],
   find: string[]
 ): { found: string[]; missing: string[] } {
   const found: string[] = [];
@@ -32,4 +32,18 @@ export function findValues(
 export function stripDiacritics(value: string): string {
   // Lol
   return value.replaceAll("ː", "");
+}
+
+export type HasIpaCharacter = { ipaCharacter: string };
+
+export type ByIpaCharacter<T extends HasIpaCharacter> = { [char: string]: T };
+export function createIpaCharacterLookup<T extends HasIpaCharacter>(
+  values: T[]
+): ByIpaCharacter<T> {
+  const result: ByIpaCharacter<T> = {};
+  for (let index = 0; index < values.length; index++) {
+    const value = values[index];
+    result[value.ipaCharacter] = value;
+  }
+  return result;
 }

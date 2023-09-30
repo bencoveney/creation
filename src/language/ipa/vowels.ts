@@ -8,6 +8,12 @@
   - Diphthongs
 */
 
+import {
+  ByIpaCharacter,
+  HasIpaCharacter,
+  createIpaCharacterLookup,
+} from "./utils";
+
 export enum Backness {
   "Front",
   "Near-front",
@@ -36,11 +42,10 @@ export type Vowel = {
   backness: Backness;
   height: Height;
   roundedness: Roundedness;
-  ipaCharacter: string;
   name: string;
   // ipaNumber: number;
   ipaUnicode: string;
-};
+} & HasIpaCharacter;
 
 /*
   Lacking:
@@ -345,3 +350,6 @@ export const vowels: Vowel[] = [
     ipaUnicode: "U+0252",
   },
 ];
+
+export const vowelsByIpaCharacter: ByIpaCharacter<Vowel> =
+  createIpaCharacterLookup(vowels);

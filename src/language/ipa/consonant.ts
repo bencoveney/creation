@@ -7,6 +7,12 @@
   - Co-articulated
 */
 
+import {
+  ByIpaCharacter,
+  HasIpaCharacter,
+  createIpaCharacterLookup,
+} from "./utils";
+
 export enum ArticulationPlace {
   // Articulated with both lips.
   // https://en.wikipedia.org/wiki/Bilabial_consonant
@@ -103,11 +109,10 @@ export type Consonant = {
   place: ArticulationPlace;
   manner: ArticulationManner;
   voicing: Voicing;
-  ipaCharacter: string;
   name: string;
   // ipaNumber: number;
   // ipaUnicode: string;
-};
+} & HasIpaCharacter;
 
 export const consonants: Consonant[] = [
   {
@@ -975,3 +980,6 @@ export const consonants: Consonant[] = [
     manner: ArticulationManner["Lateral tap/flap"],
   },
 ];
+
+export const consonantsByIpaCharacter: ByIpaCharacter<Consonant> =
+  createIpaCharacterLookup(consonants);
