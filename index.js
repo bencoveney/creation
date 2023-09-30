@@ -28978,6 +28978,45 @@
     }
   }
 
+  // src/language/ipa/utils.ts
+  function findValues(set, find) {
+    const found = [];
+    const missing = [];
+    for (let index = 0; index < find.length; index++) {
+      const toFind = stripDiacritics(find[index]);
+      if (toFind.length > 1) {
+        const parts = toFind.split("");
+        const match = parts.every(
+          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
+        );
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      } else {
+        const match = set.find((potential) => potential.ipaCharacter === toFind);
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      }
+    }
+    return { found, missing };
+  }
+  function stripDiacritics(value) {
+    return value.replaceAll("\u02D0", "");
+  }
+  function createIpaCharacterLookup(values) {
+    const result = {};
+    for (let index = 0; index < values.length; index++) {
+      const value = values[index];
+      result[value.ipaCharacter] = value;
+    }
+    return result;
+  }
+
   // src/language/ipa/consonant.ts
   var consonants = [
     {
@@ -29847,8 +29886,49 @@
       voicing: 0 /* Voiced */,
       place: 8 /* Velar */,
       manner: 9 /* Lateral tap/flap */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_labial-palatal_fricative
+      name: "Voiceless labial-palatal fricative",
+      ipaCharacter: "\u0265\u030A",
+      voicing: 1 /* Voiceless */,
+      place: 12 /* Labial-Palatal */,
+      manner: 10 /* Fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labial-palatal_approximant
+      name: "Voiced labial-palatal approximant",
+      ipaCharacter: "\u0265",
+      voicing: 0 /* Voiced */,
+      place: 12 /* Labial-Palatal */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiceless_labial-velar_fricative
+      name: "Voiceless labial-velar fricative",
+      ipaCharacter: "\u028D",
+      voicing: 1 /* Voiceless */,
+      place: 13 /* Labial-Velar */,
+      manner: 10 /* Fricative */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Voiced_labial-velar_approximant
+      name: "Voiced labial-velar approximant",
+      ipaCharacter: "w",
+      voicing: 0 /* Voiced */,
+      place: 13 /* Labial-Velar */,
+      manner: 4 /* Approximant */
+    },
+    {
+      // https://en.wikipedia.org/wiki/Sj-sound
+      name: "\u0267",
+      ipaCharacter: "Sj-sound",
+      voicing: 1 /* Voiceless */,
+      place: 14 /* Variable */,
+      manner: 10 /* Fricative */
     }
   ];
+  var consonantsByIpaCharacter = createIpaCharacterLookup(consonants);
 
   // src/language/ipa/vowels.ts
   var vowels = [
@@ -30150,6 +30230,7 @@
       ipaUnicode: "U+0252"
     }
   ];
+  var vowelsByIpaCharacter = createIpaCharacterLookup(vowels);
 
   // src/language/ipa/fromEnglish.ts
   var englishConsonants = [
@@ -30437,37 +30518,6 @@
     return result.sort(
       (a, b) => syllableStructureSize(a) - syllableStructureSize(b)
     );
-  }
-
-  // src/language/ipa/utils.ts
-  function findValues(set, find) {
-    const found = [];
-    const missing = [];
-    for (let index = 0; index < find.length; index++) {
-      const toFind = stripDiacritics(find[index]);
-      if (toFind.length > 1) {
-        const parts = toFind.split("");
-        const match = parts.every(
-          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
-        );
-        if (match) {
-          found.push(toFind);
-        } else {
-          missing.push(toFind);
-        }
-      } else {
-        const match = set.find((potential) => potential.ipaCharacter === toFind);
-        if (match) {
-          found.push(toFind);
-        } else {
-          missing.push(toFind);
-        }
-      }
-    }
-    return { found, missing };
-  }
-  function stripDiacritics(value) {
-    return value.replaceAll("\u02D0", "");
   }
 
   // src/language/ipa/index.ts
