@@ -50,6 +50,14 @@ export enum ArticulationPlace {
   // Using the glottis as their primary articulation.
   // https://en.wikipedia.org/wiki/Glottal_consonant
   "Glottal",
+  // Simultaneously labialized and palatalized.
+  // https://en.wikipedia.org/wiki/Labio-palatalization
+  "Labial-Palatal",
+  // Simultaneously labialized and velarized.
+  // https://en.wikipedia.org/wiki/Labialized_velar_consonant
+  "Labial-Velar",
+  // TODO: Restructure...
+  "Variable",
 }
 
 export enum ArticulationManner {
@@ -81,6 +89,8 @@ export enum ArticulationManner {
   "Lateral approximant",
   // https://en.wikipedia.org/wiki/Lateral_consonant#Flaps
   "Lateral tap/flap",
+  // TODO: Restructure...
+  "Fricative",
 }
 
 // https://en.wikipedia.org/wiki/Obstruent
@@ -978,6 +988,46 @@ export const consonants: Consonant[] = [
     voicing: Voicing.Voiced,
     place: ArticulationPlace.Velar,
     manner: ArticulationManner["Lateral tap/flap"],
+  },
+  {
+    // https://en.wikipedia.org/wiki/Voiceless_labial-palatal_fricative
+    name: "Voiceless labial-palatal fricative",
+    ipaCharacter: "ɥ̊",
+    voicing: Voicing.Voiceless,
+    place: ArticulationPlace["Labial-Palatal"],
+    manner: ArticulationManner.Fricative,
+  },
+  {
+    // https://en.wikipedia.org/wiki/Voiced_labial-palatal_approximant
+    name: "Voiced labial-palatal approximant",
+    ipaCharacter: "ɥ",
+    voicing: Voicing.Voiced,
+    place: ArticulationPlace["Labial-Palatal"],
+    manner: ArticulationManner.Approximant,
+  },
+  {
+    // https://en.wikipedia.org/wiki/Voiceless_labial-velar_fricative
+    name: "Voiceless labial-velar fricative",
+    ipaCharacter: "ʍ",
+    voicing: Voicing.Voiceless,
+    place: ArticulationPlace["Labial-Velar"],
+    manner: ArticulationManner.Fricative,
+  },
+  {
+    // https://en.wikipedia.org/wiki/Voiced_labial-velar_approximant
+    name: "Voiced labial-velar approximant",
+    ipaCharacter: "w",
+    voicing: Voicing.Voiced,
+    place: ArticulationPlace["Labial-Velar"],
+    manner: ArticulationManner.Approximant,
+  },
+  {
+    // https://en.wikipedia.org/wiki/Sj-sound
+    name: "ɧ",
+    ipaCharacter: "Sj-sound",
+    voicing: Voicing.Voiceless,
+    place: ArticulationPlace.Variable,
+    manner: ArticulationManner.Fricative,
   },
 ];
 
