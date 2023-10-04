@@ -30277,6 +30277,8 @@
   ];
   var englishDiphthongs = ["e\u026A", "a\u026A", "\u0254\u026A", "a\u028A", "\u0259\u028A", "\u026A\u0259", "\u028A\u0259"];
   var englishOnset = [
+    // All single-consonant phonemes except /ŋ/
+    ...englishConsonants,
     // Stop plus approximant other than /j/:
     "pl",
     "bl",
@@ -30520,6 +30522,67 @@
     );
   }
 
+  // src/language/lexicon/index.ts
+  var rootConcepts = [...config.themes.map((theme2) => theme2.name)];
+  function createRootWord(concept, possibleOnset, possibleNucleus, possibleCoda, syllableStructures) {
+    const syllableStructure = randomChoice(
+      syllableStructures.filter(
+        (structure) => syllableStructureSize(structure) <= 3
+      )
+    );
+    const result = {
+      concept,
+      syllables: [
+        {
+          onset: [],
+          rhyme: {
+            nucleus: [],
+            coda: []
+          }
+        }
+      ]
+    };
+    if (syllableStructure.onset > 0) {
+      const onset = randomChoice(
+        possibleOnset.filter(
+          (onsetSize) => onsetSize.length === syllableStructure.onset
+        )
+      );
+      const ipaCharacters = onset.split("").map((char) => consonantsByIpaCharacter[char]);
+      result.syllables[0].onset.push(...ipaCharacters);
+    }
+    if (syllableStructure.rhyme.nucleus > 0) {
+      const nucleus = randomChoice(
+        possibleNucleus.filter(
+          (nucleusSize) => nucleusSize.length === syllableStructure.rhyme.nucleus
+        )
+      );
+      const ipaCharacters = nucleus.split("").map((char) => vowelsByIpaCharacter[char]);
+      result.syllables[0].rhyme.nucleus.push(...ipaCharacters);
+    }
+    if (syllableStructure.rhyme.coda > 0) {
+      const coda = randomChoice(
+        possibleCoda.filter(
+          (codaSize) => codaSize.length === syllableStructure.rhyme.coda
+        )
+      );
+      const ipaCharacters = coda.split("").map((char) => consonantsByIpaCharacter[char]);
+      result.syllables[0].rhyme.coda.push(...ipaCharacters);
+    }
+    return result;
+  }
+  function createRootWords(possibleOnset, possibleNucleus, possibleCoda, syllableStructures) {
+    return rootConcepts.map(
+      (concept) => createRootWord(
+        concept,
+        possibleOnset,
+        possibleNucleus,
+        possibleCoda,
+        syllableStructures
+      )
+    );
+  }
+
   // src/language/ipa/index.ts
   function validate() {
     console.log("consonants", findValues(consonants, englishConsonants));
@@ -30538,6 +30601,22 @@
         (syllableStructure) => stringifySyllableStructure(syllableStructure)
       )
     );
+    console.log(
+      createRootWords(
+        englishOnset,
+        englishNucleus,
+        englishCoda,
+        getPossibleSyllableStructures(englishSyllableStructure)
+      ).map((root2) => `${root2.concept} => ${spell(root2.syllables)}`)
+    );
+  }
+  function spell(syllables) {
+    const chars = syllables.map((syllable) => [
+      syllable.onset,
+      syllable.rhyme.nucleus,
+      syllable.rhyme.coda
+    ]).flat(2);
+    return `/${chars.map((char) => char.ipaCharacter).join("")}/`;
   }
 
   // src/index.tsx
