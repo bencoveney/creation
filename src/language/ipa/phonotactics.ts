@@ -10,7 +10,7 @@ export type Syllable = {
   onset: Consonant[];
   rhyme: {
     nucleus: Vowel[];
-    Coda: Consonant[];
+    coda: Consonant[];
   };
 };
 

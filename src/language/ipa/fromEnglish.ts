@@ -53,6 +53,8 @@ export const englishVowels = [
 export const englishDiphthongs = ["eɪ", "aɪ", "ɔɪ", "aʊ", "əʊ", "ɪə", "ʊə"];
 
 export const englishOnset = [
+  // All single-consonant phonemes except /ŋ/
+  ...englishConsonants,
   // Stop plus approximant other than /j/:
   "pl",
   "bl",

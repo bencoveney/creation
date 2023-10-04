@@ -17,6 +17,11 @@ https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 https://en.wikipedia.org/wiki/Phonotactics
 https://en.wikipedia.org/wiki/English_phonology#Phonotactics
 
+## Lexicon
+
+https://en.wikibooks.org/wiki/Conlang/Beginner/Words
+https://www.reddit.com/r/conlangs/comments/nkqosr/what_are_the_100_most_important_words_to_make_for/
+
 ## Audio creation
 
 http://ipa-reader.xyz/
