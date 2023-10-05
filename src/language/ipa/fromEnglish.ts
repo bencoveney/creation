@@ -4,7 +4,8 @@
   https://en.wikipedia.org/wiki/English_language_in_England
 */
 
-import { SyllableStructure } from "./phonotactics";
+import { Phonotactics } from "./phonotactics";
+import { SyllableStructure } from "./syllableStructure";
 
 export const englishConsonants = [
   "m",
@@ -261,8 +262,15 @@ export const englishCoda = [
 
 export const englishSyllableStructure = {
   onset: 3,
-  rhyme: {
-    nucleus: 1,
-    coda: 5,
-  },
+  nucleus: 1,
+  coda: 5,
 } as SyllableStructure;
+
+export const englishPhonotactics = {
+  possibilities: {
+    onset: englishOnset,
+    nucleus: englishNucleus,
+    coda: englishCoda,
+  },
+  syllableStructure: englishSyllableStructure,
+} as Phonotactics;

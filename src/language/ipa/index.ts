@@ -6,16 +6,17 @@ import {
   englishDiphthongs,
   englishNucleus,
   englishOnset,
+  englishPhonotactics,
   englishSyllableStructure,
   englishVowels,
 } from "./fromEnglish";
-import {
-  getPossibleSyllableStructures,
-  stringifySyllableStructure,
-} from "./phonotactics";
 import { findValues } from "./utils";
 import { createRootWords } from "../lexicon";
 import { spellSyllable } from "./syllable";
+import {
+  stringifySyllableStructure,
+  getPossibleSyllableStructures,
+} from "./syllableStructure";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
@@ -35,11 +36,8 @@ export function validate() {
     )
   );
   console.log(
-    createRootWords(
-      englishOnset,
-      englishNucleus,
-      englishCoda,
-      getPossibleSyllableStructures(englishSyllableStructure)
-    ).map((root) => `${root.concept} => ${spellSyllable(root.syllable)}`)
+    createRootWords(englishPhonotactics).map(
+      (root) => `${root.concept} => ${spellSyllable(root.syllable)}`
+    )
   );
 }

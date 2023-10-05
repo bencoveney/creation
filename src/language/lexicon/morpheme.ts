@@ -1,4 +1,4 @@
-import { SyllableStructure } from "../ipa/phonotactics";
+import { Phonotactics } from "../ipa/phonotactics";
 import { Syllable, createSyllable } from "../ipa/syllable";
 
 export enum MorphemeKind {
@@ -15,20 +15,11 @@ export type Morpheme = {
 export function createMorpheme(
   concept: string,
   kind: MorphemeKind,
-  possibleOnset: string[],
-  possibleNucleus: string[],
-  possibleCoda: string[],
-  syllableStructures: SyllableStructure[]
+  phonotactics: Phonotactics
 ): Morpheme {
   return {
     concept,
     kind,
-    syllable: createSyllable(
-      syllableStructures,
-      possibleOnset,
-      possibleNucleus,
-      possibleCoda,
-      3
-    ),
+    syllable: createSyllable(phonotactics, 3),
   };
 }
