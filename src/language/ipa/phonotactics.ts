@@ -1,18 +1,4 @@
-import { Consonant } from "./consonant";
-import { Vowel } from "./vowels";
-
-export enum PhonemeKind {
-  Consonant,
-  Vowel,
-}
-
-export type Syllable = {
-  onset: Consonant[];
-  rhyme: {
-    nucleus: Vowel[];
-    coda: Consonant[];
-  };
-};
+import { PhonemeKind } from "./phoneme";
 
 export type SyllableStructure = {
   onset: number;

@@ -10,12 +10,12 @@ import {
   englishVowels,
 } from "./fromEnglish";
 import {
-  Syllable,
   getPossibleSyllableStructures,
   stringifySyllableStructure,
 } from "./phonotactics";
-import { HasIpaCharacter, findValues } from "./utils";
+import { findValues } from "./utils";
 import { createRootWords } from "../lexicon";
+import { spellSyllable } from "./syllable";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
@@ -40,17 +40,6 @@ export function validate() {
       englishNucleus,
       englishCoda,
       getPossibleSyllableStructures(englishSyllableStructure)
-    ).map((root) => `${root.concept} => ${spell(root.syllables)}`)
+    ).map((root) => `${root.concept} => ${spellSyllable(root.syllable)}`)
   );
-}
-
-export function spell(syllables: Syllable[]) {
-  const chars = syllables
-    .map<HasIpaCharacter[][]>((syllable) => [
-      syllable.onset,
-      syllable.rhyme.nucleus,
-      syllable.rhyme.coda,
-    ])
-    .flat(2);
-  return `/${chars.map((char) => char.ipaCharacter).join("")}/`;
 }

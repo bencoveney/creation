@@ -7,11 +7,7 @@
   - Co-articulated
 */
 
-import {
-  ByIpaCharacter,
-  HasIpaCharacter,
-  createIpaCharacterLookup,
-} from "./utils";
+import { Phoneme } from "./phoneme";
 
 export enum ArticulationPlace {
   // Articulated with both lips.
@@ -122,7 +118,7 @@ export type Consonant = {
   name: string;
   // ipaNumber: number;
   // ipaUnicode: string;
-} & HasIpaCharacter;
+} & Phoneme;
 
 export const consonants: Consonant[] = [
   {
@@ -1030,6 +1026,3 @@ export const consonants: Consonant[] = [
     manner: ArticulationManner.Fricative,
   },
 ];
-
-export const consonantsByIpaCharacter: ByIpaCharacter<Consonant> =
-  createIpaCharacterLookup(consonants);

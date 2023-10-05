@@ -17,10 +17,13 @@ https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 https://en.wikipedia.org/wiki/Phonotactics
 https://en.wikipedia.org/wiki/English_phonology#Phonotactics
 
-## Lexicon
+## Morphology & Lexicon
 
 https://en.wikibooks.org/wiki/Conlang/Beginner/Words
 https://www.reddit.com/r/conlangs/comments/nkqosr/what_are_the_100_most_important_words_to_make_for/
+https://en.wikipedia.org/wiki/Morpheme
+https://en.wikipedia.org/wiki/Root_(linguistics)
+https://en.wikipedia.org/wiki/Lexeme
 
 ## Audio creation
 
