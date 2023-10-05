@@ -24,6 +24,7 @@ https://www.reddit.com/r/conlangs/comments/nkqosr/what_are_the_100_most_importan
 https://en.wikipedia.org/wiki/Morpheme
 https://en.wikipedia.org/wiki/Root_(linguistics)
 https://en.wikipedia.org/wiki/Lexeme
+https://en.wikipedia.org/wiki/Affix
 
 ## Audio creation
 

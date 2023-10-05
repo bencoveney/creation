@@ -11,7 +11,7 @@ import {
   englishVowels,
 } from "./fromEnglish";
 import { findValues } from "./utils";
-import { createRootWords } from "../lexicon";
+import { createRoots } from "../lexicon";
 import { spellSyllable } from "./syllable";
 import {
   stringifySyllableStructure,
@@ -36,7 +36,7 @@ export function validate() {
     )
   );
   console.log(
-    createRootWords(englishPhonotactics).map(
+    createRoots(englishPhonotactics).map(
       (root) => `${root.concept} => ${spellSyllable(root.syllable)}`
     )
   );
