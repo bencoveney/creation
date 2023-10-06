@@ -25,7 +25,8 @@ export function createRootMorpheme(
     concept,
     MorphemeKind.Root,
     phonotactics,
-    3
+    2,
+    4
   );
 }
 
@@ -40,7 +41,8 @@ export function createAffixMorpheme(
     concept,
     affixType,
     phonotactics,
-    2
+    1,
+    3
   );
 }
 
@@ -48,12 +50,13 @@ export function createMorpheme(
   concept: string,
   kind: MorphemeKind,
   phonotactics: Phonotactics,
+  minSize: number,
   maxSize: number
 ): Morpheme {
   return {
     concept,
     kind,
-    syllable: createSyllable(phonotactics, maxSize),
+    syllable: createSyllable(phonotactics, minSize, maxSize),
   };
 }
 
@@ -78,10 +81,17 @@ export function createUnusedMorpheme(
   concept: string,
   kind: MorphemeKind,
   phonotactics: Phonotactics,
+  minSize: number,
   maxSize: number
 ) {
   while (true) {
-    const morpheme = createMorpheme(concept, kind, phonotactics, maxSize);
+    const morpheme = createMorpheme(
+      concept,
+      kind,
+      phonotactics,
+      minSize,
+      maxSize
+    );
     const key = spellMorpheme(morpheme);
     if (!used.has(key)) {
       used.set(key, morpheme);

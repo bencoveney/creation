@@ -15,11 +15,16 @@ export type SyllableParts<TConst, TVowel> = {
 
 export type Syllable = SyllableParts<Consonant[], Vowel[]>;
 
-export function createSyllable(phonotactics: Phonotactics, maxSize: number) {
+export function createSyllable(
+  phonotactics: Phonotactics,
+  minSize: number,
+  maxSize: number
+) {
   const syllableStructure = randomChoice(
-    phonotactics.possibleSyllableStructures.filter(
-      (structure) => syllableStructureSize(structure) <= maxSize
-    )
+    phonotactics.possibleSyllableStructures.filter((structure) => {
+      const size = syllableStructureSize(structure);
+      return size >= minSize && size < maxSize;
+    })
   );
   const result: Syllable = {
     onset: [],
