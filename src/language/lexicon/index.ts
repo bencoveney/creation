@@ -1,21 +1,32 @@
 import { config } from "../../config";
 import { Phonotactics } from "../ipa/phonotactics";
-import { Morpheme, createAffixMorpheme, createRootMorpheme } from "./morpheme";
+import {
+  Morpheme,
+  UsedMorphemes,
+  createAffixMorpheme,
+  createRootMorpheme,
+} from "./morpheme";
 import { Word, addAffix, createRootWord } from "./word";
 
 export const rootConcepts = [...config.themes.map((theme) => theme.name)];
 
-export function createRootMorphemes(phonotactics: Phonotactics): Morpheme[] {
+export function createRootMorphemes(
+  usedMorphemes: UsedMorphemes,
+  phonotactics: Phonotactics
+): Morpheme[] {
   return rootConcepts.map((concept) =>
-    createRootMorpheme(concept, phonotactics)
+    createRootMorpheme(usedMorphemes, concept, phonotactics)
   );
 }
 
 export const affixConcepts = ["deity", "place"];
 
-export function createAffixMorphemes(phonotactics: Phonotactics): Morpheme[] {
+export function createAffixMorphemes(
+  usedMorphemes: UsedMorphemes,
+  phonotactics: Phonotactics
+): Morpheme[] {
   return affixConcepts.map((concept) =>
-    createAffixMorpheme(concept, phonotactics)
+    createAffixMorpheme(usedMorphemes, concept, phonotactics)
   );
 }
 

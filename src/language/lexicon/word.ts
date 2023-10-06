@@ -1,5 +1,4 @@
-import { spellSyllable } from "../ipa/syllable";
-import { Morpheme, MorphemeKind } from "./morpheme";
+import { Morpheme, MorphemeKind, spellMorpheme } from "./morpheme";
 
 export type AffixedWord = {
   kind: "affix";
@@ -41,13 +40,13 @@ export function describeWord(word: Word): string {
 export function spellWord(word: Word): string {
   switch (word.kind) {
     case "root":
-      return spellSyllable(word.root.syllable);
+      return spellMorpheme(word.root);
     case "affix":
       switch (word.affix.kind) {
         case MorphemeKind.Prefix:
-          return `${spellSyllable(word.affix.syllable)}${spellWord(word.stem)}`;
+          return `${spellMorpheme(word.affix)}${spellWord(word.stem)}`;
         case MorphemeKind.Suffix:
-          return `${spellWord(word.stem)}${spellSyllable(word.affix.syllable)}`;
+          return `${spellWord(word.stem)}${spellMorpheme(word.affix)}`;
         case MorphemeKind.Root:
           throw new Error("what");
       }

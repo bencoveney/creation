@@ -23,6 +23,7 @@ import {
   getPossibleSyllableStructures,
 } from "./syllableStructure";
 import { describeWord, spellWord } from "../lexicon/word";
+import { Morpheme } from "../lexicon/morpheme";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
@@ -41,7 +42,8 @@ export function validate() {
       (syllableStructure) => stringifySyllableStructure(syllableStructure)
     )
   );
-  const rootMorphemes = createRootMorphemes(englishPhonotactics);
+  const usedMorphemes = new Map<string, Morpheme>();
+  const rootMorphemes = createRootMorphemes(usedMorphemes, englishPhonotactics);
   console.log(
     "rootMorphemes",
     rootMorphemes.map(
@@ -49,7 +51,10 @@ export function validate() {
         `${rootMorpheme.concept} => /${spellSyllable(rootMorpheme.syllable)}/`
     )
   );
-  const affixMorphemes = createAffixMorphemes(englishPhonotactics);
+  const affixMorphemes = createAffixMorphemes(
+    usedMorphemes,
+    englishPhonotactics
+  );
   console.log(
     "affixMorphemes",
     affixMorphemes.map(

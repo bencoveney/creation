@@ -1,6 +1,6 @@
 import { randomChoice } from "../../utils/random";
 import { Phonotactics } from "../ipa/phonotactics";
-import { Syllable, createSyllable } from "../ipa/syllable";
+import { Syllable, createSyllable, spellSyllable } from "../ipa/syllable";
 
 export enum MorphemeKind {
   Root,
@@ -16,18 +16,32 @@ export type Morpheme = {
 };
 
 export function createRootMorpheme(
+  usedMorphemes: UsedMorphemes,
   concept: string,
   phonotactics: Phonotactics
 ): Morpheme {
-  return createMorpheme(concept, MorphemeKind.Root, phonotactics, 3);
+  return createUnusedMorpheme(
+    usedMorphemes,
+    concept,
+    MorphemeKind.Root,
+    phonotactics,
+    3
+  );
 }
 
 export function createAffixMorpheme(
+  usedMorphemes: UsedMorphemes,
   concept: string,
   phonotactics: Phonotactics
 ): Morpheme {
   const affixType = randomChoice([MorphemeKind.Prefix, MorphemeKind.Suffix]);
-  return createMorpheme(concept, affixType, phonotactics, 2);
+  return createUnusedMorpheme(
+    usedMorphemes,
+    concept,
+    affixType,
+    phonotactics,
+    2
+  );
 }
 
 export function createMorpheme(
@@ -41,4 +55,41 @@ export function createMorpheme(
     kind,
     syllable: createSyllable(phonotactics, maxSize),
   };
+}
+
+export type UsedMorphemes = Map<string, Morpheme>;
+
+export function hasMorphemeBeenUsed(used: UsedMorphemes, morpheme: Morpheme) {
+  const key = spellMorpheme(morpheme);
+  return used.has(key);
+}
+
+export function registerMorpheme(used: UsedMorphemes, morpheme: Morpheme) {
+  const key = spellMorpheme(morpheme);
+  if (used.has(key)) {
+    throw new Error(`${key} already registered`);
+  } else {
+    used.set(key, morpheme);
+  }
+}
+
+export function createUnusedMorpheme(
+  used: UsedMorphemes,
+  concept: string,
+  kind: MorphemeKind,
+  phonotactics: Phonotactics,
+  maxSize: number
+) {
+  while (true) {
+    const morpheme = createMorpheme(concept, kind, phonotactics, maxSize);
+    const key = spellMorpheme(morpheme);
+    if (!used.has(key)) {
+      used.set(key, morpheme);
+      return morpheme;
+    }
+  }
+}
+
+export function spellMorpheme(morpheme: Morpheme): string {
+  return spellSyllable(morpheme.syllable);
 }
