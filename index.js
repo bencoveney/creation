@@ -28978,45 +28978,6 @@
     }
   }
 
-  // src/language/ipa/utils.ts
-  function findValues(set, find) {
-    const found = [];
-    const missing = [];
-    for (let index = 0; index < find.length; index++) {
-      const toFind = stripDiacritics(find[index]);
-      if (toFind.length > 1) {
-        const parts = toFind.split("");
-        const match = parts.every(
-          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
-        );
-        if (match) {
-          found.push(toFind);
-        } else {
-          missing.push(toFind);
-        }
-      } else {
-        const match = set.find((potential) => potential.ipaCharacter === toFind);
-        if (match) {
-          found.push(toFind);
-        } else {
-          missing.push(toFind);
-        }
-      }
-    }
-    return { found, missing };
-  }
-  function stripDiacritics(value) {
-    return value.replaceAll("\u02D0", "");
-  }
-  function createIpaCharacterLookup(values) {
-    const result = {};
-    for (let index = 0; index < values.length; index++) {
-      const value = values[index];
-      result[value.ipaCharacter] = value;
-    }
-    return result;
-  }
-
   // src/language/ipa/consonant.ts
   var consonants = [
     {
@@ -29928,7 +29889,6 @@
       manner: 10 /* Fricative */
     }
   ];
-  var consonantsByIpaCharacter = createIpaCharacterLookup(consonants);
 
   // src/language/ipa/vowels.ts
   var vowels = [
@@ -30230,7 +30190,52 @@
       ipaUnicode: "U+0252"
     }
   ];
-  var vowelsByIpaCharacter = createIpaCharacterLookup(vowels);
+
+  // src/language/ipa/phoneme.ts
+  function createPhonemeLookup(values) {
+    const result = {};
+    for (let index = 0; index < values.length; index++) {
+      const value = values[index];
+      result[value.ipaCharacter] = value;
+    }
+    return result;
+  }
+  var phonemeLookup = {
+    ...createPhonemeLookup(vowels),
+    ...createPhonemeLookup(consonants)
+  };
+
+  // src/language/ipa/syllableStructure.ts
+  function describeSyllableStructure(syllableStructure) {
+    return [
+      ...new Array(syllableStructure.onset).fill(0 /* Consonant */),
+      ...new Array(syllableStructure.nucleus).fill(1 /* Vowel */),
+      ...new Array(syllableStructure.coda).fill(0 /* Consonant */)
+    ];
+  }
+  function stringifySyllableStructure(syllableStructure) {
+    return describeSyllableStructure(syllableStructure).map((part) => part === 0 /* Consonant */ ? "C" : "V").join("");
+  }
+  function syllableStructureSize(syllableStructure) {
+    return syllableStructure.onset + syllableStructure.nucleus + syllableStructure.coda;
+  }
+  function getPossibleSyllableStructures(maximums) {
+    const result = [];
+    for (let nucleus = 1; nucleus <= maximums.nucleus; nucleus++) {
+      for (let onset = 0; onset <= maximums.onset; onset++) {
+        for (let coda = 0; coda <= maximums.coda; coda++) {
+          result.push({
+            onset,
+            nucleus,
+            coda
+          });
+        }
+      }
+    }
+    return result.sort(
+      (a, b) => syllableStructureSize(a) - syllableStructureSize(b)
+    );
+  }
 
   // src/language/ipa/fromEnglish.ts
   var englishConsonants = [
@@ -30482,105 +30487,203 @@
   ];
   var englishSyllableStructure = {
     onset: 3,
-    rhyme: {
-      nucleus: 1,
-      coda: 5
-    }
+    nucleus: 1,
+    coda: 5
+  };
+  var englishPhonotactics = {
+    possibilities: {
+      onset: englishOnset,
+      nucleus: englishNucleus,
+      coda: englishCoda
+    },
+    syllableStructure: englishSyllableStructure,
+    possibleSyllableStructures: getPossibleSyllableStructures(
+      englishSyllableStructure
+    )
   };
 
-  // src/language/ipa/phonotactics.ts
-  function describeSyllableStructure(syllableStructure) {
-    return [
-      ...new Array(syllableStructure.onset).fill(0 /* Consonant */),
-      ...new Array(syllableStructure.rhyme.nucleus).fill(1 /* Vowel */),
-      ...new Array(syllableStructure.rhyme.coda).fill(0 /* Consonant */)
-    ];
-  }
-  function stringifySyllableStructure(syllableStructure) {
-    return describeSyllableStructure(syllableStructure).map((part) => part === 0 /* Consonant */ ? "C" : "V").join("");
-  }
-  function syllableStructureSize(syllableStructure) {
-    return syllableStructure.onset + syllableStructure.rhyme.nucleus + syllableStructure.rhyme.coda;
-  }
-  function getPossibleSyllableStructures(maximums) {
-    const result = [];
-    for (let nucleus = 1; nucleus <= maximums.rhyme.nucleus; nucleus++) {
-      for (let onset = 0; onset <= maximums.onset; onset++) {
-        for (let coda = 0; coda <= maximums.rhyme.coda; coda++) {
-          result.push({
-            onset,
-            rhyme: {
-              nucleus,
-              coda
-            }
-          });
+  // src/language/ipa/utils.ts
+  function findValues(set, find) {
+    const found = [];
+    const missing = [];
+    for (let index = 0; index < find.length; index++) {
+      const toFind = stripDiacritics(find[index]);
+      if (toFind.length > 1) {
+        const parts = toFind.split("");
+        const match = parts.every(
+          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
+        );
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      } else {
+        const match = set.find((potential) => potential.ipaCharacter === toFind);
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
         }
       }
     }
-    return result.sort(
-      (a, b) => syllableStructureSize(a) - syllableStructureSize(b)
+    return { found, missing };
+  }
+  function stripDiacritics(value) {
+    return value.replaceAll("\u02D0", "");
+  }
+
+  // src/language/ipa/syllable.ts
+  function createSyllable(phonotactics, minSize, maxSize) {
+    const syllableStructure = randomChoice(
+      phonotactics.possibleSyllableStructures.filter((structure) => {
+        const size = syllableStructureSize(structure);
+        return size >= minSize && size < maxSize;
+      })
     );
+    const result = {
+      onset: [],
+      nucleus: [],
+      coda: []
+    };
+    if (syllableStructure.onset > 0) {
+      const onset = randomChoice(
+        phonotactics.possibilities.onset.filter(
+          (onsetSize) => onsetSize.length === syllableStructure.onset
+        )
+      );
+      const ipaCharacters = onset.split("").map((char) => phonemeLookup[char]);
+      result.onset.push(...ipaCharacters);
+    }
+    if (syllableStructure.nucleus > 0) {
+      const nucleus = randomChoice(
+        phonotactics.possibilities.nucleus.filter(
+          (nucleusSize) => nucleusSize.length === syllableStructure.nucleus
+        )
+      );
+      const ipaCharacters = nucleus.split("").map((char) => phonemeLookup[char]);
+      result.nucleus.push(...ipaCharacters);
+    }
+    if (syllableStructure.coda > 0) {
+      const coda = randomChoice(
+        phonotactics.possibilities.coda.filter(
+          (codaSize) => codaSize.length === syllableStructure.coda
+        )
+      );
+      const ipaCharacters = coda.split("").map((char) => phonemeLookup[char]);
+      result.coda.push(...ipaCharacters);
+    }
+    return result;
+  }
+  function spellSyllable(syllable) {
+    return [...syllable.onset, ...syllable.nucleus, ...syllable.coda].map((char) => char.ipaCharacter).join("");
+  }
+
+  // src/language/lexicon/morpheme.ts
+  function createRootMorpheme(usedMorphemes, concept, phonotactics) {
+    return createUnusedMorpheme(
+      usedMorphemes,
+      concept,
+      0 /* Root */,
+      phonotactics,
+      2,
+      4
+    );
+  }
+  function createAffixMorpheme(usedMorphemes, concept, phonotactics) {
+    const affixType = randomChoice([1 /* Prefix */, 2 /* Suffix */]);
+    return createUnusedMorpheme(
+      usedMorphemes,
+      concept,
+      affixType,
+      phonotactics,
+      1,
+      3
+    );
+  }
+  function createMorpheme(concept, kind, phonotactics, minSize, maxSize) {
+    return {
+      concept,
+      kind,
+      syllable: createSyllable(phonotactics, minSize, maxSize)
+    };
+  }
+  function createUnusedMorpheme(used, concept, kind, phonotactics, minSize, maxSize) {
+    while (true) {
+      const morpheme = createMorpheme(
+        concept,
+        kind,
+        phonotactics,
+        minSize,
+        maxSize
+      );
+      const key = spellMorpheme(morpheme);
+      if (!used.has(key)) {
+        used.set(key, morpheme);
+        return morpheme;
+      }
+    }
+  }
+  function spellMorpheme(morpheme) {
+    return spellSyllable(morpheme.syllable);
+  }
+
+  // src/language/lexicon/word.ts
+  function createRootWord(root2) {
+    return {
+      kind: "root",
+      root: root2
+    };
+  }
+  function addAffix(stem, affix) {
+    return {
+      kind: "affix",
+      affix,
+      stem
+    };
+  }
+  function describeWord(word) {
+    switch (word.kind) {
+      case "root":
+        return word.root.concept;
+      case "affix":
+        return `${describeWord(word.stem)} ${word.affix.concept}`;
+    }
+  }
+  function spellWord2(word) {
+    switch (word.kind) {
+      case "root":
+        return spellMorpheme(word.root);
+      case "affix":
+        switch (word.affix.kind) {
+          case 1 /* Prefix */:
+            return `${spellMorpheme(word.affix)}${spellWord2(word.stem)}`;
+          case 2 /* Suffix */:
+            return `${spellWord2(word.stem)}${spellMorpheme(word.affix)}`;
+          case 0 /* Root */:
+            throw new Error("what");
+        }
+    }
   }
 
   // src/language/lexicon/index.ts
   var rootConcepts = [...config.themes.map((theme2) => theme2.name)];
-  function createRootWord(concept, possibleOnset, possibleNucleus, possibleCoda, syllableStructures) {
-    const syllableStructure = randomChoice(
-      syllableStructures.filter(
-        (structure) => syllableStructureSize(structure) <= 3
-      )
-    );
-    const result = {
-      concept,
-      syllables: [
-        {
-          onset: [],
-          rhyme: {
-            nucleus: [],
-            coda: []
-          }
-        }
-      ]
-    };
-    if (syllableStructure.onset > 0) {
-      const onset = randomChoice(
-        possibleOnset.filter(
-          (onsetSize) => onsetSize.length === syllableStructure.onset
-        )
-      );
-      const ipaCharacters = onset.split("").map((char) => consonantsByIpaCharacter[char]);
-      result.syllables[0].onset.push(...ipaCharacters);
-    }
-    if (syllableStructure.rhyme.nucleus > 0) {
-      const nucleus = randomChoice(
-        possibleNucleus.filter(
-          (nucleusSize) => nucleusSize.length === syllableStructure.rhyme.nucleus
-        )
-      );
-      const ipaCharacters = nucleus.split("").map((char) => vowelsByIpaCharacter[char]);
-      result.syllables[0].rhyme.nucleus.push(...ipaCharacters);
-    }
-    if (syllableStructure.rhyme.coda > 0) {
-      const coda = randomChoice(
-        possibleCoda.filter(
-          (codaSize) => codaSize.length === syllableStructure.rhyme.coda
-        )
-      );
-      const ipaCharacters = coda.split("").map((char) => consonantsByIpaCharacter[char]);
-      result.syllables[0].rhyme.coda.push(...ipaCharacters);
-    }
-    return result;
-  }
-  function createRootWords(possibleOnset, possibleNucleus, possibleCoda, syllableStructures) {
+  function createRootMorphemes(usedMorphemes, phonotactics) {
     return rootConcepts.map(
-      (concept) => createRootWord(
-        concept,
-        possibleOnset,
-        possibleNucleus,
-        possibleCoda,
-        syllableStructures
-      )
+      (concept) => createRootMorpheme(usedMorphemes, concept, phonotactics)
     );
+  }
+  var affixConcepts = ["deity", "place"];
+  function createAffixMorphemes(usedMorphemes, phonotactics) {
+    return affixConcepts.map(
+      (concept) => createAffixMorpheme(usedMorphemes, concept, phonotactics)
+    );
+  }
+  function createRootWords(morphemes) {
+    return morphemes.map((morpheme) => createRootWord(morpheme));
+  }
+  function addAffixes(word, affixMorphemes) {
+    return affixMorphemes.map((affixMorpheme) => addAffix(word, affixMorpheme));
   }
 
   // src/language/ipa/index.ts
@@ -30601,22 +30704,38 @@
         (syllableStructure) => stringifySyllableStructure(syllableStructure)
       )
     );
+    const usedMorphemes = /* @__PURE__ */ new Map();
+    const rootMorphemes = createRootMorphemes(usedMorphemes, englishPhonotactics);
     console.log(
-      createRootWords(
-        englishOnset,
-        englishNucleus,
-        englishCoda,
-        getPossibleSyllableStructures(englishSyllableStructure)
-      ).map((root2) => `${root2.concept} => ${spell(root2.syllables)}`)
+      "rootMorphemes",
+      rootMorphemes.map(
+        (rootMorpheme) => `${rootMorpheme.concept} => /${spellSyllable(rootMorpheme.syllable)}/`
+      )
     );
-  }
-  function spell(syllables) {
-    const chars = syllables.map((syllable) => [
-      syllable.onset,
-      syllable.rhyme.nucleus,
-      syllable.rhyme.coda
-    ]).flat(2);
-    return `/${chars.map((char) => char.ipaCharacter).join("")}/`;
+    const affixMorphemes = createAffixMorphemes(
+      usedMorphemes,
+      englishPhonotactics
+    );
+    console.log(
+      "affixMorphemes",
+      affixMorphemes.map(
+        (affixMorpheme) => `${affixMorpheme.concept} => /${spellSyllable(affixMorpheme.syllable)}/`
+      )
+    );
+    const rootWords = createRootWords(rootMorphemes);
+    console.log(
+      "rootWords",
+      rootWords.map(
+        (rootWord) => `${describeWord(rootWord)} => /${spellWord2(rootWord)}/`
+      )
+    );
+    const affixWords = rootWords.map((rootWord) => addAffixes(rootWord, affixMorphemes)).flat(1);
+    console.log(
+      "affixWords",
+      affixWords.map(
+        (affixWord) => `${describeWord(affixWord)} => /${spellWord2(affixWord)}/`
+      )
+    );
   }
 
   // src/index.tsx
