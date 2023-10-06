@@ -1,10 +1,11 @@
 import { config } from "../../config";
 import { Phonotactics } from "../ipa/phonotactics";
-import { Morpheme, createRootMorpheme } from "./morpheme";
+import { Morpheme, createAffixMorpheme, createRootMorpheme } from "./morpheme";
+import { Word, addAffix, createRootWord } from "./word";
 
 export const rootConcepts = [...config.themes.map((theme) => theme.name)];
 
-export function createRoots(phonotactics: Phonotactics): Morpheme[] {
+export function createRootMorphemes(phonotactics: Phonotactics): Morpheme[] {
   return rootConcepts.map((concept) =>
     createRootMorpheme(concept, phonotactics)
   );
@@ -12,8 +13,16 @@ export function createRoots(phonotactics: Phonotactics): Morpheme[] {
 
 export const affixConcepts = ["deity", "place"];
 
-export function createAffixes(phonotactics: Phonotactics): Morpheme[] {
-  return rootConcepts.map((concept) =>
-    createRootMorpheme(concept, phonotactics)
+export function createAffixMorphemes(phonotactics: Phonotactics): Morpheme[] {
+  return affixConcepts.map((concept) =>
+    createAffixMorpheme(concept, phonotactics)
   );
+}
+
+export function createRootWords(morphemes: Morpheme[]): Word[] {
+  return morphemes.map((morpheme) => createRootWord(morpheme));
+}
+
+export function addAffixes(word: Word, affixMorphemes: Morpheme[]): Word[] {
+  return affixMorphemes.map((affixMorpheme) => addAffix(word, affixMorpheme));
 }

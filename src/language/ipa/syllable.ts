@@ -63,7 +63,7 @@ export function createSyllable(phonotactics: Phonotactics, maxSize: number) {
 }
 
 export function spellSyllable(syllable: Syllable) {
-  return `/${[...syllable.onset, ...syllable.nucleus, ...syllable.coda]
+  return [...syllable.onset, ...syllable.nucleus, ...syllable.coda]
     .map((char) => char.ipaCharacter)
-    .join("")}/`;
+    .join("");
 }

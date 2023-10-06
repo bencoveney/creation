@@ -5,7 +5,10 @@
 */
 
 import { Phonotactics } from "./phonotactics";
-import { SyllableStructure } from "./syllableStructure";
+import {
+  SyllableStructure,
+  getPossibleSyllableStructures,
+} from "./syllableStructure";
 
 export const englishConsonants = [
   "m",
@@ -273,4 +276,7 @@ export const englishPhonotactics = {
     coda: englishCoda,
   },
   syllableStructure: englishSyllableStructure,
+  possibleSyllableStructures: getPossibleSyllableStructures(
+    englishSyllableStructure
+  ),
 } as Phonotactics;

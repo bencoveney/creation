@@ -11,12 +11,18 @@ import {
   englishVowels,
 } from "./fromEnglish";
 import { findValues } from "./utils";
-import { createRoots } from "../lexicon";
+import {
+  addAffixes,
+  createAffixMorphemes,
+  createRootMorphemes,
+  createRootWords,
+} from "../lexicon";
 import { spellSyllable } from "./syllable";
 import {
   stringifySyllableStructure,
   getPossibleSyllableStructures,
 } from "./syllableStructure";
+import { describeWord, spellWord } from "../lexicon/word";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
@@ -35,9 +41,36 @@ export function validate() {
       (syllableStructure) => stringifySyllableStructure(syllableStructure)
     )
   );
+  const rootMorphemes = createRootMorphemes(englishPhonotactics);
   console.log(
-    createRoots(englishPhonotactics).map(
-      (root) => `${root.concept} => ${spellSyllable(root.syllable)}`
+    "rootMorphemes",
+    rootMorphemes.map(
+      (rootMorpheme) =>
+        `${rootMorpheme.concept} => /${spellSyllable(rootMorpheme.syllable)}/`
+    )
+  );
+  const affixMorphemes = createAffixMorphemes(englishPhonotactics);
+  console.log(
+    "affixMorphemes",
+    affixMorphemes.map(
+      (affixMorpheme) =>
+        `${affixMorpheme.concept} => /${spellSyllable(affixMorpheme.syllable)}/`
+    )
+  );
+  const rootWords = createRootWords(rootMorphemes);
+  console.log(
+    "rootWords",
+    rootWords.map(
+      (rootWord) => `${describeWord(rootWord)} => /${spellWord(rootWord)}/`
+    )
+  );
+  const affixWords = rootWords
+    .map((rootWord) => addAffixes(rootWord, affixMorphemes))
+    .flat(1);
+  console.log(
+    "affixWords",
+    affixWords.map(
+      (affixWord) => `${describeWord(affixWord)} => /${spellWord(affixWord)}/`
     )
   );
 }
