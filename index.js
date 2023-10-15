@@ -27647,6 +27647,12 @@
     }
     return `${values.slice(0, values.length - 1).join(", ")} and ${values[values.length - 1]}`;
   }
+  function stringComparer(a, b) {
+    return a.localeCompare(b);
+  }
+  function sortStrings(values) {
+    return values.toSorted(stringComparer);
+  }
 
   // src/systems/artifactCreation.ts
   function runArtifactCreation(history3) {
@@ -30533,6 +30539,10 @@
     return value.replaceAll("\u02D0", "");
   }
 
+  // src/language/lexicon/concepts.ts
+  var rootConcepts = [...config.themes.map((theme2) => theme2.name)];
+  var affixConcepts = ["deity", "place"];
+
   // src/language/ipa/syllable.ts
   function createSyllable(phonotactics, minSize, maxSize) {
     const syllableStructure = randomChoice(
@@ -30580,49 +30590,12 @@
   }
 
   // src/language/lexicon/morpheme.ts
-  function createRootMorpheme(usedMorphemes, concept, phonotactics) {
-    return createUnusedMorpheme(
-      usedMorphemes,
-      concept,
-      0 /* Root */,
-      phonotactics,
-      2,
-      4
-    );
-  }
-  function createAffixMorpheme(usedMorphemes, concept, phonotactics) {
-    const affixType = randomChoice([1 /* Prefix */, 2 /* Suffix */]);
-    return createUnusedMorpheme(
-      usedMorphemes,
-      concept,
-      affixType,
-      phonotactics,
-      1,
-      3
-    );
-  }
   function createMorpheme(concept, kind, phonotactics, minSize, maxSize) {
     return {
       concept,
       kind,
       syllable: createSyllable(phonotactics, minSize, maxSize)
     };
-  }
-  function createUnusedMorpheme(used, concept, kind, phonotactics, minSize, maxSize) {
-    while (true) {
-      const morpheme = createMorpheme(
-        concept,
-        kind,
-        phonotactics,
-        minSize,
-        maxSize
-      );
-      const key = spellMorpheme(morpheme);
-      if (!used.has(key)) {
-        used.set(key, morpheme);
-        return morpheme;
-      }
-    }
   }
   function spellMorpheme(morpheme) {
     return spellSyllable(morpheme.syllable);
@@ -30642,14 +30615,6 @@
       stem
     };
   }
-  function describeWord(word) {
-    switch (word.kind) {
-      case "root":
-        return word.root.concept;
-      case "affix":
-        return `${describeWord(word.stem)} ${word.affix.concept}`;
-    }
-  }
   function spellWord2(word) {
     switch (word.kind) {
       case "root":
@@ -30666,24 +30631,84 @@
     }
   }
 
-  // src/language/lexicon/index.ts
-  var rootConcepts = [...config.themes.map((theme2) => theme2.name)];
-  function createRootMorphemes(usedMorphemes, phonotactics) {
-    return rootConcepts.map(
-      (concept) => createRootMorpheme(usedMorphemes, concept, phonotactics)
+  // src/language/lexicon/morphemeRegistry.ts
+  function getRootMorpheme(registry, concept, phonotactics) {
+    if (registry.conceptLookup.has(concept)) {
+      return registry.conceptLookup.get(concept);
+    }
+    return createUnusedMorpheme(
+      registry,
+      concept,
+      0 /* Root */,
+      phonotactics,
+      2,
+      4
     );
   }
-  var affixConcepts = ["deity", "place"];
-  function createAffixMorphemes(usedMorphemes, phonotactics) {
-    return affixConcepts.map(
-      (concept) => createAffixMorpheme(usedMorphemes, concept, phonotactics)
+  function getAffixMorpheme(registry, concept, phonotactics) {
+    if (registry.conceptLookup.has(concept)) {
+      return registry.conceptLookup.get(concept);
+    }
+    const affixType = randomChoice([1 /* Prefix */, 2 /* Suffix */]);
+    return createUnusedMorpheme(registry, concept, affixType, phonotactics, 2, 3);
+  }
+  function createMorphemeRegistry() {
+    return {
+      used: /* @__PURE__ */ new Set(),
+      conceptLookup: /* @__PURE__ */ new Map()
+    };
+  }
+  function createUnusedMorpheme(registry, concept, kind, phonotactics, minSize, maxSize) {
+    while (true) {
+      const morpheme = createMorpheme(
+        concept,
+        kind,
+        phonotactics,
+        minSize,
+        maxSize
+      );
+      const spelling = spellMorpheme(morpheme);
+      if (!registry.used.has(spelling)) {
+        registry.used.add(spelling);
+        registry.conceptLookup.set(morpheme.concept, morpheme);
+        return morpheme;
+      }
+    }
+  }
+
+  // src/language/lexicon/wordRegistry.ts
+  function createWordRegistry() {
+    return {
+      conceptLookup: /* @__PURE__ */ new Map(),
+      morphemes: createMorphemeRegistry()
+    };
+  }
+  function createRegistryKey(rootConcept, affixConcepts2) {
+    if (affixConcepts2.length === 0) {
+      return rootConcept.toLowerCase();
+    }
+    return `${rootConcept}${sortStrings(affixConcepts2).map((affixConcept) => `_${affixConcept}`).join("")}`.toLowerCase();
+  }
+  function getWord2(registry, phonotactics, rootConcept, affixConcepts2) {
+    const key = createRegistryKey(rootConcept, affixConcepts2);
+    if (registry.conceptLookup.has(key)) {
+      return registry.conceptLookup.get(key);
+    }
+    const rootMorpheme = getRootMorpheme(
+      registry.morphemes,
+      rootConcept,
+      phonotactics
     );
-  }
-  function createRootWords(morphemes) {
-    return morphemes.map((morpheme) => createRootWord(morpheme));
-  }
-  function addAffixes(word, affixMorphemes) {
-    return affixMorphemes.map((affixMorpheme) => addAffix(word, affixMorpheme));
+    const rootWord = createRootWord(rootMorpheme);
+    const affixMorphemes = affixConcepts2.map(
+      (affixConcept) => getAffixMorpheme(registry.morphemes, affixConcept, phonotactics)
+    );
+    const affixed = affixMorphemes.reduce(
+      (prev, next) => addAffix(prev, next),
+      rootWord
+    );
+    registry.conceptLookup.set(key, affixed);
+    return affixed;
   }
 
   // src/language/ipa/index.ts
@@ -30704,37 +30729,32 @@
         (syllableStructure) => stringifySyllableStructure(syllableStructure)
       )
     );
-    const usedMorphemes = /* @__PURE__ */ new Map();
-    const rootMorphemes = createRootMorphemes(usedMorphemes, englishPhonotactics);
+    const wordRegistry = createWordRegistry();
+    const words = [];
+    rootConcepts.forEach((rootConcept) => {
+      const word = getWord2(wordRegistry, englishPhonotactics, rootConcept, []);
+      words.push(word);
+    });
+    affixConcepts.forEach((affixConcept) => {
+      rootConcepts.forEach((rootConcept) => {
+        const word = getWord2(wordRegistry, englishPhonotactics, rootConcept, [
+          affixConcept
+        ]);
+        words.push(word);
+      });
+    });
+    rootConcepts.forEach((rootConcept) => {
+      const word = getWord2(
+        wordRegistry,
+        englishPhonotactics,
+        rootConcept,
+        affixConcepts
+      );
+      words.push(word);
+    });
     console.log(
-      "rootMorphemes",
-      rootMorphemes.map(
-        (rootMorpheme) => `${rootMorpheme.concept} => /${spellSyllable(rootMorpheme.syllable)}/`
-      )
-    );
-    const affixMorphemes = createAffixMorphemes(
-      usedMorphemes,
-      englishPhonotactics
-    );
-    console.log(
-      "affixMorphemes",
-      affixMorphemes.map(
-        (affixMorpheme) => `${affixMorpheme.concept} => /${spellSyllable(affixMorpheme.syllable)}/`
-      )
-    );
-    const rootWords = createRootWords(rootMorphemes);
-    console.log(
-      "rootWords",
-      rootWords.map(
-        (rootWord) => `${describeWord(rootWord)} => /${spellWord2(rootWord)}/`
-      )
-    );
-    const affixWords = rootWords.map((rootWord) => addAffixes(rootWord, affixMorphemes)).flat(1);
-    console.log(
-      "affixWords",
-      affixWords.map(
-        (affixWord) => `${describeWord(affixWord)} => /${spellWord2(affixWord)}/`
-      )
+      "words",
+      [...wordRegistry.conceptLookup.entries()].filter(([concept]) => /(earth)|(air)|(water)|(fire)/.test(concept)).map(([concept, word]) => `${concept} => ${spellWord2(word)}`)
     );
   }
 
