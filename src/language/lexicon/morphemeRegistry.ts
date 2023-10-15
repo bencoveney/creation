@@ -31,33 +31,36 @@ export function createAffixMorpheme(
   return createUnusedMorpheme(registry, concept, affixType, phonotactics, 1, 3);
 }
 
-/*
-  At the moment this maps spelling => morpheme.
-  We never actually map from spelling to morpheme, we only check if a particular morpheme
-  has been used. A better set up would probably be:
-  Set<spellings> & Map<Concept, Morpheme(or spelling?)>
-  That would let us check for uniqueness, but also look up by concept to see if we already
-  have a morpheme.
-*/
-export type MorphemeRegistry = Map<string, Morpheme>;
+export type MorphemeRegistry = {
+  used: Set<string>;
+  conceptLookup: Map<string, Morpheme>;
+};
+
+export function createMorphemeRegistry(): MorphemeRegistry {
+  return {
+    used: new Set(),
+    conceptLookup: new Map(),
+  };
+}
 
 export function hasMorphemeBeenUsed(
   registry: MorphemeRegistry,
   morpheme: Morpheme
 ) {
   const key = spellMorpheme(morpheme);
-  return registry.has(key);
+  return registry.used.has(key);
 }
 
 export function registerMorpheme(
   registry: MorphemeRegistry,
   morpheme: Morpheme
 ) {
-  const key = spellMorpheme(morpheme);
-  if (registry.has(key)) {
-    throw new Error(`${key} already registered`);
+  const spelling = spellMorpheme(morpheme);
+  if (registry.used.has(spelling)) {
+    throw new Error(`${spelling} already registered`);
   } else {
-    registry.set(key, morpheme);
+    registry.used.add(spelling);
+    registry.conceptLookup.set(morpheme.concept, morpheme);
   }
 }
 
@@ -77,9 +80,10 @@ export function createUnusedMorpheme(
       minSize,
       maxSize
     );
-    const key = spellMorpheme(morpheme);
-    if (!registry.has(key)) {
-      registry.set(key, morpheme);
+    const spelling = spellMorpheme(morpheme);
+    if (!registry.used.has(spelling)) {
+      registry.used.add(spelling);
+      registry.conceptLookup.set(morpheme.concept, morpheme);
       return morpheme;
     }
   }

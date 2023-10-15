@@ -23,7 +23,7 @@ import {
   getPossibleSyllableStructures,
 } from "./syllableStructure";
 import { describeWord, spellWord } from "../lexicon/word";
-import { Morpheme } from "../lexicon/morpheme";
+import { createMorphemeRegistry } from "../lexicon/morphemeRegistry";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
@@ -42,8 +42,11 @@ export function validate() {
       (syllableStructure) => stringifySyllableStructure(syllableStructure)
     )
   );
-  const usedMorphemes = new Map<string, Morpheme>();
-  const rootMorphemes = createRootMorphemes(usedMorphemes, englishPhonotactics);
+  const morphemeRegistry = createMorphemeRegistry();
+  const rootMorphemes = createRootMorphemes(
+    morphemeRegistry,
+    englishPhonotactics
+  );
   console.log(
     "rootMorphemes",
     rootMorphemes.map(
@@ -52,7 +55,7 @@ export function validate() {
     )
   );
   const affixMorphemes = createAffixMorphemes(
-    usedMorphemes,
+    morphemeRegistry,
     englishPhonotactics
   );
   console.log(
