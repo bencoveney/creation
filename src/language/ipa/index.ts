@@ -11,19 +11,13 @@ import {
   englishVowels,
 } from "./fromEnglish";
 import { findValues } from "./utils";
-import {
-  addAffixes,
-  createAffixMorphemes,
-  createRootMorphemes,
-  createRootWords,
-} from "../lexicon";
-import { spellSyllable } from "./syllable";
+import { affixConcepts, rootConcepts } from "../lexicon/concepts";
 import {
   stringifySyllableStructure,
   getPossibleSyllableStructures,
 } from "./syllableStructure";
-import { describeWord, spellWord } from "../lexicon/word";
-import { createMorphemeRegistry } from "../lexicon/morphemeRegistry";
+import { Word, spellWord } from "../lexicon/word";
+import { createWordRegistry, getWord } from "../lexicon/wordRegistry";
 
 export function validate() {
   console.log("consonants", findValues(consonants, englishConsonants));
@@ -42,43 +36,33 @@ export function validate() {
       (syllableStructure) => stringifySyllableStructure(syllableStructure)
     )
   );
-  const morphemeRegistry = createMorphemeRegistry();
-  const rootMorphemes = createRootMorphemes(
-    morphemeRegistry,
-    englishPhonotactics
-  );
+  const wordRegistry = createWordRegistry();
+  const words: Word[] = [];
+  rootConcepts.forEach((rootConcept) => {
+    const word = getWord(wordRegistry, englishPhonotactics, rootConcept, []);
+    words.push(word);
+  });
+  affixConcepts.forEach((affixConcept) => {
+    rootConcepts.forEach((rootConcept) => {
+      const word = getWord(wordRegistry, englishPhonotactics, rootConcept, [
+        affixConcept,
+      ]);
+      words.push(word);
+    });
+  });
+  rootConcepts.forEach((rootConcept) => {
+    const word = getWord(
+      wordRegistry,
+      englishPhonotactics,
+      rootConcept,
+      affixConcepts
+    );
+    words.push(word);
+  });
   console.log(
-    "rootMorphemes",
-    rootMorphemes.map(
-      (rootMorpheme) =>
-        `${rootMorpheme.concept} => /${spellSyllable(rootMorpheme.syllable)}/`
-    )
-  );
-  const affixMorphemes = createAffixMorphemes(
-    morphemeRegistry,
-    englishPhonotactics
-  );
-  console.log(
-    "affixMorphemes",
-    affixMorphemes.map(
-      (affixMorpheme) =>
-        `${affixMorpheme.concept} => /${spellSyllable(affixMorpheme.syllable)}/`
-    )
-  );
-  const rootWords = createRootWords(rootMorphemes);
-  console.log(
-    "rootWords",
-    rootWords.map(
-      (rootWord) => `${describeWord(rootWord)} => /${spellWord(rootWord)}/`
-    )
-  );
-  const affixWords = rootWords
-    .map((rootWord) => addAffixes(rootWord, affixMorphemes))
-    .flat(1);
-  console.log(
-    "affixWords",
-    affixWords.map(
-      (affixWord) => `${describeWord(affixWord)} => /${spellWord(affixWord)}/`
-    )
+    "words",
+    [...wordRegistry.conceptLookup.entries()]
+      .filter(([concept]) => /(earth)|(air)|(water)|(fire)/.test(concept))
+      .map(([concept, word]) => `${concept} => ${spellWord(word)}`)
   );
 }

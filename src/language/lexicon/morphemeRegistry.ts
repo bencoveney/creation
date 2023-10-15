@@ -7,11 +7,14 @@ import {
   createMorpheme,
 } from "./morpheme";
 
-export function createRootMorpheme(
+export function getRootMorpheme(
   registry: MorphemeRegistry,
   concept: string,
   phonotactics: Phonotactics
 ): Morpheme {
+  if (registry.conceptLookup.has(concept)) {
+    return registry.conceptLookup.get(concept)!;
+  }
   return createUnusedMorpheme(
     registry,
     concept,
@@ -22,13 +25,16 @@ export function createRootMorpheme(
   );
 }
 
-export function createAffixMorpheme(
+export function getAffixMorpheme(
   registry: MorphemeRegistry,
   concept: string,
   phonotactics: Phonotactics
 ): Morpheme {
+  if (registry.conceptLookup.has(concept)) {
+    return registry.conceptLookup.get(concept)!;
+  }
   const affixType = randomChoice([MorphemeKind.Prefix, MorphemeKind.Suffix]);
-  return createUnusedMorpheme(registry, concept, affixType, phonotactics, 1, 3);
+  return createUnusedMorpheme(registry, concept, affixType, phonotactics, 2, 3);
 }
 
 export type MorphemeRegistry = {

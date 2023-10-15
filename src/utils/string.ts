@@ -6,3 +6,10 @@ export function commaSeparate(values: string[]) {
     values[values.length - 1]
   }`;
 }
+
+function stringComparer(a: string, b: string): number {
+  return a.localeCompare(b);
+}
+export function sortStrings(values: string[]) {
+  return values.toSorted(stringComparer);
+}
