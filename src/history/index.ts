@@ -11,6 +11,7 @@ import { Lookup, lookupValues } from "./lookup";
 import { Language } from "../language/index";
 import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
+import { HasNames } from "../language/names";
 
 export type Region = {
   id: string;
@@ -39,7 +40,8 @@ export type Relationships = {
 
 export type Being = HasAvailableActions<BeingAction> &
   HasNeeds &
-  HasActivities & {
+  HasActivities &
+  HasNames & {
     id: string;
     kind: "deity";
     name: string;

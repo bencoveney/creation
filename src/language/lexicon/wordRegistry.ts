@@ -20,7 +20,10 @@ export function createWordRegistry(): WordRegistry {
   };
 }
 
-function createRegistryKey(rootConcept: string, affixConcepts: string[]) {
+export function createRegistryKey(
+  rootConcept: string,
+  affixConcepts: string[]
+) {
   if (affixConcepts.length === 0) {
     return rootConcept.toLowerCase();
   }
@@ -54,4 +57,16 @@ export function getWord(
   );
   registry.conceptLookup.set(key, affixed);
   return affixed;
+}
+
+export function getWordForKey(
+  registry: WordRegistry,
+  phonotactics: Phonotactics,
+  key: string
+) {
+  if (registry.conceptLookup.has(key)) {
+    return registry.conceptLookup.get(key)!;
+  }
+  const [root, ...affixes] = key.split("_");
+  return getWord(registry, phonotactics, root, affixes);
 }

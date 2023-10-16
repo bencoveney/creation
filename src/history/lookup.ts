@@ -1,3 +1,5 @@
+import { nextId } from "../utils/id";
+
 export type HasId = {
   id: string;
 };
@@ -6,7 +8,6 @@ export type NeedsId<T extends HasId> = Omit<T, "id">;
 export type Lookup<T extends HasId> = {
   map: ReadonlyMap<string, T>;
   set: (value: T | NeedsId<T>) => T;
-  nextId: () => string;
 };
 
 export function createLookup<T extends HasId>(): Lookup<T> {
@@ -23,14 +24,7 @@ export function createLookup<T extends HasId>(): Lookup<T> {
       map.set(castValue.id, castValue);
       return castValue;
     },
-    nextId,
   };
-}
-
-// Globally unique so stuff can be shared between maps without conflicts.
-let id = 0;
-function nextId(): string {
-  return "" + id++;
 }
 
 export function getFromLookup<T extends HasId>(

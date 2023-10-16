@@ -24,5 +24,7 @@ Procedural world/history generation
     - Locations
     - Artifacts
 - Improve generated words
+  - Manipulate words, e.g. remove redundant syllables
   - e.g. sibling deities could follow naming pattern
   - Enforce uniqueness for names
+  - Derive naming concepts from a wider set (e.g. terrain features)

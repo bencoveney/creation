@@ -23,6 +23,7 @@ import {
   TerrainRegistryStringEntry,
   getTerrainLayer,
 } from "../terrain/registry";
+import { createNames } from "../language/names";
 
 export function initialiseHistory() {
   const newHistory = initHistory();
@@ -210,6 +211,7 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
   const deity = beings.set({
     kind: "deity",
     name: createDeityName(),
+    names: createNames(theme, ["deity"]),
     theme,
     relationships: {},
     needs: createDeityNeeds(),
