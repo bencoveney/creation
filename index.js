@@ -25284,6 +25284,12 @@
     );
   }
 
+  // src/utils/id.ts
+  var id = 0;
+  function nextId(prefix = "") {
+    return `${prefix}${id++}`;
+  }
+
   // src/history/lookup.ts
   function createLookup() {
     const map = /* @__PURE__ */ new Map();
@@ -25297,13 +25303,8 @@
         }
         map.set(castValue.id, castValue);
         return castValue;
-      },
-      nextId
+      }
     };
-  }
-  var id = 0;
-  function nextId() {
-    return "" + id++;
   }
   function getFromLookup(lookup, key) {
     const found = getFromLookupSafe(lookup, key);
@@ -28725,265 +28726,6 @@
     );
   }
 
-  // src/history/factories.ts
-  function initialiseHistory() {
-    const newHistory = initHistory();
-    populateWorld(newHistory);
-    return newHistory;
-  }
-  function initHistory() {
-    const terrainRegistry = [];
-    createTerrain(
-      config.worldWidth * config.terrainResolution,
-      config.worldHeight * config.terrainResolution,
-      terrainRegistry
-    );
-    return {
-      regions: createLookup(),
-      beings: createLookup(),
-      dialects: createLookup(),
-      artifacts: createLookup(),
-      log: createLogger(0),
-      tick: 0,
-      world: null,
-      terrainRegistry,
-      availableActions: []
-    };
-  }
-  function populateWorld(history3) {
-    history3.dialects.set({
-      language: generateLanguage(history3)
-    });
-    createWorldRegion(history3.regions);
-    createInitialDeities(history3);
-    if (history3.regions.map.size >= 1 && !history3.world) {
-      history3.world = createWorld(history3, config.worldWidth, config.worldHeight);
-    }
-    createFeatureRegions(history3.regions, history3.terrainRegistry);
-  }
-  function createWorldRegion(regions) {
-    return regions.set({
-      name: createWorldName(),
-      discovered: true
-    });
-  }
-  function createFeatureRegions(regions, terrainRegistry) {
-    const features = getTerrainLayer(
-      terrainRegistry,
-      "features"
-    );
-    const found = /* @__PURE__ */ new Set();
-    for (let i = 0; i < features.values.values.length; i++) {
-      found.add(features.values.values[i]);
-    }
-    const foundFeatures = Array.from(found.values());
-    for (let i = 0; i < foundFeatures.length; i++) {
-      const foundFeature = foundFeatures[i];
-      regions.set({
-        discovered: true,
-        name: foundFeature
-      });
-    }
-  }
-  var themesByName = /* @__PURE__ */ new Map();
-  function populatethemesByName() {
-    if (themesByName.size > 0) {
-      return;
-    }
-    config.themes.forEach((theme2) => {
-      themesByName.set(theme2.name, theme2);
-    });
-  }
-  var themesByCategory = /* @__PURE__ */ new Map();
-  function populateThemesByCategory() {
-    if (themesByCategory.size > 0) {
-      return;
-    }
-    config.themes.forEach((theme2) => {
-      theme2.categories.forEach((category) => {
-        if (!themesByCategory.has(category)) {
-          themesByCategory.set(category, []);
-        }
-        const themes = themesByCategory.get(category);
-        themes.push(theme2);
-      });
-    });
-  }
-  var themesByTag = /* @__PURE__ */ new Map();
-  function populateThemesByTag() {
-    if (themesByTag.size > 0) {
-      return;
-    }
-    config.themes.forEach((theme2) => {
-      theme2.tags.forEach((tag) => {
-        if (!themesByTag.has(tag)) {
-          themesByTag.set(tag, []);
-        }
-        const themes = themesByTag.get(tag);
-        themes.push(theme2);
-      });
-    });
-  }
-  function createInitialDeities(history3) {
-    const deityThemes = getDeityThemes();
-    const deities = deityThemes.map((deityTheme) => {
-      const deity = createDeity(history3.beings, deityTheme.theme);
-      history3.log(
-        `[[${deity.name}]] woke from their slumber.`,
-        [deity.id],
-        [],
-        []
-      );
-      return deity;
-    });
-    deityThemes.forEach((deityTheme) => {
-      const deity = deities.find((d) => d.theme === deityTheme.theme);
-      if (deityTheme.relationshipKind) {
-        deityTheme.relationshipTo?.forEach((relationshipTo) => {
-          const other = deities.find((d) => d.theme === relationshipTo);
-          deity.relationships[other.id] = {
-            kind: deityTheme.relationshipKind,
-            encounters: 0
-          };
-        });
-      }
-    });
-  }
-  function getDeityThemes() {
-    populatethemesByName();
-    populateThemesByCategory();
-    populateThemesByTag();
-    const selectedCategories = randomChoices(
-      [...themesByCategory.keys()],
-      randomInt(config.themeRange.min, config.themeRange.max)
-    );
-    const groups = selectedCategories.flatMap((category) => {
-      const themes = themesByCategory.get(category);
-      const isRelationship = rollDice(config.deityRelationshipChance);
-      const relationship = isRelationship ? getRelationship(themes.length) : void 0;
-      const themeNames = themes.map((theme2) => theme2.name);
-      return themes.map((theme2) => ({
-        theme: theme2.name,
-        relationshipKind: relationship,
-        relationshipTo: isRelationship ? themeNames.filter((name) => name !== theme2.name) : void 0
-      }));
-    });
-    return groups;
-  }
-  function getRelationship(count) {
-    if (count === 2) {
-      return randomChoice(["sibling", "partner", "lover"]);
-    } else {
-      return randomChoice(["sibling"]);
-    }
-  }
-  function createDeity(beings, theme2) {
-    const deity = beings.set({
-      kind: "deity",
-      name: createDeityName(),
-      theme: theme2,
-      relationships: {},
-      needs: createDeityNeeds(),
-      preferences: createDeityPreferences(),
-      timesChosen: Object.fromEntries(
-        Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
-      ),
-      holding: [],
-      availableActions: [],
-      activities: []
-    });
-    initialBeingActions(deity);
-    return deity;
-  }
-
-  // src/systems/rest.ts
-  function runRest(history3) {
-    forEachBeingByActivity(history3, "rest", rest);
-  }
-  function rest(history3, being, activity) {
-    const tile = getFromLookup(history3.regions, being.location);
-    if (activity.timeLeft === void 0) {
-      history3.log(
-        `[[${being.name}]] rested in [[${tile.name}]]`,
-        [being.id],
-        [tile.id],
-        []
-      );
-      activity.timeLeft = Math.round(Math.random() * 10);
-    } else {
-      activity.timeLeft--;
-      if (activity.timeLeft >= 0) {
-        return;
-      }
-      history3.log(
-        `[[${being.name}]] finished resting in [[${tile.name}]]`,
-        [being.id],
-        [tile.id],
-        []
-      );
-      completeActivity(being);
-    }
-  }
-
-  // src/systems/architectureCreation.ts
-  function runArchitectureCreation(history3) {
-    forEachBeingByActivity(history3, "createArchitecture", createArchitecture);
-  }
-  function architectureFactory(regions, parent) {
-    const kind = randomChoice(config.deityArchitecture);
-    const architecture = regions.set({
-      name: architectureNameFactory(kind),
-      discovered: true,
-      parent
-    });
-    return architecture;
-  }
-  var architectureNameCount = 0;
-  function architectureNameFactory(kind) {
-    return `architecture_${kind}_${architectureNameCount++}`;
-  }
-  function createArchitecture(history3, being, activity) {
-    const tile = getFromLookup(history3.regions, being.location);
-    if (activity.timeLeft === void 0) {
-      history3.log(
-        `[[${being.name}]] started creating architecture in [[${tile.name}]]`,
-        [being.id],
-        [tile.id],
-        []
-      );
-      activity.timeLeft = Math.round(Math.random() * 10);
-    } else {
-      activity.timeLeft--;
-      if (activity.timeLeft >= 0) {
-        return;
-      }
-      const otherBeings = lookupValues(history3.beings).filter((other) => {
-        const otherActivity = getCurrentActivity(other);
-        if (otherActivity?.kind === "joined" && otherActivity.activity === activity) {
-          return true;
-        }
-        return false;
-      });
-      const allBeings = [being, ...otherBeings.map((other) => other)];
-      const architecture = architectureFactory(history3.regions, tile);
-      const beingIds = [];
-      const beingNames = [];
-      allBeings.forEach((participant) => {
-        completeActivity(participant);
-        updateBeingActions(participant);
-        beingNames.push(`[[${participant.name}]]`);
-        beingIds.push(participant.id);
-      });
-      history3.log(
-        `${commaSeparate(beingNames)} created [[${architecture.name}]] in [[${tile.name}]]`,
-        beingIds,
-        [tile.id, architecture.id],
-        []
-      );
-      updateArchitectureCreatedTileActions(history3, tile);
-    }
-  }
-
   // src/language/ipa/consonant.ts
   var consonants = [
     {
@@ -30508,41 +30250,6 @@
     )
   };
 
-  // src/language/ipa/utils.ts
-  function findValues(set, find) {
-    const found = [];
-    const missing = [];
-    for (let index = 0; index < find.length; index++) {
-      const toFind = stripDiacritics(find[index]);
-      if (toFind.length > 1) {
-        const parts = toFind.split("");
-        const match = parts.every(
-          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
-        );
-        if (match) {
-          found.push(toFind);
-        } else {
-          missing.push(toFind);
-        }
-      } else {
-        const match = set.find((potential) => potential.ipaCharacter === toFind);
-        if (match) {
-          found.push(toFind);
-        } else {
-          missing.push(toFind);
-        }
-      }
-    }
-    return { found, missing };
-  }
-  function stripDiacritics(value) {
-    return value.replaceAll("\u02D0", "");
-  }
-
-  // src/language/lexicon/concepts.ts
-  var rootConcepts = [...config.themes.map((theme2) => theme2.name)];
-  var affixConcepts = ["deity", "place"];
-
   // src/language/ipa/syllable.ts
   function createSyllable(phonotactics, minSize, maxSize) {
     const syllableStructure = randomChoice(
@@ -30710,6 +30417,311 @@
     registry.conceptLookup.set(key, affixed);
     return affixed;
   }
+
+  // src/language/names/index.ts
+  function createNames(root2, affixes = []) {
+    return {
+      defaultKey: createRegistryKey(root2, affixes)
+    };
+  }
+
+  // src/history/factories.ts
+  function initialiseHistory() {
+    const newHistory = initHistory();
+    populateWorld(newHistory);
+    return newHistory;
+  }
+  function initHistory() {
+    const terrainRegistry = [];
+    createTerrain(
+      config.worldWidth * config.terrainResolution,
+      config.worldHeight * config.terrainResolution,
+      terrainRegistry
+    );
+    return {
+      regions: createLookup(),
+      beings: createLookup(),
+      dialects: createLookup(),
+      artifacts: createLookup(),
+      log: createLogger(0),
+      tick: 0,
+      world: null,
+      terrainRegistry,
+      availableActions: []
+    };
+  }
+  function populateWorld(history3) {
+    history3.dialects.set({
+      language: generateLanguage(history3)
+    });
+    createWorldRegion(history3.regions);
+    createInitialDeities(history3);
+    if (history3.regions.map.size >= 1 && !history3.world) {
+      history3.world = createWorld(history3, config.worldWidth, config.worldHeight);
+    }
+    createFeatureRegions(history3.regions, history3.terrainRegistry);
+  }
+  function createWorldRegion(regions) {
+    return regions.set({
+      name: createWorldName(),
+      discovered: true
+    });
+  }
+  function createFeatureRegions(regions, terrainRegistry) {
+    const features = getTerrainLayer(
+      terrainRegistry,
+      "features"
+    );
+    const found = /* @__PURE__ */ new Set();
+    for (let i = 0; i < features.values.values.length; i++) {
+      found.add(features.values.values[i]);
+    }
+    const foundFeatures = Array.from(found.values());
+    for (let i = 0; i < foundFeatures.length; i++) {
+      const foundFeature = foundFeatures[i];
+      regions.set({
+        discovered: true,
+        name: foundFeature
+      });
+    }
+  }
+  var themesByName = /* @__PURE__ */ new Map();
+  function populatethemesByName() {
+    if (themesByName.size > 0) {
+      return;
+    }
+    config.themes.forEach((theme2) => {
+      themesByName.set(theme2.name, theme2);
+    });
+  }
+  var themesByCategory = /* @__PURE__ */ new Map();
+  function populateThemesByCategory() {
+    if (themesByCategory.size > 0) {
+      return;
+    }
+    config.themes.forEach((theme2) => {
+      theme2.categories.forEach((category) => {
+        if (!themesByCategory.has(category)) {
+          themesByCategory.set(category, []);
+        }
+        const themes = themesByCategory.get(category);
+        themes.push(theme2);
+      });
+    });
+  }
+  var themesByTag = /* @__PURE__ */ new Map();
+  function populateThemesByTag() {
+    if (themesByTag.size > 0) {
+      return;
+    }
+    config.themes.forEach((theme2) => {
+      theme2.tags.forEach((tag) => {
+        if (!themesByTag.has(tag)) {
+          themesByTag.set(tag, []);
+        }
+        const themes = themesByTag.get(tag);
+        themes.push(theme2);
+      });
+    });
+  }
+  function createInitialDeities(history3) {
+    const deityThemes = getDeityThemes();
+    const deities = deityThemes.map((deityTheme) => {
+      const deity = createDeity(history3.beings, deityTheme.theme);
+      history3.log(
+        `[[${deity.name}]] woke from their slumber.`,
+        [deity.id],
+        [],
+        []
+      );
+      return deity;
+    });
+    deityThemes.forEach((deityTheme) => {
+      const deity = deities.find((d) => d.theme === deityTheme.theme);
+      if (deityTheme.relationshipKind) {
+        deityTheme.relationshipTo?.forEach((relationshipTo) => {
+          const other = deities.find((d) => d.theme === relationshipTo);
+          deity.relationships[other.id] = {
+            kind: deityTheme.relationshipKind,
+            encounters: 0
+          };
+        });
+      }
+    });
+  }
+  function getDeityThemes() {
+    populatethemesByName();
+    populateThemesByCategory();
+    populateThemesByTag();
+    const selectedCategories = randomChoices(
+      [...themesByCategory.keys()],
+      randomInt(config.themeRange.min, config.themeRange.max)
+    );
+    const groups = selectedCategories.flatMap((category) => {
+      const themes = themesByCategory.get(category);
+      const isRelationship = rollDice(config.deityRelationshipChance);
+      const relationship = isRelationship ? getRelationship(themes.length) : void 0;
+      const themeNames = themes.map((theme2) => theme2.name);
+      return themes.map((theme2) => ({
+        theme: theme2.name,
+        relationshipKind: relationship,
+        relationshipTo: isRelationship ? themeNames.filter((name) => name !== theme2.name) : void 0
+      }));
+    });
+    return groups;
+  }
+  function getRelationship(count) {
+    if (count === 2) {
+      return randomChoice(["sibling", "partner", "lover"]);
+    } else {
+      return randomChoice(["sibling"]);
+    }
+  }
+  function createDeity(beings, theme2) {
+    const deity = beings.set({
+      kind: "deity",
+      name: createDeityName(),
+      names: createNames(theme2, ["deity"]),
+      theme: theme2,
+      relationships: {},
+      needs: createDeityNeeds(),
+      preferences: createDeityPreferences(),
+      timesChosen: Object.fromEntries(
+        Object.entries(createDeityPreferences()).map(([key]) => [key, 0])
+      ),
+      holding: [],
+      availableActions: [],
+      activities: []
+    });
+    initialBeingActions(deity);
+    return deity;
+  }
+
+  // src/systems/rest.ts
+  function runRest(history3) {
+    forEachBeingByActivity(history3, "rest", rest);
+  }
+  function rest(history3, being, activity) {
+    const tile = getFromLookup(history3.regions, being.location);
+    if (activity.timeLeft === void 0) {
+      history3.log(
+        `[[${being.name}]] rested in [[${tile.name}]]`,
+        [being.id],
+        [tile.id],
+        []
+      );
+      activity.timeLeft = Math.round(Math.random() * 10);
+    } else {
+      activity.timeLeft--;
+      if (activity.timeLeft >= 0) {
+        return;
+      }
+      history3.log(
+        `[[${being.name}]] finished resting in [[${tile.name}]]`,
+        [being.id],
+        [tile.id],
+        []
+      );
+      completeActivity(being);
+    }
+  }
+
+  // src/systems/architectureCreation.ts
+  function runArchitectureCreation(history3) {
+    forEachBeingByActivity(history3, "createArchitecture", createArchitecture);
+  }
+  function architectureFactory(regions, parent) {
+    const kind = randomChoice(config.deityArchitecture);
+    const architecture = regions.set({
+      name: architectureNameFactory(kind),
+      discovered: true,
+      parent
+    });
+    return architecture;
+  }
+  var architectureNameCount = 0;
+  function architectureNameFactory(kind) {
+    return `architecture_${kind}_${architectureNameCount++}`;
+  }
+  function createArchitecture(history3, being, activity) {
+    const tile = getFromLookup(history3.regions, being.location);
+    if (activity.timeLeft === void 0) {
+      history3.log(
+        `[[${being.name}]] started creating architecture in [[${tile.name}]]`,
+        [being.id],
+        [tile.id],
+        []
+      );
+      activity.timeLeft = Math.round(Math.random() * 10);
+    } else {
+      activity.timeLeft--;
+      if (activity.timeLeft >= 0) {
+        return;
+      }
+      const otherBeings = lookupValues(history3.beings).filter((other) => {
+        const otherActivity = getCurrentActivity(other);
+        if (otherActivity?.kind === "joined" && otherActivity.activity === activity) {
+          return true;
+        }
+        return false;
+      });
+      const allBeings = [being, ...otherBeings.map((other) => other)];
+      const architecture = architectureFactory(history3.regions, tile);
+      const beingIds = [];
+      const beingNames = [];
+      allBeings.forEach((participant) => {
+        completeActivity(participant);
+        updateBeingActions(participant);
+        beingNames.push(`[[${participant.name}]]`);
+        beingIds.push(participant.id);
+      });
+      history3.log(
+        `${commaSeparate(beingNames)} created [[${architecture.name}]] in [[${tile.name}]]`,
+        beingIds,
+        [tile.id, architecture.id],
+        []
+      );
+      updateArchitectureCreatedTileActions(history3, tile);
+    }
+  }
+
+  // src/language/ipa/utils.ts
+  function findValues(set, find) {
+    const found = [];
+    const missing = [];
+    for (let index = 0; index < find.length; index++) {
+      const toFind = stripDiacritics(find[index]);
+      if (toFind.length > 1) {
+        const parts = toFind.split("");
+        const match = parts.every(
+          (partToFind) => set.find((potential) => potential.ipaCharacter === partToFind)
+        );
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      } else {
+        const match = set.find((potential) => potential.ipaCharacter === toFind);
+        if (match) {
+          found.push(toFind);
+        } else {
+          missing.push(toFind);
+        }
+      }
+    }
+    return { found, missing };
+  }
+  function stripDiacritics(value) {
+    return value.replaceAll("\u02D0", "");
+  }
+
+  // src/language/lexicon/concepts.ts
+  var rootConcepts = [
+    ...config.themes.map((theme2) => theme2.name),
+    "speech"
+  ];
+  var affixConcepts = ["deity", "place"];
 
   // src/language/ipa/index.ts
   function validate() {
