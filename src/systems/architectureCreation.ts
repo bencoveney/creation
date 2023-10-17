@@ -22,12 +22,13 @@ export function runArchitectureCreation(history: History) {
 
 export function architectureFactory(
   regions: Lookup<Region>,
-  parent: Region
+  parent: Region,
+  being: Being
 ): Region {
   const kind = randomChoice(config.deityArchitecture);
   const architecture = regions.set({
     name: architectureNameFactory(kind),
-    names: createNames(kind),
+    names: createNames(being.theme!, [kind]),
     discovered: true,
     parent,
   });
@@ -69,7 +70,7 @@ function createArchitecture(
       return false;
     });
     const allBeings = [being, ...otherBeings.map((other) => other)];
-    const architecture = architectureFactory(history.regions, tile);
+    const architecture = architectureFactory(history.regions, tile, being);
     const beingIds: string[] = [];
     const beingNames: string[] = [];
     allBeings.forEach((participant) => {
