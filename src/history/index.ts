@@ -13,7 +13,7 @@ import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
 import { HasNames } from "../language/names";
 
-export type Region = {
+export type Region = HasNames & {
   id: string;
   name: string;
   tile?: Tile;

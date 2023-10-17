@@ -10,6 +10,8 @@ export type TerrainAssessment = {
   percentWater: number;
   averageTemp: number;
   includesFeatures: string[];
+  rootConcept: string;
+  affixConcepts: string[];
 };
 
 export function assessTerrain(terrain: TerrainRegistry): TerrainAssessment {
@@ -31,16 +33,33 @@ export function assessTerrain(terrain: TerrainRegistry): TerrainAssessment {
   ) as TerrainRegistryNumberEntry;
   const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
 
-  const includesFeatures = new Set<string>();
+  const includesUniqueFeatures = new Set<string>();
   const features = getTerrainLayer(
     terrain,
     "features"
   ) as TerrainRegistryStringEntry;
-  features.values.values.forEach((f) => includesFeatures.add(f));
+  features.values.values.forEach((f) => includesUniqueFeatures.add(f));
+
+  const percentWater = waterCount / temperature.values.values.length;
+  const averageTemp = totalTemperature / temperature.values.values.length;
+  const includesFeatures = [...includesUniqueFeatures.values()];
 
   return {
-    percentWater: waterCount / temperature.values.values.length,
-    averageTemp: totalTemperature / temperature.values.values.length,
-    includesFeatures: [...includesFeatures.values()],
+    percentWater,
+    averageTemp,
+    includesFeatures,
+    rootConcept:
+      percentWater <= 0
+        ? "terrain-water"
+        : percentWater > 0.9
+        ? "terrain-land"
+        : "terrain-coast",
+    affixConcepts: [
+      averageTemp > 0.75
+        ? "temp-hot"
+        : averageTemp < 0.25
+        ? "temp-cold"
+        : "temp-average",
+    ],
   };
 }

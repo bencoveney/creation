@@ -14,6 +14,7 @@ import {
 import { commaSeparate } from "../utils/string";
 import { randomChoice } from "../utils/random";
 import { config } from "../config";
+import { createNames } from "../language/names";
 
 export function runArchitectureCreation(history: History) {
   forEachBeingByActivity(history, "createArchitecture", createArchitecture);
@@ -26,6 +27,7 @@ export function architectureFactory(
   const kind = randomChoice(config.deityArchitecture);
   const architecture = regions.set({
     name: architectureNameFactory(kind),
+    names: createNames(kind),
     discovered: true,
     parent,
   });

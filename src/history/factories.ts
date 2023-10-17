@@ -66,6 +66,7 @@ export function populateWorld(history: History): void {
 export function createWorldRegion(regions: Lookup<Region>): Region {
   return regions.set({
     name: createWorldName(),
+    names: createNames("world"),
     discovered: true,
   });
 }
@@ -85,9 +86,11 @@ function createFeatureRegions(
   const foundFeatures = Array.from(found.values());
   for (let i = 0; i < foundFeatures.length; i++) {
     const foundFeature = foundFeatures[i];
+    const featureKind = foundFeature.split("_")[0];
     regions.set({
       discovered: true,
       name: foundFeature,
+      names: createNames(featureKind),
     });
   }
 }

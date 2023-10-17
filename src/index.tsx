@@ -16,6 +16,7 @@ import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
 import { validate } from "./language/ipa";
+import { createNewLanguage, spellNameWord } from "./language/names";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -64,6 +65,11 @@ function Wrapper() {
     if (playbackControls.canTick && getQueryBool("autorun")) {
       playbackControls.tickAll();
       console.log(history);
+      const language = createNewLanguage();
+      validate(
+        [...history.regions.map.values(), ...history.beings.map.values()],
+        language
+      );
     }
   }, [playbackControls]);
 
@@ -77,5 +83,3 @@ function Wrapper() {
 }
 
 createRoot(root).render(<Wrapper />);
-
-validate();
