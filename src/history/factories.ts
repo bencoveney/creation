@@ -23,25 +23,20 @@ import {
   TerrainRegistryStringEntry,
   getTerrainLayer,
 } from "../terrain/registry";
-import { createNames } from "../language/names";
+import { NewLanguage, createNames, createNewLanguage } from "../language/names";
 
 export function initialiseHistory() {
-  const newHistory = initHistory();
-  populateWorld(newHistory);
-  return newHistory;
-}
-
-export function initHistory(): History {
   const terrainRegistry: TerrainRegistry = [];
   createTerrain(
     config.worldWidth * config.terrainResolution,
     config.worldHeight * config.terrainResolution,
     terrainRegistry
   );
-  return {
+  const result: History = {
     regions: createLookup<Region>(),
     beings: createLookup<Being>(),
     dialects: createLookup<Dialect>(),
+    languages: createLookup<NewLanguage>(),
     artifacts: createLookup<Artifact>(),
     log: createLogger(0),
     tick: 0,
@@ -49,18 +44,17 @@ export function initHistory(): History {
     terrainRegistry,
     availableActions: [],
   };
-}
-
-export function populateWorld(history: History): void {
-  history.dialects.set({
-    language: generateLanguage(history),
+  result.dialects.set({
+    language: generateLanguage(result),
   });
-  createWorldRegion(history.regions);
-  createInitialDeities(history);
-  if (history.regions.map.size >= 1 && !history.world) {
-    history.world = createWorld(history, config.worldWidth, config.worldHeight);
+  result.languages.set(createNewLanguage());
+  createWorldRegion(result.regions);
+  createInitialDeities(result);
+  if (result.regions.map.size >= 1 && !result.world) {
+    result.world = createWorld(result, config.worldWidth, config.worldHeight);
   }
-  createFeatureRegions(history.regions, history.terrainRegistry);
+  createFeatureRegions(result.regions, result.terrainRegistry);
+  return result;
 }
 
 export function createWorldRegion(regions: Lookup<Region>): Region {

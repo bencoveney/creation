@@ -9,12 +9,14 @@ import {
 import { Word, addAffix, createRootWord } from "./word";
 
 export type WordRegistry = {
+  knownWords: Set<String>;
   conceptLookup: Map<string, Word>;
   morphemes: MorphemeRegistry;
 };
 
 export function createWordRegistry(): WordRegistry {
   return {
+    knownWords: new Set(),
     conceptLookup: new Map(),
     morphemes: createMorphemeRegistry(),
   };
@@ -58,6 +60,7 @@ export function getWord(
     (prev, next) => addAffix(prev, next),
     rootWord
   );
+  registry.knownWords.add(key);
   registry.conceptLookup.set(key, affixed);
   return affixed;
 }

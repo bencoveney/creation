@@ -11,7 +11,7 @@ import { Lookup, lookupValues } from "./lookup";
 import { Language } from "../language/index";
 import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
-import { HasNames } from "../language/names";
+import { HasNames, NewLanguage } from "../language/names";
 
 export type Region = HasNames & {
   id: string;
@@ -71,6 +71,7 @@ export type History = HasAvailableActions<TileAction> & {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
   dialects: Lookup<Dialect>;
+  languages: Lookup<NewLanguage>;
   artifacts: Lookup<Artifact>;
   log: Logger;
   tick: number;

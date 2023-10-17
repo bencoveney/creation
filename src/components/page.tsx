@@ -16,6 +16,7 @@ import { Inspect } from "./inspect";
 import { BeingSummary } from "./beingSummary";
 import { ArtifactSummary } from "./artifactSummary";
 import { RegionSummary } from "./regionSummary";
+import { LanguageSummary } from "./language/languageSummary";
 
 export function Page({
   history,
@@ -96,6 +97,17 @@ export function Page({
               return (
                 <GridItem key={dialect.id}>
                   <Dialect dialect={dialect} history={history} />
+                </GridItem>
+              );
+            })}
+          </Grid>
+        </Tab>
+        <Tab label={"Languages"}>
+          <Grid title="Languages" minWidth={350}>
+            {lookupValues(history.languages).map((language) => {
+              return (
+                <GridItem key={language.id}>
+                  <LanguageSummary newLanguage={language} inspect={inspect} />
                 </GridItem>
               );
             })}

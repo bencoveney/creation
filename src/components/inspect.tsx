@@ -7,6 +7,8 @@ import { VerticalSplit } from "./layout/verticalSplit";
 import { Log } from "./log";
 import { Region as RegionComponent } from "./region";
 import { Artifact as ArtifactComponent } from "./artifact";
+import { Language as LanguageComponent } from "./language/language";
+import { NewLanguage } from "../language/names";
 
 export function Inspect({
   history,
@@ -49,6 +51,9 @@ export function Inspect({
           inspect={inspect}
         />
       );
+    case "language":
+      const newLanguage = getFromLookup(history.languages, inspected.id);
+      return <InspectLanguage newLanguage={newLanguage} inspect={inspect} />;
     default:
       return null;
   }
@@ -133,4 +138,13 @@ function InspectArtifact({
       />
     </VerticalSplit>
   );
+}
+
+function InspectLanguage({
+  newLanguage,
+  inspect,
+}: {
+  newLanguage: NewLanguage;
+} & InspectProps) {
+  return <LanguageComponent newLanguage={newLanguage} inspect={inspect} />;
 }

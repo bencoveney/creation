@@ -65,15 +65,15 @@ function Wrapper() {
     if (playbackControls.canTick && getQueryBool("autorun")) {
       playbackControls.tickAll();
       console.log(history);
-      const language = createNewLanguage();
+      const mainLanguage = lookupFirstValue(history.languages);
       validate(
         [
-          language,
+          mainLanguage,
           ...history.regions.map.values(),
           ...history.beings.map.values(),
           ...history.artifacts.map.values(),
         ],
-        language
+        mainLanguage
       );
     }
   }, [playbackControls]);

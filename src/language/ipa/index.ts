@@ -23,4 +23,5 @@ export function validate(hasNames: HasNames[], language: NewLanguage) {
       )}`;
     })
   );
+  console.log([...language.registry.knownWords.values()]);
 }
