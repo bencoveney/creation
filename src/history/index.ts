@@ -59,7 +59,7 @@ export type Dialect = {
   language: Language;
 };
 
-export type Artifact = {
+export type Artifact = HasNames & {
   id: string;
   name: string;
   object: string;

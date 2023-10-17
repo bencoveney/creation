@@ -67,7 +67,12 @@ function Wrapper() {
       console.log(history);
       const language = createNewLanguage();
       validate(
-        [...history.regions.map.values(), ...history.beings.map.values()],
+        [
+          language,
+          ...history.regions.map.values(),
+          ...history.beings.map.values(),
+          ...history.artifacts.map.values(),
+        ],
         language
       );
     }

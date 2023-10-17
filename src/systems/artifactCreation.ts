@@ -14,6 +14,7 @@ import {
   getCurrentActivity,
 } from "../decision/activity";
 import { commaSeparate } from "../utils/string";
+import { createNames } from "../language/names";
 
 export function runArtifactCreation(history: History) {
   forEachBeingByActivity(history, "createArtifact", createArtifact);
@@ -24,8 +25,10 @@ export function artifactFactory(
   artifacts: Lookup<Artifact>
 ): Artifact {
   const holder = randomChoice(creators);
+  const item = randomChoice(config.artifactItems);
   const artifact = artifacts.set({
     name: artifactNameFactory(),
+    names: createNames(holder.theme!, [item]),
     object: randomChoice(config.artifactItems),
     creators: creators.map((creator) => creator.id),
     inPosessionOf: holder.id,

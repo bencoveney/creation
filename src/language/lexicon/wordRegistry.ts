@@ -24,6 +24,9 @@ export function createRegistryKey(
   rootConcept: string,
   affixConcepts: string[]
 ) {
+  if (!rootConcept) {
+    throw new Error("What");
+  }
   if (affixConcepts.length === 0) {
     return rootConcept.toLowerCase();
   }
