@@ -1,7 +1,5 @@
 import { History, Being } from "../history";
-import { Language } from "../language";
 import { Motif } from "./motif";
-import { Names } from "./names";
 import { Needs } from "./needs";
 import { Activities } from "./activities";
 import { Preferences } from "./preferences";
@@ -13,19 +11,14 @@ import { InspectLinks } from "./inspectLinks";
 
 export function Being({
   being,
-  history,
-  language,
   inspect,
 }: {
   being: Being;
-  history: History;
-  language: Language;
 } & InspectProps) {
   return (
     <>
       <InspectLink id={being.id} inspect={inspect} kind="being" />
-      <div>{being.name}</div>
-      <Names name={being.name} history={history} />
+      <div>{being.names.defaultKey}</div>
       <Motif motif={being.motif} />
       {being.theme && `Represents ${being.theme}`}
       <Needs needs={being.needs} />
@@ -34,12 +27,7 @@ export function Being({
       <Activities hasActivities={being} />
       <h3>Holding</h3>
       <InspectLinks ids={being.holding} kind="artifact" inspect={inspect} />
-      <Relationships
-        relationships={being.relationships}
-        history={history}
-        language={language}
-        inspect={inspect}
-      />
+      <Relationships relationships={being.relationships} inspect={inspect} />
     </>
   );
 }

@@ -21,7 +21,7 @@ function giveArtifact(
   const tile = getFromLookup(history.regions, being.location!);
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started gifing an artifact to [[${target.name}]]`,
+      `[[${being.id}]] started gifing an artifact to [[${target.id}]]`,
       [being.id, target.id],
       [tile.id],
       [artifact.id]
@@ -33,7 +33,7 @@ function giveArtifact(
       return;
     }
     history.log(
-      `[[${being.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
+      `[[${being.id}]] gifted the ${artifact.object} [[${artifact.id}]] to [[${target.id}]]`,
       [being.id, target.id],
       [tile.id],
       [artifact.id]

@@ -3,7 +3,6 @@ import { updateInitialTileActions } from "../decision/factories";
 import { TerrainAssessment, assessTerrain } from "../terrain/assess";
 import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import { NeedsId } from "../history/lookup";
-import { createRegionName } from "../language/factories";
 import { Array2d, array2dCreate, array2dGet } from "../utils/array2d";
 import { config } from "../config";
 import { createNames } from "../language/names";
@@ -37,7 +36,6 @@ export function createWorld(
       terrainRegistry,
       terrainAssessment,
       discovered: false,
-      name: createRegionName(),
       names: createNames(
         terrainAssessment.rootConcept,
         terrainAssessment.affixConcepts

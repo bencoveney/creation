@@ -1,4 +1,4 @@
-import { Artifact, Being, Dialect, History, Region } from ".";
+import { Artifact, Being, History, Region } from ".";
 import { config } from "../config";
 import {
   randomChoice,
@@ -12,8 +12,6 @@ import {
   initialBeingActions,
 } from "../decision/factories";
 import { Preferences } from "../decision/preference";
-import { createDeityName, createWorldName } from "../language/factories";
-import { generateLanguage } from "../language";
 import { createWorld } from "../world";
 import { Lookup, createLookup } from "./lookup";
 import { createLogger } from "../log";
@@ -35,7 +33,6 @@ export function initialiseHistory() {
   const result: History = {
     regions: createLookup<Region>(),
     beings: createLookup<Being>(),
-    dialects: createLookup<Dialect>(),
     languages: createLookup<NewLanguage>(),
     artifacts: createLookup<Artifact>(),
     log: createLogger(0),
@@ -44,9 +41,6 @@ export function initialiseHistory() {
     terrainRegistry,
     availableActions: [],
   };
-  result.dialects.set({
-    language: generateLanguage(result),
-  });
   result.languages.set(createNewLanguage());
   createWorldRegion(result.regions);
   createInitialDeities(result);
@@ -59,7 +53,6 @@ export function initialiseHistory() {
 
 export function createWorldRegion(regions: Lookup<Region>): Region {
   return regions.set({
-    name: createWorldName(),
     names: createNames("world"),
     discovered: true,
   });
@@ -83,7 +76,6 @@ function createFeatureRegions(
     const featureKind = foundFeature.split("_")[0];
     regions.set({
       discovered: true,
-      name: foundFeature,
       names: createNames(featureKind),
     });
   }
@@ -147,12 +139,7 @@ export function createInitialDeities(history: History) {
   const deityThemes = getDeityThemes();
   const deities = deityThemes.map((deityTheme) => {
     const deity = createDeity(history.beings, deityTheme.theme);
-    history.log(
-      `[[${deity.name}]] woke from their slumber.`,
-      [deity.id],
-      [],
-      []
-    );
+    history.log(`[[${deity.id}]] woke from their slumber.`, [deity.id], [], []);
     return deity;
   });
   deityThemes.forEach((deityTheme) => {
@@ -207,7 +194,6 @@ function getRelationship(count: number): string {
 function createDeity(beings: Lookup<Being>, theme: string): Being {
   const deity = beings.set({
     kind: "deity",
-    name: createDeityName(),
     names: createNames(theme, ["deity"]),
     theme,
     relationships: {},

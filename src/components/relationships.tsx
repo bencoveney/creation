@@ -1,8 +1,4 @@
-import { getFromLookup } from "../history/lookup";
 import { History, Relationships } from "../history";
-import { Language } from "../language";
-import { getWord } from "../language/word";
-import { spellWord } from "../language/spelling";
 import { Name } from "./name";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
@@ -10,25 +6,18 @@ import { spacer } from "./layout/theme";
 
 export function Relationships({
   relationships,
-  history,
-  language,
   inspect,
 }: {
   relationships: Relationships;
-  history: History;
-  language: Language;
 } & InspectProps) {
   if (Object.entries(relationships).length === 0) {
     return null;
   }
-  const languageName = spellWord(getWord(language.name, language));
   return (
     <>
       <h3>Relationships</h3>
       {Object.entries(relationships).map(([otherBeing, relationship]) => {
-        const otherBeingName = spellWord(
-          getWord(getFromLookup(history.beings, otherBeing).name, language)
-        );
+        const otherBeingName = otherBeing;
         return (
           <div
             key={otherBeing}
@@ -37,7 +26,7 @@ export function Relationships({
             <div>
               <Name
                 key={otherBeingName}
-                languageName={languageName}
+                languageName={"ID"}
                 word={otherBeingName}
               />{" "}
               - {`${relationship.kind} ${relationship.encounters}`}

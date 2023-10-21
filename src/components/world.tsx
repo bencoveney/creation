@@ -1,5 +1,4 @@
 import { History } from "../history";
-import { Language } from "../language";
 import { useCallback, useState } from "react";
 import { Map } from "./map/map";
 import { WorldSelection } from "./worldSelection";
@@ -7,11 +6,9 @@ import { InspectProps } from "../hooks/useInspect";
 
 export function World({
   history,
-  language,
   inspect,
 }: {
   history: History;
-  language: Language;
 } & InspectProps) {
   if (!history.world) {
     return null;
@@ -44,7 +41,6 @@ export function World({
     >
       <Map
         history={history}
-        language={language}
         terrainLayer={terrainLayer}
         setSelection={setSelectionComparer}
       />

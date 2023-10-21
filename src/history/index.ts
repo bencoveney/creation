@@ -8,14 +8,12 @@ import { HasNeeds } from "../decision/need";
 import { Preferences } from "../decision/preference";
 import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, lookupValues } from "./lookup";
-import { Language } from "../language/index";
 import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
 import { HasNames, NewLanguage } from "../language/names";
 
 export type Region = HasNames & {
   id: string;
-  name: string;
   tile?: Tile;
   discovered: Boolean;
   parent?: Region;
@@ -44,7 +42,6 @@ export type Being = HasAvailableActions<BeingAction> &
   HasNames & {
     id: string;
     kind: "deity";
-    name: string;
     theme?: string;
     location?: string; // Region ID.
     motif?: Motif;
@@ -54,14 +51,8 @@ export type Being = HasAvailableActions<BeingAction> &
     timesChosen: Preferences;
   };
 
-export type Dialect = {
-  id: string;
-  language: Language;
-};
-
 export type Artifact = HasNames & {
   id: string;
-  name: string;
   object: string;
   creators: string[];
   inPosessionOf: string;
@@ -70,7 +61,6 @@ export type Artifact = HasNames & {
 export type History = HasAvailableActions<TileAction> & {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
-  dialects: Lookup<Dialect>;
   languages: Lookup<NewLanguage>;
   artifacts: Lookup<Artifact>;
   log: Logger;

@@ -1,5 +1,4 @@
 import { History } from "../../history";
-import { Language } from "../../language";
 import { Terrain } from "./terrain";
 import { useHoverPosition } from "../../hooks/useHover";
 import {
@@ -13,12 +12,10 @@ import { clamp } from "../../utils/maths";
 
 export function Map({
   history,
-  language,
   terrainLayer,
   setSelection,
 }: {
   history: History;
-  language: Language;
   terrainLayer: string;
   setSelection: (coords: [number, number]) => void;
 }) {
@@ -95,7 +92,7 @@ export function Map({
             boxSizing: "border-box",
           }}
         >
-          <MapTile tile={selectedTile} history={history} language={language} />
+          <MapTile tile={selectedTile} history={history} />
         </div>
       )}
       <div

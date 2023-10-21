@@ -1,5 +1,4 @@
 import { History } from "../history";
-import { Language } from "../language";
 import { Region } from "./region";
 import { Grid, GridItem } from "./layout/grid";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
@@ -55,14 +54,14 @@ export function WorldSelection({
         <TileValues tile={selectedTile} />
       </GridItem>
       <GridItem>
-        <Region region={selectedTile} history={history} inspect={inspect} />
+        <Region region={selectedTile} inspect={inspect} />
       </GridItem>
       {selectedTile &&
         lookupValues(history.beings)
           .filter((being) => being.location === selectedTile.id)
           .map((being, index) => (
             <GridItem key={index}>
-              <BeingSummary being={being} history={history} inspect={inspect} />
+              <BeingSummary being={being} inspect={inspect} />
             </GridItem>
           ))}
     </Grid>

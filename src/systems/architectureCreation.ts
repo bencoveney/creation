@@ -27,17 +27,11 @@ export function architectureFactory(
 ): Region {
   const kind = randomChoice(config.deityArchitecture);
   const architecture = regions.set({
-    name: architectureNameFactory(kind),
     names: createNames(being.theme!, [kind]),
     discovered: true,
     parent,
   });
   return architecture;
-}
-
-let architectureNameCount = 0;
-function architectureNameFactory(kind: string): string {
-  return `architecture_${kind}_${architectureNameCount++}`;
 }
 
 function createArchitecture(
@@ -48,7 +42,7 @@ function createArchitecture(
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started creating architecture in [[${tile.name}]]`,
+      `[[${being.id}]] started creating architecture in [[${tile.id}]]`,
       [being.id],
       [tile.id],
       []
@@ -76,12 +70,12 @@ function createArchitecture(
     allBeings.forEach((participant) => {
       completeActivity(participant);
       updateBeingActions(participant);
-      beingNames.push(`[[${participant.name}]]`);
+      beingNames.push(`[[${participant.id}]]`);
       beingIds.push(participant.id);
     });
     history.log(
-      `${commaSeparate(beingNames)} created [[${architecture.name}]] in [[${
-        tile.name
+      `${commaSeparate(beingNames)} created [[${architecture.id}]] in [[${
+        tile.id
       }]]`,
       beingIds,
       [tile.id, architecture.id],

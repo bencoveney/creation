@@ -27,7 +27,6 @@ export function artifactFactory(
   const holder = randomChoice(creators);
   const item = randomChoice(config.artifactItems);
   const artifact = artifacts.set({
-    name: artifactNameFactory(),
     names: createNames(holder.theme!, [item]),
     object: randomChoice(config.artifactItems),
     creators: creators.map((creator) => creator.id),
@@ -50,7 +49,7 @@ function createArtifact(
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started forging an artifact in [[${tile.name}]]`,
+      `[[${being.id}]] started forging an artifact in [[${tile.id}]]`,
       [being.id],
       [tile.id],
       []
@@ -78,13 +77,13 @@ function createArtifact(
     allBeings.forEach((participant) => {
       completeActivity(participant);
       updateBeingActions(participant);
-      beingNames.push(`[[${participant.name}]]`);
+      beingNames.push(`[[${participant.id}]]`);
       beingIds.push(participant.id);
     });
     history.log(
       `${commaSeparate(beingNames)} created the ${artifact.object} [[${
-        artifact.name
-      }]] in [[${tile.name}]]`,
+        artifact.id
+      }]] in [[${tile.id}]]`,
       beingIds,
       [tile.id],
       [artifact.id]

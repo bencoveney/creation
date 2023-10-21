@@ -1,10 +1,8 @@
 import { History } from "../history";
-import { Language } from "../language";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
 import { Grid, GridItem } from "./layout/grid";
-import { Dialect } from "./dialect";
 import { lookupValues } from "../history/lookup";
 import { World } from "./world";
 import { Tab } from "./layout/tab";
@@ -20,11 +18,9 @@ import { LanguageSummary } from "./language/languageSummary";
 
 export function Page({
   history,
-  language,
   playbackControls,
 }: {
   history: History;
-  language: Language;
   playbackControls: PlaybackControls;
 }) {
   const [inspected, inspect] = useInspect();
@@ -41,21 +37,17 @@ export function Page({
         }
       >
         <Tab label={"World"}>
-          <World history={history} language={language} inspect={inspect} />
+          <World history={history} inspect={inspect} />
         </Tab>
         <Tab label={"Log"}>
-          <Log history={history} language={language} inspect={inspect} />
+          <Log history={history} inspect={inspect} />
         </Tab>
         <Tab label={"Regions"}>
           <Grid title="Regions">
             {lookupValues(history.regions).map((region) => {
               return (
                 <GridItem key={region.id}>
-                  <RegionSummary
-                    region={region}
-                    history={history}
-                    inspect={inspect}
-                  />
+                  <RegionSummary region={region} inspect={inspect} />
                 </GridItem>
               );
             })}
@@ -66,11 +58,7 @@ export function Page({
             {lookupValues(history.beings).map((being) => {
               return (
                 <GridItem key={being.id}>
-                  <BeingSummary
-                    being={being}
-                    history={history}
-                    inspect={inspect}
-                  />
+                  <BeingSummary being={being} inspect={inspect} />
                 </GridItem>
               );
             })}
@@ -81,22 +69,7 @@ export function Page({
             {lookupValues(history.artifacts).map((artifact) => {
               return (
                 <GridItem key={artifact.id}>
-                  <ArtifactSummary
-                    artifact={artifact}
-                    history={history}
-                    inspect={inspect}
-                  />
-                </GridItem>
-              );
-            })}
-          </Grid>
-        </Tab>
-        <Tab label={"Dialects"}>
-          <Grid title="Dialects" minWidth={350}>
-            {lookupValues(history.dialects).map((dialect) => {
-              return (
-                <GridItem key={dialect.id}>
-                  <Dialect dialect={dialect} history={history} />
+                  <ArtifactSummary artifact={artifact} inspect={inspect} />
                 </GridItem>
               );
             })}
@@ -117,7 +90,6 @@ export function Page({
           <Tab label={`Inspect ${inspected.kind} #${inspected.id}`}>
             <Inspect
               history={history}
-              language={language}
               inspected={inspected}
               inspect={inspect}
             />

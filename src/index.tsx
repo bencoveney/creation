@@ -16,7 +16,6 @@ import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
 import { validate } from "./language/ipa";
-import { createNewLanguage, spellNameWord } from "./language/names";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -78,13 +77,7 @@ function Wrapper() {
     }
   }, [playbackControls]);
 
-  return (
-    <Page
-      history={history}
-      language={lookupFirstValue(history.dialects).language}
-      playbackControls={playbackControls}
-    />
-  );
+  return <Page history={history} playbackControls={playbackControls} />;
 }
 
 createRoot(root).render(<Wrapper />);

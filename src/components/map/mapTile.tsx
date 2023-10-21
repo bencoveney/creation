@@ -1,7 +1,4 @@
 import { History } from "../../history";
-import { Language } from "../../language";
-import { getWords } from "../../language/word";
-import { spellWords } from "../../language/spelling";
 import { lookupValues } from "../../history/lookup";
 import { Tile } from "../../world";
 import { Name } from "./../name";
@@ -9,19 +6,10 @@ import { Tooltip } from "./../layout/tooltip";
 import { Motif } from "./../motif";
 import { PropsWithChildren } from "react";
 
-export function MapTile({
-  tile,
-  history,
-  language,
-}: {
-  tile: Tile;
-  history: History;
-  language: Language;
-}) {
+export function MapTile({ tile, history }: { tile: Tile; history: History }) {
   if (!tile.discovered) {
     return null;
   }
-  const languageName = spellWords(getWords(language.name, language));
   const beings = lookupValues(history.beings).filter(
     (being) => being.location === tile.id
   );
@@ -36,19 +24,13 @@ export function MapTile({
       }}
     >
       <BlackLabel>
-        <Name
-          languageName={languageName}
-          word={spellWords(getWords(tile.name, language))}
-        />
+        <Name languageName={"ID"} word={tile.id} />
       </BlackLabel>
       <br />
       {beings.length ? (
         <BlackLabel>
           {beings.map((being, index) => (
-            <Tooltip
-              key={index}
-              label={spellWords(getWords(being.name, language))}
-            >
+            <Tooltip key={index} label={being.id}>
               <Motif motif={being.motif} />
             </Tooltip>
           ))}

@@ -1,5 +1,7 @@
 import { Tooltip } from "./layout/tooltip";
 
+// TODO: Lang fix...
+
 export function Name({
   languageName,
   word,
