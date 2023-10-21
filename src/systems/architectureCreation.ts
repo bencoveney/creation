@@ -14,7 +14,7 @@ import {
 import { commaSeparate } from "../utils/string";
 import { randomChoice } from "../utils/random";
 import { config } from "../config";
-import { createNames } from "../language/names";
+import { createNames } from "../language";
 
 export function runArchitectureCreation(history: History) {
   forEachBeingByActivity(history, "createArchitecture", createArchitecture);

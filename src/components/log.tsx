@@ -10,10 +10,10 @@ import { InspectProps } from "../hooks/useInspect";
 import { spacer } from "./layout/theme";
 import { InspectLinks } from "./inspectLinks";
 import { useLanguage } from "./language/languageContext";
-import { NewLanguage, spellNameWordByKey } from "../language/names";
+import { Language, spellNameWordByKey } from "../language";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-function formatLog(message: string, language: NewLanguage): string {
+function formatLog(message: string, language: Language): string {
   return message.replace(logReplaceRegex, (_, word) =>
     spellNameWordByKey(word, language)
   );

@@ -1,7 +1,8 @@
 import { stringifySyllableStructure } from "./syllableStructure";
-import { HasNames, NewLanguage, spellNameWord } from "../names";
+import { HasNames } from "../names";
+import { Language, spellNameWord } from "..";
 
-export function validate(hasNames: HasNames[], language: NewLanguage) {
+export function validate(hasNames: HasNames[], language: Language) {
   console.log("onset", language.phonotactics.possibilities.onset);
   console.log("nucleus", language.phonotactics.possibilities.nucleus);
   console.log("coda", language.phonotactics.possibilities.coda);

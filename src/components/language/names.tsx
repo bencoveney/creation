@@ -1,4 +1,5 @@
-import { HasNames, spellNameWord } from "../../language/names";
+import { spellNameWord } from "../../language";
+import { HasNames } from "../../language/names";
 import { spacer } from "../layout/theme";
 import { Tooltip } from "../layout/tooltip";
 import { useLanguage } from "./languageContext";

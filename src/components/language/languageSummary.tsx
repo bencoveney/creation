@@ -1,19 +1,19 @@
 import { InspectProps } from "../../hooks/useInspect";
 import { InspectLink } from "../inspectLink";
-import { NewLanguage } from "../../language/names";
+import { Language } from "../../language";
 import { Names } from "./names";
 
 export function LanguageSummary({
-  newLanguage,
+  language,
   inspect,
 }: {
-  newLanguage: NewLanguage;
+  language: Language;
 } & InspectProps) {
   return (
     <>
-      <InspectLink id={newLanguage.id} inspect={inspect} kind="language" />
-      <Names named={newLanguage} />
-      <div>Words: {newLanguage.registry.knownWords.size}</div>
+      <InspectLink id={language.id} inspect={inspect} kind="language" />
+      <Names named={language} />
+      <div>Words: {language.registry.knownWords.size}</div>
     </>
   );
 }

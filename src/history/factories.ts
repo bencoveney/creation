@@ -21,7 +21,7 @@ import {
   TerrainRegistryStringEntry,
   getTerrainLayer,
 } from "../terrain/registry";
-import { NewLanguage, createNames, createNewLanguage } from "../language/names";
+import { Language, createNames, createLanguage } from "../language";
 
 export function initialiseHistory() {
   const terrainRegistry: TerrainRegistry = [];
@@ -33,7 +33,7 @@ export function initialiseHistory() {
   const result: History = {
     regions: createLookup<Region>(),
     beings: createLookup<Being>(),
-    languages: createLookup<NewLanguage>(),
+    languages: createLookup<Language>(),
     artifacts: createLookup<Artifact>(),
     log: createLogger(0),
     tick: 0,
@@ -41,7 +41,7 @@ export function initialiseHistory() {
     terrainRegistry,
     availableActions: [],
   };
-  result.languages.set(createNewLanguage());
+  result.languages.set(createLanguage());
   createWorldRegion(result.regions);
   createInitialDeities(result);
   if (result.regions.map.size >= 1 && !result.world) {

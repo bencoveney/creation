@@ -5,7 +5,7 @@ import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import { NeedsId } from "../history/lookup";
 import { Array2d, array2dCreate, array2dGet } from "../utils/array2d";
 import { config } from "../config";
-import { createNames } from "../language/names";
+import { createNames } from "../language";
 
 export type Tile = {
   x: number;

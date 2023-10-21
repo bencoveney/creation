@@ -10,7 +10,8 @@ import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, lookupValues } from "./lookup";
 import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
-import { HasNames, NewLanguage } from "../language/names";
+import { Language } from "../language";
+import { HasNames } from "../language/names";
 
 export type Region = HasNames & {
   id: string;
@@ -61,7 +62,7 @@ export type Artifact = HasNames & {
 export type History = HasAvailableActions<TileAction> & {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
-  languages: Lookup<NewLanguage>;
+  languages: Lookup<Language>;
   artifacts: Lookup<Artifact>;
   log: Logger;
   tick: number;

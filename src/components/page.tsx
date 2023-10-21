@@ -80,7 +80,7 @@ export function Page({
             {lookupValues(history.languages).map((language) => {
               return (
                 <GridItem key={language.id}>
-                  <LanguageSummary newLanguage={language} inspect={inspect} />
+                  <LanguageSummary language={language} inspect={inspect} />
                 </GridItem>
               );
             })}

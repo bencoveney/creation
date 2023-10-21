@@ -14,7 +14,7 @@ import {
   getCurrentActivity,
 } from "../decision/activity";
 import { commaSeparate } from "../utils/string";
-import { createNames } from "../language/names";
+import { createNames } from "../language";
 
 export function runArtifactCreation(history: History) {
   forEachBeingByActivity(history, "createArtifact", createArtifact);

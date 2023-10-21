@@ -1,12 +1,12 @@
 import { PropsWithChildren, createContext, useContext } from "react";
-import { NewLanguage } from "../../language/names";
+import { Language } from "../../language";
 
-const Context = createContext<NewLanguage | null>(null);
+const Context = createContext<Language | null>(null);
 
 export function LanguageContext({
   children,
   defaultLanguage,
-}: { defaultLanguage: NewLanguage } & PropsWithChildren) {
+}: { defaultLanguage: Language } & PropsWithChildren) {
   return (
     <Context.Provider value={defaultLanguage}>{children}</Context.Provider>
   );

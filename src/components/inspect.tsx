@@ -7,7 +7,7 @@ import { Log } from "./log";
 import { Region as RegionComponent } from "./region";
 import { Artifact as ArtifactComponent } from "./artifact";
 import { Language as LanguageComponent } from "./language/language";
-import { NewLanguage } from "../language/names";
+import { Language } from "../language";
 
 export function Inspect({
   history,
@@ -36,8 +36,8 @@ export function Inspect({
         />
       );
     case "language":
-      const newLanguage = getFromLookup(history.languages, inspected.id);
-      return <InspectLanguage newLanguage={newLanguage} inspect={inspect} />;
+      const language = getFromLookup(history.languages, inspected.id);
+      return <InspectLanguage language={language} inspect={inspect} />;
     default:
       return null;
   }
@@ -107,10 +107,10 @@ function InspectArtifact({
 }
 
 function InspectLanguage({
-  newLanguage,
+  language,
   inspect,
 }: {
-  newLanguage: NewLanguage;
+  language: Language;
 } & InspectProps) {
-  return <LanguageComponent newLanguage={newLanguage} inspect={inspect} />;
+  return <LanguageComponent language={language} inspect={inspect} />;
 }
