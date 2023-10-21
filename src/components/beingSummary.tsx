@@ -14,6 +14,7 @@ export function BeingSummary({
     <>
       <InspectLink id={being.id} inspect={inspect} kind="being" />
       <Names named={being} />
+      <div>{being.role}</div>
       <Motif motif={being.motif} />
       {being.theme && `Represents ${being.theme}`}
     </>

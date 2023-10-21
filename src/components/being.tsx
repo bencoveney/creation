@@ -20,8 +20,9 @@ export function Being({
     <>
       <InspectLink id={being.id} inspect={inspect} kind="being" />
       <Names named={being} />
+      <div>{being.role}</div>
       <Motif motif={being.motif} />
-      {being.theme && `Represents ${being.theme}`}
+      <div>{being.theme && `Represents ${being.theme}`}</div>
       <Needs needs={being.needs} />
       <Preferences preferences={being.preferences} />
       <TimesChosen timesChosen={being.timesChosen} />

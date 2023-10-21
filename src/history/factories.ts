@@ -200,6 +200,7 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
   const deity = beings.set({
     kind: "deity",
     names: createNames(theme, ["deity"]),
+    role: randomChoice(config.deityRole),
     theme,
     relationships: {},
     needs: createDeityNeeds(),
@@ -233,6 +234,7 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
 // Herald
 // Apprentice
 // Follower
+// Servant
 
 // Plants:
 // fungus
@@ -245,17 +247,6 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
 // pathos
 // logos
 // ethos
-
-// Activities:
-// craft
-// build
-// mine
-// weave
-// hunt
-// cook
-// dance
-// song
-// fight
 
 // Sin:
 // envy

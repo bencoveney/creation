@@ -43,6 +43,7 @@ export type Being = HasAvailableActions<BeingAction> &
   HasNames & {
     id: string;
     kind: "deity";
+    role: string;
     theme?: string;
     location?: string; // Region ID.
     motif?: Motif;
