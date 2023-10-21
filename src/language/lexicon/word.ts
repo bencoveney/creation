@@ -56,13 +56,13 @@ export function spellWord(word: Word): string {
 export function etymology(word: Word): string {
   switch (word.kind) {
     case "root":
-      return `root: ${word.root.concept}`;
+      return `(root: ${word.root.concept})`;
     case "affix":
       switch (word.affix.kind) {
         case MorphemeKind.Prefix:
-          return `(prefix: ${word.affix.concept}) (${etymology(word.stem)})`;
+          return `(prefix: ${word.affix.concept}) ${etymology(word.stem)}`;
         case MorphemeKind.Suffix:
-          return `(${etymology(word.stem)}) (suffix:${word.affix.concept})`;
+          return `${etymology(word.stem)} (suffix:${word.affix.concept})`;
         case MorphemeKind.Root:
           throw new Error("what");
       }
