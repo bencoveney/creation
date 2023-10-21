@@ -2434,7 +2434,7 @@
           var HostPortal = 4;
           var HostComponent = 5;
           var HostText = 6;
-          var Fragment22 = 7;
+          var Fragment20 = 7;
           var Mode = 8;
           var ContextConsumer = 9;
           var ContextProvider = 10;
@@ -3590,7 +3590,7 @@
                 return "DehydratedFragment";
               case ForwardRef:
                 return getWrappedName$1(type, type.render, "ForwardRef");
-              case Fragment22:
+              case Fragment20:
                 return "Fragment";
               case HostComponent:
                 return type;
@@ -13261,7 +13261,7 @@
               }
             }
             function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-              if (current2 === null || current2.tag !== Fragment22) {
+              if (current2 === null || current2.tag !== Fragment20) {
                 var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
                 created.return = returnFiber;
                 return created;
@@ -13664,7 +13664,7 @@
                 if (child.key === key) {
                   var elementType = element.type;
                   if (elementType === REACT_FRAGMENT_TYPE) {
-                    if (child.tag === Fragment22) {
+                    if (child.tag === Fragment20) {
                       deleteRemainingChildren(returnFiber, child.sibling);
                       var existing = useFiber(child, element.props.children);
                       existing.return = returnFiber;
@@ -17839,7 +17839,7 @@
                 var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
                 return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
               }
-              case Fragment22:
+              case Fragment20:
                 return updateFragment(current2, workInProgress2, renderLanes2);
               case Mode:
                 return updateMode(current2, workInProgress2, renderLanes2);
@@ -18112,7 +18112,7 @@
               case SimpleMemoComponent:
               case FunctionComponent:
               case ForwardRef:
-              case Fragment22:
+              case Fragment20:
               case Mode:
               case Profiler:
               case ContextConsumer:
@@ -22371,7 +22371,7 @@
             return fiber;
           }
           function createFiberFromFragment(elements, mode, lanes, key) {
-            var fiber = createFiber(Fragment22, elements, key, mode);
+            var fiber = createFiber(Fragment20, elements, key, mode);
             fiber.lanes = lanes;
             return fiber;
           }
@@ -24376,11 +24376,11 @@
               return jsxWithValidation(type, props, key, false);
             }
           }
-          var jsx44 = jsxWithValidationDynamic;
-          var jsxs34 = jsxWithValidationStatic;
+          var jsx40 = jsxWithValidationDynamic;
+          var jsxs32 = jsxWithValidationStatic;
           exports.Fragment = REACT_FRAGMENT_TYPE;
-          exports.jsx = jsx44;
-          exports.jsxs = jsxs34;
+          exports.jsx = jsx40;
+          exports.jsxs = jsxs32;
         })();
       }
     }
@@ -24489,288 +24489,6 @@
 
   // src/index.tsx
   var import_client = __toESM(require_client(), 1);
-
-  // src/language/phoneme.ts
-  var allPhonemes = {
-    singleVowels: [
-      "\u026A" /* ɪ */,
-      "i_" /* i_ */,
-      "\u028A" /* ʊ */,
-      "u_" /* u_ */,
-      "e" /* e */,
-      "\u025C_" /* ɜ_ */,
-      "\u0259" /* ə */,
-      "\u0254_" /* ɔ_ */,
-      "\xE6" /* æ */,
-      "\u028C" /* ʌ */,
-      "\u0252" /* ɒ */,
-      "\u0251_" /* ɑ_ */
-    ],
-    dipthongs: [
-      "e\u026A" /* eɪ */,
-      "\u0254\u026A" /* ɔɪ */,
-      "a\u026A" /* aɪ */,
-      "e\u0259" /* eə */,
-      "\u026A\u0259" /* ɪə */,
-      "\u028A\u0259" /* ʊə */,
-      "\u0259\u028A" /* əʊ */,
-      "a\u028A" /* aʊ */
-    ],
-    unvoicedConstants: [
-      "p" /* p */,
-      "f" /* f */,
-      "\u03B8" /* θ */,
-      "t" /* t */,
-      "s" /* s */,
-      "\u0283" /* ʃ */,
-      "\u02A7" /* ʧ */,
-      "k" /* k */
-    ],
-    voicedConstants: [
-      "b" /* b */,
-      "v" /* v */,
-      "\xF0" /* ð */,
-      "d" /* d */,
-      "z" /* z */,
-      "\u0292" /* ʒ */,
-      "\u02A4" /* ʤ */,
-      "g" /* g */,
-      "m" /* m */,
-      "n" /* n */,
-      "\u014B" /* ŋ */,
-      "h" /* h */,
-      "w" /* w */,
-      "l" /* l */,
-      "r" /* r */,
-      "j" /* j */
-    ]
-  };
-
-  // src/language/spelling.ts
-  function spellWords(words) {
-    return words.map((word) => spellWord(word)).join(" ");
-  }
-  function spellWord(word) {
-    return word.map((phoneme) => spellPhoneme(phoneme)).join("");
-  }
-  function spellPhoneme(phoneme) {
-    switch (phoneme) {
-      case "\u026A" /* ɪ */:
-        return "i";
-      case "i_" /* i_ */:
-        return "ee";
-      case "\u028A" /* ʊ */:
-        return "oo";
-      case "u_" /* u_ */:
-        return "oo";
-      case "e" /* e */:
-        return "e";
-      case "\u025C_" /* ɜ_ */:
-        return "er";
-      case "\u0259" /* ə */:
-        return "er";
-      case "\u0254_" /* ɔ_ */:
-        return "oor";
-      case "\xE6" /* æ */:
-        return "a";
-      case "\u028C" /* ʌ */:
-        return "u";
-      case "\u0252" /* ɒ */:
-        return "o";
-      case "\u0251_" /* ɑ_ */:
-        return "ar";
-      case "e\u026A" /* eɪ */:
-        return "ai";
-      case "\u0254\u026A" /* ɔɪ */:
-        return "oi";
-      case "a\u026A" /* aɪ */:
-        return "i";
-      case "e\u0259" /* eə */:
-        return "air";
-      case "\u026A\u0259" /* ɪə */:
-        return "ere";
-      case "\u028A\u0259" /* ʊə */:
-        return "our";
-      case "\u0259\u028A" /* əʊ */:
-        return "ow";
-      case "a\u028A" /* aʊ */:
-        return "ou";
-      case "p" /* p */:
-        return "p";
-      case "f" /* f */:
-        return "f";
-      case "\u03B8" /* θ */:
-        return "th";
-      case "t" /* t */:
-        return "t";
-      case "s" /* s */:
-        return "s";
-      case "\u0283" /* ʃ */:
-        return "sh";
-      case "\u02A7" /* ʧ */:
-        return "ch";
-      case "k" /* k */:
-        return "c";
-      case "b" /* b */:
-        return "b";
-      case "v" /* v */:
-        return "v";
-      case "\xF0" /* ð */:
-        return "th";
-      case "d" /* d */:
-        return "d";
-      case "z" /* z */:
-        return "z";
-      case "\u0292" /* ʒ */:
-        return "s";
-      case "\u02A4" /* ʤ */:
-        return "j";
-      case "g" /* g */:
-        return "g";
-      case "m" /* m */:
-        return "m";
-      case "n" /* n */:
-        return "n";
-      case "\u014B" /* ŋ */:
-        return "n";
-      case "h" /* h */:
-        return "h";
-      case "w" /* w */:
-        return "w";
-      case "l" /* l */:
-        return "l";
-      case "r" /* r */:
-        return "r";
-      case "j" /* j */:
-        return "y";
-      case "|" /* SyllableBreak */:
-        return "";
-    }
-  }
-
-  // src/utils/random.ts
-  function randomChoice(items) {
-    if (items.length === 0) {
-      throw new Error("Probably a mistake");
-    }
-    return items[randomInt(0, items.length)];
-  }
-  function randomChoices(items, nChoices) {
-    if (nChoices >= items.length) {
-      throw new Error("Probably a mistake");
-    }
-    const result = [randomChoice(items)];
-    if (nChoices > 0) {
-      result.push(
-        ...randomChoices(
-          items.filter((next) => next !== result[0]),
-          nChoices - 1
-        )
-      );
-    }
-    return result;
-  }
-  function randomInt(minIncl = 0, maxExcl = 1) {
-    return Math.floor(Math.random() * (maxExcl - minIncl) + minIncl);
-  }
-  function flipCoin() {
-    return rollDice(0.5);
-  }
-  function rollDice(chanceOfSuccess) {
-    return Math.random() < chanceOfSuccess;
-  }
-
-  // src/language/syllable.ts
-  function generateSyllableStructure() {
-    const minConsonants = 3;
-    const onset = randomInt(0, 3);
-    const coda = minConsonants - onset;
-    return {
-      minOnset: 0,
-      maxOnset: onset,
-      minNucleus: 1,
-      maxNucleus: 1,
-      minCoda: 0,
-      maxCoda: coda
-    };
-  }
-  function generateSyllable({
-    syllableStructure,
-    phonemes
-  }) {
-    const onset = randomInt(
-      syllableStructure.minOnset,
-      syllableStructure.maxOnset
-    );
-    const nucleus = randomInt(
-      syllableStructure.minNucleus,
-      syllableStructure.maxNucleus
-    );
-    const coda = randomInt(syllableStructure.minCoda, syllableStructure.maxCoda);
-    const result = [];
-    for (let i = 0; i < onset; i++) {
-      result.push(
-        randomChoice([...phonemes.unvoicedConstants, ...phonemes.voicedConstants])
-      );
-    }
-    for (let i = 0; i < nucleus; i++) {
-      result.push(
-        randomChoice([...phonemes.singleVowels, ...phonemes.dipthongs])
-      );
-    }
-    for (let i = 0; i < coda; i++) {
-      result.push(
-        randomChoice([...phonemes.unvoicedConstants, ...phonemes.voicedConstants])
-      );
-    }
-    return result;
-  }
-
-  // src/language/word.ts
-  function generateUnusedWord(language, minSyllables) {
-    let attempt = 1;
-    while (true) {
-      const numSyllables = minSyllables + Math.floor(attempt++ / 5);
-      const possible = [];
-      for (let i = 0; i < numSyllables; i++) {
-        const syllable = generateSyllable(language);
-        possible.push(...syllable);
-      }
-      const conflictingPhonemes = Object.entries(language.words).find(
-        ([_, voiced]) => possible.length === voiced.length && possible.every((phoneme, index) => voiced[index] === phoneme)
-      );
-      if (conflictingPhonemes) {
-        console.log(
-          `Phonemes conflict with ${conflictingPhonemes[0]} (${conflictingPhonemes[1]})`
-        );
-      } else {
-        const conflictingSpelling = Object.entries(language.words).find(
-          ([_, voiced]) => spellWord(voiced) === spellWord(possible)
-        );
-        if (conflictingSpelling) {
-          console.log(
-            `Spelling conflict with ${conflictingSpelling[0]} (${conflictingSpelling[1]})`
-          );
-        } else {
-          return possible;
-        }
-      }
-      if (attempt > 50) {
-        console.error("Couldn't generate word :<");
-        return [];
-      }
-    }
-  }
-  function getWord(word, language, minSyllables = 2) {
-    const sanitised = word.toLocaleLowerCase();
-    if (!language.words[sanitised]) {
-      language.words[sanitised] = generateUnusedWord(language, minSyllables);
-    }
-    return language.words[sanitised];
-  }
-  function getWords(words, language) {
-    return words.split(" ").map((word) => getWord(word, language));
-  }
 
   // src/hooks/useInput.tsx
   var import_react = __toESM(require_react(), 1);
@@ -25107,15 +24825,11 @@
   // src/components/log.tsx
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
   var logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-  function formatLog(message, language) {
-    return message.replace(
-      logReplaceRegex,
-      (_, word) => `${spellWords(getWords(word, language))}`
-    );
+  function formatLog(message) {
+    return message.replace(logReplaceRegex, (_, word) => `${word}`);
   }
   function Log({
     history: history3,
-    language,
     being,
     location,
     artifact,
@@ -25129,7 +24843,7 @@
     const selectedLogs = history3.log.entries.map(([tick, system, log, deities, locations, artifacts]) => [
       tick,
       system,
-      formatLog(log, language),
+      formatLog(log),
       deities,
       locations,
       artifacts
@@ -25336,154 +25050,8 @@
   function lookupValues(lookup) {
     return Array.from(lookup.map.values());
   }
-  function lookupEntries(lookup) {
-    return Array.from(lookup.map.entries());
-  }
   function lookupFirstValue(lookup) {
     return lookup.map.values().next().value;
-  }
-
-  // src/components/layout/commaSeparate.tsx
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  function CommaSeparate({ children }) {
-    if (!Array.isArray(children)) {
-      throw new Error("What");
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_jsx_runtime13.Fragment, { children: children.map((child, i) => [i > 0 && ", ", child]) });
-  }
-
-  // src/components/layout/tooltip.tsx
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  function Tooltip({
-    children,
-    label
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-      "span",
-      {
-        title: label,
-        style: {
-          textDecoration: "underline",
-          textDecorationStyle: "dotted"
-        },
-        children
-      }
-    );
-  }
-
-  // src/components/name.tsx
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  function Name({
-    languageName,
-    word
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tooltip, { label: `From the language ${languageName}`, children: word });
-  }
-
-  // src/components/names.tsx
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  function Names({ name, history: history3 }) {
-    const translations = lookupEntries(history3.dialects).map(
-      ([dialectName, dialect]) => [
-        dialectName,
-        spellWord(getWord(dialect.language.name, dialect.language)),
-        spellWords(getWords(name, dialect.language))
-      ]
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
-      "Known as",
-      " ",
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(CommaSeparate, { children: translations.map(([dialectName, languageName, word]) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Name, { languageName, word }, dialectName)) })
-    ] });
-  }
-
-  // src/components/layout/tags.tsx
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  function Tags({ children }) {
-    if (Array.isArray(children) && children.length === 0) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("ul", { style: { margin: 0, padding: 0 }, children });
-  }
-  function TagsItem({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-      "li",
-      {
-        style: {
-          display: "inline-block",
-          margin: 2,
-          padding: 2,
-          border: "1px solid grey"
-        },
-        children
-      }
-    );
-  }
-
-  // src/components/dialect.tsx
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
-  function Dialect({
-    dialect,
-    history: history3
-  }) {
-    const { id: id3, language } = dialect;
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Id, { value: id3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Names, { name: language.name, history: history3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("ul", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Structure:",
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(Tooltip, { label: "Onset", children: [
-            "[",
-            language.syllableStructure.minOnset,
-            "-",
-            language.syllableStructure.maxOnset,
-            "]"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(Tooltip, { label: "Nucleus", children: [
-            "[",
-            language.syllableStructure.minNucleus,
-            "-",
-            language.syllableStructure.maxNucleus,
-            "]"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(Tooltip, { label: "Coda", children: [
-            "[",
-            language.syllableStructure.minCoda,
-            "-",
-            language.syllableStructure.maxCoda,
-            "]"
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Single Vowels:",
-          " ",
-          language.phonemes.singleVowels.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Dipthongs:",
-          " ",
-          language.phonemes.dipthongs.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Unvoiced Consonants:",
-          " ",
-          language.phonemes.unvoicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("li", { children: [
-          "Voiced Consonants:",
-          " ",
-          language.phonemes.voicedConstants.map((phoneme) => spellPhoneme(phoneme)).join(", ")
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Tags, { children: Object.entries(language.words).map(([word, voicing]) => /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(TagsItem, { children: [
-        word,
-        ": ",
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("i", { children: spellWord(voicing) })
-      ] }, word)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("ul", { style: { margin: 0, padding: 0 } })
-    ] });
   }
 
   // src/components/world.tsx
@@ -26299,7 +25867,7 @@
   }
 
   // src/components/map/terrain.tsx
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
   var selectedColor = (0, import_color.toHex)({ r: 0, g: 255, b: 0 });
   var missingColor = { r: 0, g: 255, b: 0 };
   function Terrain({
@@ -26344,7 +25912,7 @@
         }
       });
     }, [canvasRef.current, hoverX, hoverY, layer]);
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "canvas",
       {
         ref: canvasRef,
@@ -26401,27 +25969,50 @@
     return newTerrainRegistry;
   }
 
+  // src/components/layout/tooltip.tsx
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  function Tooltip({
+    children,
+    label
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      "span",
+      {
+        title: label,
+        style: {
+          textDecoration: "underline",
+          textDecorationStyle: "dotted"
+        },
+        children
+      }
+    );
+  }
+
+  // src/components/name.tsx
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  function Name({
+    languageName,
+    word
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tooltip, { label: `From the language ${languageName}`, children: word });
+  }
+
   // src/components/motif.tsx
-  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
   function Motif({ motif }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(import_jsx_runtime20.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_jsx_runtime16.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
   }
 
   // src/components/map/mapTile.tsx
-  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
-  function MapTile({
-    tile,
-    history: history3,
-    language
-  }) {
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  function MapTile({ tile, history: history3 }) {
     if (!tile.discovered) {
       return null;
     }
-    const languageName = spellWords(getWords(language.name, language));
     const beings = lookupValues(history3.beings).filter(
       (being) => being.location === tile.id
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
       "div",
       {
         style: {
@@ -26432,22 +26023,9 @@
           lineHeight: 2
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
-            Name,
-            {
-              languageName,
-              word: spellWords(getWords(tile.name, language))
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("br", {}),
-          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
-            Tooltip,
-            {
-              label: spellWords(getWords(being.name, language)),
-              children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(Motif, { motif: being.motif })
-            },
-            index
-          )) }) : /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Name, { languageName: "ID", word: tile.id }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("br", {}),
+          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Tooltip, { label: being.id, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Motif, { motif: being.motif }) }, index)) }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
             "span",
             {
               style: {
@@ -26461,7 +26039,7 @@
     );
   }
   function BlackLabel({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
       "span",
       {
         style: {
@@ -26727,40 +26305,6 @@
         averageTemp > 0.75 ? "temp-hot" : averageTemp < 0.25 ? "temp-cold" : "temp-average"
       ]
     };
-  }
-
-  // src/language/factories.ts
-  function describeNoun(nouns, adjectices) {
-    return flipCoin() ? randomChoice(nouns) : `${randomChoice(adjectices)} ${randomChoice(nouns)}`;
-  }
-  var worldNameCount = 0;
-  function createWorldName() {
-    return `world_${worldNameCount++}`;
-  }
-  function createRegionName() {
-    const mode = randomInt(0, 3);
-    switch (mode) {
-      case 0:
-        return `the ${describeNoun(
-          config.regionPlaces,
-          config.regionAdjectives
-        )}`;
-      case 1:
-        return `the ${describeNoun(
-          config.regionPlaces,
-          config.regionAdjectives
-        )}`;
-      case 2:
-        return `${randomChoice(config.settlementNameStarts)}${randomChoice(
-          config.settlementNameEnds
-        )}`;
-      default:
-        return "default";
-    }
-  }
-  var deityNameCount = 0;
-  function createDeityName() {
-    return `deity_${deityNameCount++}`;
   }
 
   // src/language/ipa/consonant.ts
@@ -28287,6 +27831,35 @@
     )
   };
 
+  // src/utils/random.ts
+  function randomChoice(items) {
+    if (items.length === 0) {
+      throw new Error("Probably a mistake");
+    }
+    return items[randomInt(0, items.length)];
+  }
+  function randomChoices(items, nChoices) {
+    if (nChoices >= items.length) {
+      throw new Error("Probably a mistake");
+    }
+    const result = [randomChoice(items)];
+    if (nChoices > 0) {
+      result.push(
+        ...randomChoices(
+          items.filter((next) => next !== result[0]),
+          nChoices - 1
+        )
+      );
+    }
+    return result;
+  }
+  function randomInt(minIncl = 0, maxExcl = 1) {
+    return Math.floor(Math.random() * (maxExcl - minIncl) + minIncl);
+  }
+  function rollDice(chanceOfSuccess) {
+    return Math.random() < chanceOfSuccess;
+  }
+
   // src/language/ipa/syllable.ts
   function createSyllable(phonotactics, minSize, maxSize) {
     const syllableStructure = randomChoice(
@@ -28359,16 +27932,16 @@
       stem
     };
   }
-  function spellWord2(word) {
+  function spellWord(word) {
     switch (word.kind) {
       case "root":
         return spellMorpheme(word.root);
       case "affix":
         switch (word.affix.kind) {
           case 1 /* Prefix */:
-            return `${spellMorpheme(word.affix)}${spellWord2(word.stem)}`;
+            return `${spellMorpheme(word.affix)}${spellWord(word.stem)}`;
           case 2 /* Suffix */:
-            return `${spellWord2(word.stem)}${spellMorpheme(word.affix)}`;
+            return `${spellWord(word.stem)}${spellMorpheme(word.affix)}`;
           case 0 /* Root */:
             throw new Error("what");
         }
@@ -28451,7 +28024,7 @@
     }
     return `${rootConcept}${sortStrings(affixConcepts).map((affixConcept) => `_${affixConcept}`).join("")}`.toLowerCase();
   }
-  function getWord2(registry, phonotactics, rootConcept, affixConcepts) {
+  function getWord(registry, phonotactics, rootConcept, affixConcepts) {
     const key = createRegistryKey(rootConcept, affixConcepts);
     if (registry.conceptLookup.has(key)) {
       return registry.conceptLookup.get(key);
@@ -28478,7 +28051,7 @@
       return registry.conceptLookup.get(key);
     }
     const [root2, ...affixes] = key.split("_");
-    return getWord2(registry, phonotactics, root2, affixes);
+    return getWord(registry, phonotactics, root2, affixes);
   }
 
   // src/language/names/index.ts
@@ -28504,7 +28077,7 @@
     return getWordForKey(language.registry, language.phonotactics, existingName);
   }
   function spellNameWord(hasNames, language) {
-    return spellWord2(getNameWord(hasNames, language));
+    return spellWord(getNameWord(hasNames, language));
   }
 
   // src/world/index.ts
@@ -28524,7 +28097,6 @@
         terrainRegistry,
         terrainAssessment,
         discovered: false,
-        name: createRegionName(),
         names: createNames(
           terrainAssessment.rootConcept,
           terrainAssessment.affixConcepts
@@ -28543,10 +28115,9 @@
   }
 
   // src/components/map/map.tsx
-  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
   function Map2({
     history: history3,
-    language,
     terrainLayer,
     setSelection
   }) {
@@ -28583,7 +28154,7 @@
       }
     }, [setSelection, pixelX, flipPixelY]);
     const layer = getTerrainLayer(terrainRegistry, terrainLayer);
-    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
       "div",
       {
         style: {
@@ -28601,7 +28172,7 @@
         },
         onMouseMove: handler,
         children: [
-          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             "div",
             {
               style: {
@@ -28615,10 +28186,10 @@
                 padding: "10px",
                 boxSizing: "border-box"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(MapTile, { tile: selectedTile, history: history3, language })
+              children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MapTile, { tile: selectedTile, history: history3 })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             "div",
             {
               style: {
@@ -28629,7 +28200,7 @@
                 aspectRatio: 1,
                 zIndex: 0
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
+              children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
             }
           )
         ]
@@ -28638,41 +28209,39 @@
   }
 
   // src/components/region.tsx
-  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   function Region({
     region,
-    history: history3,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InspectLink, { kind: "region", id: region.id, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { children: region.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Names, { name: region.name, history: history3 })
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(InspectLink, { kind: "region", id: region.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { children: region.names.defaultKey })
     ] });
   }
 
   // src/components/terrainLayerPicker.tsx
-  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime20 = __toESM(require_jsx_runtime(), 1);
   function TerrainLayerPicker({
     terrainRegistry,
     setTerrainLayer
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(import_jsx_runtime24.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { children: "Terrain layer" }),
-      terrainRegistry.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("button", { onClick: () => setTerrainLayer(entry.name), children: entry.name }, entry.name))
+    return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { children: "Terrain layer" }),
+      terrainRegistry.map((entry) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("button", { onClick: () => setTerrainLayer(entry.name), children: entry.name }, entry.name))
     ] });
   }
 
   // src/components/terrainValues.tsx
   var import_color3 = __toESM(require_color(), 1);
-  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime21 = __toESM(require_jsx_runtime(), 1);
   function TerrainValues({
     terrainRegistry,
     selectionX,
     selectionY
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)(import_jsx_runtime21.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
         "Terrain Position: (",
         selectionX,
         ", ",
@@ -28684,19 +28253,19 @@
           case "color":
             const color = array2dGet(entry.values, selectionX, selectionY);
             const hex = (0, import_color3.toHex)(color);
-            return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
               entry.name,
               ": ",
-              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { style: { backgroundColor: hex }, children: hex })
+              /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("span", { style: { backgroundColor: hex }, children: hex })
             ] }, entry.name);
           case "number":
-            return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
               entry.name,
               ": ",
               round(array2dGet(entry.values, selectionX, selectionY), 3)
             ] }, entry.name);
           case "string":
-            return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { children: [
+            return /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { children: [
               entry.name,
               ": ",
               array2dGet(entry.values, selectionX, selectionY)
@@ -28707,17 +28276,17 @@
   }
 
   // src/components/tileValues.tsx
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime22 = __toESM(require_jsx_runtime(), 1);
   function TileValues({ tile }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(import_jsx_runtime26.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(import_jsx_runtime22.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { children: [
         "Tile Position: (",
         tile.x,
         ", ",
         tile.y,
         ")"
       ] }),
-      Object.entries(tile.terrainAssessment).map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { children: [
+      Object.entries(tile.terrainAssessment).map(([key, value]) => /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)("div", { children: [
         key,
         ": ",
         stringify(value)
@@ -28737,23 +28306,21 @@
   }
 
   // src/components/beingSummary.tsx
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
   function BeingSummary({
     being,
-    history: history3,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(import_jsx_runtime27.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { children: being.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Names, { name: being.name, history: history3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Motif, { motif: being.motif }),
+    return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { children: being.names.defaultKey }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Motif, { motif: being.motif }),
       being.theme && `Represents ${being.theme}`
     ] });
   }
 
   // src/components/worldSelection.tsx
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
   function WorldSelection({
     history: history3,
     selectionX,
@@ -28767,15 +28334,15 @@
     }
     const selectedTile = getTile(history3.world, selectionX, selectionY);
     const layer = getTerrainLayer(selectedTile.terrainRegistry, terrainLayer);
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(Grid, { columns: 1, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(Grid, { columns: 1, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         TerrainLayerPicker,
         {
           terrainRegistry: history3.terrainRegistry,
           setTerrainLayer
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         TerrainValues,
         {
           terrainRegistry: history3.terrainRegistry,
@@ -28783,18 +28350,17 @@
           selectionY
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Terrain, { layer, hoverX: null, hoverY: null }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(TileValues, { tile: selectedTile }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Region, { region: selectedTile, history: history3, inspect }) }),
-      selectedTile && lookupValues(history3.beings).filter((being) => being.location === selectedTile.id).map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(BeingSummary, { being, history: history3, inspect }) }, index))
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Terrain, { layer, hoverX: null, hoverY: null }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(TileValues, { tile: selectedTile }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(Region, { region: selectedTile, inspect }) }),
+      selectedTile && lookupValues(history3.beings).filter((being) => being.location === selectedTile.id).map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(BeingSummary, { being, inspect }) }, index))
     ] });
   }
 
   // src/components/world.tsx
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime25 = __toESM(require_jsx_runtime(), 1);
   function World({
     history: history3,
-    language,
     inspect
   }) {
     if (!history3.world) {
@@ -28811,7 +28377,7 @@
       },
       [selection]
     );
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
       "div",
       {
         style: {
@@ -28820,16 +28386,15 @@
           alignItems: "flex-start"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
             Map2,
             {
               history: history3,
-              language,
               terrainLayer,
               setSelection: setSelectionComparer
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: { flexGrow: 1 }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
             WorldSelection,
             {
               history: history3,
@@ -28846,14 +28411,14 @@
   }
 
   // src/components/layout/tab.tsx
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime(), 1);
   function Tab({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(import_jsx_runtime30.Fragment, { children });
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_jsx_runtime26.Fragment, { children });
   }
 
   // src/components/layout/tabs.tsx
   var import_react8 = __toESM(require_react(), 1);
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime(), 1);
   function Tabs({
     children,
     selectedTab
@@ -28871,8 +28436,8 @@
         setSelected(selectedTab);
       }
     }, [selectedTab]);
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(FixedTop, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Toolbar, { children: labels.map((label) => /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(FixedTop, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Toolbar, { children: labels.map((label) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
         Button,
         {
           selected: selected === label,
@@ -28900,12 +28465,12 @@
   }
 
   // src/components/needs.tsx
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime(), 1);
   function Needs2({ needs }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { children: "Needs" }),
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(import_jsx_runtime28.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("h3", { children: "Needs" }),
       Object.entries(needs).map(([name, value]) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { children: [
           name,
           ": ",
           round(value.currentValue, 3),
@@ -28950,23 +28515,23 @@
   }
 
   // src/components/activities.tsx
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime(), 1);
   function Activities({
     hasActivities
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsxs)("div", { children: [
       "Current Activity: ",
       getCurrentActivity(hasActivities)?.kind || "none"
     ] });
   }
 
   // src/components/preferences.tsx
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime(), 1);
   function Preferences2({ preferences }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(import_jsx_runtime34.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("h3", { children: "Preferences" }),
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)(import_jsx_runtime30.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("h3", { children: "Preferences" }),
       Object.entries(preferences).map(([name, value]) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", { children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime30.jsxs)("div", { children: [
           name,
           ": ",
           round(value, 3)
@@ -28976,12 +28541,12 @@
   }
 
   // src/components/timesChosen.tsx
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime(), 1);
   function TimesChosen({ timesChosen }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h3", { children: "Times Chosen" }),
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)(import_jsx_runtime31.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime31.jsx)("h3", { children: "Times Chosen" }),
       Object.entries(timesChosen).filter(([_, value]) => value > 0).map(([name, value]) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)("div", { children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime31.jsxs)("div", { children: [
           name,
           ": ",
           round(value, 3)
@@ -28991,33 +28556,28 @@
   }
 
   // src/components/relationships.tsx
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime(), 1);
   function Relationships({
     relationships,
-    history: history3,
-    language,
     inspect
   }) {
     if (Object.entries(relationships).length === 0) {
       return null;
     }
-    const languageName = spellWord(getWord(language.name, language));
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("h3", { children: "Relationships" }),
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("h3", { children: "Relationships" }),
       Object.entries(relationships).map(([otherBeing, relationship]) => {
-        const otherBeingName = spellWord(
-          getWord(getFromLookup(history3.beings, otherBeing).name, language)
-        );
-        return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(
+        const otherBeingName = otherBeing;
+        return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
           "div",
           {
             style: { textAlign: "center", marginBottom: spacer.medium },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(
                   Name,
                   {
-                    languageName,
+                    languageName: "ID",
                     word: otherBeingName
                   },
                   otherBeingName
@@ -29026,7 +28586,7 @@
                 "- ",
                 `${relationship.kind} ${relationship.encounters}`
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(InspectLink, { id: otherBeing, inspect, kind: "being" })
+              /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(InspectLink, { id: otherBeing, inspect, kind: "being" })
             ]
           },
           otherBeing
@@ -29036,39 +28596,28 @@
   }
 
   // src/components/being.tsx
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime(), 1);
   function Being({
     being,
-    history: history3,
-    language,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(import_jsx_runtime37.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("div", { children: being.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Names, { name: being.name, history: history3 }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Motif, { motif: being.motif }),
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", { children: being.names.defaultKey }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Motif, { motif: being.motif }),
       being.theme && `Represents ${being.theme}`,
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Needs2, { needs: being.needs }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Preferences2, { preferences: being.preferences }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Activities, { hasActivities: being }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("h3", { children: "Holding" }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(InspectLinks, { ids: being.holding, kind: "artifact", inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
-        Relationships,
-        {
-          relationships: being.relationships,
-          history: history3,
-          language,
-          inspect
-        }
-      )
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Needs2, { needs: being.needs }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Preferences2, { preferences: being.preferences }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Activities, { hasActivities: being }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("h3", { children: "Holding" }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(InspectLinks, { ids: being.holding, kind: "artifact", inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Relationships, { relationships: being.relationships, inspect })
     ] });
   }
 
   // src/components/layout/verticalSplit.tsx
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime(), 1);
   function VerticalSplit({ children }) {
     if (!Array.isArray(children)) {
       return null;
@@ -29076,7 +28625,7 @@
     if (children.length !== 2) {
       return null;
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)(
       "div",
       {
         style: {
@@ -29086,7 +28635,7 @@
           height: "100%"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
             "div",
             {
               style: {
@@ -29099,7 +28648,7 @@
               children: children[0]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(
             "div",
             {
               style: {
@@ -29117,111 +28666,81 @@
   }
 
   // src/components/artifact.tsx
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime(), 1);
   function Artifact({
     artifact,
-    history: history3,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { children: artifact.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Names, { name: artifact.name, history: history3 }),
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { children: artifact.names.defaultKey }),
       artifact.object,
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h3", { children: "Holder" }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLink, { kind: "being", id: artifact.inPosessionOf, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("h3", { children: "Creators" }),
-      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLinks, { kind: "being", ids: artifact.creators, inspect })
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h3", { children: "Holder" }),
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(InspectLink, { kind: "being", id: artifact.inPosessionOf, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("h3", { children: "Creators" }),
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(InspectLinks, { kind: "being", ids: artifact.creators, inspect })
     ] });
   }
 
   // src/components/language/language.tsx
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime(), 1);
   function Language({
     newLanguage,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(InspectLink, { id: newLanguage.id, inspect, kind: "language" }),
-      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { children: newLanguage.names.defaultKey }),
-      [...newLanguage.registry.conceptLookup.entries()].map(([key, word]) => /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("b", { children: key }),
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)(import_jsx_runtime36.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(InspectLink, { id: newLanguage.id, inspect, kind: "language" }),
+      /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("div", { children: newLanguage.names.defaultKey }),
+      [...newLanguage.registry.conceptLookup.entries()].map(([key, word]) => /* @__PURE__ */ (0, import_jsx_runtime36.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime36.jsx)("b", { children: key }),
         ": ",
-        spellWord2(word)
+        spellWord(word)
       ] }, key))
     ] });
   }
 
   // src/components/inspect.tsx
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime(), 1);
   function Inspect({
     history: history3,
-    language,
     inspected,
     inspect
   }) {
     switch (inspected.kind) {
       case "being":
         const being = getFromLookup(history3.beings, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-          InspectBeing,
-          {
-            history: history3,
-            language,
-            being,
-            inspect
-          }
-        );
+        return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(InspectBeing, { history: history3, being, inspect });
       case "region":
         const region = getFromLookup(history3.regions, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-          InspectRegion,
-          {
-            history: history3,
-            language,
-            region,
-            inspect
-          }
-        );
+        return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(InspectRegion, { history: history3, region, inspect });
       case "artifact":
         const artifact = getFromLookup(history3.artifacts, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
           InspectArtifact,
           {
             history: history3,
-            language,
             artifact,
             inspect
           }
         );
       case "language":
         const newLanguage = getFromLookup(history3.languages, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InspectLanguage, { newLanguage, inspect });
+        return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(InspectLanguage, { newLanguage, inspect });
       default:
         return null;
     }
   }
   function InspectBeing({
     history: history3,
-    language,
     being,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(VerticalSplit, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-        Being,
-        {
-          history: history3,
-          language,
-          being,
-          inspect
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(VerticalSplit, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Being, { being, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
         Log,
         {
           history: history3,
-          language,
           being: being.id,
           initialSystems: ["decision"],
           inspect
@@ -29231,17 +28750,15 @@
   }
   function InspectRegion({
     history: history3,
-    language,
     region,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(VerticalSplit, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Region, { history: history3, region, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(VerticalSplit, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Region, { region, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
         Log,
         {
           history: history3,
-          language,
           location: region.id,
           initialSystems: ["movement", "artifactCreation"],
           inspect
@@ -29251,24 +28768,15 @@
   }
   function InspectArtifact({
     history: history3,
-    language,
     artifact,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(VerticalSplit, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
-        Artifact,
-        {
-          history: history3,
-          artifact,
-          inspect
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)(VerticalSplit, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Artifact, { artifact, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(
         Log,
         {
           history: history3,
-          language,
           artifact: artifact.id,
           initialSystems: ["artifactCreation", "artifactGiving"],
           inspect
@@ -29280,48 +28788,44 @@
     newLanguage,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Language, { newLanguage, inspect });
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Language, { newLanguage, inspect });
   }
 
   // src/components/artifactSummary.tsx
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
   function ArtifactSummary({
     artifact,
-    history: history3,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)("div", { children: artifact.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Names, { name: artifact.name, history: history3 }),
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("div", { children: artifact.names.defaultKey }),
       artifact.object
     ] });
   }
 
   // src/components/regionSummary.tsx
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime(), 1);
   function RegionSummary({
     region,
-    history: history3,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsxs)(import_jsx_runtime43.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(InspectLink, { kind: "region", id: region.id, inspect }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)("div", { children: region.name }),
-      /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Names, { name: region.name, history: history3 })
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsxs)(import_jsx_runtime39.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLink, { kind: "region", id: region.id, inspect }),
+      /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", { children: region.names.defaultKey })
     ] });
   }
 
   // src/components/language/languageSummary.tsx
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime(), 1);
   function LanguageSummary({
     newLanguage,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)(import_jsx_runtime44.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(InspectLink, { id: newLanguage.id, inspect, kind: "language" }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsx)("div", { children: newLanguage.names.defaultKey }),
-      /* @__PURE__ */ (0, import_jsx_runtime44.jsxs)("div", { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)(import_jsx_runtime40.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(InspectLink, { id: newLanguage.id, inspect, kind: "language" }),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", { children: newLanguage.names.defaultKey }),
+      /* @__PURE__ */ (0, import_jsx_runtime40.jsxs)("div", { children: [
         "Words: ",
         newLanguage.registry.knownWords.size
       ] })
@@ -29329,63 +28833,37 @@
   }
 
   // src/components/page.tsx
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime(), 1);
   function Page({
     history: history3,
-    language,
     playbackControls
   }) {
     const [inspected, inspect] = useInspect();
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(FixedTop, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Toolbar, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Playback, { ...playbackControls }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime45.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(FixedTop, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Toolbar, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Playback, { ...playbackControls }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(
         Tabs,
         {
           selectedTab: inspected !== null ? `Inspect ${inspected.kind} #${inspected.id}` : void 0,
           children: [
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(World, { history: history3, language, inspect }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "Log", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Log, { history: history3, language, inspect }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "Regions", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Grid, { title: "Regions", children: lookupValues(history3.regions).map((region) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
-                RegionSummary,
-                {
-                  region,
-                  history: history3,
-                  inspect
-                }
-              ) }, region.id);
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: "World", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(World, { history: history3, inspect }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: "Log", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Log, { history: history3, inspect }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: "Regions", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Grid, { title: "Regions", children: lookupValues(history3.regions).map((region) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(RegionSummary, { region, inspect }) }, region.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "Beings", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Grid, { title: "Beings", children: lookupValues(history3.beings).map((being) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
-                BeingSummary,
-                {
-                  being,
-                  history: history3,
-                  inspect
-                }
-              ) }, being.id);
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: "Beings", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Grid, { title: "Beings", children: lookupValues(history3.beings).map((being) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(BeingSummary, { being, inspect }) }, being.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "Artifacts", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Grid, { title: "Artifacts", children: lookupValues(history3.artifacts).map((artifact) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
-                ArtifactSummary,
-                {
-                  artifact,
-                  history: history3,
-                  inspect
-                }
-              ) }, artifact.id);
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: "Artifacts", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Grid, { title: "Artifacts", children: lookupValues(history3.artifacts).map((artifact) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ArtifactSummary, { artifact, inspect }) }, artifact.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "Dialects", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Grid, { title: "Dialects", minWidth: 350, children: lookupValues(history3.dialects).map((dialect) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Dialect, { dialect, history: history3 }) }, dialect.id);
+            /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: "Languages", children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Grid, { title: "Languages", minWidth: 350, children: lookupValues(history3.languages).map((language) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(LanguageSummary, { newLanguage: language, inspect }) }, language.id);
             }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: "Languages", children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Grid, { title: "Languages", minWidth: 350, children: lookupValues(history3.languages).map((language2) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(LanguageSummary, { newLanguage: language2, inspect }) }, language2.id);
-            }) }) }),
-            inspected && /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Tab, { label: `Inspect ${inspected.kind} #${inspected.id}`, children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(
+            inspected && /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Tab, { label: `Inspect ${inspected.kind} #${inspected.id}`, children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(
               Inspect,
               {
                 history: history3,
-                language,
                 inspected,
                 inspect
               }
@@ -29412,7 +28890,7 @@
     being.location = target.id;
     if (path.length === 0) {
       history3.log(
-        `[[${being.name}]] completed their journey`,
+        `[[${being.id}]] completed their journey`,
         [being.id],
         [target.id],
         []
@@ -29425,14 +28903,14 @@
     being.location = targetTile.id;
     if (previous) {
       history3.log(
-        `[[${being.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
+        `[[${being.id}]] moved from [[${previous.id}]] to [[${targetTile.id}]]`,
         [being.id],
         [targetTile.id],
         []
       );
     } else {
       history3.log(
-        `[[${being.name}]] entered the world in [[${targetTile.name}]]`,
+        `[[${being.id}]] entered the world in [[${targetTile.id}]]`,
         [being.id],
         [targetTile.id],
         []
@@ -29445,9 +28923,8 @@
     }
     targetTile.discovered = true;
     updateDiscoveredTileActions(history3, targetTile);
-    const regionNameParts = targetTile.name.split(" ").map((part) => `[[${part}]]`).join(" ");
     history3.log(
-      `[[${being.name}]] discovered the region of ${regionNameParts}`,
+      `[[${being.id}]] discovered the region of ${targetTile.id}`,
       [being.id],
       [targetTile.id],
       []
@@ -29464,7 +28941,6 @@
     const holder = randomChoice(creators);
     const item = randomChoice(config.artifactItems);
     const artifact = artifacts.set({
-      name: artifactNameFactory(),
       names: createNames(holder.theme, [item]),
       object: randomChoice(config.artifactItems),
       creators: creators.map((creator) => creator.id),
@@ -29473,15 +28949,11 @@
     holder.holding.push(artifact.id);
     return artifact;
   }
-  var artifactNameCount = 0;
-  function artifactNameFactory() {
-    return `artifact_${artifactNameCount++}`;
-  }
   function createArtifact(history3, being, activity) {
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.name}]] started forging an artifact in [[${tile.name}]]`,
+        `[[${being.id}]] started forging an artifact in [[${tile.id}]]`,
         [being.id],
         [tile.id],
         []
@@ -29506,11 +28978,11 @@
       allBeings.forEach((participant) => {
         completeActivity(participant);
         updateBeingActions(participant);
-        beingNames.push(`[[${participant.name}]]`);
+        beingNames.push(`[[${participant.id}]]`);
         beingIds.push(participant.id);
       });
       history3.log(
-        `${commaSeparate(beingNames)} created the ${artifact.object} [[${artifact.name}]] in [[${tile.name}]]`,
+        `${commaSeparate(beingNames)} created the ${artifact.object} [[${artifact.id}]] in [[${tile.id}]]`,
         beingIds,
         [tile.id],
         [artifact.id]
@@ -29526,7 +28998,7 @@
   function adoptSymbol(history3, being, activity) {
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.name}]] started adopting a symbol`,
+        `[[${being.id}]] started adopting a symbol`,
         [being.id],
         being.location ? [being.location] : [],
         []
@@ -29542,7 +29014,7 @@
         value: randomChoice(config.motifs).name
       };
       history3.log(
-        `[[${being.name}]] adopted the ${being.motif?.value} as their symbol`,
+        `[[${being.id}]] adopted the ${being.motif?.value} as their symbol`,
         [being.id],
         being.location ? [being.location] : [],
         []
@@ -29861,7 +29333,7 @@
     }
     const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
-      `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
+      `[[${being.id}]] ${verb} ${action.action} in ${getRegionName(
         currentLocation
       )}`,
       beingIds,
@@ -29935,7 +29407,7 @@
     }
     const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
-      `[[${being.name}]] ${verb} ${action.action} in ${getRegionName(
+      `[[${being.id}]] ${verb} ${action.action} in ${getRegionName(
         currentLocation
       )}`,
       beingIds,
@@ -29949,7 +29421,7 @@
       return;
     }
     history3.log(
-      `[[${being.name}]] set out for ${getRegionName(targetLocation)}`,
+      `[[${being.id}]] set out for ${getRegionName(targetLocation)}`,
       [being.id],
       [targetLocation.id],
       []
@@ -29963,7 +29435,7 @@
     });
   }
   function getRegionName(tile) {
-    return !tile.discovered ? "an unknown land" : `[[${tile.name}]]`;
+    return !tile.discovered ? "an unknown land" : `[[${tile.id}]]`;
   }
 
   // src/systems/conversation.ts
@@ -29983,11 +29455,11 @@
     const allBeings = [being, ...otherBeings.map((other) => other)];
     const beingIds = allBeings.map((participant) => participant.id);
     const beingNames = allBeings.map(
-      (participant) => `[[${participant.name}]]`
+      (participant) => `[[${participant.id}]]`
     );
     if (activity.timeLeft === void 0) {
       history3.log(
-        `${commaSeparate(beingNames)} started a conversation in [[${location.name}]]`,
+        `${commaSeparate(beingNames)} started a conversation in [[${location.id}]]`,
         beingIds,
         [location.id],
         []
@@ -30003,7 +29475,7 @@
         completeActivity(participant);
       });
       history3.log(
-        `${commaSeparate(beingNames)} finished their conversation in [[${location.name}]]`,
+        `${commaSeparate(beingNames)} finished their conversation in [[${location.id}]]`,
         beingIds,
         [location.id],
         []
@@ -30035,7 +29507,7 @@
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.name}]] started gifing an artifact to [[${target.name}]]`,
+        `[[${being.id}]] started gifing an artifact to [[${target.id}]]`,
         [being.id, target.id],
         [tile.id],
         [artifact.id]
@@ -30047,7 +29519,7 @@
         return;
       }
       history3.log(
-        `[[${being.name}]] gifted the ${artifact.object} [[${artifact.name}]] to [[${target.name}]]`,
+        `[[${being.id}]] gifted the ${artifact.object} [[${artifact.id}]] to [[${target.id}]]`,
         [being.id, target.id],
         [tile.id],
         [artifact.id]
@@ -30060,26 +29532,6 @@
       completeActivity(target);
       updateBeingActions(target);
     }
-  }
-
-  // src/language/index.ts
-  function generateLanguage(history3) {
-    const phonemes = {
-      singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
-      dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
-      unvoicedConstants: allPhonemes.unvoicedConstants.filter(() => flipCoin()),
-      voicedConstants: allPhonemes.voicedConstants.filter(() => flipCoin())
-    };
-    const syllableStructure = generateSyllableStructure();
-    const language = {
-      name: "language",
-      phonemes,
-      syllableStructure,
-      words: {}
-    };
-    config.preRegisterWords.map((word) => getWord(word, language, 1));
-    getWord(language.name, language, 2);
-    return language;
   }
 
   // src/log.ts
@@ -30540,7 +29992,6 @@
     const result = {
       regions: createLookup(),
       beings: createLookup(),
-      dialects: createLookup(),
       languages: createLookup(),
       artifacts: createLookup(),
       log: createLogger(0),
@@ -30549,9 +30000,6 @@
       terrainRegistry,
       availableActions: []
     };
-    result.dialects.set({
-      language: generateLanguage(result)
-    });
     result.languages.set(createNewLanguage());
     createWorldRegion(result.regions);
     createInitialDeities(result);
@@ -30563,7 +30011,6 @@
   }
   function createWorldRegion(regions) {
     return regions.set({
-      name: createWorldName(),
       names: createNames("world"),
       discovered: true
     });
@@ -30583,7 +30030,6 @@
       const featureKind = foundFeature.split("_")[0];
       regions.set({
         discovered: true,
-        name: foundFeature,
         names: createNames(featureKind)
       });
     }
@@ -30631,12 +30077,7 @@
     const deityThemes = getDeityThemes();
     const deities = deityThemes.map((deityTheme) => {
       const deity = createDeity(history3.beings, deityTheme.theme);
-      history3.log(
-        `[[${deity.name}]] woke from their slumber.`,
-        [deity.id],
-        [],
-        []
-      );
+      history3.log(`[[${deity.id}]] woke from their slumber.`, [deity.id], [], []);
       return deity;
     });
     deityThemes.forEach((deityTheme) => {
@@ -30683,7 +30124,6 @@
   function createDeity(beings, theme2) {
     const deity = beings.set({
       kind: "deity",
-      name: createDeityName(),
       names: createNames(theme2, ["deity"]),
       theme: theme2,
       relationships: {},
@@ -30708,7 +30148,7 @@
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.name}]] rested in [[${tile.name}]]`,
+        `[[${being.id}]] rested in [[${tile.id}]]`,
         [being.id],
         [tile.id],
         []
@@ -30720,7 +30160,7 @@
         return;
       }
       history3.log(
-        `[[${being.name}]] finished resting in [[${tile.name}]]`,
+        `[[${being.id}]] finished resting in [[${tile.id}]]`,
         [being.id],
         [tile.id],
         []
@@ -30733,25 +30173,20 @@
   function runArchitectureCreation(history3) {
     forEachBeingByActivity(history3, "createArchitecture", createArchitecture);
   }
-  function architectureFactory(regions, parent) {
+  function architectureFactory(regions, parent, being) {
     const kind = randomChoice(config.deityArchitecture);
     const architecture = regions.set({
-      name: architectureNameFactory(kind),
-      names: createNames(kind),
+      names: createNames(being.theme, [kind]),
       discovered: true,
       parent
     });
     return architecture;
   }
-  var architectureNameCount = 0;
-  function architectureNameFactory(kind) {
-    return `architecture_${kind}_${architectureNameCount++}`;
-  }
   function createArchitecture(history3, being, activity) {
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.name}]] started creating architecture in [[${tile.name}]]`,
+        `[[${being.id}]] started creating architecture in [[${tile.id}]]`,
         [being.id],
         [tile.id],
         []
@@ -30770,17 +30205,17 @@
         return false;
       });
       const allBeings = [being, ...otherBeings.map((other) => other)];
-      const architecture = architectureFactory(history3.regions, tile);
+      const architecture = architectureFactory(history3.regions, tile, being);
       const beingIds = [];
       const beingNames = [];
       allBeings.forEach((participant) => {
         completeActivity(participant);
         updateBeingActions(participant);
-        beingNames.push(`[[${participant.name}]]`);
+        beingNames.push(`[[${participant.id}]]`);
         beingIds.push(participant.id);
       });
       history3.log(
-        `${commaSeparate(beingNames)} created [[${architecture.name}]] in [[${tile.name}]]`,
+        `${commaSeparate(beingNames)} created [[${architecture.id}]] in [[${tile.id}]]`,
         beingIds,
         [tile.id, architecture.id],
         []
@@ -30816,7 +30251,7 @@
   }
 
   // src/index.tsx
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
   if (!root) {
     throw new Error("Could not find #root in document");
@@ -30867,16 +30302,9 @@
         );
       }
     }, [playbackControls]);
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(
-      Page,
-      {
-        history: history2,
-        language: lookupFirstValue(history2.dialects).language,
-        playbackControls
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Page, { history: history2, playbackControls });
   }
-  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Wrapper, {}));
+  (0, import_client.createRoot)(root).render(/* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Wrapper, {}));
 })();
 /*! Bundled license information:
 
