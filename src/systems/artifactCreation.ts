@@ -49,7 +49,7 @@ function createArtifact(
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.id}]] started forging an artifact in [[${tile.id}]]`,
+      `[[${being.names.defaultKey}]] started forging an artifact in [[${tile.names.defaultKey}]]`,
       [being.id],
       [tile.id],
       []
@@ -77,13 +77,13 @@ function createArtifact(
     allBeings.forEach((participant) => {
       completeActivity(participant);
       updateBeingActions(participant);
-      beingNames.push(`[[${participant.id}]]`);
+      beingNames.push(`[[${participant.names.defaultKey}]]`);
       beingIds.push(participant.id);
     });
     history.log(
       `${commaSeparate(beingNames)} created the ${artifact.object} [[${
-        artifact.id
-      }]] in [[${tile.id}]]`,
+        artifact.names.defaultKey
+      }]] in [[${tile.names.defaultKey}]]`,
       beingIds,
       [tile.id],
       [artifact.id]

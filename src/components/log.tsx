@@ -9,10 +9,14 @@ import { Table } from "./layout/table";
 import { InspectProps } from "../hooks/useInspect";
 import { spacer } from "./layout/theme";
 import { InspectLinks } from "./inspectLinks";
+import { useLanguage } from "./language/languageContext";
+import { NewLanguage, spellNameWordByKey } from "../language/names";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-function formatLog(message: string): string {
-  return message.replace(logReplaceRegex, (_, word) => `${word}`);
+function formatLog(message: string, language: NewLanguage): string {
+  return message.replace(logReplaceRegex, (_, word) =>
+    spellNameWordByKey(word, language)
+  );
 }
 
 export function Log({
@@ -33,11 +37,12 @@ export function Log({
   const [enabledSystems, setEnabledSystems] = useState(
     initialSystems || ["init", "decision"]
   );
+  const language = useLanguage();
   const selectedLogs = history.log.entries
     .map<LogEntry>(([tick, system, log, deities, locations, artifacts]) => [
       tick,
       system,
-      formatLog(log),
+      formatLog(log, language),
       deities,
       locations,
       artifacts,

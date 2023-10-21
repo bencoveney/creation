@@ -42,7 +42,7 @@ function createArchitecture(
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.id}]] started creating architecture in [[${tile.id}]]`,
+      `[[${being.names.defaultKey}]] started creating architecture in [[${tile.names.defaultKey}]]`,
       [being.id],
       [tile.id],
       []
@@ -70,13 +70,13 @@ function createArchitecture(
     allBeings.forEach((participant) => {
       completeActivity(participant);
       updateBeingActions(participant);
-      beingNames.push(`[[${participant.id}]]`);
+      beingNames.push(`[[${participant.names.defaultKey}]]`);
       beingIds.push(participant.id);
     });
     history.log(
-      `${commaSeparate(beingNames)} created [[${architecture.id}]] in [[${
-        tile.id
-      }]]`,
+      `${commaSeparate(beingNames)} created [[${
+        architecture.names.defaultKey
+      }]] in [[${tile.names.defaultKey}]]`,
       beingIds,
       [tile.id, architecture.id],
       []

@@ -37,12 +37,12 @@ function conversation(
   const allBeings = [being, ...otherBeings.map((other) => other)];
   const beingIds: string[] = allBeings.map((participant) => participant.id);
   const beingNames: string[] = allBeings.map(
-    (participant) => `[[${participant.id}]]`
+    (participant) => `[[${participant.names.defaultKey}]]`
   );
   if (activity.timeLeft === undefined) {
     history.log(
       `${commaSeparate(beingNames)} started a conversation in [[${
-        location.id
+        location.names.defaultKey
       }]]`,
       beingIds,
       [location.id],
@@ -60,7 +60,7 @@ function conversation(
     });
     history.log(
       `${commaSeparate(beingNames)} finished their conversation in [[${
-        location.id
+        location.names.defaultKey
       }]]`,
       beingIds,
       [location.id],

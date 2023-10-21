@@ -58,3 +58,9 @@ export function spellNameWord(
 ): string {
   return spellWord(getNameWord(hasNames, language));
 }
+
+export function spellNameWordByKey(key: string, language: NewLanguage): string {
+  return spellWord(
+    getWordForKey(language.registry, language.phonotactics, key)
+  );
+}

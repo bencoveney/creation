@@ -177,7 +177,7 @@ function doTileAction(
   const verb =
     getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
   history.log(
-    `[[${being.id}]] ${verb} ${action.action} in ${getRegionName(
+    `[[${being.names.defaultKey}]] ${verb} ${action.action} in ${getRegionName(
       currentLocation
     )}`,
     beingIds,
@@ -260,7 +260,7 @@ function doBeingAction(
   const verb =
     getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
   history.log(
-    `[[${being.id}]] ${verb} ${action.action} in ${getRegionName(
+    `[[${being.names.defaultKey}]] ${verb} ${action.action} in ${getRegionName(
       currentLocation
     )}`,
     beingIds,
@@ -275,7 +275,9 @@ function doEntryAction(history: History, being: Being) {
     return;
   }
   history.log(
-    `[[${being.id}]] set out for ${getRegionName(targetLocation)}`,
+    `[[${being.names.defaultKey}]] set out for ${getRegionName(
+      targetLocation
+    )}`,
     [being.id],
     [targetLocation.id],
     []
@@ -290,5 +292,5 @@ function doEntryAction(history: History, being: Being) {
 }
 
 function getRegionName(tile: Tile) {
-  return !tile.discovered ? "an unknown land" : `[[${tile.id}]]`;
+  return !tile.discovered ? "an unknown land" : `[[${tile.names.defaultKey}]]`;
 }
