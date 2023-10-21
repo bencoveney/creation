@@ -24591,7 +24591,7 @@
   }
 
   // src/components/log.tsx
-  var import_react3 = __toESM(require_react(), 1);
+  var import_react4 = __toESM(require_react(), 1);
 
   // src/components/layout/fixedTop.tsx
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
@@ -24822,1489 +24822,28 @@
     );
   }
 
-  // src/components/log.tsx
+  // src/components/language/languageContext.tsx
+  var import_react3 = __toESM(require_react(), 1);
   var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-  var logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
-  function formatLog(message) {
-    return message.replace(logReplaceRegex, (_, word) => `${word}`);
-  }
-  function Log({
-    history: history3,
-    being,
-    location,
-    artifact,
-    initialSystems,
-    inspect
-  }) {
-    const [filter, input] = useInput("Filter");
-    const [enabledSystems, setEnabledSystems] = (0, import_react3.useState)(
-      initialSystems || ["init", "decision"]
-    );
-    const selectedLogs = history3.log.entries.map(([tick, system, log, deities, locations, artifacts]) => [
-      tick,
-      system,
-      formatLog(log),
-      deities,
-      locations,
-      artifacts
-    ]).filter(([_t, system, log, beings, locations, artifacts]) => {
-      if (!enabledSystems.includes(system)) {
-        return false;
-      }
-      if (filter && !log.includes(filter)) {
-        return false;
-      }
-      if (being && !beings.includes(being)) {
-        return false;
-      }
-      if (location && !locations.includes(location)) {
-        return false;
-      }
-      if (artifact && !artifacts.includes(artifact)) {
-        return false;
-      }
-      return true;
-    });
-    const limitedLogs = selectedLogs.slice(0, 200);
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(FixedTop, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(Toolbar, { children: [
-        input,
-        [...history3.log.knownSystems.values()].map((system) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
-          Button,
-          {
-            onClick: () => {
-              const newEnabledSystems = enabledSystems.includes(system) ? enabledSystems.filter((sys) => sys !== system) : enabledSystems.concat(system);
-              setEnabledSystems(newEnabledSystems);
-            },
-            children: [
-              enabledSystems.includes(system) ? "\u{1F7E9}" : "\u{1F7E5}",
-              system
-            ]
-          },
-          system
-        ))
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(FixedTop, { children: [
-        limitedLogs.length !== selectedLogs.length ? /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { padding: spacer.medium, textAlign: "center" }, children: [
-          "Showing first ",
-          limitedLogs.length,
-          " of ",
-          selectedLogs.length
-        ] }) : null,
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(Table, { cols: 6, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "Year" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "System" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "Message" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "Beings" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "Locations" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { children: "Artifacts" }),
-          limitedLogs.map(
-            ([tick, system, log, deities, locations, artifacts], index) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_react3.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { textAlign: "right" }, children: tick }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { children: system }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { children: log }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(InspectLinks, { kind: "being", ids: deities, inspect }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-                  InspectLinks,
-                  {
-                    kind: "region",
-                    ids: locations,
-                    inspect
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-                  InspectLinks,
-                  {
-                    kind: "artifact",
-                    ids: artifacts,
-                    inspect
-                  }
-                )
-              ] }, index);
-            }
-          )
-        ] })
-      ] })
-    ] });
-  }
-
-  // src/utils/queryParams.ts
-  function getQueryParam(name) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(name);
-  }
-  function getQueryBool(name) {
-    return getQueryParam(name) === "1";
-  }
-  function modifyQueryParam(name, value) {
-    const params = new URLSearchParams(window.location.search);
-    params.set(name, value);
-    var newPathname = window.location.pathname + "?" + params.toString();
-    history.replaceState(null, "", newPathname);
-  }
-  function modifyQueryBool(name, value) {
-    return modifyQueryParam(name, value ? "1" : "0");
-  }
-
-  // src/components/playback.tsx
-  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  var toggleAutorun = () => {
-    const current = getQueryBool("autorun");
-    modifyQueryBool("autorun", !current);
-  };
-  var restart = () => {
-    window.location.reload();
-  };
-  function Playback({
-    tickOnce,
-    tickAll,
-    canTick,
-    tickCount
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Button, { onClick: tickOnce, disabled: !canTick, children: "\u25B6\uFE0F Tick world" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Button, { onClick: tickAll, disabled: !canTick, children: "\u23E9 Run world" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Button, { onClick: restart, children: "\u{1F503} Restart" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Button, { onClick: toggleAutorun, children: "\u{1F3C3} Toggle autorun" }),
-      "Tick: ",
-      tickCount
-    ] });
-  }
-
-  // src/components/layout/grid.tsx
-  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  function Grid({
+  var Context = (0, import_react3.createContext)(null);
+  function LanguageContext({
     children,
-    minWidth = 175,
-    columns,
-    title
+    defaultLanguage: defaultLanguage2
   }) {
-    if (Array.isArray(children) && children.length === 0) {
-      return null;
-    }
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
-      "div",
-      {
-        style: {
-          display: "grid",
-          gridTemplateColumns: columns ? `1fr `.repeat(columns) : `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
-          gridGap: 10,
-          margin: 10
-        },
-        children: [
-          title && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h2", { style: { gridColumn: "1/-1", margin: 0 }, children: title }),
-          children
-        ]
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Context.Provider, { value: defaultLanguage2, children });
   }
-  function GridItem({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-      "div",
-      {
-        style: {
-          backgroundColor: "#ddd",
-          padding: 10
-        },
-        children
-      }
-    );
+  function useLanguage() {
+    const language = (0, import_react3.useContext)(Context);
+    if (!language) {
+      throw new Error("Whoops");
+    }
+    return language;
   }
 
   // src/utils/id.ts
   var id = 0;
   function nextId(prefix = "") {
     return `${prefix}${id++}`;
-  }
-
-  // src/history/lookup.ts
-  function createLookup() {
-    const map = /* @__PURE__ */ new Map();
-    return {
-      map,
-      set: (value) => {
-        let castValue = value;
-        if (!castValue.id) {
-          const id3 = nextId();
-          castValue.id = id3;
-        }
-        map.set(castValue.id, castValue);
-        return castValue;
-      }
-    };
-  }
-  function getFromLookup(lookup, key) {
-    const found = getFromLookupSafe(lookup, key);
-    if (found === void 0) {
-      throw new Error(`Failed to get ${key} from lookup`);
-    }
-    return found;
-  }
-  function getFromLookupSafe(lookup, key) {
-    if (lookup && key && lookup.map.has(key)) {
-      return lookup.map.get(key);
-    }
-    return void 0;
-  }
-  function lookupValues(lookup) {
-    return Array.from(lookup.map.values());
-  }
-  function lookupFirstValue(lookup) {
-    return lookup.map.values().next().value;
-  }
-
-  // src/components/world.tsx
-  var import_react8 = __toESM(require_react(), 1);
-
-  // src/components/map/terrain.tsx
-  var import_react4 = __toESM(require_react(), 1);
-  var import_color = __toESM(require_color(), 1);
-
-  // src/utils/array2d.ts
-  var import_array = __toESM(require_array(), 1);
-
-  // src/utils/maths.ts
-  function round(value, decimalPlaces) {
-    const multiplier = Math.pow(10, decimalPlaces);
-    return Math.floor(value * multiplier) / multiplier;
-  }
-  function clamp(min, max, value) {
-    return Math.max(min, Math.min(max, value));
-  }
-  function lerp(x, min, max) {
-    return (1 - x) * min + max * x;
-  }
-  function inverseLerp(x, min, max) {
-    return (x - min) / (max - min);
-  }
-
-  // src/utils/array.ts
-  function getMinAndMax(values) {
-    if (values.length === 0) {
-      throw new Error("What?");
-    }
-    let highest = values[0];
-    let lowest = values[0];
-    for (let i = 1; i < values.length; i++) {
-      highest = Math.max(highest, values[i]);
-      lowest = Math.min(lowest, values[i]);
-    }
-    return { min: lowest, max: highest };
-  }
-  function normalize(values) {
-    const { min, max } = getMinAndMax(values);
-    return values.map((value) => inverseLerp(value, min, max));
-  }
-  function last(values) {
-    if (values.length === 0) {
-      return void 0;
-    }
-    return values[values.length - 1];
-  }
-
-  // src/utils/array2d.ts
-  function isFillFunc(filler) {
-    return typeof filler === "function";
-  }
-  function array2dCreate(xSize, ySize, init) {
-    const size = xSize * ySize;
-    if (init !== void 0) {
-      if (isFillFunc(init)) {
-        return {
-          xSize,
-          ySize,
-          values: (0, import_array.empty)(size).map((_, index) => {
-            const x = index % xSize;
-            const y = Math.floor(index / ySize);
-            return init(x, y);
-          })
-        };
-      } else {
-        return {
-          xSize,
-          ySize,
-          values: (0, import_array.empty)(size).fill(init)
-        };
-      }
-    }
-    return {
-      xSize,
-      ySize,
-      values: (0, import_array.empty)(xSize * ySize)
-    };
-  }
-  function array2dFrom(xSize, ySize, values) {
-    return {
-      xSize,
-      ySize,
-      values
-    };
-  }
-  function array2dGet(arr, x, y) {
-    return arr.values[x + y * arr.xSize];
-  }
-  function array2dGetIndex(arr, x, y) {
-    return x + y * arr.xSize;
-  }
-  function array2dGetCoords(arr, index) {
-    return [index % arr.xSize, Math.floor(index / arr.ySize)];
-  }
-  function array2dIsInBounds(arr, x, y) {
-    return x >= 0 && x < arr.xSize && y >= 0 && y < arr.ySize;
-  }
-  function array2dMap(arr, mapper) {
-    return {
-      xSize: arr.xSize,
-      ySize: arr.ySize,
-      values: arr.values.map(
-        (value, index) => mapper(value, index % arr.xSize, Math.floor(index / arr.ySize), index)
-      )
-    };
-  }
-  function array2dReplace(arr, newValues) {
-    return {
-      xSize: arr.xSize,
-      ySize: arr.ySize,
-      values: newValues
-    };
-  }
-  function array2dFlipY(arr, y) {
-    return arr.ySize - y - 1;
-  }
-  function array2dMerge(arr, merger) {
-    const keys = Object.keys(arr);
-    const anyArr = arr[keys[0]];
-    const length = anyArr.values.length;
-    const values = [];
-    const param = {};
-    for (let index = 0; index < length; index++) {
-      for (let key = 0; key < keys.length; key++) {
-        param[keys[key]] = arr[keys[key]].values[index];
-      }
-      values.push(
-        merger(
-          param,
-          index % anyArr.xSize,
-          Math.floor(index / anyArr.ySize),
-          index
-        )
-      );
-    }
-    return array2dReplace(anyArr, values);
-  }
-  function array2dSum(...arrs) {
-    const anyArr = arrs[0];
-    const length = anyArr.values.length;
-    const values = [];
-    for (let index = 0; index < length; index++) {
-      values.push(0);
-      for (let arr = 0; arr < arrs.length; arr++) {
-        values[index] += arrs[arr].values[index];
-      }
-    }
-    return array2dReplace(anyArr, values);
-  }
-  function array2dProduct(...arrs) {
-    const anyArr = arrs[0];
-    const length = anyArr.values.length;
-    const values = [];
-    for (let index = 0; index < length; index++) {
-      values.push(1);
-      for (let arr = 0; arr < arrs.length; arr++) {
-        values[index] *= arrs[arr].values[index];
-      }
-    }
-    return array2dReplace(anyArr, values);
-  }
-  function array2dScale(arr, by) {
-    const multiplied = [];
-    for (let index = 0; index < arr.values.length; index++) {
-      multiplied.push(arr.values[index] * by);
-    }
-    return array2dReplace(arr, multiplied);
-  }
-  function array2dNormalize(arr) {
-    return array2dReplace(arr, normalize(arr.values));
-  }
-  function array2dSlice(arr, fromX, fromY, xSize, ySize) {
-    const result = array2dCreate(xSize, ySize);
-    for (let xOffset = 0; xOffset < xSize; xOffset++) {
-      for (let yOffset = 0; yOffset < ySize; yOffset++) {
-        const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
-        const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
-        result.values[mappedIndex] = sourceValue;
-      }
-    }
-    return result;
-  }
-  var neighbours4 = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1]
-  ];
-  var neighbours24 = [
-    [-2, -2],
-    [-2, -1],
-    [-2, 0],
-    [-2, 1],
-    [-2, 2],
-    [-1, -2],
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [-1, 2],
-    [0, -2],
-    [0, -1],
-    [0, 1],
-    [0, 2],
-    [1, -2],
-    [1, -1],
-    [1, 0],
-    [1, 1],
-    [1, 2],
-    [2, -2],
-    [2, -1],
-    [2, 0],
-    [2, 1],
-    [2, 2]
-  ];
-  function array2dGetNeighbourIndices(arr, index, neighbourMask, excluding) {
-    const [positionX, positionY] = array2dGetCoords(arr, index);
-    const result = [];
-    for (let neighbour = 0; neighbour < neighbourMask.length; neighbour++) {
-      const [xOffset, yOffset] = neighbourMask[neighbour];
-      const x = positionX + xOffset;
-      const y = positionY + yOffset;
-      if (array2dIsInBounds(arr, x, y)) {
-        const index2 = array2dGetIndex(arr, x, y);
-        if (!excluding?.has(index2)) {
-          result.push(index2);
-        }
-      }
-    }
-    return result;
-  }
-  function array2dFlip(arr) {
-    const result = [];
-    for (let x = arr.xSize - 1; x >= 0; x--) {
-      for (let y = arr.ySize - 1; y >= 0; y--) {
-        result.push(array2dGet(arr, x, y));
-      }
-    }
-    return array2dReplace(arr, result);
-  }
-
-  // src/config.ts
-  var config = {
-    runTicks: 100,
-    preRegisterWords: ["the", "of"],
-    artifactItems: [
-      "sword",
-      "shield",
-      "dagger",
-      "spear",
-      "cup",
-      "bowl",
-      "knife",
-      "bracelet",
-      "necklace",
-      "chain",
-      "rope",
-      "gown",
-      "robe",
-      "club",
-      "scepter",
-      "vial",
-      "hood",
-      "veil",
-      "necklace",
-      "eyeglass",
-      "map",
-      "drum",
-      "horn",
-      "bell"
-    ],
-    themes: [
-      {
-        name: "sun",
-        categories: ["celestial"],
-        tags: ["daylight"]
-      },
-      {
-        name: "moon",
-        categories: ["celestial"],
-        tags: ["nightlight"]
-      },
-      {
-        name: "stars",
-        categories: ["celestial"],
-        tags: ["nightlight"]
-      },
-      {
-        name: "create",
-        categories: ["stages_of_creations"],
-        tags: ["beginning"]
-      },
-      {
-        name: "preserve",
-        categories: ["stages_of_creations"],
-        tags: ["middle"]
-      },
-      {
-        name: "destroy",
-        categories: ["stages_of_creations"],
-        tags: ["end"]
-      },
-      {
-        name: "earth",
-        categories: ["elements"],
-        tags: ["land"]
-      },
-      { name: "air", categories: ["elements"], tags: ["sky", "gas"] },
-      { name: "water", categories: ["elements"], tags: ["liquid"] },
-      {
-        name: "fire",
-        categories: ["elements"],
-        tags: ["forge", "temperature"]
-      },
-      {
-        name: "ice",
-        categories: ["elements"],
-        tags: ["temperature", "cold"]
-      },
-      { name: "metal", categories: ["elements"], tags: [] },
-      { name: "destiny", categories: ["fate"], tags: [] },
-      { name: "chance", categories: ["fate"], tags: [] },
-      { name: "desire", categories: ["fate"], tags: [] },
-      {
-        name: "life",
-        categories: ["stages_of_life"],
-        tags: ["beginning"]
-      },
-      { name: "death", categories: ["stages_of_life"], tags: ["end"] },
-      { name: "war", categories: ["diplomacy"], tags: [] },
-      { name: "peace", categories: ["diplomacy"], tags: [] },
-      { name: "mercy", categories: ["judgement"], tags: [] },
-      {
-        name: "revenge",
-        categories: ["judgement"],
-        tags: []
-      },
-      { name: "law", categories: ["judgement"], tags: [] },
-      { name: "forgive", categories: ["judgement"], tags: [] },
-      { name: "grief", categories: ["emotions"], tags: [] },
-      { name: "joy", categories: ["emotions"], tags: [] },
-      { name: "dream", categories: ["mental_states"], tags: [] },
-      { name: "madness", categories: ["mental_states"], tags: [] },
-      { name: "thought", categories: ["mental_states"], tags: [] },
-      { name: "lucid", categories: ["mental_states"], tags: [] },
-      { name: "heal", categories: ["medical"], tags: ["beginning"] },
-      { name: "wound", categories: ["medical"], tags: ["end"] },
-      {
-        name: "animals",
-        categories: ["living_beings"],
-        tags: ["land"]
-      },
-      { name: "fish", categories: ["living_beings"], tags: ["liquid"] },
-      { name: "bird", categories: ["living_beings"], tags: ["sky"] },
-      { name: "plant", categories: ["living_beings"], tags: ["land"] },
-      { name: "cloud", categories: ["weather"], tags: ["sky"] },
-      { name: "wind", categories: ["weather"], tags: ["sky", "gas"] },
-      {
-        name: "rain",
-        categories: ["weather"],
-        tags: ["sky", "liquid"]
-      },
-      { name: "thunder", categories: ["weather"], tags: ["sky"] },
-      { name: "lightning", categories: ["weather"], tags: ["sky"] },
-      { name: "snow", categories: ["weather"], tags: ["sky", "cold"] },
-      {
-        name: "sunshine",
-        categories: ["weather"],
-        tags: ["sky", "daylight"]
-      }
-    ],
-    deityArchitecture: [
-      "monument",
-      "temple",
-      "shrine",
-      "statue",
-      "monastery",
-      "cathedral",
-      "altar",
-      "church",
-      "gardens",
-      "palace",
-      "cemetary",
-      "sanctuary",
-      "halls",
-      "forum"
-    ],
-    themeRange: {
-      min: 3,
-      max: 5
-    },
-    motifs: [
-      { name: "cross", unicode: "\u271A" },
-      { name: "triangle", unicode: "\u25B2" },
-      { name: "circle", unicode: "\u25CF" },
-      { name: "square", unicode: "\u25FC" },
-      { name: "star", unicode: "\u26E6" },
-      { name: "ring", unicode: "\u233E" },
-      { name: "arrowhead", unicode: "\u27A4" },
-      { name: "diamond", unicode: "\u2666" },
-      { name: "cresent", unicode: "\u25E0" },
-      { name: "semicircle", unicode: "\u25D6" },
-      { name: "bar", unicode: "\u2759" }
-    ],
-    deityRelationshipChance: 0.75,
-    deityHoldingLimit: 3,
-    movementChance: 0.2,
-    worldWidth: 10,
-    worldHeight: 10,
-    terrainResolution: 20,
-    waterHeight: 0.46,
-    waterStop1: 0.25,
-    waterStop2: 0.35,
-    regionPlaces: [
-      "woods",
-      "halls",
-      "cliffs",
-      "forest",
-      "plains",
-      "tundras",
-      "mountains",
-      "streets"
-    ],
-    regionAdjectives: [
-      "windy",
-      "calm",
-      "frozen",
-      "windswept",
-      "sunny",
-      "tranquil",
-      "undead",
-      "barren"
-    ],
-    settlementNameStarts: [
-      "ply",
-      "exe",
-      "tor",
-      "paign",
-      "ex",
-      "barn",
-      "ton",
-      "tiver",
-      "brix",
-      "bide",
-      "teign",
-      "sid",
-      "dawl",
-      "tavi",
-      "north",
-      "ivy"
-    ],
-    settlementNameEnds: [
-      "mouth",
-      "ter",
-      "quay",
-      "ton",
-      "staple",
-      "ton abbot",
-      "ham",
-      "ford",
-      "ish",
-      "stock",
-      "bridge"
-    ]
-  };
-
-  // src/terrain/biome.ts
-  var biomeColorMap = {
-    ["DeepSea" /* DeepSea */]: {
-      r: 23,
-      g: 110,
-      b: 128
-    },
-    ["ShallowSea" /* ShallowSea */]: {
-      r: 50,
-      g: 163,
-      b: 171
-    },
-    ["Beach" /* Beach */]: {
-      r: 235,
-      g: 196,
-      b: 80
-    },
-    ["Grass" /* Grass */]: {
-      r: 18,
-      g: 116,
-      b: 49
-    },
-    ["Desert" /* Desert */]: {
-      r: 255,
-      g: 242,
-      b: 179
-    },
-    ["Tundra" /* Tundra */]: {
-      r: 230,
-      g: 255,
-      b: 230
-    },
-    ["Mountain" /* Mountain */]: {
-      r: 112,
-      g: 117,
-      b: 113
-    },
-    ["Snow" /* Snow */]: {
-      r: 236,
-      g: 240,
-      b: 240
-    },
-    ["Unknown" /* Unknown */]: {
-      r: 255,
-      g: 0,
-      b: 0
-    }
-  };
-  function getBiome(height, temperature, gradient, coast, rockHardness) {
-    if (height < config.waterStop2) {
-      return "DeepSea" /* DeepSea */;
-    }
-    if (height < config.waterHeight) {
-      return "ShallowSea" /* ShallowSea */;
-    }
-    if (coast > 0.6 && gradient < 0.5 && height < 0.5 && rockHardness < 0.5) {
-      return "Beach" /* Beach */;
-    }
-    if (coast > 0.3 && gradient < 0.4 && height < 0.5 && rockHardness < 0.5) {
-      return "Beach" /* Beach */;
-    }
-    if (gradient > 0.7) {
-      return "Mountain" /* Mountain */;
-    }
-    if (height < 0.81) {
-      if (temperature > 0.7) {
-        return "Desert" /* Desert */;
-      }
-      if (temperature < 0.3) {
-        return "Tundra" /* Tundra */;
-      }
-      return "Grass" /* Grass */;
-    }
-    if (height < 0.96) {
-      return "Mountain" /* Mountain */;
-    }
-    if (height <= 1) {
-      return "Snow" /* Snow */;
-    }
-    return "Unknown" /* Unknown */;
-  }
-
-  // src/terrain/color.ts
-  function getNumberColor(value) {
-    if (value < 0) {
-      return {
-        r: 255,
-        g: 0,
-        b: 0
-      };
-    } else if (value > 1) {
-      return {
-        r: 0,
-        g: 255,
-        b: 0
-      };
-    }
-    const shade = lerp(value, 0, 255);
-    return {
-      r: shade,
-      g: shade,
-      b: shade
-    };
-  }
-  function getStringColor(value, colorMap) {
-    return colorMap[value];
-  }
-  function getTerrainColor(height, temperature, biome, sunlight, snow, sand, icebergs, rivers, vegetation) {
-    if (rivers === 1) {
-      return applySunlight(
-        applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
-        sunlight,
-        1 / 4
-      );
-    }
-    switch (biome) {
-      case "DeepSea" /* DeepSea */:
-      case "ShallowSea" /* ShallowSea */:
-        return applySnow(getWaterColor(height, temperature), icebergs, 1);
-      case "Beach" /* Beach */:
-        return applySunlight(
-          applySand(
-            applySnow(getSandColor(height, temperature), snow, 0.8),
-            sand,
-            0.5
-          ),
-          sunlight,
-          1 / 4
-        );
-      case "Desert" /* Desert */:
-      case "Grass" /* Grass */:
-      case "Tundra" /* Tundra */:
-        const color = vegetation === 1 ? getVegetationColor(height, temperature) : getGroundColor(height, temperature);
-        return applySunlight(
-          applySand(
-            applySnow(color, snow, vegetation === 1 ? 0.1 : 0.9),
-            sand,
-            vegetation === 1 ? 0.1 : 0.9
-          ),
-          sunlight,
-          1 / 4
-        );
-      case "Mountain" /* Mountain */:
-        return applySunlight(
-          getCliffsColor(height, temperature),
-          sunlight,
-          1 / 4
-        );
-      case "Snow" /* Snow */:
-        return applySunlight(getSnowColor(height, temperature), sunlight, 1 / 4);
-      case "Unknown" /* Unknown */:
-        return { r: 255, g: 0, b: 0 };
-    }
-  }
-  function applySunlight(color, sunlight, strength) {
-    const shadow = 1 - sunlight;
-    return validateColor({
-      r: color.r + lerp(shadow, 0, -color.r * strength),
-      g: color.g + lerp(shadow, 0, -color.g * strength),
-      b: color.b + lerp(shadow, 0, -color.b * strength)
-    });
-  }
-  function applySnow(color, snow, amount) {
-    const snowAmount = snow * amount;
-    return {
-      r: lerp(snowAmount, color.r, 230),
-      g: lerp(snowAmount, color.g, 230),
-      b: lerp(snowAmount, color.b, 230)
-    };
-  }
-  function applySand(color, snow, amount) {
-    const snowAmount = snow * amount;
-    return {
-      r: lerp(snowAmount, color.r, 235),
-      g: lerp(snowAmount, color.g, 196),
-      b: lerp(snowAmount, color.b, 80)
-    };
-  }
-  function applyTemp(color, temperature) {
-    if (temperature <= 0.5) {
-      const scale = temperature * 2;
-      return clampColor({
-        r: color.r + lerp(scale, 50, 0),
-        g: color.g + lerp(scale, 50, 0),
-        b: color.b + lerp(scale, 100, 0)
-      });
-    } else {
-      const scale = (temperature - 0.5) * 2;
-      return clampColor({
-        ...color,
-        r: color.r + lerp(scale, 0, 150),
-        g: color.g + lerp(scale, 0, 50),
-        b: color.b + lerp(scale, 0, 50)
-      });
-    }
-  }
-  function clampColor(color) {
-    return {
-      r: clamp(0, 255, color.r),
-      g: clamp(0, 255, color.g),
-      b: clamp(0, 255, color.b)
-    };
-  }
-  function validateColor(color) {
-    if (Number.isNaN(color.r) || color.r < 0 || color.r > 255) {
-      throw new Error("Bad color");
-    }
-    if (Number.isNaN(color.g) || color.g < 0 || color.g > 255) {
-      throw new Error("Bad color");
-    }
-    if (Number.isNaN(color.b) || color.b < 0 || color.b > 255) {
-      throw new Error("Bad color");
-    }
-    return color;
-  }
-  function getSandColor(height, temperature) {
-    const scale = inverseLerp(height, config.waterHeight, 0.5);
-    return clampColor(
-      applyTemp(
-        {
-          r: lerp(scale, 235, 148),
-          g: lerp(scale, 196, 119),
-          b: lerp(scale, 80, 3)
-        },
-        temperature
-      )
-    );
-  }
-  function getWaterColor(height, temperature) {
-    if (height < config.waterStop1) {
-      const scale = inverseLerp(height, 0, config.waterStop1);
-      return {
-        r: lerp(scale, 0, 23),
-        g: lerp(scale, 55, 110),
-        b: lerp(scale, 93, 128)
-      };
-    } else if (height >= config.waterStop1 && height < config.waterStop2) {
-      const scale = inverseLerp(height, config.waterStop1, config.waterStop2);
-      return {
-        r: lerp(scale, 23, 50),
-        g: lerp(scale, 110, 163),
-        b: lerp(scale, 128, 171)
-      };
-    } else {
-      const scale = inverseLerp(height, config.waterStop2, config.waterHeight);
-      return {
-        r: lerp(scale, 50, 88),
-        g: lerp(scale, 163, 219),
-        b: lerp(scale, 171, 202)
-      };
-    }
-  }
-  var ground1 = {
-    r: 21,
-    g: 126,
-    b: 32
-  };
-  var ground2 = {
-    r: 18,
-    g: 116,
-    b: 49
-  };
-  var ground3 = {
-    r: 12,
-    g: 92,
-    b: 52
-  };
-  function getGroundColor(height, temperature) {
-    if (height < 0.67) {
-      const scale = inverseLerp(height, 0.5, 0.67);
-      return applyTemp(
-        {
-          r: lerp(scale, ground1.r, ground2.r),
-          g: lerp(scale, ground1.g, ground2.g),
-          b: lerp(scale, ground1.b, ground2.b)
-        },
-        temperature
-      );
-    } else {
-      const scale = inverseLerp(height, 0.67, 0.81);
-      return applyTemp(
-        {
-          r: lerp(scale, ground2.r, ground3.r),
-          g: lerp(scale, ground2.g, ground3.g),
-          b: lerp(scale, ground2.b, ground3.b)
-        },
-        temperature
-      );
-    }
-  }
-  var vegetation1 = {
-    r: 4,
-    g: 61,
-    b: 10
-  };
-  var vegetation2 = {
-    r: 4,
-    g: 48,
-    b: 18
-  };
-  var vegetation3 = {
-    r: 1,
-    g: 71,
-    b: 36
-  };
-  function getVegetationColor(height, temperature) {
-    if (height < 0.67) {
-      const scale = inverseLerp(height, 0.5, 0.67);
-      return applyTemp(
-        {
-          r: lerp(scale, vegetation1.r, vegetation2.r),
-          g: lerp(scale, vegetation1.g, vegetation2.g),
-          b: lerp(scale, vegetation1.b, vegetation2.b)
-        },
-        temperature
-      );
-    } else {
-      const scale = inverseLerp(height, 0.67, 0.81);
-      return applyTemp(
-        {
-          r: lerp(scale, vegetation2.r, vegetation3.r),
-          g: lerp(scale, vegetation2.g, vegetation3.g),
-          b: lerp(scale, vegetation2.b, vegetation3.b)
-        },
-        temperature
-      );
-    }
-  }
-  function getCliffsColor(height, temperature) {
-    const scale = inverseLerp(height, 0.81, 0.96);
-    return {
-      r: lerp(scale, 112, 76),
-      g: lerp(scale, 117, 79),
-      b: lerp(scale, 113, 100)
-    };
-  }
-  function getSnowColor(height, temperature) {
-    const scale = inverseLerp(height, 0.96, 1);
-    return {
-      r: lerp(scale, 236, 223),
-      g: lerp(scale, 240, 245),
-      b: lerp(scale, 240, 245)
-    };
-  }
-
-  // src/components/map/terrain.tsx
-  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-  var selectedColor = (0, import_color.toHex)({ r: 0, g: 255, b: 0 });
-  var missingColor = { r: 0, g: 255, b: 0 };
-  function Terrain({
-    layer,
-    hoverX,
-    hoverY
-  }) {
-    const canvasRef = (0, import_react4.useRef)(null);
-    (0, import_react4.useEffect)(() => {
-      const canvas = canvasRef.current;
-      if (!canvas) {
-        return;
-      }
-      const context = canvas.getContext("2d");
-      if (!context) {
-        return;
-      }
-      let colors;
-      switch (layer.kind) {
-        case "color":
-          colors = layer.values;
-          break;
-        case "number":
-          colors = array2dMap(layer.values, getNumberColor);
-          break;
-        case "string":
-          colors = array2dMap(
-            layer.values,
-            (value) => getStringColor(value, layer.colorMap) || missingColor
-          );
-          break;
-      }
-      const hoverIndex = hoverX !== null && hoverY !== null ? array2dGetIndex(colors, hoverX, hoverY) : null;
-      array2dMap(colors, (color, x, y, index) => {
-        const flipY = array2dFlipY(colors, y);
-        if (index === hoverIndex) {
-          context.fillStyle = selectedColor;
-          context.fillRect(x, flipY, 1, 1);
-        } else {
-          context.fillStyle = (0, import_color.toHex)(color);
-          context.fillRect(x, flipY, 1, 1);
-        }
-      });
-    }, [canvasRef.current, hoverX, hoverY, layer]);
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-      "canvas",
-      {
-        ref: canvasRef,
-        width: layer.values.xSize,
-        height: layer.values.ySize,
-        style: {
-          width: "100%",
-          height: "100%",
-          imageRendering: "pixelated",
-          margin: 0,
-          padding: 0
-        }
-      }
-    );
-  }
-
-  // src/hooks/useHover.tsx
-  var import_react5 = __toESM(require_react(), 1);
-  function useHoverPosition() {
-    const [pos, setPos] = (0, import_react5.useState)([null, null]);
-    const handleMouseMove = (0, import_react5.useCallback)(
-      (e) => {
-        const bounds = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - bounds.x;
-        const y = e.clientY - bounds.y;
-        setPos([x, y]);
-      },
-      [setPos]
-    );
-    return [handleMouseMove, ...pos];
-  }
-
-  // src/terrain/registry.ts
-  function getTerrainLayer(terrainRegistry, layerName) {
-    const result = terrainRegistry.find((layer) => layer.name === layerName);
-    if (!result) {
-      throw new Error(`Bad layer name ${layerName}`);
-    }
-    return result;
-  }
-  function sliceTerrainRegistry(terrainRegistry, x, y, resolution) {
-    const xTerrain = x * resolution;
-    const yTerrain = y * resolution;
-    const newTerrainRegistry = terrainRegistry.map((entry) => ({
-      ...entry,
-      values: array2dSlice(
-        entry.values,
-        xTerrain,
-        yTerrain,
-        resolution,
-        resolution
-      )
-    }));
-    return newTerrainRegistry;
-  }
-
-  // src/components/layout/tooltip.tsx
-  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
-  function Tooltip({
-    children,
-    label
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
-      "span",
-      {
-        title: label,
-        style: {
-          textDecoration: "underline",
-          textDecorationStyle: "dotted"
-        },
-        children
-      }
-    );
-  }
-
-  // src/components/name.tsx
-  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
-  function Name({
-    languageName,
-    word
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Tooltip, { label: `From the language ${languageName}`, children: word });
-  }
-
-  // src/components/motif.tsx
-  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
-  function Motif({ motif }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_jsx_runtime16.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
-  }
-
-  // src/components/map/mapTile.tsx
-  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
-  function MapTile({ tile, history: history3 }) {
-    if (!tile.discovered) {
-      return null;
-    }
-    const beings = lookupValues(history3.beings).filter(
-      (being) => being.location === tile.id
-    );
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
-      "div",
-      {
-        style: {
-          textAlign: "center",
-          fontSize: 10,
-          fontFamily: "sans-serif",
-          fontWeight: "bold",
-          lineHeight: 2
-        },
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Name, { languageName: "ID", word: tile.id }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("br", {}),
-          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Tooltip, { label: being.id, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Motif, { motif: being.motif }) }, index)) }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-            "span",
-            {
-              style: {
-                lineHeight: 1.4
-              },
-              children: "\xA0"
-            }
-          )
-        ]
-      }
-    );
-  }
-  function BlackLabel({ children }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-      "span",
-      {
-        style: {
-          backgroundColor: "black",
-          color: "white",
-          lineHeight: 1.4,
-          boxDecorationBreak: "clone",
-          borderRadius: 6,
-          padding: "6px 6px"
-        },
-        children
-      }
-    );
-  }
-
-  // src/components/map/map.tsx
-  var import_react6 = __toESM(require_react(), 1);
-
-  // src/decision/action.ts
-  function actionBroadcast(hasActions, ...toAdd) {
-    hasActions.availableActions = hasActions.availableActions.concat(toAdd);
-  }
-  function actionTileRevokeWhere(hasActions, action, location, target, allowClaim) {
-    const prevLength = hasActions.availableActions.length;
-    const filtered = hasActions.availableActions.filter((availableAction) => {
-      const actionMatch = availableAction.action === action;
-      const locationMatch = availableAction.location === location;
-      if (target !== void 0) {
-        const targetMatch = availableAction.target === target;
-        return !(actionMatch && locationMatch && targetMatch);
-      }
-      return !(actionMatch && locationMatch);
-    });
-    if (!allowClaim && prevLength === filtered.length) {
-      throw new Error("Expected to revoke something");
-    }
-    hasActions.availableActions = filtered;
-  }
-  function actionBeingRevokeWhere(hasActions, action) {
-    hasActions.availableActions = hasActions.availableActions.filter(
-      (availableAction) => availableAction.action !== action
-    );
-  }
-
-  // src/decision/need.ts
-  function createNeeds() {
-    return {
-      socialise: createNeed(),
-      create: createNeed(),
-      rest: createNeed(),
-      explore: createNeed()
-    };
-  }
-  function createNeed() {
-    return {
-      currentValue: Math.random(),
-      drainRate: Math.random() * 0.1
-    };
-  }
-  function satisfyNeed(hasNeeds, satisfies) {
-    hasNeeds.needs[satisfies].currentValue = 0.5 + Math.random() * 0.5;
-  }
-  function updateNeeds(needs) {
-    updateNeed(needs.socialise);
-    updateNeed(needs.create);
-    updateNeed(needs.rest);
-    updateNeed(needs.explore);
-  }
-  function updateNeed(need) {
-    need.currentValue = Math.max(0, need.currentValue - need.drainRate);
-  }
-
-  // src/decision/preference.ts
-  function createPreferences() {
-    return {
-      discover: Math.random(),
-      rest: Math.random(),
-      travel: Math.random(),
-      createArtifact: Math.random(),
-      createArchitecture: Math.random(),
-      adoptSymbol: Math.random(),
-      conversation: Math.random(),
-      giveArtifact: Math.random()
-    };
-  }
-  function createStrongPreference() {
-    return Math.random() * 0.5 + 0.5;
-  }
-  function createWeakPreference() {
-    return Math.random() * 0.5;
-  }
-
-  // src/decision/factories.ts
-  function createDeityPreferences() {
-    return {
-      ...createPreferences(),
-      adoptSymbol: createStrongPreference(),
-      rest: createWeakPreference(),
-      createArtifact: createWeakPreference(),
-      createArchitecture: createWeakPreference(),
-      conversation: createWeakPreference(),
-      giveArtifact: createWeakPreference()
-    };
-  }
-  function createDeityNeeds() {
-    return {
-      ...createNeeds()
-    };
-  }
-  function updateInitialTileActions(history3, tile) {
-    actionBroadcast(history3, {
-      kind: "tile",
-      action: "discover",
-      satisfies: "explore",
-      location: tile,
-      requires: {
-        location: "different"
-      }
-    });
-    if (Math.random() > 0.5) {
-      actionBroadcast(history3, {
-        kind: "tile",
-        action: "createArtifact",
-        satisfies: "create",
-        location: tile,
-        requires: {
-          location: "same",
-          motif: "present"
-        }
-      });
-    }
-    if (Math.random() > 0.5) {
-      actionBroadcast(history3, {
-        kind: "tile",
-        action: "createArchitecture",
-        satisfies: "create",
-        location: tile,
-        requires: {
-          location: "same",
-          motif: "present"
-        }
-      });
-    }
-  }
-  function updateDiscoveredTileActions(history3, tile) {
-    actionBroadcast(history3, {
-      kind: "tile",
-      action: "travel",
-      satisfies: "explore",
-      location: tile,
-      requires: {
-        location: "different"
-      }
-    });
-    actionTileRevokeWhere(history3, "discover", tile);
-  }
-  function updateArtifactCreatedTileActions(history3, tile) {
-    actionTileRevokeWhere(history3, "createArtifact", tile, void 0, true);
-  }
-  function updateArchitectureCreatedTileActions(history3, tile) {
-    actionTileRevokeWhere(history3, "createArchitecture", tile, void 0, true);
-  }
-  function updateConversationStartedTileActions(history3, tile, being) {
-    actionBroadcast(history3, {
-      kind: "tile",
-      action: "conversation",
-      location: tile,
-      satisfies: "socialise",
-      target: being,
-      requires: {
-        location: "same"
-      }
-    });
-  }
-  function updateConversationFinishedTileActions(history3, tile) {
-    actionTileRevokeWhere(history3, "conversation", tile);
-  }
-  function initialBeingActions(being) {
-    actionBroadcast(being, {
-      kind: "being",
-      action: "rest",
-      satisfies: "rest",
-      target: being,
-      requires: {
-        owner: "same"
-      }
-    });
-    updateBeingActions(being);
-  }
-  function updateBeingActions(being) {
-    actionBeingRevokeWhere(being, "giveArtifact");
-    if (being.holding.length < config.deityHoldingLimit) {
-      actionBroadcast(being, {
-        kind: "being",
-        action: "giveArtifact",
-        satisfies: "socialise",
-        target: being,
-        requires: {
-          holding: true,
-          owner: "different"
-        }
-      });
-    }
-    actionBeingRevokeWhere(being, "adoptSymbol");
-    if (!being.motif) {
-      actionBroadcast(being, {
-        kind: "being",
-        action: "adoptSymbol",
-        satisfies: "create",
-        target: being,
-        requires: {
-          owner: "same"
-        }
-      });
-    }
-    actionBeingRevokeWhere(being, "conversation");
-    if (being.location) {
-      actionBroadcast(being, {
-        kind: "being",
-        action: "conversation",
-        satisfies: "socialise",
-        target: being,
-        requires: {
-          owner: "different"
-        }
-      });
-    }
-  }
-
-  // src/terrain/assess.ts
-  function assessTerrain(terrain) {
-    const heights = getTerrainLayer(
-      terrain,
-      "heights"
-    );
-    let waterCount = 0;
-    for (let index = 0; index < heights.values.values.length; index++) {
-      const height = heights.values.values[index];
-      if (height < config.waterHeight) {
-        waterCount++;
-      }
-    }
-    const temperature = getTerrainLayer(
-      terrain,
-      "temperature"
-    );
-    const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
-    const includesUniqueFeatures = /* @__PURE__ */ new Set();
-    const features = getTerrainLayer(
-      terrain,
-      "features"
-    );
-    features.values.values.forEach((f) => includesUniqueFeatures.add(f));
-    const percentWater = waterCount / temperature.values.values.length;
-    const averageTemp = totalTemperature / temperature.values.values.length;
-    const includesFeatures = [...includesUniqueFeatures.values()];
-    return {
-      percentWater,
-      averageTemp,
-      includesFeatures,
-      rootConcept: percentWater <= 0 ? "terrain-water" : percentWater > 0.9 ? "terrain-land" : "terrain-coast",
-      affixConcepts: [
-        averageTemp > 0.75 ? "temp-hot" : averageTemp < 0.25 ? "temp-cold" : "temp-average"
-      ]
-    };
   }
 
   // src/language/ipa/consonant.ts
@@ -28079,6 +26618,1494 @@
   function spellNameWord(hasNames, language) {
     return spellWord(getNameWord(hasNames, language));
   }
+  function spellNameWordByKey(key, language) {
+    return spellWord(
+      getWordForKey(language.registry, language.phonotactics, key)
+    );
+  }
+
+  // src/components/log.tsx
+  var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+  var logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
+  function formatLog(message, language) {
+    return message.replace(
+      logReplaceRegex,
+      (_, word) => spellNameWordByKey(word, language)
+    );
+  }
+  function Log({
+    history: history3,
+    being,
+    location,
+    artifact,
+    initialSystems,
+    inspect
+  }) {
+    const [filter, input] = useInput("Filter");
+    const [enabledSystems, setEnabledSystems] = (0, import_react4.useState)(
+      initialSystems || ["init", "decision"]
+    );
+    const language = useLanguage();
+    const selectedLogs = history3.log.entries.map(([tick, system, log, deities, locations, artifacts]) => [
+      tick,
+      system,
+      formatLog(log, language),
+      deities,
+      locations,
+      artifacts
+    ]).filter(([_t, system, log, beings, locations, artifacts]) => {
+      if (!enabledSystems.includes(system)) {
+        return false;
+      }
+      if (filter && !log.includes(filter)) {
+        return false;
+      }
+      if (being && !beings.includes(being)) {
+        return false;
+      }
+      if (location && !locations.includes(location)) {
+        return false;
+      }
+      if (artifact && !artifacts.includes(artifact)) {
+        return false;
+      }
+      return true;
+    });
+    const limitedLogs = selectedLogs.slice(0, 200);
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(FixedTop, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(Toolbar, { children: [
+        input,
+        [...history3.log.knownSystems.values()].map((system) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+          Button,
+          {
+            onClick: () => {
+              const newEnabledSystems = enabledSystems.includes(system) ? enabledSystems.filter((sys) => sys !== system) : enabledSystems.concat(system);
+              setEnabledSystems(newEnabledSystems);
+            },
+            children: [
+              enabledSystems.includes(system) ? "\u{1F7E9}" : "\u{1F7E5}",
+              system
+            ]
+          },
+          system
+        ))
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(FixedTop, { children: [
+        limitedLogs.length !== selectedLogs.length ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { padding: spacer.medium, textAlign: "center" }, children: [
+          "Showing first ",
+          limitedLogs.length,
+          " of ",
+          selectedLogs.length
+        ] }) : null,
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(Table, { cols: 6, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "Year" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "System" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "Message" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "Beings" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "Locations" }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "Artifacts" }),
+          limitedLogs.map(
+            ([tick, system, log, deities, locations, artifacts], index) => {
+              return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_react4.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { textAlign: "right" }, children: tick }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { children: system }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { children: log }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(InspectLinks, { kind: "being", ids: deities, inspect }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                  InspectLinks,
+                  {
+                    kind: "region",
+                    ids: locations,
+                    inspect
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                  InspectLinks,
+                  {
+                    kind: "artifact",
+                    ids: artifacts,
+                    inspect
+                  }
+                )
+              ] }, index);
+            }
+          )
+        ] })
+      ] })
+    ] });
+  }
+
+  // src/utils/queryParams.ts
+  function getQueryParam(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+  function getQueryBool(name) {
+    return getQueryParam(name) === "1";
+  }
+  function modifyQueryParam(name, value) {
+    const params = new URLSearchParams(window.location.search);
+    params.set(name, value);
+    var newPathname = window.location.pathname + "?" + params.toString();
+    history.replaceState(null, "", newPathname);
+  }
+  function modifyQueryBool(name, value) {
+    return modifyQueryParam(name, value ? "1" : "0");
+  }
+
+  // src/components/playback.tsx
+  var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+  var toggleAutorun = () => {
+    const current = getQueryBool("autorun");
+    modifyQueryBool("autorun", !current);
+  };
+  var restart = () => {
+    window.location.reload();
+  };
+  function Playback({
+    tickOnce,
+    tickAll,
+    canTick,
+    tickCount
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { onClick: tickOnce, disabled: !canTick, children: "\u25B6\uFE0F Tick world" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { onClick: tickAll, disabled: !canTick, children: "\u23E9 Run world" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { onClick: restart, children: "\u{1F503} Restart" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { onClick: toggleAutorun, children: "\u{1F3C3} Toggle autorun" }),
+      "Tick: ",
+      tickCount
+    ] });
+  }
+
+  // src/components/layout/grid.tsx
+  var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+  function Grid({
+    children,
+    minWidth = 175,
+    columns,
+    title
+  }) {
+    if (Array.isArray(children) && children.length === 0) {
+      return null;
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+      "div",
+      {
+        style: {
+          display: "grid",
+          gridTemplateColumns: columns ? `1fr `.repeat(columns) : `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
+          gridGap: 10,
+          margin: 10
+        },
+        children: [
+          title && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h2", { style: { gridColumn: "1/-1", margin: 0 }, children: title }),
+          children
+        ]
+      }
+    );
+  }
+  function GridItem({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+      "div",
+      {
+        style: {
+          backgroundColor: "#ddd",
+          padding: 10
+        },
+        children
+      }
+    );
+  }
+
+  // src/history/lookup.ts
+  function createLookup() {
+    const map = /* @__PURE__ */ new Map();
+    return {
+      map,
+      set: (value) => {
+        let castValue = value;
+        if (!castValue.id) {
+          const id3 = nextId();
+          castValue.id = id3;
+        }
+        map.set(castValue.id, castValue);
+        return castValue;
+      }
+    };
+  }
+  function getFromLookup(lookup, key) {
+    const found = getFromLookupSafe(lookup, key);
+    if (found === void 0) {
+      throw new Error(`Failed to get ${key} from lookup`);
+    }
+    return found;
+  }
+  function getFromLookupSafe(lookup, key) {
+    if (lookup && key && lookup.map.has(key)) {
+      return lookup.map.get(key);
+    }
+    return void 0;
+  }
+  function lookupValues(lookup) {
+    return Array.from(lookup.map.values());
+  }
+  function lookupFirstValue(lookup) {
+    return lookup.map.values().next().value;
+  }
+
+  // src/components/world.tsx
+  var import_react8 = __toESM(require_react(), 1);
+
+  // src/components/map/terrain.tsx
+  var import_react5 = __toESM(require_react(), 1);
+  var import_color = __toESM(require_color(), 1);
+
+  // src/utils/array2d.ts
+  var import_array = __toESM(require_array(), 1);
+
+  // src/utils/maths.ts
+  function round(value, decimalPlaces) {
+    const multiplier = Math.pow(10, decimalPlaces);
+    return Math.floor(value * multiplier) / multiplier;
+  }
+  function clamp(min, max, value) {
+    return Math.max(min, Math.min(max, value));
+  }
+  function lerp(x, min, max) {
+    return (1 - x) * min + max * x;
+  }
+  function inverseLerp(x, min, max) {
+    return (x - min) / (max - min);
+  }
+
+  // src/utils/array.ts
+  function getMinAndMax(values) {
+    if (values.length === 0) {
+      throw new Error("What?");
+    }
+    let highest = values[0];
+    let lowest = values[0];
+    for (let i = 1; i < values.length; i++) {
+      highest = Math.max(highest, values[i]);
+      lowest = Math.min(lowest, values[i]);
+    }
+    return { min: lowest, max: highest };
+  }
+  function normalize(values) {
+    const { min, max } = getMinAndMax(values);
+    return values.map((value) => inverseLerp(value, min, max));
+  }
+  function last(values) {
+    if (values.length === 0) {
+      return void 0;
+    }
+    return values[values.length - 1];
+  }
+
+  // src/utils/array2d.ts
+  function isFillFunc(filler) {
+    return typeof filler === "function";
+  }
+  function array2dCreate(xSize, ySize, init) {
+    const size = xSize * ySize;
+    if (init !== void 0) {
+      if (isFillFunc(init)) {
+        return {
+          xSize,
+          ySize,
+          values: (0, import_array.empty)(size).map((_, index) => {
+            const x = index % xSize;
+            const y = Math.floor(index / ySize);
+            return init(x, y);
+          })
+        };
+      } else {
+        return {
+          xSize,
+          ySize,
+          values: (0, import_array.empty)(size).fill(init)
+        };
+      }
+    }
+    return {
+      xSize,
+      ySize,
+      values: (0, import_array.empty)(xSize * ySize)
+    };
+  }
+  function array2dFrom(xSize, ySize, values) {
+    return {
+      xSize,
+      ySize,
+      values
+    };
+  }
+  function array2dGet(arr, x, y) {
+    return arr.values[x + y * arr.xSize];
+  }
+  function array2dGetIndex(arr, x, y) {
+    return x + y * arr.xSize;
+  }
+  function array2dGetCoords(arr, index) {
+    return [index % arr.xSize, Math.floor(index / arr.ySize)];
+  }
+  function array2dIsInBounds(arr, x, y) {
+    return x >= 0 && x < arr.xSize && y >= 0 && y < arr.ySize;
+  }
+  function array2dMap(arr, mapper) {
+    return {
+      xSize: arr.xSize,
+      ySize: arr.ySize,
+      values: arr.values.map(
+        (value, index) => mapper(value, index % arr.xSize, Math.floor(index / arr.ySize), index)
+      )
+    };
+  }
+  function array2dReplace(arr, newValues) {
+    return {
+      xSize: arr.xSize,
+      ySize: arr.ySize,
+      values: newValues
+    };
+  }
+  function array2dFlipY(arr, y) {
+    return arr.ySize - y - 1;
+  }
+  function array2dMerge(arr, merger) {
+    const keys = Object.keys(arr);
+    const anyArr = arr[keys[0]];
+    const length = anyArr.values.length;
+    const values = [];
+    const param = {};
+    for (let index = 0; index < length; index++) {
+      for (let key = 0; key < keys.length; key++) {
+        param[keys[key]] = arr[keys[key]].values[index];
+      }
+      values.push(
+        merger(
+          param,
+          index % anyArr.xSize,
+          Math.floor(index / anyArr.ySize),
+          index
+        )
+      );
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dSum(...arrs) {
+    const anyArr = arrs[0];
+    const length = anyArr.values.length;
+    const values = [];
+    for (let index = 0; index < length; index++) {
+      values.push(0);
+      for (let arr = 0; arr < arrs.length; arr++) {
+        values[index] += arrs[arr].values[index];
+      }
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dProduct(...arrs) {
+    const anyArr = arrs[0];
+    const length = anyArr.values.length;
+    const values = [];
+    for (let index = 0; index < length; index++) {
+      values.push(1);
+      for (let arr = 0; arr < arrs.length; arr++) {
+        values[index] *= arrs[arr].values[index];
+      }
+    }
+    return array2dReplace(anyArr, values);
+  }
+  function array2dScale(arr, by) {
+    const multiplied = [];
+    for (let index = 0; index < arr.values.length; index++) {
+      multiplied.push(arr.values[index] * by);
+    }
+    return array2dReplace(arr, multiplied);
+  }
+  function array2dNormalize(arr) {
+    return array2dReplace(arr, normalize(arr.values));
+  }
+  function array2dSlice(arr, fromX, fromY, xSize, ySize) {
+    const result = array2dCreate(xSize, ySize);
+    for (let xOffset = 0; xOffset < xSize; xOffset++) {
+      for (let yOffset = 0; yOffset < ySize; yOffset++) {
+        const sourceValue = array2dGet(arr, fromX + xOffset, fromY + yOffset);
+        const mappedIndex = array2dGetIndex(result, xOffset, yOffset);
+        result.values[mappedIndex] = sourceValue;
+      }
+    }
+    return result;
+  }
+  var neighbours4 = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1]
+  ];
+  var neighbours24 = [
+    [-2, -2],
+    [-2, -1],
+    [-2, 0],
+    [-2, 1],
+    [-2, 2],
+    [-1, -2],
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [-1, 2],
+    [0, -2],
+    [0, -1],
+    [0, 1],
+    [0, 2],
+    [1, -2],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+    [1, 2],
+    [2, -2],
+    [2, -1],
+    [2, 0],
+    [2, 1],
+    [2, 2]
+  ];
+  function array2dGetNeighbourIndices(arr, index, neighbourMask, excluding) {
+    const [positionX, positionY] = array2dGetCoords(arr, index);
+    const result = [];
+    for (let neighbour = 0; neighbour < neighbourMask.length; neighbour++) {
+      const [xOffset, yOffset] = neighbourMask[neighbour];
+      const x = positionX + xOffset;
+      const y = positionY + yOffset;
+      if (array2dIsInBounds(arr, x, y)) {
+        const index2 = array2dGetIndex(arr, x, y);
+        if (!excluding?.has(index2)) {
+          result.push(index2);
+        }
+      }
+    }
+    return result;
+  }
+  function array2dFlip(arr) {
+    const result = [];
+    for (let x = arr.xSize - 1; x >= 0; x--) {
+      for (let y = arr.ySize - 1; y >= 0; y--) {
+        result.push(array2dGet(arr, x, y));
+      }
+    }
+    return array2dReplace(arr, result);
+  }
+
+  // src/config.ts
+  var config = {
+    runTicks: 100,
+    preRegisterWords: ["the", "of"],
+    artifactItems: [
+      "sword",
+      "shield",
+      "dagger",
+      "spear",
+      "cup",
+      "bowl",
+      "knife",
+      "bracelet",
+      "necklace",
+      "chain",
+      "rope",
+      "gown",
+      "robe",
+      "club",
+      "scepter",
+      "vial",
+      "hood",
+      "veil",
+      "necklace",
+      "eyeglass",
+      "map",
+      "drum",
+      "horn",
+      "bell"
+    ],
+    themes: [
+      {
+        name: "sun",
+        categories: ["celestial"],
+        tags: ["daylight"]
+      },
+      {
+        name: "moon",
+        categories: ["celestial"],
+        tags: ["nightlight"]
+      },
+      {
+        name: "stars",
+        categories: ["celestial"],
+        tags: ["nightlight"]
+      },
+      {
+        name: "create",
+        categories: ["stages_of_creations"],
+        tags: ["beginning"]
+      },
+      {
+        name: "preserve",
+        categories: ["stages_of_creations"],
+        tags: ["middle"]
+      },
+      {
+        name: "destroy",
+        categories: ["stages_of_creations"],
+        tags: ["end"]
+      },
+      {
+        name: "earth",
+        categories: ["elements"],
+        tags: ["land"]
+      },
+      { name: "air", categories: ["elements"], tags: ["sky", "gas"] },
+      { name: "water", categories: ["elements"], tags: ["liquid"] },
+      {
+        name: "fire",
+        categories: ["elements"],
+        tags: ["forge", "temperature"]
+      },
+      {
+        name: "ice",
+        categories: ["elements"],
+        tags: ["temperature", "cold"]
+      },
+      { name: "metal", categories: ["elements"], tags: [] },
+      { name: "destiny", categories: ["fate"], tags: [] },
+      { name: "chance", categories: ["fate"], tags: [] },
+      { name: "desire", categories: ["fate"], tags: [] },
+      {
+        name: "life",
+        categories: ["stages_of_life"],
+        tags: ["beginning"]
+      },
+      { name: "death", categories: ["stages_of_life"], tags: ["end"] },
+      { name: "war", categories: ["diplomacy"], tags: [] },
+      { name: "peace", categories: ["diplomacy"], tags: [] },
+      { name: "mercy", categories: ["judgement"], tags: [] },
+      {
+        name: "revenge",
+        categories: ["judgement"],
+        tags: []
+      },
+      { name: "law", categories: ["judgement"], tags: [] },
+      { name: "forgive", categories: ["judgement"], tags: [] },
+      { name: "grief", categories: ["emotions"], tags: [] },
+      { name: "joy", categories: ["emotions"], tags: [] },
+      { name: "dream", categories: ["mental_states"], tags: [] },
+      { name: "madness", categories: ["mental_states"], tags: [] },
+      { name: "thought", categories: ["mental_states"], tags: [] },
+      { name: "lucid", categories: ["mental_states"], tags: [] },
+      { name: "heal", categories: ["medical"], tags: ["beginning"] },
+      { name: "wound", categories: ["medical"], tags: ["end"] },
+      {
+        name: "animals",
+        categories: ["living_beings"],
+        tags: ["land"]
+      },
+      { name: "fish", categories: ["living_beings"], tags: ["liquid"] },
+      { name: "bird", categories: ["living_beings"], tags: ["sky"] },
+      { name: "plant", categories: ["living_beings"], tags: ["land"] },
+      { name: "cloud", categories: ["weather"], tags: ["sky"] },
+      { name: "wind", categories: ["weather"], tags: ["sky", "gas"] },
+      {
+        name: "rain",
+        categories: ["weather"],
+        tags: ["sky", "liquid"]
+      },
+      { name: "thunder", categories: ["weather"], tags: ["sky"] },
+      { name: "lightning", categories: ["weather"], tags: ["sky"] },
+      { name: "snow", categories: ["weather"], tags: ["sky", "cold"] },
+      {
+        name: "sunshine",
+        categories: ["weather"],
+        tags: ["sky", "daylight"]
+      }
+    ],
+    deityArchitecture: [
+      "monument",
+      "temple",
+      "shrine",
+      "statue",
+      "monastery",
+      "cathedral",
+      "altar",
+      "church",
+      "gardens",
+      "palace",
+      "cemetary",
+      "sanctuary",
+      "halls",
+      "forum"
+    ],
+    themeRange: {
+      min: 3,
+      max: 5
+    },
+    motifs: [
+      { name: "cross", unicode: "\u271A" },
+      { name: "triangle", unicode: "\u25B2" },
+      { name: "circle", unicode: "\u25CF" },
+      { name: "square", unicode: "\u25FC" },
+      { name: "star", unicode: "\u26E6" },
+      { name: "ring", unicode: "\u233E" },
+      { name: "arrowhead", unicode: "\u27A4" },
+      { name: "diamond", unicode: "\u2666" },
+      { name: "cresent", unicode: "\u25E0" },
+      { name: "semicircle", unicode: "\u25D6" },
+      { name: "bar", unicode: "\u2759" }
+    ],
+    deityRelationshipChance: 0.75,
+    deityHoldingLimit: 3,
+    movementChance: 0.2,
+    worldWidth: 10,
+    worldHeight: 10,
+    terrainResolution: 20,
+    waterHeight: 0.46,
+    waterStop1: 0.25,
+    waterStop2: 0.35,
+    regionPlaces: [
+      "woods",
+      "halls",
+      "cliffs",
+      "forest",
+      "plains",
+      "tundras",
+      "mountains",
+      "streets"
+    ],
+    regionAdjectives: [
+      "windy",
+      "calm",
+      "frozen",
+      "windswept",
+      "sunny",
+      "tranquil",
+      "undead",
+      "barren"
+    ],
+    settlementNameStarts: [
+      "ply",
+      "exe",
+      "tor",
+      "paign",
+      "ex",
+      "barn",
+      "ton",
+      "tiver",
+      "brix",
+      "bide",
+      "teign",
+      "sid",
+      "dawl",
+      "tavi",
+      "north",
+      "ivy"
+    ],
+    settlementNameEnds: [
+      "mouth",
+      "ter",
+      "quay",
+      "ton",
+      "staple",
+      "ton abbot",
+      "ham",
+      "ford",
+      "ish",
+      "stock",
+      "bridge"
+    ]
+  };
+
+  // src/terrain/biome.ts
+  var biomeColorMap = {
+    ["DeepSea" /* DeepSea */]: {
+      r: 23,
+      g: 110,
+      b: 128
+    },
+    ["ShallowSea" /* ShallowSea */]: {
+      r: 50,
+      g: 163,
+      b: 171
+    },
+    ["Beach" /* Beach */]: {
+      r: 235,
+      g: 196,
+      b: 80
+    },
+    ["Grass" /* Grass */]: {
+      r: 18,
+      g: 116,
+      b: 49
+    },
+    ["Desert" /* Desert */]: {
+      r: 255,
+      g: 242,
+      b: 179
+    },
+    ["Tundra" /* Tundra */]: {
+      r: 230,
+      g: 255,
+      b: 230
+    },
+    ["Mountain" /* Mountain */]: {
+      r: 112,
+      g: 117,
+      b: 113
+    },
+    ["Snow" /* Snow */]: {
+      r: 236,
+      g: 240,
+      b: 240
+    },
+    ["Unknown" /* Unknown */]: {
+      r: 255,
+      g: 0,
+      b: 0
+    }
+  };
+  function getBiome(height, temperature, gradient, coast, rockHardness) {
+    if (height < config.waterStop2) {
+      return "DeepSea" /* DeepSea */;
+    }
+    if (height < config.waterHeight) {
+      return "ShallowSea" /* ShallowSea */;
+    }
+    if (coast > 0.6 && gradient < 0.5 && height < 0.5 && rockHardness < 0.5) {
+      return "Beach" /* Beach */;
+    }
+    if (coast > 0.3 && gradient < 0.4 && height < 0.5 && rockHardness < 0.5) {
+      return "Beach" /* Beach */;
+    }
+    if (gradient > 0.7) {
+      return "Mountain" /* Mountain */;
+    }
+    if (height < 0.81) {
+      if (temperature > 0.7) {
+        return "Desert" /* Desert */;
+      }
+      if (temperature < 0.3) {
+        return "Tundra" /* Tundra */;
+      }
+      return "Grass" /* Grass */;
+    }
+    if (height < 0.96) {
+      return "Mountain" /* Mountain */;
+    }
+    if (height <= 1) {
+      return "Snow" /* Snow */;
+    }
+    return "Unknown" /* Unknown */;
+  }
+
+  // src/terrain/color.ts
+  function getNumberColor(value) {
+    if (value < 0) {
+      return {
+        r: 255,
+        g: 0,
+        b: 0
+      };
+    } else if (value > 1) {
+      return {
+        r: 0,
+        g: 255,
+        b: 0
+      };
+    }
+    const shade = lerp(value, 0, 255);
+    return {
+      r: shade,
+      g: shade,
+      b: shade
+    };
+  }
+  function getStringColor(value, colorMap) {
+    return colorMap[value];
+  }
+  function getTerrainColor(height, temperature, biome, sunlight, snow, sand, icebergs, rivers, vegetation) {
+    if (rivers === 1) {
+      return applySunlight(
+        applySnow({ r: 88, g: 219, b: 202 }, snow, 0.5),
+        sunlight,
+        1 / 4
+      );
+    }
+    switch (biome) {
+      case "DeepSea" /* DeepSea */:
+      case "ShallowSea" /* ShallowSea */:
+        return applySnow(getWaterColor(height, temperature), icebergs, 1);
+      case "Beach" /* Beach */:
+        return applySunlight(
+          applySand(
+            applySnow(getSandColor(height, temperature), snow, 0.8),
+            sand,
+            0.5
+          ),
+          sunlight,
+          1 / 4
+        );
+      case "Desert" /* Desert */:
+      case "Grass" /* Grass */:
+      case "Tundra" /* Tundra */:
+        const color = vegetation === 1 ? getVegetationColor(height, temperature) : getGroundColor(height, temperature);
+        return applySunlight(
+          applySand(
+            applySnow(color, snow, vegetation === 1 ? 0.1 : 0.9),
+            sand,
+            vegetation === 1 ? 0.1 : 0.9
+          ),
+          sunlight,
+          1 / 4
+        );
+      case "Mountain" /* Mountain */:
+        return applySunlight(
+          getCliffsColor(height, temperature),
+          sunlight,
+          1 / 4
+        );
+      case "Snow" /* Snow */:
+        return applySunlight(getSnowColor(height, temperature), sunlight, 1 / 4);
+      case "Unknown" /* Unknown */:
+        return { r: 255, g: 0, b: 0 };
+    }
+  }
+  function applySunlight(color, sunlight, strength) {
+    const shadow = 1 - sunlight;
+    return validateColor({
+      r: color.r + lerp(shadow, 0, -color.r * strength),
+      g: color.g + lerp(shadow, 0, -color.g * strength),
+      b: color.b + lerp(shadow, 0, -color.b * strength)
+    });
+  }
+  function applySnow(color, snow, amount) {
+    const snowAmount = snow * amount;
+    return {
+      r: lerp(snowAmount, color.r, 230),
+      g: lerp(snowAmount, color.g, 230),
+      b: lerp(snowAmount, color.b, 230)
+    };
+  }
+  function applySand(color, snow, amount) {
+    const snowAmount = snow * amount;
+    return {
+      r: lerp(snowAmount, color.r, 235),
+      g: lerp(snowAmount, color.g, 196),
+      b: lerp(snowAmount, color.b, 80)
+    };
+  }
+  function applyTemp(color, temperature) {
+    if (temperature <= 0.5) {
+      const scale = temperature * 2;
+      return clampColor({
+        r: color.r + lerp(scale, 50, 0),
+        g: color.g + lerp(scale, 50, 0),
+        b: color.b + lerp(scale, 100, 0)
+      });
+    } else {
+      const scale = (temperature - 0.5) * 2;
+      return clampColor({
+        ...color,
+        r: color.r + lerp(scale, 0, 150),
+        g: color.g + lerp(scale, 0, 50),
+        b: color.b + lerp(scale, 0, 50)
+      });
+    }
+  }
+  function clampColor(color) {
+    return {
+      r: clamp(0, 255, color.r),
+      g: clamp(0, 255, color.g),
+      b: clamp(0, 255, color.b)
+    };
+  }
+  function validateColor(color) {
+    if (Number.isNaN(color.r) || color.r < 0 || color.r > 255) {
+      throw new Error("Bad color");
+    }
+    if (Number.isNaN(color.g) || color.g < 0 || color.g > 255) {
+      throw new Error("Bad color");
+    }
+    if (Number.isNaN(color.b) || color.b < 0 || color.b > 255) {
+      throw new Error("Bad color");
+    }
+    return color;
+  }
+  function getSandColor(height, temperature) {
+    const scale = inverseLerp(height, config.waterHeight, 0.5);
+    return clampColor(
+      applyTemp(
+        {
+          r: lerp(scale, 235, 148),
+          g: lerp(scale, 196, 119),
+          b: lerp(scale, 80, 3)
+        },
+        temperature
+      )
+    );
+  }
+  function getWaterColor(height, temperature) {
+    if (height < config.waterStop1) {
+      const scale = inverseLerp(height, 0, config.waterStop1);
+      return {
+        r: lerp(scale, 0, 23),
+        g: lerp(scale, 55, 110),
+        b: lerp(scale, 93, 128)
+      };
+    } else if (height >= config.waterStop1 && height < config.waterStop2) {
+      const scale = inverseLerp(height, config.waterStop1, config.waterStop2);
+      return {
+        r: lerp(scale, 23, 50),
+        g: lerp(scale, 110, 163),
+        b: lerp(scale, 128, 171)
+      };
+    } else {
+      const scale = inverseLerp(height, config.waterStop2, config.waterHeight);
+      return {
+        r: lerp(scale, 50, 88),
+        g: lerp(scale, 163, 219),
+        b: lerp(scale, 171, 202)
+      };
+    }
+  }
+  var ground1 = {
+    r: 21,
+    g: 126,
+    b: 32
+  };
+  var ground2 = {
+    r: 18,
+    g: 116,
+    b: 49
+  };
+  var ground3 = {
+    r: 12,
+    g: 92,
+    b: 52
+  };
+  function getGroundColor(height, temperature) {
+    if (height < 0.67) {
+      const scale = inverseLerp(height, 0.5, 0.67);
+      return applyTemp(
+        {
+          r: lerp(scale, ground1.r, ground2.r),
+          g: lerp(scale, ground1.g, ground2.g),
+          b: lerp(scale, ground1.b, ground2.b)
+        },
+        temperature
+      );
+    } else {
+      const scale = inverseLerp(height, 0.67, 0.81);
+      return applyTemp(
+        {
+          r: lerp(scale, ground2.r, ground3.r),
+          g: lerp(scale, ground2.g, ground3.g),
+          b: lerp(scale, ground2.b, ground3.b)
+        },
+        temperature
+      );
+    }
+  }
+  var vegetation1 = {
+    r: 4,
+    g: 61,
+    b: 10
+  };
+  var vegetation2 = {
+    r: 4,
+    g: 48,
+    b: 18
+  };
+  var vegetation3 = {
+    r: 1,
+    g: 71,
+    b: 36
+  };
+  function getVegetationColor(height, temperature) {
+    if (height < 0.67) {
+      const scale = inverseLerp(height, 0.5, 0.67);
+      return applyTemp(
+        {
+          r: lerp(scale, vegetation1.r, vegetation2.r),
+          g: lerp(scale, vegetation1.g, vegetation2.g),
+          b: lerp(scale, vegetation1.b, vegetation2.b)
+        },
+        temperature
+      );
+    } else {
+      const scale = inverseLerp(height, 0.67, 0.81);
+      return applyTemp(
+        {
+          r: lerp(scale, vegetation2.r, vegetation3.r),
+          g: lerp(scale, vegetation2.g, vegetation3.g),
+          b: lerp(scale, vegetation2.b, vegetation3.b)
+        },
+        temperature
+      );
+    }
+  }
+  function getCliffsColor(height, temperature) {
+    const scale = inverseLerp(height, 0.81, 0.96);
+    return {
+      r: lerp(scale, 112, 76),
+      g: lerp(scale, 117, 79),
+      b: lerp(scale, 113, 100)
+    };
+  }
+  function getSnowColor(height, temperature) {
+    const scale = inverseLerp(height, 0.96, 1);
+    return {
+      r: lerp(scale, 236, 223),
+      g: lerp(scale, 240, 245),
+      b: lerp(scale, 240, 245)
+    };
+  }
+
+  // src/components/map/terrain.tsx
+  var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+  var selectedColor = (0, import_color.toHex)({ r: 0, g: 255, b: 0 });
+  var missingColor = { r: 0, g: 255, b: 0 };
+  function Terrain({
+    layer,
+    hoverX,
+    hoverY
+  }) {
+    const canvasRef = (0, import_react5.useRef)(null);
+    (0, import_react5.useEffect)(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) {
+        return;
+      }
+      const context = canvas.getContext("2d");
+      if (!context) {
+        return;
+      }
+      let colors;
+      switch (layer.kind) {
+        case "color":
+          colors = layer.values;
+          break;
+        case "number":
+          colors = array2dMap(layer.values, getNumberColor);
+          break;
+        case "string":
+          colors = array2dMap(
+            layer.values,
+            (value) => getStringColor(value, layer.colorMap) || missingColor
+          );
+          break;
+      }
+      const hoverIndex = hoverX !== null && hoverY !== null ? array2dGetIndex(colors, hoverX, hoverY) : null;
+      array2dMap(colors, (color, x, y, index) => {
+        const flipY = array2dFlipY(colors, y);
+        if (index === hoverIndex) {
+          context.fillStyle = selectedColor;
+          context.fillRect(x, flipY, 1, 1);
+        } else {
+          context.fillStyle = (0, import_color.toHex)(color);
+          context.fillRect(x, flipY, 1, 1);
+        }
+      });
+    }, [canvasRef.current, hoverX, hoverY, layer]);
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      "canvas",
+      {
+        ref: canvasRef,
+        width: layer.values.xSize,
+        height: layer.values.ySize,
+        style: {
+          width: "100%",
+          height: "100%",
+          imageRendering: "pixelated",
+          margin: 0,
+          padding: 0
+        }
+      }
+    );
+  }
+
+  // src/hooks/useHover.tsx
+  var import_react6 = __toESM(require_react(), 1);
+  function useHoverPosition() {
+    const [pos, setPos] = (0, import_react6.useState)([null, null]);
+    const handleMouseMove = (0, import_react6.useCallback)(
+      (e) => {
+        const bounds = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - bounds.x;
+        const y = e.clientY - bounds.y;
+        setPos([x, y]);
+      },
+      [setPos]
+    );
+    return [handleMouseMove, ...pos];
+  }
+
+  // src/terrain/registry.ts
+  function getTerrainLayer(terrainRegistry, layerName) {
+    const result = terrainRegistry.find((layer) => layer.name === layerName);
+    if (!result) {
+      throw new Error(`Bad layer name ${layerName}`);
+    }
+    return result;
+  }
+  function sliceTerrainRegistry(terrainRegistry, x, y, resolution) {
+    const xTerrain = x * resolution;
+    const yTerrain = y * resolution;
+    const newTerrainRegistry = terrainRegistry.map((entry) => ({
+      ...entry,
+      values: array2dSlice(
+        entry.values,
+        xTerrain,
+        yTerrain,
+        resolution,
+        resolution
+      )
+    }));
+    return newTerrainRegistry;
+  }
+
+  // src/components/layout/tooltip.tsx
+  var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+  function Tooltip({
+    children,
+    label
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      "span",
+      {
+        title: label,
+        style: {
+          textDecoration: "underline",
+          textDecorationStyle: "dotted"
+        },
+        children
+      }
+    );
+  }
+
+  // src/components/name.tsx
+  var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+  function Name({
+    languageName,
+    word
+  }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Tooltip, { label: `From the language ${languageName}`, children: word });
+  }
+
+  // src/components/motif.tsx
+  var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
+  function Motif({ motif }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_jsx_runtime17.Fragment, { children: motif ? config.motifs.find((match) => match.name === motif?.value)?.unicode : "?" });
+  }
+
+  // src/components/map/mapTile.tsx
+  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+  function MapTile({ tile, history: history3 }) {
+    if (!tile.discovered) {
+      return null;
+    }
+    const beings = lookupValues(history3.beings).filter(
+      (being) => being.location === tile.id
+    );
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+      "div",
+      {
+        style: {
+          textAlign: "center",
+          fontSize: 10,
+          fontFamily: "sans-serif",
+          fontWeight: "bold",
+          lineHeight: 2
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(BlackLabel, { children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Name, { languageName: "ID", word: tile.id }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("br", {}),
+          beings.length ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(BlackLabel, { children: beings.map((being, index) => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Tooltip, { label: being.id, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Motif, { motif: being.motif }) }, index)) }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            "span",
+            {
+              style: {
+                lineHeight: 1.4
+              },
+              children: "\xA0"
+            }
+          )
+        ]
+      }
+    );
+  }
+  function BlackLabel({ children }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+      "span",
+      {
+        style: {
+          backgroundColor: "black",
+          color: "white",
+          lineHeight: 1.4,
+          boxDecorationBreak: "clone",
+          borderRadius: 6,
+          padding: "6px 6px"
+        },
+        children
+      }
+    );
+  }
+
+  // src/components/map/map.tsx
+  var import_react7 = __toESM(require_react(), 1);
+
+  // src/decision/action.ts
+  function actionBroadcast(hasActions, ...toAdd) {
+    hasActions.availableActions = hasActions.availableActions.concat(toAdd);
+  }
+  function actionTileRevokeWhere(hasActions, action, location, target, allowClaim) {
+    const prevLength = hasActions.availableActions.length;
+    const filtered = hasActions.availableActions.filter((availableAction) => {
+      const actionMatch = availableAction.action === action;
+      const locationMatch = availableAction.location === location;
+      if (target !== void 0) {
+        const targetMatch = availableAction.target === target;
+        return !(actionMatch && locationMatch && targetMatch);
+      }
+      return !(actionMatch && locationMatch);
+    });
+    if (!allowClaim && prevLength === filtered.length) {
+      throw new Error("Expected to revoke something");
+    }
+    hasActions.availableActions = filtered;
+  }
+  function actionBeingRevokeWhere(hasActions, action) {
+    hasActions.availableActions = hasActions.availableActions.filter(
+      (availableAction) => availableAction.action !== action
+    );
+  }
+
+  // src/decision/need.ts
+  function createNeeds() {
+    return {
+      socialise: createNeed(),
+      create: createNeed(),
+      rest: createNeed(),
+      explore: createNeed()
+    };
+  }
+  function createNeed() {
+    return {
+      currentValue: Math.random(),
+      drainRate: Math.random() * 0.1
+    };
+  }
+  function satisfyNeed(hasNeeds, satisfies) {
+    hasNeeds.needs[satisfies].currentValue = 0.5 + Math.random() * 0.5;
+  }
+  function updateNeeds(needs) {
+    updateNeed(needs.socialise);
+    updateNeed(needs.create);
+    updateNeed(needs.rest);
+    updateNeed(needs.explore);
+  }
+  function updateNeed(need) {
+    need.currentValue = Math.max(0, need.currentValue - need.drainRate);
+  }
+
+  // src/decision/preference.ts
+  function createPreferences() {
+    return {
+      discover: Math.random(),
+      rest: Math.random(),
+      travel: Math.random(),
+      createArtifact: Math.random(),
+      createArchitecture: Math.random(),
+      adoptSymbol: Math.random(),
+      conversation: Math.random(),
+      giveArtifact: Math.random()
+    };
+  }
+  function createStrongPreference() {
+    return Math.random() * 0.5 + 0.5;
+  }
+  function createWeakPreference() {
+    return Math.random() * 0.5;
+  }
+
+  // src/decision/factories.ts
+  function createDeityPreferences() {
+    return {
+      ...createPreferences(),
+      adoptSymbol: createStrongPreference(),
+      rest: createWeakPreference(),
+      createArtifact: createWeakPreference(),
+      createArchitecture: createWeakPreference(),
+      conversation: createWeakPreference(),
+      giveArtifact: createWeakPreference()
+    };
+  }
+  function createDeityNeeds() {
+    return {
+      ...createNeeds()
+    };
+  }
+  function updateInitialTileActions(history3, tile) {
+    actionBroadcast(history3, {
+      kind: "tile",
+      action: "discover",
+      satisfies: "explore",
+      location: tile,
+      requires: {
+        location: "different"
+      }
+    });
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        kind: "tile",
+        action: "createArtifact",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "present"
+        }
+      });
+    }
+    if (Math.random() > 0.5) {
+      actionBroadcast(history3, {
+        kind: "tile",
+        action: "createArchitecture",
+        satisfies: "create",
+        location: tile,
+        requires: {
+          location: "same",
+          motif: "present"
+        }
+      });
+    }
+  }
+  function updateDiscoveredTileActions(history3, tile) {
+    actionBroadcast(history3, {
+      kind: "tile",
+      action: "travel",
+      satisfies: "explore",
+      location: tile,
+      requires: {
+        location: "different"
+      }
+    });
+    actionTileRevokeWhere(history3, "discover", tile);
+  }
+  function updateArtifactCreatedTileActions(history3, tile) {
+    actionTileRevokeWhere(history3, "createArtifact", tile, void 0, true);
+  }
+  function updateArchitectureCreatedTileActions(history3, tile) {
+    actionTileRevokeWhere(history3, "createArchitecture", tile, void 0, true);
+  }
+  function updateConversationStartedTileActions(history3, tile, being) {
+    actionBroadcast(history3, {
+      kind: "tile",
+      action: "conversation",
+      location: tile,
+      satisfies: "socialise",
+      target: being,
+      requires: {
+        location: "same"
+      }
+    });
+  }
+  function updateConversationFinishedTileActions(history3, tile) {
+    actionTileRevokeWhere(history3, "conversation", tile);
+  }
+  function initialBeingActions(being) {
+    actionBroadcast(being, {
+      kind: "being",
+      action: "rest",
+      satisfies: "rest",
+      target: being,
+      requires: {
+        owner: "same"
+      }
+    });
+    updateBeingActions(being);
+  }
+  function updateBeingActions(being) {
+    actionBeingRevokeWhere(being, "giveArtifact");
+    if (being.holding.length < config.deityHoldingLimit) {
+      actionBroadcast(being, {
+        kind: "being",
+        action: "giveArtifact",
+        satisfies: "socialise",
+        target: being,
+        requires: {
+          holding: true,
+          owner: "different"
+        }
+      });
+    }
+    actionBeingRevokeWhere(being, "adoptSymbol");
+    if (!being.motif) {
+      actionBroadcast(being, {
+        kind: "being",
+        action: "adoptSymbol",
+        satisfies: "create",
+        target: being,
+        requires: {
+          owner: "same"
+        }
+      });
+    }
+    actionBeingRevokeWhere(being, "conversation");
+    if (being.location) {
+      actionBroadcast(being, {
+        kind: "being",
+        action: "conversation",
+        satisfies: "socialise",
+        target: being,
+        requires: {
+          owner: "different"
+        }
+      });
+    }
+  }
+
+  // src/terrain/assess.ts
+  function assessTerrain(terrain) {
+    const heights = getTerrainLayer(
+      terrain,
+      "heights"
+    );
+    let waterCount = 0;
+    for (let index = 0; index < heights.values.values.length; index++) {
+      const height = heights.values.values[index];
+      if (height < config.waterHeight) {
+        waterCount++;
+      }
+    }
+    const temperature = getTerrainLayer(
+      terrain,
+      "temperature"
+    );
+    const totalTemperature = temperature.values.values.reduce((p, n) => p + n, 0);
+    const includesUniqueFeatures = /* @__PURE__ */ new Set();
+    const features = getTerrainLayer(
+      terrain,
+      "features"
+    );
+    features.values.values.forEach((f) => includesUniqueFeatures.add(f));
+    const percentWater = waterCount / temperature.values.values.length;
+    const averageTemp = totalTemperature / temperature.values.values.length;
+    const includesFeatures = [...includesUniqueFeatures.values()];
+    return {
+      percentWater,
+      averageTemp,
+      includesFeatures,
+      rootConcept: percentWater <= 0 ? "terrain-water" : percentWater > 0.9 ? "terrain-land" : "terrain-coast",
+      affixConcepts: [
+        averageTemp > 0.75 ? "temp-hot" : averageTemp < 0.25 ? "temp-cold" : "temp-average"
+      ]
+    };
+  }
 
   // src/world/index.ts
   function createWorld(history3, width, height) {
@@ -28115,7 +28142,7 @@
   }
 
   // src/components/map/map.tsx
-  var import_jsx_runtime18 = __toESM(require_jsx_runtime(), 1);
+  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
   function Map2({
     history: history3,
     terrainLayer,
@@ -28148,13 +28175,13 @@
     );
     const flipPixelY = pixelY === null ? 0 : heights.ySize - pixelY - 1;
     const selectedTile = pixelX !== null && flipPixelY !== null && getTile(history3.world, pixelX, flipPixelY);
-    (0, import_react6.useEffect)(() => {
+    (0, import_react7.useEffect)(() => {
       if (pixelX !== null && flipPixelY !== null) {
         setSelection([pixelX, flipPixelY]);
       }
     }, [setSelection, pixelX, flipPixelY]);
     const layer = getTerrainLayer(terrainRegistry, terrainLayer);
-    return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+    return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
       "div",
       {
         style: {
@@ -28172,7 +28199,7 @@
         },
         onMouseMove: handler,
         children: [
-          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          selectedTile && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
             "div",
             {
               style: {
@@ -28186,10 +28213,10 @@
                 padding: "10px",
                 boxSizing: "border-box"
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(MapTile, { tile: selectedTile, history: history3 })
+              children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(MapTile, { tile: selectedTile, history: history3 })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
             "div",
             {
               style: {
@@ -28200,30 +28227,12 @@
                 aspectRatio: 1,
                 zIndex: 0
               },
-              children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
+              children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Terrain, { layer, hoverX: pixelX, hoverY: flipPixelY })
             }
           )
         ]
       }
     );
-  }
-
-  // src/components/language/languageContext.tsx
-  var import_react7 = __toESM(require_react(), 1);
-  var import_jsx_runtime19 = __toESM(require_jsx_runtime(), 1);
-  var Context = (0, import_react7.createContext)(null);
-  function LanguageContext({
-    children,
-    defaultLanguage: defaultLanguage2
-  }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Context.Provider, { value: defaultLanguage2, children });
-  }
-  function useLanguage() {
-    const language = (0, import_react7.useContext)(Context);
-    if (!language) {
-      throw new Error("Whoops");
-    }
-    return language;
   }
 
   // src/components/language/names.tsx
@@ -28937,7 +28946,7 @@
     being.location = target.id;
     if (path.length === 0) {
       history3.log(
-        `[[${being.id}]] completed their journey`,
+        `[[${being.names.defaultKey}]] completed their journey`,
         [being.id],
         [target.id],
         []
@@ -28950,14 +28959,14 @@
     being.location = targetTile.id;
     if (previous) {
       history3.log(
-        `[[${being.id}]] moved from [[${previous.id}]] to [[${targetTile.id}]]`,
+        `[[${being.names.defaultKey}]] moved from [[${previous.names.defaultKey}]] to [[${targetTile.names.defaultKey}]]`,
         [being.id],
         [targetTile.id],
         []
       );
     } else {
       history3.log(
-        `[[${being.id}]] entered the world in [[${targetTile.id}]]`,
+        `[[${being.names.defaultKey}]] entered the world in [[${targetTile.names.defaultKey}]]`,
         [being.id],
         [targetTile.id],
         []
@@ -28971,7 +28980,7 @@
     targetTile.discovered = true;
     updateDiscoveredTileActions(history3, targetTile);
     history3.log(
-      `[[${being.id}]] discovered the region of ${targetTile.id}`,
+      `[[${being.names.defaultKey}]] discovered the region of [[${targetTile.names.defaultKey}]]`,
       [being.id],
       [targetTile.id],
       []
@@ -29000,7 +29009,7 @@
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.id}]] started forging an artifact in [[${tile.id}]]`,
+        `[[${being.names.defaultKey}]] started forging an artifact in [[${tile.names.defaultKey}]]`,
         [being.id],
         [tile.id],
         []
@@ -29025,11 +29034,11 @@
       allBeings.forEach((participant) => {
         completeActivity(participant);
         updateBeingActions(participant);
-        beingNames.push(`[[${participant.id}]]`);
+        beingNames.push(`[[${participant.names.defaultKey}]]`);
         beingIds.push(participant.id);
       });
       history3.log(
-        `${commaSeparate(beingNames)} created the ${artifact.object} [[${artifact.id}]] in [[${tile.id}]]`,
+        `${commaSeparate(beingNames)} created the ${artifact.object} [[${artifact.names.defaultKey}]] in [[${tile.names.defaultKey}]]`,
         beingIds,
         [tile.id],
         [artifact.id]
@@ -29045,7 +29054,7 @@
   function adoptSymbol(history3, being, activity) {
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.id}]] started adopting a symbol`,
+        `[[${being.names.defaultKey}]] started adopting a symbol`,
         [being.id],
         being.location ? [being.location] : [],
         []
@@ -29061,7 +29070,7 @@
         value: randomChoice(config.motifs).name
       };
       history3.log(
-        `[[${being.id}]] adopted the ${being.motif?.value} as their symbol`,
+        `[[${being.names.defaultKey}]] adopted the ${being.motif?.value} as their symbol`,
         [being.id],
         being.location ? [being.location] : [],
         []
@@ -29380,7 +29389,7 @@
     }
     const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
-      `[[${being.id}]] ${verb} ${action.action} in ${getRegionName(
+      `[[${being.names.defaultKey}]] ${verb} ${action.action} in ${getRegionName(
         currentLocation
       )}`,
       beingIds,
@@ -29454,7 +29463,7 @@
     }
     const verb = getCurrentActivity(being)?.kind === "joined" ? "joined" : "chose";
     history3.log(
-      `[[${being.id}]] ${verb} ${action.action} in ${getRegionName(
+      `[[${being.names.defaultKey}]] ${verb} ${action.action} in ${getRegionName(
         currentLocation
       )}`,
       beingIds,
@@ -29468,7 +29477,9 @@
       return;
     }
     history3.log(
-      `[[${being.id}]] set out for ${getRegionName(targetLocation)}`,
+      `[[${being.names.defaultKey}]] set out for ${getRegionName(
+        targetLocation
+      )}`,
       [being.id],
       [targetLocation.id],
       []
@@ -29482,7 +29493,7 @@
     });
   }
   function getRegionName(tile) {
-    return !tile.discovered ? "an unknown land" : `[[${tile.id}]]`;
+    return !tile.discovered ? "an unknown land" : `[[${tile.names.defaultKey}]]`;
   }
 
   // src/systems/conversation.ts
@@ -29502,11 +29513,11 @@
     const allBeings = [being, ...otherBeings.map((other) => other)];
     const beingIds = allBeings.map((participant) => participant.id);
     const beingNames = allBeings.map(
-      (participant) => `[[${participant.id}]]`
+      (participant) => `[[${participant.names.defaultKey}]]`
     );
     if (activity.timeLeft === void 0) {
       history3.log(
-        `${commaSeparate(beingNames)} started a conversation in [[${location.id}]]`,
+        `${commaSeparate(beingNames)} started a conversation in [[${location.names.defaultKey}]]`,
         beingIds,
         [location.id],
         []
@@ -29522,7 +29533,7 @@
         completeActivity(participant);
       });
       history3.log(
-        `${commaSeparate(beingNames)} finished their conversation in [[${location.id}]]`,
+        `${commaSeparate(beingNames)} finished their conversation in [[${location.names.defaultKey}]]`,
         beingIds,
         [location.id],
         []
@@ -29554,7 +29565,7 @@
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.id}]] started gifing an artifact to [[${target.id}]]`,
+        `[[${being.names.defaultKey}]] started gifing an artifact to [[${target.names.defaultKey}]]`,
         [being.id, target.id],
         [tile.id],
         [artifact.id]
@@ -29566,7 +29577,7 @@
         return;
       }
       history3.log(
-        `[[${being.id}]] gifted the ${artifact.object} [[${artifact.id}]] to [[${target.id}]]`,
+        `[[${being.names.defaultKey}]] gifted the ${artifact.object} [[${artifact.names.defaultKey}]] to [[${target.names.defaultKey}]]`,
         [being.id, target.id],
         [tile.id],
         [artifact.id]
@@ -30124,7 +30135,12 @@
     const deityThemes = getDeityThemes();
     const deities = deityThemes.map((deityTheme) => {
       const deity = createDeity(history3.beings, deityTheme.theme);
-      history3.log(`[[${deity.id}]] woke from their slumber.`, [deity.id], [], []);
+      history3.log(
+        `[[${deity.names.defaultKey}]] woke from their slumber.`,
+        [deity.id],
+        [],
+        []
+      );
       return deity;
     });
     deityThemes.forEach((deityTheme) => {
@@ -30195,7 +30211,7 @@
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.id}]] rested in [[${tile.id}]]`,
+        `[[${being.names.defaultKey}]] rested in [[${tile.names.defaultKey}]]`,
         [being.id],
         [tile.id],
         []
@@ -30207,7 +30223,7 @@
         return;
       }
       history3.log(
-        `[[${being.id}]] finished resting in [[${tile.id}]]`,
+        `[[${being.names.defaultKey}]] finished resting in [[${tile.names.defaultKey}]]`,
         [being.id],
         [tile.id],
         []
@@ -30233,7 +30249,7 @@
     const tile = getFromLookup(history3.regions, being.location);
     if (activity.timeLeft === void 0) {
       history3.log(
-        `[[${being.id}]] started creating architecture in [[${tile.id}]]`,
+        `[[${being.names.defaultKey}]] started creating architecture in [[${tile.names.defaultKey}]]`,
         [being.id],
         [tile.id],
         []
@@ -30258,11 +30274,11 @@
       allBeings.forEach((participant) => {
         completeActivity(participant);
         updateBeingActions(participant);
-        beingNames.push(`[[${participant.id}]]`);
+        beingNames.push(`[[${participant.names.defaultKey}]]`);
         beingIds.push(participant.id);
       });
       history3.log(
-        `${commaSeparate(beingNames)} created [[${architecture.id}]] in [[${tile.id}]]`,
+        `${commaSeparate(beingNames)} created [[${architecture.names.defaultKey}]] in [[${tile.names.defaultKey}]]`,
         beingIds,
         [tile.id, architecture.id],
         []
