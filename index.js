@@ -26486,6 +26486,21 @@
         }
     }
   }
+  function etymology(word) {
+    switch (word.kind) {
+      case "root":
+        return `root: ${word.root.concept}`;
+      case "affix":
+        switch (word.affix.kind) {
+          case 1 /* Prefix */:
+            return `(prefix: ${word.affix.concept}) (${etymology(word.stem)})`;
+          case 2 /* Suffix */:
+            return `(${etymology(word.stem)}) (suffix:${word.affix.concept})`;
+          case 0 /* Root */:
+            throw new Error("what");
+        }
+    }
+  }
 
   // src/utils/string.ts
   function commaSeparate(values) {
@@ -28747,10 +28762,20 @@
     return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(InspectLink, { id: language.id, inspect, kind: "language" }),
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Names, { named: language }),
-      [...language.registry.conceptLookup.entries()].map(([key, word]) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("b", { children: key }),
-        ": ",
-        spellWord(word)
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(WordsTable, { registry: language.registry })
+    ] });
+  }
+  function WordsTable({ registry }) {
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("table", { style: { width: "100%" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { children: "Concept" }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { children: "Pronounciation" }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("th", { children: "Etymology" })
+      ] }),
+      [...registry.conceptLookup.entries()].map(([key, word]) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { children: key }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { children: spellWord(word) }),
+        /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("td", { children: etymology(word) })
       ] }, key))
     ] });
   }
