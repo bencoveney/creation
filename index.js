@@ -26489,13 +26489,13 @@
   function etymology(word) {
     switch (word.kind) {
       case "root":
-        return `root: ${word.root.concept}`;
+        return `(root: ${word.root.concept})`;
       case "affix":
         switch (word.affix.kind) {
           case 1 /* Prefix */:
-            return `(prefix: ${word.affix.concept}) (${etymology(word.stem)})`;
+            return `(prefix: ${word.affix.concept}) ${etymology(word.stem)}`;
           case 2 /* Suffix */:
-            return `(${etymology(word.stem)}) (suffix:${word.affix.concept})`;
+            return `${etymology(word.stem)} (suffix:${word.affix.concept})`;
           case 0 /* Root */:
             throw new Error("what");
         }
