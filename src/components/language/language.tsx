@@ -2,6 +2,7 @@ import { InspectProps } from "../../hooks/useInspect";
 import { InspectLink } from "../inspectLink";
 import { NewLanguage } from "../../language/names";
 import { spellWord } from "../../language/lexicon/word";
+import { Names } from "./names";
 
 export function Language({
   newLanguage,
@@ -12,7 +13,7 @@ export function Language({
   return (
     <>
       <InspectLink id={newLanguage.id} inspect={inspect} kind="language" />
-      <div>{newLanguage.names.defaultKey}</div>
+      <Names named={newLanguage} />
       {[...newLanguage.registry.conceptLookup.entries()].map(([key, word]) => (
         <div key={key}>
           <b>{key}</b>: {spellWord(word)}

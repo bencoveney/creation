@@ -1,6 +1,7 @@
 import { Region } from "../history";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
+import { Names } from "./language/names";
 
 export function RegionSummary({
   region,
@@ -11,7 +12,7 @@ export function RegionSummary({
   return (
     <>
       <InspectLink kind="region" id={region.id} inspect={inspect} />
-      <div>{region.names.defaultKey}</div>
+      <Names named={region} />
     </>
   );
 }

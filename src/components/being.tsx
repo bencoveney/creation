@@ -1,4 +1,4 @@
-import { History, Being } from "../history";
+import { Being } from "../history";
 import { Motif } from "./motif";
 import { Needs } from "./needs";
 import { Activities } from "./activities";
@@ -8,6 +8,7 @@ import { TimesChosen } from "./timesChosen";
 import { Relationships } from "./relationships";
 import { InspectLink } from "./inspectLink";
 import { InspectLinks } from "./inspectLinks";
+import { Names } from "./language/names";
 
 export function Being({
   being,
@@ -18,7 +19,7 @@ export function Being({
   return (
     <>
       <InspectLink id={being.id} inspect={inspect} kind="being" />
-      <div>{being.names.defaultKey}</div>
+      <Names named={being} />
       <Motif motif={being.motif} />
       {being.theme && `Represents ${being.theme}`}
       <Needs needs={being.needs} />

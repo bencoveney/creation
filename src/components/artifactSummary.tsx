@@ -1,6 +1,7 @@
 import { Artifact } from "../history";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
+import { Names } from "./language/names";
 
 export function ArtifactSummary({
   artifact,
@@ -11,7 +12,7 @@ export function ArtifactSummary({
   return (
     <>
       <InspectLink kind="artifact" id={artifact.id} inspect={inspect} />
-      <div>{artifact.names.defaultKey}</div>
+      <Names named={artifact} />
       {artifact.object}
     </>
   );

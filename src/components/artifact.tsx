@@ -2,6 +2,7 @@ import { Artifact } from "../history";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
 import { InspectLinks } from "./inspectLinks";
+import { Names } from "./language/names";
 
 export function Artifact({
   artifact,
@@ -12,7 +13,7 @@ export function Artifact({
   return (
     <>
       <InspectLink kind="artifact" id={artifact.id} inspect={inspect} />
-      <div>{artifact.names.defaultKey}</div>
+      <Names named={artifact} />
       {artifact.object}
       <h3>Holder</h3>
       <InspectLink kind="being" id={artifact.inPosessionOf} inspect={inspect} />

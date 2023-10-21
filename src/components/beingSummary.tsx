@@ -2,6 +2,7 @@ import { Being } from "../history";
 import { Motif } from "./motif";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
+import { Names } from "./language/names";
 
 export function BeingSummary({
   being,
@@ -12,7 +13,7 @@ export function BeingSummary({
   return (
     <>
       <InspectLink id={being.id} inspect={inspect} kind="being" />
-      <div>{being.names.defaultKey}</div>
+      <Names named={being} />
       <Motif motif={being.motif} />
       {being.theme && `Represents ${being.theme}`}
     </>
