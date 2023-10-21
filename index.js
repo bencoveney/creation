@@ -27139,7 +27139,9 @@
       "map",
       "drum",
       "horn",
-      "bell"
+      "bell",
+      "painting",
+      "tapestry"
     ],
     themes: [
       {
@@ -27255,7 +27257,65 @@
       "cemetary",
       "sanctuary",
       "halls",
-      "forum"
+      "forum",
+      "library"
+      // Ideas from roles
+      // "amphitheatre",
+      // "theatre",
+      // "market",
+      // "study",
+      // "studio",
+      // "gallery",
+      // "kitchen",
+      // "forge",
+      // "quarry",
+      // "mine",
+      // "cavern",
+      // "dock",
+      // "shop",
+      // "stall",
+      // "inn",
+      // "sawmill",
+      // "waystation",
+    ],
+    deityRole: [
+      "farmer",
+      "soldier",
+      "merchant",
+      "scribe",
+      "bureaucrat",
+      "priest",
+      "painter",
+      "sculptor",
+      "weaver",
+      "butcher",
+      "fisher",
+      "musician",
+      "dancer",
+      "singer",
+      "actor",
+      "baker",
+      "brewer",
+      "builder",
+      "stonemason",
+      "architect",
+      "cobbler",
+      "tanner",
+      "armourer",
+      "blacksmith",
+      "goldsmith",
+      "jeweller",
+      "carpenter",
+      "cook",
+      "tailor",
+      "woodcutter",
+      "innkeeper",
+      "messenger",
+      "miner",
+      "hunter",
+      "fighter",
+      "sailor",
+      "gardener"
     ],
     themeRange: {
       min: 3,
@@ -27282,58 +27342,7 @@
     terrainResolution: 20,
     waterHeight: 0.46,
     waterStop1: 0.25,
-    waterStop2: 0.35,
-    regionPlaces: [
-      "woods",
-      "halls",
-      "cliffs",
-      "forest",
-      "plains",
-      "tundras",
-      "mountains",
-      "streets"
-    ],
-    regionAdjectives: [
-      "windy",
-      "calm",
-      "frozen",
-      "windswept",
-      "sunny",
-      "tranquil",
-      "undead",
-      "barren"
-    ],
-    settlementNameStarts: [
-      "ply",
-      "exe",
-      "tor",
-      "paign",
-      "ex",
-      "barn",
-      "ton",
-      "tiver",
-      "brix",
-      "bide",
-      "teign",
-      "sid",
-      "dawl",
-      "tavi",
-      "north",
-      "ivy"
-    ],
-    settlementNameEnds: [
-      "mouth",
-      "ter",
-      "quay",
-      "ton",
-      "staple",
-      "ton abbot",
-      "ham",
-      "ford",
-      "ish",
-      "stock",
-      "bridge"
-    ]
+    waterStop2: 0.35
   };
 
   // src/terrain/biome.ts
@@ -28385,6 +28394,7 @@
     return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(import_jsx_runtime25.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
       /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Names, { named: being }),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { children: being.role }),
       /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Motif, { motif: being.motif }),
       being.theme && `Represents ${being.theme}`
     ] });
@@ -28675,8 +28685,9 @@
     return /* @__PURE__ */ (0, import_jsx_runtime35.jsxs)(import_jsx_runtime35.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(InspectLink, { id: being.id, inspect, kind: "being" }),
       /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Names, { named: being }),
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { children: being.role }),
       /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Motif, { motif: being.motif }),
-      being.theme && `Represents ${being.theme}`,
+      /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", { children: being.theme && `Represents ${being.theme}` }),
       /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Needs2, { needs: being.needs }),
       /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Preferences2, { preferences: being.preferences }),
       /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(TimesChosen, { timesChosen: being.timesChosen }),
@@ -30213,6 +30224,7 @@
     const deity = beings.set({
       kind: "deity",
       names: createNames(theme2, ["deity"]),
+      role: randomChoice(config.deityRole),
       theme: theme2,
       relationships: {},
       needs: createDeityNeeds(),
