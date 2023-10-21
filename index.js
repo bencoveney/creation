@@ -26593,8 +26593,8 @@
     return getWord(registry, phonotactics, root2, affixes);
   }
 
-  // src/language/names/index.ts
-  function createNewLanguage() {
+  // src/language/index.ts
+  function createLanguage() {
     return {
       id: nextId(),
       registry: createWordRegistry(),
@@ -28740,14 +28740,14 @@
 
   // src/components/language/language.tsx
   var import_jsx_runtime38 = __toESM(require_jsx_runtime(), 1);
-  function Language({
-    newLanguage,
+  function Language2({
+    language,
     inspect
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(InspectLink, { id: newLanguage.id, inspect, kind: "language" }),
-      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Names, { named: newLanguage }),
-      [...newLanguage.registry.conceptLookup.entries()].map(([key, word]) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(InspectLink, { id: language.id, inspect, kind: "language" }),
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Names, { named: language }),
+      [...language.registry.conceptLookup.entries()].map(([key, word]) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("b", { children: key }),
         ": ",
         spellWord(word)
@@ -28780,8 +28780,8 @@
           }
         );
       case "language":
-        const newLanguage = getFromLookup(history3.languages, inspected.id);
-        return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLanguage, { newLanguage, inspect });
+        const language = getFromLookup(history3.languages, inspected.id);
+        return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(InspectLanguage, { language, inspect });
       default:
         return null;
     }
@@ -28841,10 +28841,10 @@
     ] });
   }
   function InspectLanguage({
-    newLanguage,
+    language,
     inspect
   }) {
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Language, { newLanguage, inspect });
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Language2, { language, inspect });
   }
 
   // src/components/artifactSummary.tsx
@@ -28875,15 +28875,15 @@
   // src/components/language/languageSummary.tsx
   var import_jsx_runtime42 = __toESM(require_jsx_runtime(), 1);
   function LanguageSummary({
-    newLanguage,
+    language,
     inspect
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(import_jsx_runtime42.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InspectLink, { id: newLanguage.id, inspect, kind: "language" }),
-      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Names, { named: newLanguage }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(InspectLink, { id: language.id, inspect, kind: "language" }),
+      /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Names, { named: language }),
       /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)("div", { children: [
         "Words: ",
-        newLanguage.registry.knownWords.size
+        language.registry.knownWords.size
       ] })
     ] });
   }
@@ -28914,7 +28914,7 @@
               return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(ArtifactSummary, { artifact, inspect }) }, artifact.id);
             }) }) }),
             /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: "Languages", children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Grid, { title: "Languages", minWidth: 350, children: lookupValues(history3.languages).map((language) => {
-              return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(LanguageSummary, { newLanguage: language, inspect }) }, language.id);
+              return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(GridItem, { children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(LanguageSummary, { language, inspect }) }, language.id);
             }) }) }),
             inspected && /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Tab, { label: `Inspect ${inspected.kind} #${inspected.id}`, children: /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(
               Inspect,
@@ -30058,7 +30058,7 @@
       terrainRegistry,
       availableActions: []
     };
-    result.languages.set(createNewLanguage());
+    result.languages.set(createLanguage());
     createWorldRegion(result.regions);
     createInitialDeities(result);
     if (result.regions.map.size >= 1 && !result.world) {
