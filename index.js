@@ -26935,6 +26935,19 @@
     }
     return values[values.length - 1];
   }
+  function unique(values) {
+    if (values.length <= 1) {
+      return values;
+    }
+    const uniqueValues = [values[0]];
+    for (let index = 1; index < values.length; index++) {
+      const next = values[index];
+      if (!uniqueValues.includes(next)) {
+        uniqueValues.push(next);
+      }
+    }
+    return uniqueValues;
+  }
 
   // src/utils/array2d.ts
   function isFillFunc(filler) {
@@ -27132,35 +27145,6 @@
   // src/config.ts
   var config = {
     runTicks: 100,
-    preRegisterWords: ["the", "of"],
-    artifactItems: [
-      "sword",
-      "shield",
-      "dagger",
-      "spear",
-      "cup",
-      "bowl",
-      "knife",
-      "bracelet",
-      "necklace",
-      "chain",
-      "rope",
-      "gown",
-      "robe",
-      "club",
-      "scepter",
-      "vial",
-      "hood",
-      "veil",
-      "necklace",
-      "eyeglass",
-      "map",
-      "drum",
-      "horn",
-      "bell",
-      "painting",
-      "tapestry"
-    ],
     themes: [
       {
         name: "sun",
@@ -27276,7 +27260,10 @@
       "sanctuary",
       "halls",
       "forum",
-      "library"
+      "library",
+      "tower",
+      "watchtower",
+      "fort"
       // Ideas from roles
       // "amphitheatre",
       // "theatre",
@@ -27354,7 +27341,6 @@
     ],
     deityRelationshipChance: 0.75,
     deityHoldingLimit: 3,
-    movementChance: 0.2,
     worldWidth: 10,
     worldHeight: 10,
     terrainResolution: 20,
@@ -28762,7 +28748,11 @@
     return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)(import_jsx_runtime38.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Names, { named: artifact }),
-      artifact.object,
+      /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", { children: [
+        artifact.material,
+        " ",
+        artifact.object
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h3", { children: "Holder" }),
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(InspectLink, { kind: "being", id: artifact.inPosessionOf, inspect }),
       /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("h3", { children: "Creators" }),
@@ -28878,7 +28868,11 @@
     return /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)(import_jsx_runtime41.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(InspectLink, { kind: "artifact", id: artifact.id, inspect }),
       /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Names, { named: artifact }),
-      artifact.object
+      /* @__PURE__ */ (0, import_jsx_runtime41.jsxs)("div", { children: [
+        artifact.material,
+        " ",
+        artifact.object
+      ] })
     ] });
   }
 
@@ -29004,21 +28998,252 @@
     updateBeingActions(being);
   }
 
-  // src/systems/artifactCreation.ts
-  function runArtifactCreation(history3) {
-    forEachBeingByActivity(history3, "createArtifact", createArtifact);
-  }
+  // src/artifact/config.ts
+  var artifactConfig = {
+    items: [
+      {
+        name: "sword",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+        // Blade, guard, hilt, grip, pommel
+      },
+      {
+        name: "shield",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+      },
+      {
+        name: "dagger",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+      },
+      {
+        name: "spear",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+      },
+      {
+        name: "cup",
+        allowedMaterials: [{ kind: "set", name: "base_small" }]
+        // parts: [],
+      },
+      {
+        name: "bowl",
+        allowedMaterials: [{ kind: "set", name: "base_small" }]
+        // parts: [],
+      },
+      {
+        name: "knife",
+        allowedMaterials: [{ kind: "set", name: "base_small" }]
+        // parts: [],
+      },
+      {
+        name: "bracelet",
+        allowedMaterials: [{ kind: "set", name: "ornament" }]
+        // parts: [],
+      },
+      {
+        name: "necklace",
+        allowedMaterials: [{ kind: "set", name: "ornament" }]
+        // parts: [],
+      },
+      {
+        name: "gown",
+        allowedMaterials: [{ kind: "set", name: "clothing" }]
+        // parts: [],
+      },
+      {
+        name: "robe",
+        allowedMaterials: [{ kind: "set", name: "clothing" }]
+        // parts: [],
+      },
+      {
+        name: "club",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+      },
+      {
+        name: "scepter",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+      },
+      {
+        name: "vial",
+        allowedMaterials: [{ kind: "set", name: "transparent" }]
+        // parts: [],
+      },
+      {
+        name: "hood",
+        allowedMaterials: [{ kind: "set", name: "clothing" }]
+        // parts: [],
+      },
+      {
+        name: "veil",
+        allowedMaterials: [{ kind: "set", name: "clothing" }]
+        // parts: [],
+      },
+      {
+        name: "scarf",
+        allowedMaterials: [{ kind: "set", name: "clothing" }]
+        // parts: [],
+      },
+      {
+        name: "eyeglass",
+        allowedMaterials: [{ kind: "set", name: "ornament" }]
+        // parts: [],
+      },
+      {
+        name: "map",
+        allowedMaterials: [{ kind: "set", name: "canvas" }]
+        // parts: [],
+      },
+      {
+        name: "jewel",
+        allowedMaterials: [{ kind: "set", name: "jewel" }]
+        // parts: [],
+      },
+      {
+        name: "drum",
+        allowedMaterials: [{ kind: "set", name: "base_large" }]
+        // parts: [],
+      },
+      {
+        name: "horn",
+        allowedMaterials: [{ kind: "set", name: "base_small" }]
+        // parts: [],
+      },
+      {
+        name: "bell",
+        allowedMaterials: [{ kind: "set", name: "metal" }]
+        // parts: [],
+      },
+      {
+        name: "painting",
+        allowedMaterials: [{ kind: "set", name: "paintable" }]
+        // parts: [],
+      },
+      {
+        name: "tapestry",
+        allowedMaterials: [{ kind: "material", name: "cloth" }]
+        // parts: [],
+      },
+      {
+        name: "bag",
+        allowedMaterials: [{ kind: "set", name: "carrier" }]
+        // parts: [],
+      }
+    ],
+    materials: [
+      { name: "wood", sets: ["base_large", "base_small"] },
+      { name: "paper", sets: ["paintable"] },
+      { name: "canvas", sets: ["paintable", "carrier"] },
+      { name: "leather", sets: ["clothing", "carrier"] },
+      { name: "cloth", sets: ["canvas", "clothing", "carrier"] },
+      { name: "silk", sets: ["clothing", "carrier"] },
+      { name: "wool", sets: ["clothing"] },
+      { name: "stone", sets: ["sculpt", "base_large", "base_small"] },
+      {
+        name: "gold",
+        sets: ["sculpt", "base_large", "base_small", "ornament", "metal"]
+      },
+      {
+        name: "silver",
+        sets: ["sculpt", "base_large", "base_small", "ornament", "metal"]
+      },
+      { name: "bone", sets: ["sculpt", "ornament", "base_small"] },
+      { name: "horn", sets: ["ornament", "base_small"] },
+      { name: "iron", sets: ["sculpt", "base_large", "base_small", "metal"] },
+      { name: "clay", sets: ["sculpt"] },
+      { name: "ruby", sets: ["jewel", "transparent"] },
+      { name: "diamond", sets: ["jewel", "transparent"] },
+      { name: "emerald", sets: ["jewel", "transparent"] },
+      { name: "sapphire", sets: ["jewel", "transparent"] },
+      { name: "glass", sets: ["transparent"] }
+    ]
+  };
+
+  // src/artifact/factory.ts
   function artifactFactory(creators, artifacts) {
+    const item = randomChoice(artifactConfig.items);
     const holder = randomChoice(creators);
-    const item = randomChoice(config.artifactItems);
     const artifact = artifacts.set({
-      names: createNames(holder.theme, [item]),
-      object: randomChoice(config.artifactItems),
       creators: creators.map((creator) => creator.id),
-      inPosessionOf: holder.id
+      inPosessionOf: holder.id,
+      ...itemFactory(
+        creators.map((creator) => creator.theme),
+        item
+      )
     });
     holder.holding.push(artifact.id);
     return artifact;
+  }
+  function itemFactory(themes, template) {
+    const themeChoice = randomChoice(themes);
+    const possibleMaterials = getAllowedMaterials(template.allowedMaterials);
+    if (possibleMaterials.length === 0) {
+      throw new Error("What");
+    }
+    const chosenMaterial = randomChoice(possibleMaterials);
+    if (!chosenMaterial) {
+      throw new Error("What");
+    }
+    return {
+      object: template.name,
+      names: createNames(themeChoice, [template.name]),
+      material: chosenMaterial.name
+    };
+  }
+  var materialsByName = artifactConfig.materials.reduce((prev, next) => {
+    prev[next.name] = next;
+    return prev;
+  }, {});
+  var materialsBySet = artifactConfig.materials.reduce((prev, next) => {
+    next.sets.forEach((set) => {
+      if (!prev[set]) {
+        prev[set] = [];
+      }
+      prev[set].push(next);
+    });
+    return prev;
+  }, {});
+  (function validateMaterials() {
+    artifactConfig.items.forEach((item) => {
+      item.allowedMaterials.forEach((allowedMaterial) => {
+        switch (allowedMaterial.kind) {
+          case "material":
+            if (!materialsByName[allowedMaterial.name]) {
+              throw new Error(`Bad`);
+            }
+            return;
+          case "set":
+            if (!materialsBySet[allowedMaterial.name]) {
+              throw new Error(`Bad`);
+            }
+            return;
+        }
+      });
+    });
+  })();
+  function getAllowedMaterials(allowedMaterials) {
+    const results = [];
+    allowedMaterials.forEach((materialReference) => {
+      switch (materialReference.kind) {
+        case "material":
+          results.push(materialsByName[materialReference.name]);
+          return;
+        case "set":
+          results.push(...materialsBySet[materialReference.name]);
+          return;
+        default:
+          throw new Error("Whoops");
+      }
+    });
+    return unique(results);
+  }
+
+  // src/systems/artifactCreation.ts
+  function runArtifactCreation(history3) {
+    forEachBeingByActivity(history3, "createArtifact", createArtifact);
   }
   function createArtifact(history3, being, activity) {
     const tile = getFromLookup(history3.regions, being.location);
@@ -29667,7 +29892,7 @@
   }
 
   // src/terrain/features.ts
-  var import_array4 = __toESM(require_array(), 1);
+  var import_array5 = __toESM(require_array(), 1);
   function getWaterFeature(area) {
     if (area < 100) {
       return "lake";
@@ -29687,7 +29912,7 @@
   var id2 = 0;
   function findFeatures(heights) {
     const tested = /* @__PURE__ */ new Set();
-    const features = (0, import_array4.empty)(heights.values.length).fill("");
+    const features = (0, import_array5.empty)(heights.values.length).fill("");
     array2dMap(heights, (value, x, y, index) => {
       if (tested.has(index)) {
         return;
