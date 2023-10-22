@@ -1,4 +1,3 @@
-import { History } from "../history";
 import { Region } from "./region";
 import { Grid, GridItem } from "./layout/grid";
 import { TerrainLayerPicker } from "./terrainLayerPicker";
@@ -10,21 +9,21 @@ import { getTile } from "../world";
 import { InspectProps } from "../hooks/useInspect";
 import { lookupValues } from "../history/lookup";
 import { BeingSummary } from "./beingSummary";
+import { useHistory } from "./historyContext";
 
 export function WorldSelection({
-  history,
   selectionX,
   selectionY,
   setTerrainLayer,
   terrainLayer,
   inspect,
 }: {
-  history: History;
   selectionX: number;
   selectionY: number;
   setTerrainLayer: (name: string) => void;
   terrainLayer: string;
 } & InspectProps) {
+  const history = useHistory();
   if (!history.world) {
     return null;
   }

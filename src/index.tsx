@@ -17,6 +17,7 @@ import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
 import { validate } from "./language/ipa";
 import { LanguageContext } from "./components/language/languageContext";
+import { HistoryContext } from "./components/historyContext";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -79,9 +80,11 @@ function Wrapper() {
   }, [playbackControls]);
 
   return (
-    <LanguageContext defaultLanguage={defaultLanguage}>
-      <Page history={history} playbackControls={playbackControls} />
-    </LanguageContext>
+    <HistoryContext history={history}>
+      <LanguageContext defaultLanguage={defaultLanguage}>
+        <Page playbackControls={playbackControls} />
+      </LanguageContext>
+    </HistoryContext>
   );
 }
 

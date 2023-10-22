@@ -1,4 +1,3 @@
-import { History } from "../history";
 import { Log } from "./log";
 import { Playback } from "./playback";
 import { PlaybackControls } from "../playback";
@@ -15,15 +14,15 @@ import { BeingSummary } from "./beingSummary";
 import { ArtifactSummary } from "./artifactSummary";
 import { RegionSummary } from "./regionSummary";
 import { LanguageSummary } from "./language/languageSummary";
+import { useHistory } from "./historyContext";
 
 export function Page({
-  history,
   playbackControls,
 }: {
-  history: History;
   playbackControls: PlaybackControls;
 }) {
   const [inspected, inspect] = useInspect();
+  const history = useHistory();
   return (
     <FixedTop>
       <Toolbar>
@@ -37,10 +36,10 @@ export function Page({
         }
       >
         <Tab label={"World"}>
-          <World history={history} inspect={inspect} />
+          <World inspect={inspect} />
         </Tab>
         <Tab label={"Log"}>
-          <Log history={history} inspect={inspect} />
+          <Log inspect={inspect} />
         </Tab>
         <Tab label={"Regions"}>
           <Grid title="Regions">
@@ -88,11 +87,7 @@ export function Page({
         </Tab>
         {inspected && (
           <Tab label={`Inspect ${inspected.kind} #${inspected.id}`}>
-            <Inspect
-              history={history}
-              inspected={inspected}
-              inspect={inspect}
-            />
+            <Inspect inspected={inspected} inspect={inspect} />
           </Tab>
         )}
       </Tabs>

@@ -1,18 +1,21 @@
-import { History } from "../../history";
 import { lookupValues } from "../../history/lookup";
 import { Tile } from "../../world";
-import { Name } from "./../name";
+import { Name } from "../language/name";
 import { Tooltip } from "./../layout/tooltip";
 import { Motif } from "./../motif";
 import { PropsWithChildren } from "react";
+import { useLanguage } from "../language/languageContext";
+import { useHistory } from "../historyContext";
 
-export function MapTile({ tile, history }: { tile: Tile; history: History }) {
+export function MapTile({ tile }: { tile: Tile }) {
+  const history = useHistory();
   if (!tile.discovered) {
     return null;
   }
   const beings = lookupValues(history.beings).filter(
     (being) => being.location === tile.id
   );
+  const language = useLanguage();
   return (
     <div
       style={{
@@ -24,7 +27,7 @@ export function MapTile({ tile, history }: { tile: Tile; history: History }) {
       }}
     >
       <BlackLabel>
-        <Name languageName={"ID"} word={tile.id} />
+        <Name language={language} named={tile} />
       </BlackLabel>
       <br />
       {beings.length ? (

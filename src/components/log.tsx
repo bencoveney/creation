@@ -1,4 +1,3 @@
-import { History } from "../history";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";
 import { Fragment, useState } from "react";
@@ -11,6 +10,7 @@ import { spacer } from "./layout/theme";
 import { InspectLinks } from "./inspectLinks";
 import { useLanguage } from "./language/languageContext";
 import { Language, spellNameWordByKey } from "../language";
+import { useHistory } from "./historyContext";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
@@ -20,14 +20,12 @@ function formatLog(message: string, language: Language): string {
 }
 
 export function Log({
-  history,
   being,
   location,
   artifact,
   initialSystems,
   inspect,
 }: {
-  history: History;
   being?: string;
   location?: string;
   artifact?: string;
@@ -38,6 +36,7 @@ export function Log({
     initialSystems || ["init", "decision"]
   );
   const language = useLanguage();
+  const history = useHistory();
   const selectedLogs = history.log.entries
     .map<LogEntry>(([tick, system, log, deities, locations, artifacts]) => [
       tick,
