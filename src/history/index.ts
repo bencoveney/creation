@@ -53,11 +53,19 @@ export type Being = HasAvailableActions<BeingAction> &
     timesChosen: Preferences;
   };
 
+export type ArtifactDecoration = {
+  kind: "motif";
+  value: string;
+  location: string;
+};
+
 export type Artifact = HasNames & {
   id: string;
   object: string;
   creators: string[];
   inPosessionOf: string;
+  // decoration: ArtifactDecoration[];
+  material: string;
 };
 
 export type History = HasAvailableActions<TileAction> & {

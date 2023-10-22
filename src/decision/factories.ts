@@ -125,6 +125,7 @@ export function updateConversationFinishedTileActions(
   history: History,
   tile: Tile
 ): void {
+  // BUG: Sometimes throws?
   actionTileRevokeWhere(history, "conversation", tile);
 }
 

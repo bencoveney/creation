@@ -13,7 +13,9 @@ export function ArtifactSummary({
     <>
       <InspectLink kind="artifact" id={artifact.id} inspect={inspect} />
       <Names named={artifact} />
-      {artifact.object}
+      <div>
+        {artifact.material} {artifact.object}
+      </div>
     </>
   );
 }

@@ -14,7 +14,9 @@ export function Artifact({
     <>
       <InspectLink kind="artifact" id={artifact.id} inspect={inspect} />
       <Names named={artifact} />
-      {artifact.object}
+      <div>
+        {artifact.material} {artifact.object}
+      </div>
       <h3>Holder</h3>
       <InspectLink kind="being" id={artifact.inPosessionOf} inspect={inspect} />
       <h3>Creators</h3>

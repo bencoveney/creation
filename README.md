@@ -16,7 +16,6 @@ Procedural world/history generation
 - Artifacts can be given stored, stolen
 - Migrate to new language generation:
   - Add english spelling?
-  - Add dialect render components?
 - Improve generated words
   - Manipulate words, e.g. remove redundant syllables
   - e.g. sibling deities could follow naming pattern

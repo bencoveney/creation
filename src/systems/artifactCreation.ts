@@ -1,7 +1,5 @@
-import { Artifact, Being, History } from "../history";
-import { randomChoice } from "../utils/random";
-import { Lookup, getFromLookup, lookupValues } from "../history/lookup";
-import { config } from "../config";
+import { Being, History } from "../history";
+import { getFromLookup, lookupValues } from "../history/lookup";
 import {
   updateArtifactCreatedTileActions,
   updateBeingActions,
@@ -14,31 +12,10 @@ import {
   getCurrentActivity,
 } from "../decision/activity";
 import { commaSeparate } from "../utils/string";
-import { createNames } from "../language";
+import { artifactFactory } from "../artifact/factory";
 
 export function runArtifactCreation(history: History) {
   forEachBeingByActivity(history, "createArtifact", createArtifact);
-}
-
-export function artifactFactory(
-  creators: Being[],
-  artifacts: Lookup<Artifact>
-): Artifact {
-  const holder = randomChoice(creators);
-  const item = randomChoice(config.artifactItems);
-  const artifact = artifacts.set({
-    names: createNames(holder.theme!, [item]),
-    object: randomChoice(config.artifactItems),
-    creators: creators.map((creator) => creator.id),
-    inPosessionOf: holder.id,
-  });
-  holder.holding.push(artifact.id);
-  return artifact;
-}
-
-let artifactNameCount = 0;
-function artifactNameFactory(): string {
-  return `artifact_${artifactNameCount++}`;
 }
 
 function createArtifact(
