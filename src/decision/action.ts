@@ -70,7 +70,9 @@ export function actionTileRevokeWhere(
     return !(actionMatch && locationMatch);
   });
   if (!allowClaim && prevLength === filtered.length) {
-    throw new Error("Expected to revoke something");
+    // Be careful that you don't revoke multiple actions when you only intend to revoke one
+    // For example multiple beings have started doing something in the same tile.
+    throw new Error(`Expected to revoke ${action}`);
   }
   hasActions.availableActions = filtered;
 }

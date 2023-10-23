@@ -66,7 +66,7 @@ function conversation(
       [location.id],
       []
     );
-    updateConversationFinishedTileActions(history, location);
+    updateConversationFinishedTileActions(history, location, being);
     if (being.relationships[target.id]) {
       being.relationships[target.id].encounters++;
     } else {
