@@ -12,6 +12,7 @@ import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
 import { Language } from "../language";
 import { HasNames } from "../language/names";
+import { ArtifactPart } from "../artifact/config";
 
 export type Region = HasNames & {
   id: string;
@@ -64,8 +65,7 @@ export type Artifact = HasNames & {
   object: string;
   creators: string[];
   inPosessionOf: string;
-  // decoration: ArtifactDecoration[];
-  material: string;
+  parts: ArtifactPart[];
 };
 
 export type History = HasAvailableActions<TileAction> & {

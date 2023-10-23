@@ -10,156 +10,267 @@ export type ArtifactMaterialReference =
   | { kind: "set"; name: string };
 export type ArtifactTemplate = {
   name: string;
-  allowedMaterials: ArtifactMaterialReference[];
-  // parts: ArtifactPartTemplate[];
+  parts: ArtifactPartTemplate[];
 };
-// export type ArtifactPartTemplate = {
-//   name: string;
-//   required: boolean;
-//   allowedMaterials: ArtifactMaterialReference[];
-// };
+export type ArtifactPartTemplate = {
+  name: string;
+  required: boolean;
+  allowedMaterials: ArtifactMaterialReference[];
+  parts: ArtifactPartTemplate[];
+};
+
+export type ArtifactPart = {
+  name: string;
+  material: string;
+  parts: ArtifactPart[];
+};
+
+const bladedWeaponParts: ArtifactPartTemplate[] = [
+  {
+    name: "blade",
+    required: true,
+    allowedMaterials: [{ kind: "set", name: "metal" }],
+    parts: [],
+  },
+  {
+    name: "hilt",
+    required: true,
+    allowedMaterials: [{ kind: "set", name: "metal" }],
+    parts: [
+      {
+        name: "grip",
+        required: false,
+        allowedMaterials: [{ kind: "material", name: "leather" }],
+        parts: [],
+      },
+      {
+        name: "guard",
+        required: false,
+        allowedMaterials: [{ kind: "set", name: "metal" }],
+        parts: [],
+      },
+      {
+        name: "pommel",
+        required: false,
+        allowedMaterials: [
+          { kind: "set", name: "metal" },
+          { kind: "set", name: "jewel" },
+        ],
+        parts: [],
+      },
+    ],
+  },
+];
+
+const poleWeaponParts: ArtifactPartTemplate[] = [
+  {
+    name: "pole",
+    required: true,
+    allowedMaterials: [{ kind: "material", name: "wood" }],
+    parts: [],
+  },
+  {
+    name: "head",
+    required: true,
+    allowedMaterials: [{ kind: "set", name: "metal" }],
+    parts: [],
+  },
+];
+
+const tablewareParts: ArtifactPartTemplate[] = [
+  {
+    name: "body",
+    required: true,
+    allowedMaterials: [{ kind: "set", name: "base_small" }],
+    parts: [],
+  },
+];
+
+const jewelleryParts: ArtifactPartTemplate[] = [
+  {
+    name: "body",
+    required: true,
+    allowedMaterials: [{ kind: "set", name: "ornament" }],
+    parts: [],
+  },
+];
+
+const clothingParts: ArtifactPartTemplate[] = [
+  {
+    name: "fabric",
+    required: true,
+    allowedMaterials: [{ kind: "set", name: "clothing" }],
+    parts: [],
+  },
+];
 
 export const artifactConfig = {
   items: [
     {
-      name: "sword",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
-      // Blade, guard, hilt, grip, pommel
+      name: "shield",
+      parts: [
+        {
+          name: "body",
+          required: true,
+          allowedMaterials: [{ kind: "material", name: "wood" }],
+          parts: [
+            {
+              name: "buckler",
+              required: false,
+              allowedMaterials: [{ kind: "set", name: "metal" }],
+              parts: [],
+            },
+            {
+              name: "rim",
+              required: false,
+              allowedMaterials: [{ kind: "set", name: "metal" }],
+              parts: [],
+            },
+            {
+              name: "strap", // or grip
+              required: false,
+              allowedMaterials: [{ kind: "material", name: "leather" }],
+              parts: [],
+            },
+          ],
+        },
+      ],
     },
     {
-      name: "shield",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
+      name: "sword",
+      parts: bladedWeaponParts,
     },
     {
       name: "dagger",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
+      parts: bladedWeaponParts,
     },
     {
       name: "spear",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
+      parts: poleWeaponParts,
     },
     {
-      name: "cup",
-      allowedMaterials: [{ kind: "set", name: "base_small" }],
-      // parts: [],
-    },
-    {
-      name: "bowl",
-      allowedMaterials: [{ kind: "set", name: "base_small" }],
-      // parts: [],
-    },
-    {
-      name: "knife",
-      allowedMaterials: [{ kind: "set", name: "base_small" }],
-      // parts: [],
-    },
-    {
-      name: "bracelet",
-      allowedMaterials: [{ kind: "set", name: "ornament" }],
-      // parts: [],
-    },
-    {
-      name: "necklace",
-      allowedMaterials: [{ kind: "set", name: "ornament" }],
-      // parts: [],
-    },
-    {
-      name: "gown",
-      allowedMaterials: [{ kind: "set", name: "clothing" }],
-      // parts: [],
-    },
-    {
-      name: "robe",
-      allowedMaterials: [{ kind: "set", name: "clothing" }],
-      // parts: [],
+      name: "trident",
+      parts: poleWeaponParts,
     },
     {
       name: "club",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
+      parts: poleWeaponParts,
     },
     {
       name: "scepter",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
+      parts: poleWeaponParts,
     },
     {
-      name: "vial",
-      allowedMaterials: [{ kind: "set", name: "transparent" }],
-      // parts: [],
+      name: "cup",
+      parts: tablewareParts,
+    },
+    {
+      name: "bowl",
+      parts: tablewareParts,
+    },
+    {
+      name: "jug",
+      parts: tablewareParts,
+    },
+    {
+      name: "knife",
+      parts: bladedWeaponParts,
+    },
+    {
+      name: "bracelet",
+      parts: jewelleryParts,
+    },
+    {
+      name: "necklace",
+      parts: jewelleryParts,
+    },
+    {
+      name: "earring",
+      parts: jewelleryParts,
+    },
+    {
+      name: "brooch",
+      parts: jewelleryParts,
+    },
+    {
+      name: "gown",
+      parts: clothingParts,
+    },
+    {
+      name: "robe",
+      parts: clothingParts,
     },
     {
       name: "hood",
-      allowedMaterials: [{ kind: "set", name: "clothing" }],
-      // parts: [],
+      parts: clothingParts,
     },
     {
       name: "veil",
-      allowedMaterials: [{ kind: "set", name: "clothing" }],
-      // parts: [],
+      parts: clothingParts,
     },
     {
       name: "scarf",
-      allowedMaterials: [{ kind: "set", name: "clothing" }],
-      // parts: [],
+      parts: clothingParts,
     },
-    {
-      name: "eyeglass",
-      allowedMaterials: [{ kind: "set", name: "ornament" }],
-      // parts: [],
-    },
-    {
-      name: "map",
-      allowedMaterials: [{ kind: "set", name: "canvas" }],
-      // parts: [],
-    },
-    {
-      name: "jewel",
-      allowedMaterials: [{ kind: "set", name: "jewel" }],
-      // parts: [],
-    },
-    {
-      name: "drum",
-      allowedMaterials: [{ kind: "set", name: "base_large" }],
-      // parts: [],
-    },
-    {
-      name: "horn",
-      allowedMaterials: [{ kind: "set", name: "base_small" }],
-      // parts: [],
-    },
-    {
-      name: "bell",
-      allowedMaterials: [{ kind: "set", name: "metal" }],
-      // parts: [],
-    },
-    {
-      name: "painting",
-      allowedMaterials: [{ kind: "set", name: "paintable" }],
-      // parts: [],
-    },
-    {
-      name: "tapestry",
-      allowedMaterials: [{ kind: "material", name: "cloth" }],
-      // parts: [],
-    },
-    {
-      name: "bag",
-      allowedMaterials: [{ kind: "set", name: "carrier" }],
-      // parts: [],
-    },
+    // {
+    //   name: "eyeglass",
+    //   allowedMaterials: [{ kind: "set", name: "ornament" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "map",
+    //   allowedMaterials: [{ kind: "set", name: "canvas" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "vial",
+    //   allowedMaterials: [{ kind: "set", name: "transparent" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "jewel",
+    //   allowedMaterials: [{ kind: "set", name: "jewel" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "drum",
+    //   allowedMaterials: [{ kind: "set", name: "base_large" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "horn",
+    //   allowedMaterials: [{ kind: "set", name: "base_small" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "bell",
+    //   allowedMaterials: [{ kind: "set", name: "metal" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "painting",
+    //   allowedMaterials: [{ kind: "set", name: "paintable" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "tapestry",
+    //   allowedMaterials: [{ kind: "material", name: "cloth" }],
+    //   // parts: [],
+    // },
+    // {
+    //   name: "bag",
+    //   allowedMaterials: [{ kind: "set", name: "carrier" }],
+    //   // parts: [],
+    // },
   ] as ArtifactTemplate[],
   materials: [
     { name: "wood", sets: ["base_large", "base_small"] },
     { name: "paper", sets: ["paintable"] },
     { name: "canvas", sets: ["paintable", "carrier"] },
-    { name: "leather", sets: ["clothing", "carrier"] },
+    { name: "leather", sets: ["carrier"] },
     { name: "cloth", sets: ["canvas", "clothing", "carrier"] },
     { name: "silk", sets: ["clothing", "carrier"] },
+    { name: "lace", sets: ["clothing"] },
     { name: "wool", sets: ["clothing"] },
     { name: "stone", sets: ["sculpt", "base_large", "base_small"] },
     {
@@ -181,3 +292,6 @@ export const artifactConfig = {
     { name: "glass", sets: ["transparent"] },
   ] as ArtifactMaterial[],
 };
+
+// axe, pike/javelin
+// bone, flint, obsidian, copper, bronze, iron, or steel

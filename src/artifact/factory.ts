@@ -1,14 +1,17 @@
 import {
   ArtifactMaterial,
   ArtifactMaterialReference,
+  ArtifactPart,
+  ArtifactPartTemplate,
   ArtifactTemplate,
   artifactConfig,
 } from "./config";
 import { Artifact, Being } from "../history";
 import { Lookup } from "../history/lookup";
 import { createNames } from "../language";
-import { randomChoice } from "../utils/random";
+import { flipCoin, randomChoice } from "../utils/random";
 import { unique } from "../utils/array";
+import { commaSeparate } from "../utils/string";
 
 export function artifactFactory(
   creators: Being[],
@@ -33,20 +36,16 @@ export function artifactFactory(
 function itemFactory(
   themes: string[],
   template: ArtifactTemplate
-): Pick<Artifact, "object" | "names" | "material"> {
+): Pick<Artifact, "object" | "names" | "parts"> {
   const themeChoice = randomChoice(themes);
-  const possibleMaterials = getAllowedMaterials(template.allowedMaterials);
-  if (possibleMaterials.length === 0) {
-    throw new Error("What");
-  }
-  const chosenMaterial = randomChoice(possibleMaterials);
-  if (!chosenMaterial) {
+  const parts = getParts(template.parts);
+  if (parts.length === 0) {
     throw new Error("What");
   }
   return {
     object: template.name,
     names: createNames(themeChoice!, [template.name]),
-    material: chosenMaterial.name,
+    parts,
   };
 }
 
@@ -68,25 +67,6 @@ const materialsBySet = artifactConfig.materials.reduce<{
   return prev;
 }, {});
 
-(function validateMaterials() {
-  artifactConfig.items.forEach((item) => {
-    item.allowedMaterials.forEach((allowedMaterial) => {
-      switch (allowedMaterial.kind) {
-        case "material":
-          if (!materialsByName[allowedMaterial.name]) {
-            throw new Error(`Bad`);
-          }
-          return;
-        case "set":
-          if (!materialsBySet[allowedMaterial.name]) {
-            throw new Error(`Bad`);
-          }
-          return;
-      }
-    });
-  });
-})();
-
 function getAllowedMaterials(
   allowedMaterials: ArtifactMaterialReference[]
 ): ArtifactMaterial[] {
@@ -104,4 +84,81 @@ function getAllowedMaterials(
     }
   });
   return unique(results);
+}
+
+function getParts(partTemplates: ArtifactPartTemplate[]): ArtifactPart[] {
+  const parts: ArtifactPart[] = [];
+  for (let i = 0; i < partTemplates.length; i++) {
+    const partTemplate = partTemplates[i];
+    if (!partTemplate.required) {
+      const include = flipCoin();
+      if (!include) {
+        continue;
+      }
+    }
+    const material = randomChoice(
+      getAllowedMaterials(partTemplate.allowedMaterials)
+    ).name;
+    const part: ArtifactPart = {
+      name: partTemplate.name,
+      material,
+      parts: getParts(partTemplate.parts),
+    };
+    parts.push(part);
+  }
+  return parts;
+}
+
+export function getMainPart(artifact: Artifact): ArtifactPart {
+  return artifact.parts[0];
+}
+
+const vowels = ["a", "e", "i", "o", "u"];
+function aOrAn(text: string, capitalise: boolean) {
+  if (vowels.includes(text[0])) {
+    return capitalise ? "An" : "an";
+  }
+  return capitalise ? "A" : "a";
+}
+
+export function getArtifactDescriptionShort(artifact: Artifact): string {
+  const mainPart = getMainPart(artifact);
+  return `${aOrAn(mainPart.material, true)} ${mainPart.material} ${
+    artifact.object
+  }.`;
+}
+
+// Really dumb at the moment - just goes to depth 2
+export function getArtifactDescriptionLong(artifact: Artifact): string {
+  const mainPart = getMainPart(artifact);
+  let result = `${aOrAn(mainPart.material, true)} ${mainPart.material} ${
+    artifact.object
+  }.`;
+  if (mainPart.parts.length > 0) {
+    result += ` It has ${commaSeparate(
+      mainPart.parts.map(
+        (nested) =>
+          `${aOrAn(nested.material, false)} ${nested.material} ${nested.name}`
+      )
+    )}.`;
+  }
+  for (let i = 1; i < artifact.parts.length; i++) {
+    const otherPart = artifact.parts[i];
+    result += ` It has ${aOrAn(otherPart.material, false)} ${
+      otherPart.material
+    } ${otherPart.name}.`;
+    if (otherPart.parts.length > 0) {
+      result += ` The ${otherPart.name} has ${commaSeparate(
+        otherPart.parts.map(
+          (nested) =>
+            `${aOrAn(nested.material, false)} ${nested.material} ${nested.name}`
+        )
+      )}.`;
+    }
+  }
+  return result;
+}
+
+export function getSubPartDescription(part: ArtifactPart) {
+  return;
 }

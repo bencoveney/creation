@@ -1,3 +1,4 @@
+import { getArtifactDescriptionShort } from "../artifact/factory";
 import { Artifact } from "../history";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
@@ -13,9 +14,7 @@ export function ArtifactSummary({
     <>
       <InspectLink kind="artifact" id={artifact.id} inspect={inspect} />
       <Names named={artifact} />
-      <div>
-        {artifact.material} {artifact.object}
-      </div>
+      <div>{getArtifactDescriptionShort(artifact)}</div>
     </>
   );
 }
