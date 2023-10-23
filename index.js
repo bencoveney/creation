@@ -27908,7 +27908,7 @@
       return !(actionMatch && locationMatch);
     });
     if (!allowClaim && prevLength === filtered.length) {
-      throw new Error("Expected to revoke something");
+      throw new Error(`Expected to revoke ${action}`);
     }
     hasActions.availableActions = filtered;
   }
@@ -28048,8 +28048,8 @@
       }
     });
   }
-  function updateConversationFinishedTileActions(history3, tile) {
-    actionTileRevokeWhere(history3, "conversation", tile);
+  function updateConversationFinishedTileActions(history3, tile, being) {
+    actionTileRevokeWhere(history3, "conversation", tile, being);
   }
   function initialBeingActions(being) {
     actionBroadcast(being, {
@@ -29924,7 +29924,7 @@
         [location.id],
         []
       );
-      updateConversationFinishedTileActions(history3, location);
+      updateConversationFinishedTileActions(history3, location, being);
       if (being.relationships[target.id]) {
         being.relationships[target.id].encounters++;
       } else {
