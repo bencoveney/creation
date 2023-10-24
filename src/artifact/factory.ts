@@ -158,7 +158,3 @@ export function getArtifactDescriptionLong(artifact: Artifact): string {
   }
   return result;
 }
-
-export function getSubPartDescription(part: ArtifactPart) {
-  return;
-}
