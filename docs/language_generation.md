@@ -17,6 +17,8 @@ https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 https://en.wikipedia.org/wiki/Phonotactics
 https://en.wikipedia.org/wiki/English_phonology#Phonotactics
 
+There are power laws here, where some phonemes are very common and others are rare
+
 ## Morphology & Lexicon
 
 https://en.wikibooks.org/wiki/Conlang/Beginner/Words
@@ -25,6 +27,9 @@ https://en.wikipedia.org/wiki/Morpheme
 https://en.wikipedia.org/wiki/Root_(linguistics)
 https://en.wikipedia.org/wiki/Lexeme
 https://en.wikipedia.org/wiki/Affix
+http://zompist.com/kitlong.html#lexicon
+
+There are power laws here, where some words are very common and others are rare
 
 ## Audio creation
 
