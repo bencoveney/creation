@@ -1,4 +1,4 @@
-import { Artifact, Being, Dialect, History, Region } from ".";
+import { Artifact, Being, History, Region } from ".";
 import { config } from "../config";
 import {
   randomChoice,
@@ -12,8 +12,6 @@ import {
   initialBeingActions,
 } from "../decision/factories";
 import { Preferences } from "../decision/preference";
-import { createDeityName, createWorldName } from "../language/factories";
-import { generateLanguage } from "../language";
 import { createWorld } from "../world";
 import { Lookup, createLookup } from "./lookup";
 import { createLogger } from "../log";
@@ -23,24 +21,19 @@ import {
   TerrainRegistryStringEntry,
   getTerrainLayer,
 } from "../terrain/registry";
+import { Language, createNames, createLanguage } from "../language";
 
 export function initialiseHistory() {
-  const newHistory = initHistory();
-  populateWorld(newHistory);
-  return newHistory;
-}
-
-export function initHistory(): History {
   const terrainRegistry: TerrainRegistry = [];
   createTerrain(
     config.worldWidth * config.terrainResolution,
     config.worldHeight * config.terrainResolution,
     terrainRegistry
   );
-  return {
+  const result: History = {
     regions: createLookup<Region>(),
     beings: createLookup<Being>(),
-    dialects: createLookup<Dialect>(),
+    languages: createLookup<Language>(),
     artifacts: createLookup<Artifact>(),
     log: createLogger(0),
     tick: 0,
@@ -48,23 +41,19 @@ export function initHistory(): History {
     terrainRegistry,
     availableActions: [],
   };
-}
-
-export function populateWorld(history: History): void {
-  history.dialects.set({
-    language: generateLanguage(history),
-  });
-  createWorldRegion(history.regions);
-  createInitialDeities(history);
-  if (history.regions.map.size >= 1 && !history.world) {
-    history.world = createWorld(history, config.worldWidth, config.worldHeight);
+  result.languages.set(createLanguage());
+  createWorldRegion(result.regions);
+  createInitialDeities(result);
+  if (result.regions.map.size >= 1 && !result.world) {
+    result.world = createWorld(result, config.worldWidth, config.worldHeight);
   }
-  createFeatureRegions(history.regions, history.terrainRegistry);
+  createFeatureRegions(result.regions, result.terrainRegistry);
+  return result;
 }
 
 export function createWorldRegion(regions: Lookup<Region>): Region {
   return regions.set({
-    name: createWorldName(),
+    names: createNames("world"),
     discovered: true,
   });
 }
@@ -84,9 +73,10 @@ function createFeatureRegions(
   const foundFeatures = Array.from(found.values());
   for (let i = 0; i < foundFeatures.length; i++) {
     const foundFeature = foundFeatures[i];
+    const featureKind = foundFeature.split("_")[0];
     regions.set({
       discovered: true,
-      name: foundFeature,
+      names: createNames(featureKind),
     });
   }
 }
@@ -150,7 +140,7 @@ export function createInitialDeities(history: History) {
   const deities = deityThemes.map((deityTheme) => {
     const deity = createDeity(history.beings, deityTheme.theme);
     history.log(
-      `[[${deity.name}]] woke from their slumber.`,
+      `[[${deity.names.defaultKey}]] woke from their slumber.`,
       [deity.id],
       [],
       []
@@ -209,7 +199,8 @@ function getRelationship(count: number): string {
 function createDeity(beings: Lookup<Being>, theme: string): Being {
   const deity = beings.set({
     kind: "deity",
-    name: createDeityName(),
+    names: createNames(theme, ["deity"]),
+    role: randomChoice(config.deityRole),
     theme,
     relationships: {},
     needs: createDeityNeeds(),
@@ -243,6 +234,7 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
 // Herald
 // Apprentice
 // Follower
+// Servant
 
 // Plants:
 // fungus
@@ -255,17 +247,6 @@ function createDeity(beings: Lookup<Being>, theme: string): Being {
 // pathos
 // logos
 // ethos
-
-// Activities:
-// craft
-// build
-// mine
-// weave
-// hunt
-// cook
-// dance
-// song
-// fight
 
 // Sin:
 // envy

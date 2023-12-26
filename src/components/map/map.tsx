@@ -1,5 +1,3 @@
-import { History } from "../../history";
-import { Language } from "../../language";
 import { Terrain } from "./terrain";
 import { useHoverPosition } from "../../hooks/useHover";
 import {
@@ -10,18 +8,16 @@ import { MapTile } from "./mapTile";
 import { useEffect } from "react";
 import { getTile } from "../../world";
 import { clamp } from "../../utils/maths";
+import { useHistory } from "../historyContext";
 
 export function Map({
-  history,
-  language,
   terrainLayer,
   setSelection,
 }: {
-  history: History;
-  language: Language;
   terrainLayer: string;
   setSelection: (coords: [number, number]) => void;
 }) {
+  const history = useHistory();
   if (!history.world) {
     return null;
   }
@@ -95,7 +91,7 @@ export function Map({
             boxSizing: "border-box",
           }}
         >
-          <MapTile tile={selectedTile} history={history} language={language} />
+          <MapTile tile={selectedTile} />
         </div>
       )}
       <div

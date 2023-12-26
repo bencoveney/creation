@@ -19,7 +19,7 @@ function adoptSymbol(
 ) {
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started adopting a symbol`,
+      `[[${being.names.defaultKey}]] started adopting a symbol`,
       [being.id],
       being.location ? [being.location] : [],
       []
@@ -35,7 +35,7 @@ function adoptSymbol(
       value: randomChoice(config.motifs).name,
     };
     history.log(
-      `[[${being.name}]] adopted the ${being.motif?.value} as their symbol`,
+      `[[${being.names.defaultKey}]] adopted the ${being.motif?.value} as their symbol`,
       [being.id],
       being.location ? [being.location] : [],
       []

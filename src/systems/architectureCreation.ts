@@ -14,6 +14,7 @@ import {
 import { commaSeparate } from "../utils/string";
 import { randomChoice } from "../utils/random";
 import { config } from "../config";
+import { createNames } from "../language";
 
 export function runArchitectureCreation(history: History) {
   forEachBeingByActivity(history, "createArchitecture", createArchitecture);
@@ -21,20 +22,16 @@ export function runArchitectureCreation(history: History) {
 
 export function architectureFactory(
   regions: Lookup<Region>,
-  parent: Region
+  parent: Region,
+  being: Being
 ): Region {
   const kind = randomChoice(config.deityArchitecture);
   const architecture = regions.set({
-    name: architectureNameFactory(kind),
+    names: createNames(being.theme!, [kind]),
     discovered: true,
     parent,
   });
   return architecture;
-}
-
-let architectureNameCount = 0;
-function architectureNameFactory(kind: string): string {
-  return `architecture_${kind}_${architectureNameCount++}`;
 }
 
 function createArchitecture(
@@ -45,7 +42,7 @@ function createArchitecture(
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started creating architecture in [[${tile.name}]]`,
+      `[[${being.names.defaultKey}]] started creating architecture in [[${tile.names.defaultKey}]]`,
       [being.id],
       [tile.id],
       []
@@ -67,19 +64,19 @@ function createArchitecture(
       return false;
     });
     const allBeings = [being, ...otherBeings.map((other) => other)];
-    const architecture = architectureFactory(history.regions, tile);
+    const architecture = architectureFactory(history.regions, tile, being);
     const beingIds: string[] = [];
     const beingNames: string[] = [];
     allBeings.forEach((participant) => {
       completeActivity(participant);
       updateBeingActions(participant);
-      beingNames.push(`[[${participant.name}]]`);
+      beingNames.push(`[[${participant.names.defaultKey}]]`);
       beingIds.push(participant.id);
     });
     history.log(
-      `${commaSeparate(beingNames)} created [[${architecture.name}]] in [[${
-        tile.name
-      }]]`,
+      `${commaSeparate(beingNames)} created [[${
+        architecture.names.defaultKey
+      }]] in [[${tile.names.defaultKey}]]`,
       beingIds,
       [tile.id, architecture.id],
       []

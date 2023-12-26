@@ -15,7 +15,7 @@ function rest(history: History, being: Being, activity: RestActivity) {
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] rested in [[${tile.name}]]`,
+      `[[${being.names.defaultKey}]] rested in [[${tile.names.defaultKey}]]`,
       [being.id],
       [tile.id],
       []
@@ -27,7 +27,7 @@ function rest(history: History, being: Being, activity: RestActivity) {
       return;
     }
     history.log(
-      `[[${being.name}]] finished resting in [[${tile.name}]]`,
+      `[[${being.names.defaultKey}]] finished resting in [[${tile.names.defaultKey}]]`,
       [being.id],
       [tile.id],
       []

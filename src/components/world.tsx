@@ -1,18 +1,11 @@
-import { History } from "../history";
-import { Language } from "../language";
 import { useCallback, useState } from "react";
 import { Map } from "./map/map";
 import { WorldSelection } from "./worldSelection";
 import { InspectProps } from "../hooks/useInspect";
+import { useHistory } from "./historyContext";
 
-export function World({
-  history,
-  language,
-  inspect,
-}: {
-  history: History;
-  language: Language;
-} & InspectProps) {
+export function World({ inspect }: {} & InspectProps) {
+  const history = useHistory();
   if (!history.world) {
     return null;
   }
@@ -42,15 +35,9 @@ export function World({
         alignItems: "flex-start",
       }}
     >
-      <Map
-        history={history}
-        language={language}
-        terrainLayer={terrainLayer}
-        setSelection={setSelectionComparer}
-      />
+      <Map terrainLayer={terrainLayer} setSelection={setSelectionComparer} />
       <div style={{ flexGrow: 1 }}>
         <WorldSelection
-          history={history}
           selectionX={selectionX}
           selectionY={selectionY}
           setTerrainLayer={setTerrainLayer}

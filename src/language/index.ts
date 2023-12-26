@@ -1,37 +1,51 @@
-import { config } from "../config";
-import { flipCoin } from "../utils/random";
-import { VoicedWord, getWord } from "./word";
-import { Phonemes, allPhonemes } from "./phoneme";
-import { SyllableStructure, generateSyllableStructure } from "./syllable";
-import { History } from "../history";
+import { nextId } from "../utils/id";
+import { englishPhonotactics } from "./ipa/fromEnglish";
+import { Phonotactics } from "./ipa/phonotactics";
+import { Word, spellWord } from "./lexicon/word";
+import {
+  WordRegistry,
+  createRegistryKey,
+  createWordRegistry,
+  getWordForKey,
+} from "./lexicon/wordRegistry";
+import { HasNames } from "./names";
 
-export type Language = {
-  name: string;
-  phonemes: Phonemes;
-  syllableStructure: SyllableStructure;
-  words: {
-    [key: string]: VoicedWord;
-  };
+export type Language = HasNames & {
+  id: string;
+  registry: WordRegistry;
+  phonotactics: Phonotactics;
 };
 
-export function generateLanguage(history: History): Language {
-  const phonemes: Phonemes = {
-    singleVowels: allPhonemes.singleVowels.filter(() => flipCoin()),
-    dipthongs: allPhonemes.dipthongs.filter(() => flipCoin()),
-    unvoicedConstants: allPhonemes.unvoicedConstants.filter(() => flipCoin()),
-    voicedConstants: allPhonemes.voicedConstants.filter(() => flipCoin()),
+export function createLanguage(): Language {
+  return {
+    id: nextId(),
+    registry: createWordRegistry(),
+    phonotactics: englishPhonotactics,
+    names: createNames("speech"),
   };
-  const syllableStructure = generateSyllableStructure();
-  const language: Language = {
-    name: "language",
-    phonemes,
-    syllableStructure,
-    words: {},
+}
+
+export function createNames(root: string, affixes: string[] = []) {
+  return {
+    defaultKey: createRegistryKey(root, affixes),
   };
+}
 
-  // Preload a few words:
-  config.preRegisterWords.map((word) => getWord(word, language, 1));
-  getWord(language.name, language, 2);
+export function getNameWord(hasNames: HasNames, language: Language): Word {
+  let existingName = hasNames.names[language.id];
+  if (!existingName) {
+    hasNames.names[language.id] = hasNames.names.defaultKey;
+    existingName = hasNames.names.defaultKey;
+  }
+  return getWordForKey(language.registry, language.phonotactics, existingName);
+}
 
-  return language as Language;
+export function spellNameWord(hasNames: HasNames, language: Language): string {
+  return spellWord(getNameWord(hasNames, language));
+}
+
+export function spellNameWordByKey(key: string, language: Language): string {
+  return spellWord(
+    getWordForKey(language.registry, language.phonotactics, key)
+  );
 }

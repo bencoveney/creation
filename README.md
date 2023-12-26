@@ -13,4 +13,11 @@ Procedural world/history generation
   - Height squared
   - Ridged noise
   - Roughness map
-- artifacts can be given stored, stolen
+- Artifacts can be given stored, stolen
+- Migrate to new language generation:
+  - Add english spelling?
+- Improve generated words
+  - Manipulate words, e.g. remove redundant syllables
+  - e.g. sibling deities could follow naming pattern
+  - Enforce uniqueness for names
+  - Derive naming concepts from a wider set (e.g. terrain features)

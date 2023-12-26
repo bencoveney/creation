@@ -1,7 +1,3 @@
-import { History } from "../history";
-import { Language } from "../language";
-import { getWords } from "../language/word";
-import { spellWords } from "../language/spelling";
 import { useInput } from "../hooks/useInput";
 import { LogEntry } from "../log";
 import { Fragment, useState } from "react";
@@ -12,26 +8,24 @@ import { Table } from "./layout/table";
 import { InspectProps } from "../hooks/useInspect";
 import { spacer } from "./layout/theme";
 import { InspectLinks } from "./inspectLinks";
+import { useLanguage } from "./language/languageContext";
+import { Language, spellNameWordByKey } from "../language";
+import { useHistory } from "./historyContext";
 
 const logReplaceRegex = /\[\[([^\[\]]+)\]\]/g;
 function formatLog(message: string, language: Language): string {
-  return message.replace(
-    logReplaceRegex,
-    (_, word) => `${spellWords(getWords(word, language))}`
+  return message.replace(logReplaceRegex, (_, word) =>
+    spellNameWordByKey(word, language)
   );
 }
 
 export function Log({
-  history,
-  language,
   being,
   location,
   artifact,
   initialSystems,
   inspect,
 }: {
-  history: History;
-  language: Language;
   being?: string;
   location?: string;
   artifact?: string;
@@ -41,6 +35,8 @@ export function Log({
   const [enabledSystems, setEnabledSystems] = useState(
     initialSystems || ["init", "decision"]
   );
+  const language = useLanguage();
+  const history = useHistory();
   const selectedLogs = history.log.entries
     .map<LogEntry>(([tick, system, log, deities, locations, artifacts]) => [
       tick,

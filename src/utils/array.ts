@@ -56,3 +56,17 @@ export function last<T>(values: T[]): T | undefined {
   }
   return values[values.length - 1];
 }
+
+export function unique<T>(values: T[]): T[] {
+  if (values.length <= 1) {
+    return values;
+  }
+  const uniqueValues = [values[0]];
+  for (let index = 1; index < values.length; index++) {
+    const next = values[index];
+    if (!uniqueValues.includes(next)) {
+      uniqueValues.push(next);
+    }
+  }
+  return uniqueValues;
+}

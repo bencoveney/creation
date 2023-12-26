@@ -1,104 +1,64 @@
 import { InspectProps, Inspected } from "../hooks/useInspect";
 import { getFromLookup } from "../history/lookup";
-import { Artifact, Being, History, Region } from "../history";
-import { Language } from "../language";
+import { Artifact, Being, Region } from "../history";
 import { Being as BeingComponent } from "./being";
 import { VerticalSplit } from "./layout/verticalSplit";
 import { Log } from "./log";
 import { Region as RegionComponent } from "./region";
 import { Artifact as ArtifactComponent } from "./artifact";
+import { Language as LanguageComponent } from "./language/language";
+import { Language } from "../language";
+import { useHistory } from "./historyContext";
 
 export function Inspect({
-  history,
-  language,
   inspected,
   inspect,
 }: {
-  history: History;
-  language: Language;
   inspected: Inspected;
 } & InspectProps) {
+  const history = useHistory();
   switch (inspected.kind) {
     case "being":
       const being = getFromLookup(history.beings, inspected.id);
-      return (
-        <InspectBeing
-          history={history}
-          language={language}
-          being={being}
-          inspect={inspect}
-        />
-      );
+      return <InspectBeing being={being} inspect={inspect} />;
     case "region":
       const region = getFromLookup(history.regions, inspected.id);
-      return (
-        <InspectRegion
-          history={history}
-          language={language}
-          region={region}
-          inspect={inspect}
-        />
-      );
+      return <InspectRegion region={region} inspect={inspect} />;
     case "artifact":
       const artifact = getFromLookup(history.artifacts, inspected.id);
-      return (
-        <InspectArtifact
-          history={history}
-          language={language}
-          artifact={artifact}
-          inspect={inspect}
-        />
-      );
+      return <InspectArtifact artifact={artifact} inspect={inspect} />;
+    case "language":
+      const language = getFromLookup(history.languages, inspected.id);
+      return <InspectLanguage language={language} inspect={inspect} />;
     default:
       return null;
   }
 }
 
 function InspectBeing({
-  history,
-  language,
   being,
   inspect,
 }: {
-  history: History;
-  language: Language;
   being: Being;
 } & InspectProps) {
   return (
     <VerticalSplit>
-      <BeingComponent
-        history={history}
-        language={language}
-        being={being}
-        inspect={inspect}
-      />
-      <Log
-        history={history}
-        language={language}
-        being={being.id}
-        initialSystems={["decision"]}
-        inspect={inspect}
-      />
+      <BeingComponent being={being} inspect={inspect} />
+      <Log being={being.id} initialSystems={["decision"]} inspect={inspect} />
     </VerticalSplit>
   );
 }
 
 function InspectRegion({
-  history,
-  language,
   region,
   inspect,
 }: {
-  history: History;
-  language: Language;
   region: Region;
 } & InspectProps) {
   return (
     <VerticalSplit>
-      <RegionComponent history={history} region={region} inspect={inspect} />
+      <RegionComponent region={region} inspect={inspect} />
       <Log
-        history={history}
-        language={language}
         location={region.id}
         initialSystems={["movement", "artifactCreation"]}
         inspect={inspect}
@@ -108,29 +68,28 @@ function InspectRegion({
 }
 
 function InspectArtifact({
-  history,
-  language,
   artifact,
   inspect,
 }: {
-  history: History;
-  language: Language;
   artifact: Artifact;
 } & InspectProps) {
   return (
     <VerticalSplit>
-      <ArtifactComponent
-        history={history}
-        artifact={artifact}
-        inspect={inspect}
-      />
+      <ArtifactComponent artifact={artifact} inspect={inspect} />
       <Log
-        history={history}
-        language={language}
         artifact={artifact.id}
         initialSystems={["artifactCreation", "artifactGiving"]}
         inspect={inspect}
       />
     </VerticalSplit>
   );
+}
+
+function InspectLanguage({
+  language,
+  inspect,
+}: {
+  language: Language;
+} & InspectProps) {
+  return <LanguageComponent language={language} inspect={inspect} />;
 }

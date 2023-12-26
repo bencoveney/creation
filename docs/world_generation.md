@@ -37,3 +37,27 @@ https://nickmcd.me/2020/04/15/procedural-hydrology/
   );
 }
 ```
+
+## Processes used
+
+- Values
+  - Number (height, noise, temp, roughness etc)
+  - Boolean (water etc)
+  - String (features etc.)
+- Create empty
+- Populate with perlin noise
+- Normalize
+- Flip (for perlin re-use)
+- Scale by constant
+- Product, sum (per cell)
+- Condition/Bins per cell vs constant (e.g. sand/snow)
+- Math functions
+  - Trig (gradient/angle)
+  - abs (ridges)
+- Neighbour aware passes
+  - Gradient/angle
+  - Edge detection (coasts)
+    - Euclidian distance
+  - Flood fill (features)
+- Rainfall
+- Terrain colour or rendering

@@ -1,81 +1,28 @@
-import { consonants } from "./consonant";
-import { vowels } from "./vowels";
-import {
-  englishCoda,
-  englishConsonants,
-  englishDiphthongs,
-  englishNucleus,
-  englishOnset,
-  englishPhonotactics,
-  englishSyllableStructure,
-  englishVowels,
-} from "./fromEnglish";
-import { findValues } from "./utils";
-import {
-  addAffixes,
-  createAffixMorphemes,
-  createRootMorphemes,
-  createRootWords,
-} from "../lexicon";
-import { spellSyllable } from "./syllable";
-import {
-  stringifySyllableStructure,
-  getPossibleSyllableStructures,
-} from "./syllableStructure";
-import { describeWord, spellWord } from "../lexicon/word";
-import { Morpheme } from "../lexicon/morpheme";
+import { stringifySyllableStructure } from "./syllableStructure";
+import { HasNames } from "../names";
+import { Language, spellNameWord } from "..";
 
-export function validate() {
-  console.log("consonants", findValues(consonants, englishConsonants));
-  console.log("vowels", findValues(vowels, englishVowels));
-  console.log("diphthongs", findValues(vowels, englishDiphthongs));
-  console.log("onset", findValues(consonants, englishOnset));
-  console.log("nucleus", findValues(vowels, englishNucleus));
-  console.log("coda", findValues(consonants, englishCoda));
+export function validate(hasNames: HasNames[], language: Language) {
+  console.log("onset", language.phonotactics.possibilities.onset);
+  console.log("nucleus", language.phonotactics.possibilities.nucleus);
+  console.log("coda", language.phonotactics.possibilities.coda);
   console.log(
     "syllableStructure",
-    stringifySyllableStructure(englishSyllableStructure)
+    stringifySyllableStructure(language.phonotactics.syllableStructure)
   );
   console.log(
     "possibleSyllables",
-    getPossibleSyllableStructures(englishSyllableStructure).map(
-      (syllableStructure) => stringifySyllableStructure(syllableStructure)
+    language.phonotactics.possibleSyllableStructures.map((syllableStructure) =>
+      stringifySyllableStructure(syllableStructure)
     )
-  );
-  const usedMorphemes = new Map<string, Morpheme>();
-  const rootMorphemes = createRootMorphemes(usedMorphemes, englishPhonotactics);
-  console.log(
-    "rootMorphemes",
-    rootMorphemes.map(
-      (rootMorpheme) =>
-        `${rootMorpheme.concept} => /${spellSyllable(rootMorpheme.syllable)}/`
-    )
-  );
-  const affixMorphemes = createAffixMorphemes(
-    usedMorphemes,
-    englishPhonotactics
   );
   console.log(
-    "affixMorphemes",
-    affixMorphemes.map(
-      (affixMorpheme) =>
-        `${affixMorpheme.concept} => /${spellSyllable(affixMorpheme.syllable)}/`
-    )
+    hasNames.map((hasNames) => {
+      return `${hasNames.names.defaultKey} => ${spellNameWord(
+        hasNames,
+        language
+      )}`;
+    })
   );
-  const rootWords = createRootWords(rootMorphemes);
-  console.log(
-    "rootWords",
-    rootWords.map(
-      (rootWord) => `${describeWord(rootWord)} => /${spellWord(rootWord)}/`
-    )
-  );
-  const affixWords = rootWords
-    .map((rootWord) => addAffixes(rootWord, affixMorphemes))
-    .flat(1);
-  console.log(
-    "affixWords",
-    affixWords.map(
-      (affixWord) => `${describeWord(affixWord)} => /${spellWord(affixWord)}/`
-    )
-  );
+  console.log([...language.registry.knownWords.values()]);
 }

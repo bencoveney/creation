@@ -123,9 +123,10 @@ export function updateConversationStartedTileActions(
 
 export function updateConversationFinishedTileActions(
   history: History,
-  tile: Tile
+  tile: Tile,
+  being: Being
 ): void {
-  actionTileRevokeWhere(history, "conversation", tile);
+  actionTileRevokeWhere(history, "conversation", tile, being);
 }
 
 export function initialBeingActions(being: Being): void {

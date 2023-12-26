@@ -29,7 +29,7 @@ function movement(history: History, being: Being, activity: MovementActivity) {
   being.location = target.id;
   if (path.length === 0) {
     history.log(
-      `[[${being.name}]] completed their journey`,
+      `[[${being.names.defaultKey}]] completed their journey`,
       [being.id],
       [target.id],
       []
@@ -48,14 +48,14 @@ function moveToLocation(
   being.location = targetTile.id;
   if (previous) {
     history.log(
-      `[[${being.name}]] moved from [[${previous.name}]] to [[${targetTile.name}]]`,
+      `[[${being.names.defaultKey}]] moved from [[${previous.names.defaultKey}]] to [[${targetTile.names.defaultKey}]]`,
       [being.id],
       [targetTile.id],
       []
     );
   } else {
     history.log(
-      `[[${being.name}]] entered the world in [[${targetTile.name}]]`,
+      `[[${being.names.defaultKey}]] entered the world in [[${targetTile.names.defaultKey}]]`,
       [being.id],
       [targetTile.id],
       []
@@ -70,12 +70,8 @@ function discoverLocation(being: Being, targetTile: Tile, history: History) {
   }
   targetTile.discovered = true;
   updateDiscoveredTileActions(history, targetTile);
-  const regionNameParts = targetTile.name
-    .split(" ")
-    .map((part) => `[[${part}]]`)
-    .join(" ");
   history.log(
-    `[[${being.name}]] discovered the region of ${regionNameParts}`,
+    `[[${being.names.defaultKey}]] discovered the region of [[${targetTile.names.defaultKey}]]`,
     [being.id],
     [targetTile.id],
     []

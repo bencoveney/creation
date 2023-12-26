@@ -1,7 +1,5 @@
-import { Artifact, Being, History } from "../history";
-import { randomChoice } from "../utils/random";
-import { Lookup, getFromLookup, lookupValues } from "../history/lookup";
-import { config } from "../config";
+import { Being, History } from "../history";
+import { getFromLookup, lookupValues } from "../history/lookup";
 import {
   updateArtifactCreatedTileActions,
   updateBeingActions,
@@ -14,29 +12,10 @@ import {
   getCurrentActivity,
 } from "../decision/activity";
 import { commaSeparate } from "../utils/string";
+import { artifactFactory } from "../artifact/factory";
 
 export function runArtifactCreation(history: History) {
   forEachBeingByActivity(history, "createArtifact", createArtifact);
-}
-
-export function artifactFactory(
-  creators: Being[],
-  artifacts: Lookup<Artifact>
-): Artifact {
-  const holder = randomChoice(creators);
-  const artifact = artifacts.set({
-    name: artifactNameFactory(),
-    object: randomChoice(config.artifactItems),
-    creators: creators.map((creator) => creator.id),
-    inPosessionOf: holder.id,
-  });
-  holder.holding.push(artifact.id);
-  return artifact;
-}
-
-let artifactNameCount = 0;
-function artifactNameFactory(): string {
-  return `artifact_${artifactNameCount++}`;
 }
 
 function createArtifact(
@@ -47,7 +26,7 @@ function createArtifact(
   const tile = getFromLookup(history.regions, being.location!) as Tile;
   if (activity.timeLeft === undefined) {
     history.log(
-      `[[${being.name}]] started forging an artifact in [[${tile.name}]]`,
+      `[[${being.names.defaultKey}]] started forging an artifact in [[${tile.names.defaultKey}]]`,
       [being.id],
       [tile.id],
       []
@@ -75,13 +54,13 @@ function createArtifact(
     allBeings.forEach((participant) => {
       completeActivity(participant);
       updateBeingActions(participant);
-      beingNames.push(`[[${participant.name}]]`);
+      beingNames.push(`[[${participant.names.defaultKey}]]`);
       beingIds.push(participant.id);
     });
     history.log(
       `${commaSeparate(beingNames)} created the ${artifact.object} [[${
-        artifact.name
-      }]] in [[${tile.name}]]`,
+        artifact.names.defaultKey
+      }]] in [[${tile.names.defaultKey}]]`,
       beingIds,
       [tile.id],
       [artifact.id]

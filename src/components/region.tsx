@@ -1,21 +1,18 @@
-import { History, Region } from "../history";
+import { Region } from "../history";
 import { InspectProps } from "../hooks/useInspect";
 import { InspectLink } from "./inspectLink";
-import { Names } from "./names";
+import { Names } from "./language/names";
 
 export function Region({
   region,
-  history,
   inspect,
 }: {
   region: Region;
-  history: History;
 } & InspectProps) {
   return (
     <>
       <InspectLink kind="region" id={region.id} inspect={inspect} />
-      <div>{region.name}</div>
-      <Names name={region.name} history={history} />
+      <Names named={region} />
     </>
   );
 }

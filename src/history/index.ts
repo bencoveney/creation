@@ -8,13 +8,14 @@ import { HasNeeds } from "../decision/need";
 import { Preferences } from "../decision/preference";
 import { TerrainRegistry } from "../terrain/registry";
 import { Lookup, lookupValues } from "./lookup";
-import { Language } from "../language/index";
 import { Tile, World } from "../world";
 import { Activity, HasActivities } from "../decision/activity";
+import { Language } from "../language";
+import { HasNames } from "../language/names";
+import { ArtifactPart } from "../artifact/config";
 
-export type Region = {
+export type Region = HasNames & {
   id: string;
-  name: string;
   tile?: Tile;
   discovered: Boolean;
   parent?: Region;
@@ -39,10 +40,11 @@ export type Relationships = {
 
 export type Being = HasAvailableActions<BeingAction> &
   HasNeeds &
-  HasActivities & {
+  HasActivities &
+  HasNames & {
     id: string;
     kind: "deity";
-    name: string;
+    role: string;
     theme?: string;
     location?: string; // Region ID.
     motif?: Motif;
@@ -52,23 +54,24 @@ export type Being = HasAvailableActions<BeingAction> &
     timesChosen: Preferences;
   };
 
-export type Dialect = {
-  id: string;
-  language: Language;
+export type ArtifactDecoration = {
+  kind: "motif";
+  value: string;
+  location: string;
 };
 
-export type Artifact = {
+export type Artifact = HasNames & {
   id: string;
-  name: string;
   object: string;
   creators: string[];
   inPosessionOf: string;
+  parts: ArtifactPart[];
 };
 
 export type History = HasAvailableActions<TileAction> & {
   regions: Lookup<Region>;
   beings: Lookup<Being>;
-  dialects: Lookup<Dialect>;
+  languages: Lookup<Language>;
   artifacts: Lookup<Artifact>;
   log: Logger;
   tick: number;

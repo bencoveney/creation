@@ -16,6 +16,8 @@ import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
 import { validate } from "./language/ipa";
+import { LanguageContext } from "./components/language/languageContext";
+import { HistoryContext } from "./components/historyContext";
 
 const root = document.getElementById("root");
 if (!root) {
@@ -23,6 +25,7 @@ if (!root) {
 }
 
 const history = initialiseHistory();
+const defaultLanguage = lookupFirstValue(history.languages);
 
 function Wrapper() {
   const [, forceRerender] = useState({});
@@ -64,18 +67,25 @@ function Wrapper() {
     if (playbackControls.canTick && getQueryBool("autorun")) {
       playbackControls.tickAll();
       console.log(history);
+      validate(
+        [
+          defaultLanguage,
+          ...history.regions.map.values(),
+          ...history.beings.map.values(),
+          ...history.artifacts.map.values(),
+        ],
+        defaultLanguage
+      );
     }
   }, [playbackControls]);
 
   return (
-    <Page
-      history={history}
-      language={lookupFirstValue(history.dialects).language}
-      playbackControls={playbackControls}
-    />
+    <HistoryContext history={history}>
+      <LanguageContext defaultLanguage={defaultLanguage}>
+        <Page playbackControls={playbackControls} />
+      </LanguageContext>
+    </HistoryContext>
   );
 }
 
 createRoot(root).render(<Wrapper />);
-
-validate();

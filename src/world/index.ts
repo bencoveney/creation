@@ -3,9 +3,9 @@ import { updateInitialTileActions } from "../decision/factories";
 import { TerrainAssessment, assessTerrain } from "../terrain/assess";
 import { TerrainRegistry, sliceTerrainRegistry } from "../terrain/registry";
 import { NeedsId } from "../history/lookup";
-import { createRegionName } from "../language/factories";
 import { Array2d, array2dCreate, array2dGet } from "../utils/array2d";
 import { config } from "../config";
+import { createNames } from "../language";
 
 export type Tile = {
   x: number;
@@ -22,20 +22,24 @@ export function createWorld(
   height: number
 ): World {
   return array2dCreate(width, height, (x, y) => {
-    const newTerrainRegistry = sliceTerrainRegistry(
+    const terrainRegistry = sliceTerrainRegistry(
       history.terrainRegistry,
       x,
       y,
       config.terrainResolution
     );
+    const terrainAssessment = assessTerrain(terrainRegistry);
     const tile = history.regions.set({
       x,
       y,
       location: "",
-      terrainRegistry: newTerrainRegistry,
-      terrainAssessment: assessTerrain(newTerrainRegistry),
+      terrainRegistry,
+      terrainAssessment,
       discovered: false,
-      name: createRegionName(),
+      names: createNames(
+        terrainAssessment.rootConcept,
+        terrainAssessment.affixConcepts
+      ),
     } as NeedsId<Tile>) as Tile;
     updateInitialTileActions(history, tile);
     return tile;
