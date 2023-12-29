@@ -352,3 +352,40 @@ I would guess that there would be more root words in domains that had cultural s
 Sometimes the disctinction between root/affix isn't clear, and root words end up being bolted together into compound words.
 
 When looking for lists of root words, a lot of the resources you get are about greek or latin. It almost feels like there were some intermediate steps (germanic languages) that were skipped or didn't contribute as much in terms of root words as those earlier languages. Maybe its linked to periods of technical advancement or something. This might just be that they didn't show up as much in my initial googling. https://en.wikipedia.org/wiki/List_of_Germanic_and_Latinate_equivalents_in_English
+
+## Worked example: Travel
+
+In english, there are multiple ways you could word a sentence to imply travelling:
+
+| Category | Examples          |
+| -------- | ----------------- |
+| Distance | Journey, Nip/pop  |
+| Reason   | Visit, Migrate    |
+| Domain   | March, Pilgrimage |
+| Means    | Voyage, Drive     |
+
+So given a sentence like:
+
+```
+[Subject] [Verb] [Object]
+Person    Travel Destination
+```
+
+Maybe this should be annotated like:
+
+```
+Person Travel[distance, reason, association, means] Destination
+```
+
+Then to pick a word to use, you'd do something like:
+
+- Do we have any specific root words for any of the categories.
+- If not, assume travel is a root word and add 1/2 affixes.
+
+This leaves a question of:
+
+- How to pick root words (initially, or for introduction at certain points)?
+- How to pick the category(s) for affixation?
+  - Perhaps least common is more notable
+- If/when to introduce new root words?
+  - Could hand-wave this away and to it when a language is "derived"
