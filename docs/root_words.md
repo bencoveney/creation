@@ -347,6 +347,8 @@ There are some cases where a single root word can serve multiple purposes. For e
 
 I think some of these feel like they are blurring together a couple of concepts. Maybe this re-use of a single word for one concept is driven by cultural values.
 
+https://en.wikipedia.org/wiki/Semantic_change
+
 I would guess that there would be more root words in domains that had cultural significance (war, politics). Maybe I'd expect more for things like trade/commerce.
 
 Sometimes the disctinction between root/affix isn't clear, and root words end up being bolted together into compound words.

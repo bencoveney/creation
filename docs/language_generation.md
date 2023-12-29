@@ -99,11 +99,28 @@ root words
 Start with phonotactics
 link sounds to themes?
 
+https://youtu.be/IttLKirWL18
+https://youtu.be/EFqvwUIlzfU
+https://youtu.be/_y2KqjRg_78
+https://youtu.be/kFzt_GHNd1M
+https://youtu.be/n7fX0Dbq_2I
+https://youtu.be/zFe1ahJ_LTk
+https://www.vulgarlang.com/
+
 ### Syntax
+
+#### Ideas for generation
+
+https://cofl.github.io/conlang/resources/mirror/conlang-syntax-test-cases.html
+https://cofl.github.io/conlang/resources/mirror/graded-sentences-for-analysis.html
 
 ### Semantics
 
 _Not really considered yet._
+
+#### Ideas for generation
+
+https://en.wikipedia.org/wiki/Semantic_change
 
 ### Pragmatics
 
