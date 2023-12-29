@@ -1,55 +1,52 @@
 # Language Generation
 
-https://en.wikipedia.org/wiki/Constructed_language
-https://en.wikipedia.org/wiki/Combining_character
+There are 2 main areas:
+
+- Spoken language
+- Written language
+
 https://conlang.org/resources/
 
-## IPA
+## Spoken language
+
+Built up from a few tiers
+
+- Phonetics (speech sounds)
+- Phonology (phonemes - syllables)
+- Morphology (words)
+- Syntax (phrases and sentences)
+- Semantics (literal meaning of phrases and sentences)
+- Pragmatics (meaning in context of discourse)
+
+### Phonetics
+
+The set of sounds the speaker can produce.
+This is basically encompassed by the international phonetic alphabet.
+Depends on the physiology of the speaker.
 
 https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
 https://en.wikipedia.org/wiki/Help:IPA/English
-https://en.wikipedia.org/wiki/English_orthography#Sound-to-spelling_correspondences
-https://en.wikipedia.org/wiki/English_orthography#Spelling-to-sound_correspondences
 https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 
-## Phonotactics
+### Phonology
+
+Construction of syllables
+
+- Onset
+- Rhyme
+  - Nucleus
+  - Coda
+
+#### Phonotactics
+
+The restrictions languages place on the sounds that can be used together.
+Currently I am just using a loosely-derived set of english-like phonotactics to get something that sounds reasonable to my ears.
+There are power laws here, where some phonemes are very common and others are rare.
 
 https://en.wikipedia.org/wiki/Phonotactics
 https://en.wikipedia.org/wiki/English_phonology#Phonotactics
 
-There are power laws here, where some phonemes are very common and others are rare
-
-## Morphology & Lexicon
-
-https://en.wikibooks.org/wiki/Conlang/Beginner/Words
-https://www.reddit.com/r/conlangs/comments/nkqosr/what_are_the_100_most_important_words_to_make_for/
-https://en.wikipedia.org/wiki/Morpheme
-https://en.wikipedia.org/wiki/Root_(linguistics)
-https://en.wikipedia.org/wiki/Lexeme
-https://en.wikipedia.org/wiki/Affix
-http://zompist.com/kitlong.html#lexicon
-
-There are power laws here, where some words are very common and others are rare
-
-## Audio creation
-
-http://ipa-reader.xyz/
-https://cuttlesoft.com/blog/2018/09/13/pronouncing-things-with-amazons-polly/
-https://github.com/WICG/speech-api/issues/37
-https://github.com/espeak-ng/espeak-ng
-https://github.com/espeak-ng/espeak-ng/issues/1701
-
-## From Artifexian
-
-https://www.youtube.com/watch?v=sFWc0sBO62c&t=165s
-IPA:
-
-- consonants
-- vowels
-- diacritics (modifiers)
-  probably less is more
-  sounds people know probably better
-  biology impacts set of sounds people can make
+#### Ideas for generation
 
 https://www.youtube.com/watch?v=3378FlHK4v0
 Pick rules e.g. english based, less is more
@@ -75,6 +72,25 @@ some consonants never appear near each other
 some consonant types never appear together in clusters (onset/coda)
 Can make rules to make things easier to pronounce
 
+### Morphology
+
+There are power laws here, where some words are very common and others are rare
+
+https://en.wikipedia.org/wiki/Morpheme
+https://en.wikipedia.org/wiki/Root_(linguistics)
+https://en.wikipedia.org/wiki/Lexeme
+https://en.wikipedia.org/wiki/Affix
+
+See [root words research](./root_words.md).
+
+#### Ideas for generation
+
+Use word lists to look at options for generation
+
+- https://en.wikibooks.org/wiki/Conlang/Beginner/Words
+- https://www.reddit.com/r/conlangs/comments/nkqosr/what_are_the_100_most_important_words_to_make_for/
+- http://zompist.com/kitlong.html#lexicon
+
 https://www.youtube.com/watch?v=TocHnrdaNG8
 words
 pick some root words > mess with them a bit
@@ -82,6 +98,47 @@ pick some root words > mess with them a bit
 root words
 Start with phonotactics
 link sounds to themes?
-some sounds will be more common than others - distribution
 
-...
+### Syntax
+
+### Semantics
+
+_Not really considered yet._
+
+### Pragmatics
+
+_Not really considered yet._
+
+### Evolution
+
+_Not really considered yet._
+
+Languages should change over time.
+This should be reflected in changes to sounds, sentence structure, word meaning.
+
+### Audio creation
+
+It would be nice to have a clickable button that will "pronounce" any words, for anyone who isn't familiar with IPA.
+_Some_ browsers _maybe_ supported this in the past, but support has since dried up.
+Now it looks like a cloud service would be the best option for producing audio, but it is paid.
+
+http://ipa-reader.xyz/
+https://cuttlesoft.com/blog/2018/09/13/pronouncing-things-with-amazons-polly/
+https://github.com/WICG/speech-api/issues/37
+https://github.com/espeak-ng/espeak-ng
+https://github.com/espeak-ng/espeak-ng/issues/1701
+
+## Written language
+
+_Not really considered yet._
+
+Some vague ideas for stop-gap implementations:
+
+- Convert spoken sounds directly to ASCII.
+- Build characters using combining characters.
+- Build characters using a seven-segment display kind-of-thing.
+
+https://en.wikipedia.org/wiki/English_orthography#Sound-to-spelling_correspondences
+https://en.wikipedia.org/wiki/English_orthography#Spelling-to-sound_correspondences
+https://en.wikipedia.org/wiki/Constructed_language
+https://en.wikipedia.org/wiki/Combining_character
