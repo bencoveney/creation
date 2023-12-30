@@ -1,4 +1,4 @@
-import { PhonemeKind } from "./phoneme";
+import { PhonemeKind } from "../phonetics/phoneme";
 import { SyllableParts } from "./syllable";
 
 export type SyllableStructure = SyllableParts<number, number>;

@@ -1,9 +1,9 @@
 import { randomChoice } from "../../utils/random";
-import { Consonant } from "./consonant";
-import { phonemeLookup } from "./phoneme";
+import { Consonant } from "../phonetics/consonant";
+import { phonemeLookup } from "../phonetics/phoneme";
 import { Phonotactics } from "./phonotactics";
 import { syllableStructureSize } from "./syllableStructure";
-import { Vowel } from "./vowels";
+import { Vowel } from "../phonetics/vowels";
 
 export type SyllableParts<TConst, TVowel> = {
   onset: TConst;

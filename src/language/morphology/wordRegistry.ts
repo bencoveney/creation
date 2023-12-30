@@ -1,5 +1,5 @@
 import { sortStrings } from "../../utils/string";
-import { Phonotactics } from "../ipa/phonotactics";
+import { Phonotactics } from "../phonology/phonotactics";
 import {
   MorphemeRegistry,
   createMorphemeRegistry,

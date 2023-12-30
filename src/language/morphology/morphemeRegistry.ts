@@ -1,5 +1,5 @@
 import { randomChoice } from "../../utils/random";
-import { Phonotactics } from "../ipa/phonotactics";
+import { Phonotactics } from "../phonology/phonotactics";
 import {
   Morpheme,
   spellMorpheme,

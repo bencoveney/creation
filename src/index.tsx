@@ -15,7 +15,7 @@ import { initialiseHistory } from "./history/factories";
 import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
-import { validate } from "./language/ipa";
+import { validate } from "./language/samples";
 import { LanguageContext } from "./components/language/languageContext";
 import { HistoryContext } from "./components/historyContext";
 

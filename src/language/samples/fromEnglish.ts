@@ -4,11 +4,11 @@
   https://en.wikipedia.org/wiki/English_language_in_England
 */
 
-import { Phonotactics } from "./phonotactics";
+import { Phonotactics } from "../phonology/phonotactics";
 import {
   SyllableStructure,
   getPossibleSyllableStructures,
-} from "./syllableStructure";
+} from "../phonology/syllableStructure";
 
 export const englishConsonants = [
   "m",

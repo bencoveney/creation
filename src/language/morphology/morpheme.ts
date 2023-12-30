@@ -1,5 +1,5 @@
-import { Phonotactics } from "../ipa/phonotactics";
-import { Syllable, createSyllable, spellSyllable } from "../ipa/syllable";
+import { Phonotactics } from "../phonology/phonotactics";
+import { Syllable, createSyllable, spellSyllable } from "../phonology/syllable";
 
 export enum MorphemeKind {
   Root,

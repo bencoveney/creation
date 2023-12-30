@@ -20,7 +20,7 @@ Built up from a few tiers
 
 ### Phonetics
 
-The set of sounds the speaker can produce.
+Physical production, acoustic transmission and perception of the sounds or signs of language.
 This is basically encompassed by the international phonetic alphabet.
 Depends on the physiology of the speaker.
 
@@ -30,7 +30,7 @@ https://en.wikipedia.org/wiki/Phonetic_symbols_in_Unicode
 
 ### Phonology
 
-Construction of syllables
+linguistic analysis either at a level beneath the word e.g. construction of syllables
 
 - Onset
 - Rhyme

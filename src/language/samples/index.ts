@@ -1,4 +1,4 @@
-import { stringifySyllableStructure } from "./syllableStructure";
+import { stringifySyllableStructure } from "../phonology/syllableStructure";
 import { HasNames } from "../names";
 import { Language, spellNameWord } from "..";
 

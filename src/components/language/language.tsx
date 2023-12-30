@@ -1,9 +1,9 @@
 import { InspectProps } from "../../hooks/useInspect";
 import { InspectLink } from "../inspectLink";
 import { Language } from "../../language";
-import { etymology, spellWord } from "../../language/lexicon/word";
+import { etymology, spellWord } from "../../language/morphology/word";
 import { Names } from "./names";
-import { WordRegistry } from "../../language/lexicon/wordRegistry";
+import { WordRegistry } from "../../language/morphology/wordRegistry";
 
 export function Language({
   language,

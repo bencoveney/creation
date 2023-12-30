@@ -1,4 +1,4 @@
-import { Phoneme } from "./phoneme";
+import { Phoneme } from "../phonetics/phoneme";
 
 export function findValues(
   set: Phoneme[],
