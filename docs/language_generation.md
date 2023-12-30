@@ -109,6 +109,9 @@ https://www.vulgarlang.com/
 
 ### Syntax
 
+https://en.wikipedia.org/wiki/Part-of-speech_tagging
+https://en.wikipedia.org/wiki/List_of_glossing_abbreviations
+
 #### Ideas for generation
 
 https://cofl.github.io/conlang/resources/mirror/conlang-syntax-test-cases.html
