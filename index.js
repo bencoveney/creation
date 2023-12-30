@@ -24846,7 +24846,7 @@
     return `${prefix}${id++}`;
   }
 
-  // src/language/ipa/consonant.ts
+  // src/language/phonetics/consonant.ts
   var consonants = [
     {
       // https://en.wikipedia.org/wiki/Voiceless_bilabial_nasal
@@ -25758,7 +25758,7 @@
     }
   ];
 
-  // src/language/ipa/vowels.ts
+  // src/language/phonetics/vowels.ts
   var vowels = [
     {
       // https://en.wikipedia.org/wiki/Close_front_unrounded_vowel
@@ -26059,7 +26059,7 @@
     }
   ];
 
-  // src/language/ipa/phoneme.ts
+  // src/language/phonetics/phoneme.ts
   function createPhonemeLookup(values) {
     const result = {};
     for (let index = 0; index < values.length; index++) {
@@ -26073,7 +26073,7 @@
     ...createPhonemeLookup(consonants)
   };
 
-  // src/language/ipa/syllableStructure.ts
+  // src/language/phonology/syllableStructure.ts
   function describeSyllableStructure(syllableStructure) {
     return [
       ...new Array(syllableStructure.onset).fill(0 /* Consonant */),
@@ -26105,7 +26105,7 @@
     );
   }
 
-  // src/language/ipa/fromEnglish.ts
+  // src/language/samples/englishPhonotactics.ts
   var englishConsonants = [
     "m",
     "n",
@@ -26402,7 +26402,7 @@
     return Math.random() < chanceOfSuccess;
   }
 
-  // src/language/ipa/syllable.ts
+  // src/language/phonology/syllable.ts
   function createSyllable(phonotactics, minSize, maxSize) {
     const syllableStructure = randomChoice(
       phonotactics.possibleSyllableStructures.filter((structure) => {
@@ -26448,7 +26448,7 @@
     return [...syllable.onset, ...syllable.nucleus, ...syllable.coda].map((char) => char.ipaCharacter).join("");
   }
 
-  // src/language/lexicon/morpheme.ts
+  // src/language/morphology/morpheme.ts
   function createMorpheme(concept, kind, phonotactics, minSize, maxSize) {
     return {
       concept,
@@ -26460,7 +26460,7 @@
     return spellSyllable(morpheme.syllable);
   }
 
-  // src/language/lexicon/word.ts
+  // src/language/morphology/word.ts
   function createRootWord(root2) {
     return {
       kind: "root",
@@ -26519,7 +26519,7 @@
     return values.toSorted(stringComparer);
   }
 
-  // src/language/lexicon/morphemeRegistry.ts
+  // src/language/morphology/morphemeRegistry.ts
   function getRootMorpheme(registry, concept, phonotactics) {
     if (registry.conceptLookup.has(concept)) {
       return registry.conceptLookup.get(concept);
@@ -26564,7 +26564,7 @@
     }
   }
 
-  // src/language/lexicon/wordRegistry.ts
+  // src/language/morphology/wordRegistry.ts
   function createWordRegistry() {
     return {
       knownWords: /* @__PURE__ */ new Set(),
@@ -26611,6 +26611,13 @@
     return getWord(registry, phonotactics, root2, affixes);
   }
 
+  // src/language/names.ts
+  function createNames(root2, affixes = []) {
+    return {
+      defaultKey: createRegistryKey(root2, affixes)
+    };
+  }
+
   // src/language/index.ts
   function createLanguage() {
     return {
@@ -26618,11 +26625,6 @@
       registry: createWordRegistry(),
       phonotactics: englishPhonotactics,
       names: createNames("speech")
-    };
-  }
-  function createNames(root2, affixes = []) {
-    return {
-      defaultKey: createRegistryKey(root2, affixes)
     };
   }
   function getNameWord(hasNames, language) {
@@ -26640,6 +26642,30 @@
     return spellWord(
       getWordForKey(language.registry, language.phonotactics, key)
     );
+  }
+  function validateLanguage(hasNames, language) {
+    console.log("onset", language.phonotactics.possibilities.onset);
+    console.log("nucleus", language.phonotactics.possibilities.nucleus);
+    console.log("coda", language.phonotactics.possibilities.coda);
+    console.log(
+      "syllableStructure",
+      stringifySyllableStructure(language.phonotactics.syllableStructure)
+    );
+    console.log(
+      "possibleSyllables",
+      language.phonotactics.possibleSyllableStructures.map(
+        (syllableStructure) => stringifySyllableStructure(syllableStructure)
+      )
+    );
+    console.log(
+      hasNames.map((hasNames2) => {
+        return `${hasNames2.names.defaultKey} => ${spellNameWord(
+          hasNames2,
+          language
+        )}`;
+      })
+    );
+    console.log([...language.registry.knownWords.values()]);
   }
 
   // src/components/historyContext.tsx
@@ -29142,7 +29168,7 @@
   }
   function ArtifactParts({ parts }) {
     if (parts.length === 0) {
-      return;
+      return null;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("ul", { children: parts.map((part) => /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("li", { children: [
       part.name,
@@ -30674,32 +30700,6 @@
     }
   }
 
-  // src/language/ipa/index.ts
-  function validate(hasNames, language) {
-    console.log("onset", language.phonotactics.possibilities.onset);
-    console.log("nucleus", language.phonotactics.possibilities.nucleus);
-    console.log("coda", language.phonotactics.possibilities.coda);
-    console.log(
-      "syllableStructure",
-      stringifySyllableStructure(language.phonotactics.syllableStructure)
-    );
-    console.log(
-      "possibleSyllables",
-      language.phonotactics.possibleSyllableStructures.map(
-        (syllableStructure) => stringifySyllableStructure(syllableStructure)
-      )
-    );
-    console.log(
-      hasNames.map((hasNames2) => {
-        return `${hasNames2.names.defaultKey} => ${spellNameWord(
-          hasNames2,
-          language
-        )}`;
-      })
-    );
-    console.log([...language.registry.knownWords.values()]);
-  }
-
   // src/index.tsx
   var import_jsx_runtime45 = __toESM(require_jsx_runtime(), 1);
   var root = document.getElementById("root");
@@ -30741,7 +30741,7 @@
       if (playbackControls.canTick && getQueryBool("autorun")) {
         playbackControls.tickAll();
         console.log(history2);
-        validate(
+        validateLanguage(
           [
             defaultLanguage,
             ...history2.regions.map.values(),
