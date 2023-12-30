@@ -30,7 +30,7 @@ export function Artifact({
 
 function ArtifactParts({ parts }: { parts: ArtifactPart[] }) {
   if (parts.length === 0) {
-    return;
+    return null;
   }
   return (
     <ul>

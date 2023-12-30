@@ -1,14 +1,14 @@
 import { nextId } from "../utils/id";
-import { englishPhonotactics } from "./samples/fromEnglish";
+import { englishPhonotactics } from "./samples/englishPhonotactics";
 import { Phonotactics } from "./phonology/phonotactics";
 import { Word, spellWord } from "./morphology/word";
 import {
   WordRegistry,
-  createRegistryKey,
   createWordRegistry,
   getWordForKey,
 } from "./morphology/wordRegistry";
-import { HasNames } from "./names";
+import { HasNames, createNames } from "./names";
+import { stringifySyllableStructure } from "./phonology/syllableStructure";
 
 export type Language = HasNames & {
   id: string;
@@ -22,12 +22,6 @@ export function createLanguage(): Language {
     registry: createWordRegistry(),
     phonotactics: englishPhonotactics,
     names: createNames("speech"),
-  };
-}
-
-export function createNames(root: string, affixes: string[] = []) {
-  return {
-    defaultKey: createRegistryKey(root, affixes),
   };
 }
 
@@ -49,3 +43,29 @@ export function spellNameWordByKey(key: string, language: Language): string {
     getWordForKey(language.registry, language.phonotactics, key)
   );
 }
+
+export function validateLanguage(hasNames: HasNames[], language: Language) {
+  console.log("onset", language.phonotactics.possibilities.onset);
+  console.log("nucleus", language.phonotactics.possibilities.nucleus);
+  console.log("coda", language.phonotactics.possibilities.coda);
+  console.log(
+    "syllableStructure",
+    stringifySyllableStructure(language.phonotactics.syllableStructure)
+  );
+  console.log(
+    "possibleSyllables",
+    language.phonotactics.possibleSyllableStructures.map((syllableStructure) =>
+      stringifySyllableStructure(syllableStructure)
+    )
+  );
+  console.log(
+    hasNames.map((hasNames) => {
+      return `${hasNames.names.defaultKey} => ${spellNameWord(
+        hasNames,
+        language
+      )}`;
+    })
+  );
+  console.log([...language.registry.knownWords.values()]);
+}
+export { createNames };

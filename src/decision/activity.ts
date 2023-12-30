@@ -132,7 +132,7 @@ export function forEachBeingByActivity<
     const being = allBeings[beingIndex];
     const activity = getCurrentActivity(being);
     if (activity && activity?.kind === kind) {
-      handler(history, being, activity as U);
+      handler(history, being, activity as unknown as U);
     }
   }
 }

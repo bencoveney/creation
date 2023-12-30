@@ -15,7 +15,7 @@ import { initialiseHistory } from "./history/factories";
 import { lookupFirstValue } from "./history/lookup";
 import { runRest } from "./systems/rest";
 import { runArchitectureCreation } from "./systems/architectureCreation";
-import { validate } from "./language/samples";
+import { validateLanguage } from "./language";
 import { LanguageContext } from "./components/language/languageContext";
 import { HistoryContext } from "./components/historyContext";
 
@@ -67,7 +67,7 @@ function Wrapper() {
     if (playbackControls.canTick && getQueryBool("autorun")) {
       playbackControls.tickAll();
       console.log(history);
-      validate(
+      validateLanguage(
         [
           defaultLanguage,
           ...history.regions.map.values(),
