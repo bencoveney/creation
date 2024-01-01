@@ -2,35 +2,29 @@ export const sentencesFromLogs: string[] = [
   // Init
 
   /**
-   * ???
-   *
    * Subject:
    * - Proper noun: [being]
    * Verb:
    * - woke
-   * Object:
-   * - Noun: slumber
-   *   - Possessive determiner: their
-   *
-   * "from" - preposition?
+   * - Prepositional phrase:
+   *   - Preposition: from
+   *   - Noun: slumber
+   *     - Possessive determiner: their
    */
   "[being] woke from their slumber",
 
   // Decision
 
   /**
-   * ???
-   *
    * Subject:
    * - Proper noun: [being]
    * Verb:
-   * - set
-   * Object:
-   * - Noun: land
-   *   - Indefinite article: an
-   *   - Adjective: unknown
-   *
-   * "out for"
+   * - Phrasal verb: set out
+   * - Prepositional phrase:
+   *   - Preposition: for
+   *   - Noun: land
+   *     - Indefinite article: an
+   *     - Adjective: unknown
    */
   "[being] set out for an unknown land",
 
@@ -95,8 +89,6 @@ export const sentencesFromLogs: string[] = [
   "[being] chose to create architecture in [location]",
 
   /**
-   * ???
-   *
    * Subject:
    * - Proper noun: [being]
    * Verb:
@@ -105,6 +97,8 @@ export const sentencesFromLogs: string[] = [
    * Object:
    * - Infinitive: to join
    * - Argument:
+   *
+   * ???
    *
    * "the creation of architecture"
    */
@@ -125,8 +119,6 @@ export const sentencesFromLogs: string[] = [
   "[being] chose to create an artifact in [location]",
 
   /**
-   * ???
-   *
    * Subject:
    * - Proper noun: [being]
    * Verb:
@@ -135,6 +127,8 @@ export const sentencesFromLogs: string[] = [
    * Object:
    * - Infinitive: to join
    * - Argument:
+   *
+   * ???
    *
    * "the creation of an artifact"
    */
@@ -183,10 +177,58 @@ export const sentencesFromLogs: string[] = [
   "[being] chose to join the conversation in [location]",
 
   // Movement
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - discovered
+   * Object:
+   * - Proper noun: [location]
+   * - Genetive case:
+   *   - Definite article: the
+   *   - Noun: region
+   *   - Preposition: of
+   */
   "[being] discovered the region of [location]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - entered
+   *   - Adverb: in [location]
+   * Object:
+   * - noun: world
+   *   - Preposition: the
+   */
   "[being] entered the world in [location]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - Phrasal verb: moved
+   * - Prepositional phrase:
+   *   - Preposition: from
+   *   - Proper noun: [location]
+   * - Prepositional phrase:
+   *   - Preposition: to
+   *   - Proper noun: [location]
+   */
   "[being] moved from [location] to [location]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - completed
+   * Object:
+   * - Noun: journey
+   *   - Possessive determiner: their
+   */
   "[being] completed their journey",
+
   // Symbol adoption
   "[being] started adopting a symbol",
   "[being] adopted the [symbol] as their symbol",
