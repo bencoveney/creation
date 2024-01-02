@@ -230,11 +230,57 @@ export const sentencesFromLogs: string[] = [
   "[being] completed their journey",
 
   // Symbol adoption
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - started
+   * Object:
+   * - Gerund: adopting
+   * - Argument:
+   *   - Noun: symbol
+   *     - Indefinite article: a
+   */
   "[being] started adopting a symbol",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - adopted
+   * Object:
+   * - noun: [symbol]
+   *   - Definite article: the
+   *   - Prepositional phrase:
+   *     - Preposition: as
+   *     - Noun: symbol
+   *       - Possessive determiner: their
+   */
   "[being] adopted the [symbol] as their symbol",
+
   // Rest
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - rested
+   *   - Adverb: in [location]
+   */
   "[being] rested in [location]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - finished
+   *   - Adverb: in [location]
+   * Object:
+   * - Gerund: resting
+   */
   "[being] finished resting in [location]",
+
   // Architecture creation
   "[being] started creating architecture in [location]",
   "[being] created [architecture] in [location]",
