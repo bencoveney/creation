@@ -282,14 +282,110 @@ export const sentencesFromLogs: string[] = [
   "[being] finished resting in [location]",
 
   // Architecture creation
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - started
+   *   - Adverb: in [location]
+   * Object:
+   * - Gerund: creating
+   * - Argument:
+   *   - Noun: architecture
+   */
   "[being] started creating architecture in [location]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - created
+   *   - Adverb: in [location]
+   * Object:
+   * - Proper noun: [architecture]
+   */
   "[being] created [architecture] in [location]",
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - created
+   *   - Adverb: in [location]
+   * Object:
+   * - Proper noun: [architecture]
+   */
   "[being] and [being] created [architecture] in [location]",
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Serial comma: ,
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - created
+   *   - Adverb: in [location]
+   * Object:
+   * - Proper noun: [architecture]
+   */
   "[being], [being] and [being] created [architecture] in [location]",
+
   // Conversation
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - started
+   *   - Adverb: in [location]
+   * Object:
+   * - Noun: conversation
+   *   - Indefinite article: a
+   */
   "[being] and [being] started a conversation in [location]",
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - finished
+   *   - Adverb: in [location]
+   * Object:
+   * - Noun: conversation
+   *   - Possessive determiner: their
+   */
   "[being] and [being] finished their conversation in [location]",
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Serial comma: ,
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - finished
+   *   - Adverb: in [location]
+   * Object:
+   * - Noun: conversation
+   *   - Possessive determiner: their
+   */
   "[being], [being] and [being] finished their conversation in [location]",
+
   // Artifact creation
   "[being] started forging an artifact in [location]",
   "[being] created the [object] [artifact] in [location]",
