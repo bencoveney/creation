@@ -6,10 +6,10 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - woke
-   * - Prepositional phrase:
-   *   - Preposition: from
-   *   - Noun: slumber
-   *     - Possessive determiner: their
+   *   - Prepositional phrase:
+   *     - Preposition: from
+   *     - Noun: slumber
+   *       - Possessive determiner: their
    */
   "[being] woke from their slumber",
 
@@ -33,7 +33,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to adopt
    * - Argument:
@@ -47,7 +49,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to rest
    */
@@ -58,7 +62,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to explore
    */
@@ -69,7 +75,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to travel
    */
@@ -80,7 +88,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to create
    * - Argument:
@@ -93,7 +103,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to join
    * - Argument:
@@ -109,7 +121,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to create
    * - Argument:
@@ -123,7 +137,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to join
    * - Argument:
@@ -139,7 +155,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to give
    * - Argument:
@@ -153,7 +171,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to have
    * - Argument:
@@ -167,7 +187,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - chose
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Infinitive: to join
    * - Argument:
@@ -197,7 +219,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - entered
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - noun: world
    *   - Preposition: the
@@ -209,12 +233,12 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - Phrasal verb: moved
-   * - Prepositional phrase:
-   *   - Preposition: from
-   *   - Proper noun: [location]
-   * - Prepositional phrase:
-   *   - Preposition: to
-   *   - Proper noun: [location]
+   *   - Prepositional phrase:
+   *     - Preposition: from
+   *     - Proper noun: [location]
+   *   - Prepositional phrase:
+   *     - Preposition: to
+   *     - Proper noun: [location]
    */
   "[being] moved from [location] to [location]",
 
@@ -266,7 +290,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - rested
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    */
   "[being] rested in [location]",
 
@@ -275,7 +301,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - finished
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Gerund: resting
    */
@@ -288,7 +316,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - started
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Gerund: creating
    * - Argument:
@@ -301,7 +331,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - created
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Proper noun: [architecture]
    */
@@ -315,7 +347,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - created
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Proper noun: [architecture]
    */
@@ -331,7 +365,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - created
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Proper noun: [architecture]
    */
@@ -347,7 +383,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - started
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Noun: conversation
    *   - Indefinite article: a
@@ -362,7 +400,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - finished
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Noun: conversation
    *   - Possessive determiner: their
@@ -379,7 +419,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - finished
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Noun: conversation
    *   - Possessive determiner: their
@@ -393,7 +435,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - started
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Gerund: forging
    * - Argument:
@@ -407,7 +451,9 @@ export const sentencesFromLogs: string[] = [
    * - Proper noun: [being]
    * Verb:
    * - created
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Appositive phrase:
    *   - Proper noun: [artifact]
@@ -425,7 +471,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - created
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Appositive phrase:
    *   - Proper noun: [artifact]
@@ -445,7 +493,9 @@ export const sentencesFromLogs: string[] = [
    *   - Proper noun: [being]
    * Verb:
    * - created
-   *   - Adverb: in [location]
+   *   - Prepositional phrase:
+   *     - Preposition: in
+   *     - Proper noun: [location]
    * Object:
    * - Appositive phrase:
    *   - Proper noun: [artifact]
@@ -490,8 +540,3 @@ export const sentencesFromLogs: string[] = [
    */
   "[being] gifted the [object] [artifact] to [being]",
 ];
-
-/*
-  Not sure to/in are adverbs - are they prepositions?
-  Consider tense/form of words.
-*/
