@@ -387,11 +387,111 @@ export const sentencesFromLogs: string[] = [
   "[being], [being] and [being] finished their conversation in [location]",
 
   // Artifact creation
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - started
+   *   - Adverb: in [location]
+   * Object:
+   * - Gerund: forging
+   * - Argument:
+   *   - Noun: artifact
+   *     - Indefinite article: an
+   */
   "[being] started forging an artifact in [location]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - created
+   *   - Adverb: in [location]
+   * Object:
+   * - Appositive phrase:
+   *   - Proper noun: [artifact]
+   * - Phrase in apposition:
+   *   - Noun: [object]
+   *     - Definite article: the
+   */
   "[being] created the [object] [artifact] in [location]",
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - created
+   *   - Adverb: in [location]
+   * Object:
+   * - Appositive phrase:
+   *   - Proper noun: [artifact]
+   * - Phrase in apposition:
+   *   - Noun: [object]
+   *     - Definite article: the
+   */
   "[being] and [being] created the [object] [artifact] in [location]",
+
+  /**
+   * Subject:
+   * - Series:
+   *   - Proper noun: [being]
+   *   - Serial comma: ,
+   *   - Proper noun: [being]
+   *   - Coordinating conjunction: and
+   *   - Proper noun: [being]
+   * Verb:
+   * - created
+   *   - Adverb: in [location]
+   * Object:
+   * - Appositive phrase:
+   *   - Proper noun: [artifact]
+   * - Phrase in apposition:
+   *   - Noun: [object]
+   *     - Definite article: the
+   */
   "[being], [being] and [being] created the [object] [artifact] in [location]",
+
   // Artifact giving
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - started
+   * Object:
+   * - Gerund: gifting
+   * - Argument:
+   *   - Noun: artifact
+   *     - Indefinite article: an
+   * - Prepositional phrase:
+   *   - Preposition: to
+   *   - Proper noun: [being]
+   */
   "[being] started gifing an artifact to [being]",
+
+  /**
+   * Subject:
+   * - Proper noun: [being]
+   * Verb:
+   * - gifted
+   * - Prepositional phrase:
+   *   - Preposition: to
+   *   - Proper noun: [being]
+   * Object:
+   * - Appositive phrase:
+   *   - Proper noun: [artifact]
+   * - Phrase in apposition:
+   *   - Noun: [object]
+   *     - Definite article: the
+   */
   "[being] gifted the [object] [artifact] to [being]",
 ];
+
+/*
+  Not sure to/in are adverbs - are they prepositions?
+  Consider tense/form of words.
+*/
