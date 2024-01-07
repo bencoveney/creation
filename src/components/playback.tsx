@@ -3,8 +3,8 @@ import { getQueryBool, modifyQueryBool } from "../utils/queryParams";
 import { Button } from "./layout/button";
 
 const toggleAutorun = () => {
-  const current = getQueryBool("autorun");
-  modifyQueryBool("autorun", !current);
+  const current = getQueryBool("pauseOnStart");
+  modifyQueryBool("pauseOnStart", !current);
 };
 
 const restart = () => {

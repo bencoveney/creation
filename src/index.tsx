@@ -64,7 +64,7 @@ function Wrapper() {
   );
 
   useEffect(() => {
-    if (playbackControls.canTick && getQueryBool("autorun")) {
+    if (playbackControls.canTick && !getQueryBool("pauseOnStart")) {
       playbackControls.tickAll();
       console.log(history);
       validateLanguage(
