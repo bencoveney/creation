@@ -538,5 +538,58 @@ export const sentencesFromLogs: string[] = [
    *   - Noun: [object]
    *     - Definite article: the
    */
+  {
+    event: {
+      subject: "$ref1",
+      verb: "gift",
+      object: "$ref3",
+      indirectObjects: {
+        recipient: "$ref2",
+      },
+      verbModifiers: {
+        when: "timestamp",
+        where: "$ref5",
+        // ...
+      },
+    },
+    referenceInfo: {
+      ref1: {
+        // Specific person
+        name: "being 1",
+        kind: "$ref4",
+      },
+      ref2: {
+        // Specific person
+        name: "being 2",
+        kind: "$ref4",
+      },
+      ref3: {
+        // Specific item
+        name: "artifact",
+        kind: "$ref5",
+      },
+      ref4: {
+        // Class of being
+        name: "deity",
+      },
+      ref5: {
+        // Class of object
+        name: "sword",
+      },
+    },
+    semanticRules: ["The verb 'gift' has a 'recipient' argument"],
+    languageRules: [
+      "Modify verb according to timestamp (past tense)",
+      "Use prepositions for describing arguments to verbs",
+      "Apposition can be used for clarifying the kind of named objects",
+      "References to singular non-proper nouns get a definite article",
+    ],
+    contextRules: [
+      "Named beings/artifacts should be referenced by name (rather than kind)",
+      "Sometimes things referenced by name should have their kind clarified",
+      "Modify being references based on who is speaking (1st/2nd/3rd person)",
+    ],
+  }.toString(),
+
   "[being] gifted the [object] [artifact] to [being]",
 ];
