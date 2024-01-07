@@ -15,6 +15,7 @@ import { ArtifactSummary } from "./artifactSummary";
 import { RegionSummary } from "./regionSummary";
 import { LanguageSummary } from "./language/languageSummary";
 import { useHistory } from "./historyContext";
+import { About } from "./about";
 
 export function Page({
   playbackControls,
@@ -35,6 +36,9 @@ export function Page({
             : undefined
         }
       >
+        <Tab label={"About"}>
+          <About />
+        </Tab>
         <Tab label={"World"}>
           <World inspect={inspect} />
         </Tab>
