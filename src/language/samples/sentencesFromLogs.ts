@@ -540,16 +540,15 @@ export const sentencesFromLogs: string[] = [
    */
   {
     event: {
-      subject: "$ref1",
       verb: "gift",
-      object: "$ref3",
-      indirectObjects: {
-        recipient: "$ref2",
+      arguments: {
+        subject: "$ref1", // Gifter
+        object: "$ref3", // Gift
+        recipient: "$ref2", // Recipient
       },
-      verbModifiers: {
+      modifiers: {
         when: "timestamp",
-        where: "$ref5",
-        // ...
+        // where, how, why etc...
       },
     },
     referenceInfo: {
@@ -580,7 +579,7 @@ export const sentencesFromLogs: string[] = [
     semanticRules: ["The verb 'gift' has a 'recipient' argument"],
     languageRules: [
       "Modify verb according to timestamp (past tense)",
-      "Use prepositions for describing arguments to verbs",
+      "Use prepositions for describing (non subject/object) arguments to verbs",
       "Apposition can be used for clarifying the kind of named objects",
       "References to singular non-proper nouns get a definite article",
     ],
@@ -590,6 +589,5 @@ export const sentencesFromLogs: string[] = [
       "Modify being references based on who is speaking (1st/2nd/3rd person)",
     ],
   }.toString(),
-
   "[being] gifted the [object] [artifact] to [being]",
 ];
